@@ -23,6 +23,15 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 1: Chronal Calibration](https://github.com/believer/advent-of-code-2018/tree/master/src/day-1-chronal-calibration)                 | 🌟  | 🌟  |
 | [Day 2: Inventory Management System](https://github.com/believer/advent-of-code-2018/tree/master/src/day-2-inventory-management-system) | 🌟  |     |
 
+## Running code and tests
+
+```bash
+$ git clone https://github.com/believer/advent-of-code-2018.git
+$ cd advent-of-code-2018
+$ npm install
+$ npm run build && npm run test:ci
+```
+
 ## Where to get a hold of me
 
 [Instagram](https://www.instagram.com/rickardlaurin/)
