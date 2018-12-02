@@ -46,7 +46,7 @@ test("handles medium puzzle input #2", () =>
   |> toEqual(14)
 );
 
-test("handles full puzzle input #2", () =>
+Skip.test("handles full puzzle input #2 - (long running task)", () =>
   expect(CalibrateTwo.findDuplicateFrequency(~input=DayOneData.data, ()))
   |> toEqual(56360)
 );

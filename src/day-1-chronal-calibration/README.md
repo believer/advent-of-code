@@ -29,7 +29,7 @@ Here are other example situations:
 
 Starting with a frequency of zero, what is the resulting frequency after all of the changes in frequency have been applied?
 
-**Your puzzle answer was 411.**
+**Your puzzle answer was `411`.**
 
 ## Part Two
 
@@ -56,4 +56,4 @@ Here are other examples:
 
 What is the first frequency your device reaches twice?
 
-**Your puzzle answer was 56360.**
+**Your puzzle answer was `56360`.**
