@@ -1,3 +1,5 @@
+open Belt.Array;
+
 let rec findDuplicateFrequency =
         (
           ~input,
@@ -9,7 +11,7 @@ let rec findDuplicateFrequency =
   switch (lastDuplicate) {
   | Some(dupe) => dupe
   | None =>
-    let first =
+    let {duplicate, seenFrequencies}: CalibrateOne.t =
       CalibrateOne.deviceFrequency(
         ~input,
         ~result=lastResult,
@@ -19,14 +21,15 @@ let rec findDuplicateFrequency =
       );
 
     let finalValue =
-      first.seenFrequencies
-      ->Belt.Array.get(Belt.Array.length(first.seenFrequencies) - 1);
+      seenFrequencies
+      ->get(length(seenFrequencies) - 1)
+      ->Belt.Option.getWithDefault(0);
 
     findDuplicateFrequency(
       ~input,
-      ~lastResult=Belt.Option.getWithDefault(finalValue, 0),
-      ~lastDuplicate=first.duplicate,
-      ~lastSeenFrequencies=first.seenFrequencies,
+      ~lastResult=finalValue,
+      ~lastDuplicate=duplicate,
+      ~lastSeenFrequencies=seenFrequencies,
       (),
     );
   };
