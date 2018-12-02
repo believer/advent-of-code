@@ -1,36 +1,25 @@
-let sortValues = ((_, _, a), (_, _, b)) =>
-  int_of_float(b *. 100.) - int_of_float(a *. 100.);
+open Belt.Array;
+
+let defaultValue = ("", "", 0.);
+
+let findSimilarity = (input, i, row) =>
+  switch (input->get(i + 1)) {
+  | Some(next) => (row, next, Levenshtein.similarity(row, next))
+  | _ => defaultValue
+  };
 
 let findBoxes = input => {
-  open Belt.Array;
-  open Js.Array;
-
-  let defaultValue = ("", "", 0.);
-
-  let similarity =
-    (input |> sortInPlace)
-    ->mapWithIndex((i, row) => {
-        let nextRow = input->get(i + 1);
-
-        switch (nextRow) {
-        | Some(next) =>
-          let distance = Levenshtein.similarity(row, next);
-          (row, next, distance);
-        | _ => defaultValue
-        };
-      });
-
-  let sorted = (similarity |> sortInPlaceWith(sortValues))->get(0);
-
   let (first, second, _) =
-    switch (sorted) {
-    | Some(value) => value
-    | _ => defaultValue
-    };
+    input
+    ->Js.Array.sortInPlace
+    ->mapWithIndex(findSimilarity(input))
+    ->Utils.sortInPlaceWith(Utils.sortFloats)
+    ->get(0)
+    ->Belt.Option.getWithDefault(defaultValue);
 
-  let allFirst = first |> Js.String.split("");
   let allSecond = second |> Js.String.split("");
 
-  allFirst->keepWithIndex((firstChar, i) => allSecond[i] == firstChar)
-  |> joinWith("");
+  Js.String.split("", first)
+  ->keepWithIndex((firstChar, i) => allSecond[i] == firstChar)
+  ->Utils.join("");
 };

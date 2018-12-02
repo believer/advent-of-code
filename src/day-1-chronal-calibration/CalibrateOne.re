@@ -1,37 +1,25 @@
+open Belt.Array;
+
 type t = {
   duplicate: option(int),
   seenFrequencies: array(int),
   result: int,
 };
 
-let parseNumber = v =>
-  Js.String.replaceByRe([%re "/\\+/g"], "", v)->int_of_string;
-
 let deviceFrequency =
     (~input, ~result=0, ~duplicate=None, ~seenFrequencies=[|0|], ()) =>
   Js.String.split(", ", input)
-  ->Belt.Array.map(parseNumber)
-  ->Belt.Array.reduce(
+  ->map(Utils.parseNumber)
+  ->reduce(
       {result, duplicate, seenFrequencies},
       (acc, curr) => {
         let result = acc.result + curr;
+        let hasValue = some(acc.seenFrequencies, v => v == result);
+        let seenFrequencies = concat(acc.seenFrequencies, [|result|]);
 
-        switch (
-          acc.duplicate,
-          Js.Array.includes(result, acc.seenFrequencies),
-        ) {
-        | (None, true) => {
-            result,
-            duplicate: Some(result),
-            seenFrequencies:
-              Belt.Array.concat(acc.seenFrequencies, [|result|]),
-          }
-        | _ => {
-            ...acc,
-            result,
-            seenFrequencies:
-              Belt.Array.concat(acc.seenFrequencies, [|result|]),
-          }
+        switch (acc.duplicate, hasValue) {
+        | (None, true) => {result, seenFrequencies, duplicate: Some(result)}
+        | _ => {...acc, result, seenFrequencies}
         };
       },
     );
