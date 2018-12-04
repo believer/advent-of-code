@@ -39,10 +39,7 @@ let parseGuard = row =>
   | None => (UnknownState, "")
   };
 
-let findSleepy = input => {
-  let list = Js.Dict.empty();
-  let fellAsleep = ref(0);
-
+let createList = input =>
   input
   ->Belt.Array.map(row => {
       let split = Js.String.split("] ", row);
@@ -55,7 +52,14 @@ let findSleepy = input => {
   ->Belt.Array.map((((_, month, date, minute), row)) => {
       let (state, id) = parseGuard(row);
       (month, date, minute, state, id);
-    })
+    });
+
+let findSleepy = input => {
+  let list = Js.Dict.empty();
+  let fellAsleep = ref(0);
+
+  input
+  ->createList
   ->Belt.Array.forEach(((_month, _date, minute, state, id)) =>
       switch (state) {
       | FallsAsleep =>

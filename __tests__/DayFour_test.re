@@ -22,9 +22,17 @@ let exampleDataOne = [|
 |];
 
 test("handles example input puzzle #1", () =>
-  expect(Guard.findSleepy(exampleDataOne)) |> toEqual(240)
+  expect(GuardOne.findSleepy(exampleDataOne)) |> toEqual(240)
 );
 
 test("solves puzzle #1", () =>
-  expect(Guard.findSleepy(DayFourData.data)) |> toEqual(19025)
+  expect(GuardOne.findSleepy(DayFourData.data)) |> toEqual(19025)
+);
+
+test("handles example input puzzle #2", () =>
+  expect(GuardTwo.findFrequentSleeper(exampleDataOne)) |> toEqual(4455)
+);
+
+test("solves puzzle #2", () =>
+  expect(GuardTwo.findFrequentSleeper(DayFourData.data)) |> toEqual(23776)
 );

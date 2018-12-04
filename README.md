@@ -23,7 +23,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 1: Chronal Calibration](https://github.com/believer/advent-of-code-2018/tree/master/src/day-1-chronal-calibration)                 | 🌟  | 🌟  |
 | [Day 2: Inventory Management System](https://github.com/believer/advent-of-code-2018/tree/master/src/day-2-inventory-management-system) | 🌟  | 🌟  |
 | [Day 3: No Matter How You Slice It](https://github.com/believer/advent-of-code-2018/tree/master/src/day-3-no-matter-how-you-slice-it)   | 🌟  | 🌟  |
-| [Day 4: Repose Record](https://github.com/believer/advent-of-code-2018/tree/master/src/day-4-repose-record)                             | 🌟  |     |
+| [Day 4: Repose Record](https://github.com/believer/advent-of-code-2018/tree/master/src/day-4-repose-record)                             | 🌟  | 🌟  |
 
 ## Running code and tests
 
