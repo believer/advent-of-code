@@ -4,9 +4,6 @@ type guardT =
   | WakeUp
   | UnknownState;
 
-let timeAsInt = date =>
-  int_of_float(Js.Date.fromString(date) |> Js.Date.getTime);
-
 let parseDate = row =>
   switch (
     Js.String.match([%re "/\\d{4}-(\\d{2})-(\\d{2}) \\d{2}:(\\d{2})/"], row)
@@ -47,7 +44,7 @@ let createList = input =>
       (parseDate(split[0]), split[1]);
     })
   ->Utils.sortInPlaceWith((((a, _, _, _), _), ((b, _, _, _), _)) =>
-      timeAsInt(a) - timeAsInt(b)
+      Utils.dateAsInt(a) - Utils.dateAsInt(b)
     )
   ->Belt.Array.map((((_, month, date, minute), row)) => {
       let (state, id) = parseGuard(row);

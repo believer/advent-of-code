@@ -24,3 +24,6 @@ let rec range = (start: int, end_: int) =>
   } else {
     [start, ...range(start + 1, end_)];
   };
+
+let dateAsInt = date =>
+  int_of_float(Js.Date.fromString(date) |> Js.Date.getTime);

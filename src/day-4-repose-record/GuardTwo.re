@@ -4,41 +4,6 @@ type guardT =
   | WakeUp
   | UnknownState;
 
-let timeAsInt = date =>
-  int_of_float(Js.Date.fromString(date) |> Js.Date.getTime);
-
-let parseDate = row =>
-  switch (
-    Js.String.match([%re "/\\d{4}-(\\d{2})-(\\d{2}) \\d{2}:(\\d{2})/"], row)
-  ) {
-  | Some(date) => (date[0], date[1], date[2], date[3])
-  | None => ("", "", "", "")
-  };
-
-let latestGuard = ref("");
-let parseGuard = row =>
-  switch (Js.String.match([%re "/^\\w+/i"], row)) {
-  | Some(guard) =>
-    let state =
-      switch (guard[0] |> Js.String.toLowerCase) {
-      | "guard" => StartShift
-      | "falls" => FallsAsleep
-      | "wakes" => WakeUp
-      | _ => UnknownState
-      };
-
-    let id =
-      switch (Js.String.match([%re "/\\d+/"], row)) {
-      | Some(id) =>
-        latestGuard := id[0];
-        id[0] |> Js.String.replace("#", "");
-      | None => latestGuard^
-      };
-
-    (state, id);
-  | None => (UnknownState, "")
-  };
-
 let findFrequentSleeper = input => {
   let list = Js.Dict.empty();
   let fellAsleep = ref(0);
