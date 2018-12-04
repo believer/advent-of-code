@@ -17,3 +17,10 @@ let sortFloats = ((_, _, a), (_, _, b)) =>
 let join = (arr, value) => Js.Array.joinWith(value, arr);
 
 let sortInPlaceWith = (arr, value) => Js.Array.sortInPlaceWith(value, arr);
+
+let rec range = (start: int, end_: int) =>
+  if (start >= end_) {
+    [];
+  } else {
+    [start, ...range(start + 1, end_)];
+  };
