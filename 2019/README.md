@@ -1,7 +1,7 @@
 # Advent of Code 2019
 
-This is my second attempt at Advent of Code, my first time around I only lasted
-a couple of days. My language of choice is still ReasonML, same as last year.
+This is my second attempt at Advent of Code 🎅🏻, my first time around I only lasted
+a couple of days. My language of choice is ReasonML, same as last year.
 
 ## Advent of Code 2019 Story
 
