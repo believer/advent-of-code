@@ -1,1 +1,0 @@
-__tests__/DayThree_test-AdventOfCode2018.cmj : src/day-3-no-matter-how-you-slice-it/DayThreeData-AdventOfCode2018.cmj src/day-3-no-matter-how-you-slice-it/SliceIt-AdventOfCode2018.cmj

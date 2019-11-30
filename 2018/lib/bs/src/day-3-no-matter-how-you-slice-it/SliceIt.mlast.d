@@ -1,1 +1,0 @@
-src/day-3-no-matter-how-you-slice-it/SliceIt-AdventOfCode2018.cmj : src/utils/Utils-AdventOfCode2018.cmj
