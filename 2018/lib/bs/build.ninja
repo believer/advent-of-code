@@ -1,0 +1,151 @@
+bs_package_flags = -bs-package-map advent-of-code-2018
+src_root_dir = /Users/rickardlaurin/Documents/Projects/personal/advent-of-code-2018
+bsc = /Users/rickardlaurin/Documents/Projects/personal/advent-of-code-2018/node_modules/bs-platform/lib/bsc.exe
+bsdep = /Users/rickardlaurin/Documents/Projects/personal/advent-of-code-2018/node_modules/bs-platform/lib/bsb_helper.exe
+warnings = -w -30-40+6+7+27+32..39+44+45+101 -warn-error +101
+bsc_flags = -bs-suffix -nostdlib -I '/Users/rickardlaurin/Documents/Projects/personal/advent-of-code-2018/node_modules/bs-platform/lib/ocaml' -color always
+ppx_flags = 
+bs_package_includes = 
+bs_package_dev_includes = -I /Users/rickardlaurin/Documents/Projects/personal/advent-of-code-2018/node_modules/@glennsl/bs-jest/lib/ocaml
+namespace = -ns AdventOfCode2018
+bsb_dir_group = 0
+bsc_group_1_includes = -I __tests__
+refmt = /Users/rickardlaurin/Documents/Projects/personal/advent-of-code-2018/node_modules/bs-platform/lib/refmt.exe
+reason_react_jsx = 
+refmt_flags = --print binary
+bsc_lib_includes = -I . -I src/utils -I src/day-3-no-matter-how-you-slice-it -I src/day-1-chronal-calibration -I src/day-5-alchemical-reduction -I src/day-2-inventory-management-system -I src/day-4-repose-record -I src
+rule build_ast_and_module_sets_from_re
+  command = ${bsc} -pp "${refmt} ${refmt_flags}" ${reason_react_jsx}  ${ppx_flags} ${warnings} ${bsc_flags} -c -o ${out} -bs-syntax-only -bs-binary-ast -impl ${in}
+  description = [34mBuilding[39m [2m${out}[22m
+build __tests__/DayOne_test.mlast : build_ast_and_module_sets_from_re $src_root_dir/__tests__/DayOne_test.re
+rule build_deps
+  command = ${bsdep} ${namespace} -g ${bsb_dir_group} -MD ${in}
+  description = [34mBuilding[39m [2m${out}[22m
+build __tests__/DayOne_test.mlast.d : build_deps __tests__/DayOne_test.mlast
+  bsb_dir_group = 1
+rule build_cmj_cmi
+  command = ${bsc} ${bs_package_flags} -bs-assume-no-mli -bs-no-builtin-ppx-ml -bs-no-implicit-include ${bs_package_includes} ${bsc_lib_includes} ${bsc_extra_includes} ${warnings} ${bsc_flags} -o ${out} -c  ${in} $postbuild
+  depfile = ${in}.d
+  description = [34mBuilding[39m [2m${out}[22m
+build __tests__/DayOne_test-AdventOfCode2018.cmj |  $src_root_dir/lib/js/__tests__/DayOne_test.bs.js __tests__/DayOne_test-AdventOfCode2018.cmi : build_cmj_cmi __tests__/DayOne_test.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/__tests__
+  bs_package_includes = $bs_package_includes $bs_package_dev_includes
+  bsc_extra_includes = $bsc_group_1_includes
+build __tests__/DayTwo_test.mlast : build_ast_and_module_sets_from_re $src_root_dir/__tests__/DayTwo_test.re
+build __tests__/DayTwo_test.mlast.d : build_deps __tests__/DayTwo_test.mlast
+  bsb_dir_group = 1
+build __tests__/DayTwo_test-AdventOfCode2018.cmj |  $src_root_dir/lib/js/__tests__/DayTwo_test.bs.js __tests__/DayTwo_test-AdventOfCode2018.cmi : build_cmj_cmi __tests__/DayTwo_test.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/__tests__
+  bs_package_includes = $bs_package_includes $bs_package_dev_includes
+  bsc_extra_includes = $bsc_group_1_includes
+build __tests__/DayFive_test.mlast : build_ast_and_module_sets_from_re $src_root_dir/__tests__/DayFive_test.re
+build __tests__/DayFive_test.mlast.d : build_deps __tests__/DayFive_test.mlast
+  bsb_dir_group = 1
+build __tests__/DayFive_test-AdventOfCode2018.cmj |  $src_root_dir/lib/js/__tests__/DayFive_test.bs.js __tests__/DayFive_test-AdventOfCode2018.cmi : build_cmj_cmi __tests__/DayFive_test.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/__tests__
+  bs_package_includes = $bs_package_includes $bs_package_dev_includes
+  bsc_extra_includes = $bsc_group_1_includes
+build __tests__/DayFour_test.mlast : build_ast_and_module_sets_from_re $src_root_dir/__tests__/DayFour_test.re
+build __tests__/DayFour_test.mlast.d : build_deps __tests__/DayFour_test.mlast
+  bsb_dir_group = 1
+build __tests__/DayFour_test-AdventOfCode2018.cmj |  $src_root_dir/lib/js/__tests__/DayFour_test.bs.js __tests__/DayFour_test-AdventOfCode2018.cmi : build_cmj_cmi __tests__/DayFour_test.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/__tests__
+  bs_package_includes = $bs_package_includes $bs_package_dev_includes
+  bsc_extra_includes = $bsc_group_1_includes
+build __tests__/DayThree_test.mlast : build_ast_and_module_sets_from_re $src_root_dir/__tests__/DayThree_test.re
+build __tests__/DayThree_test.mlast.d : build_deps __tests__/DayThree_test.mlast
+  bsb_dir_group = 1
+build __tests__/DayThree_test-AdventOfCode2018.cmj |  $src_root_dir/lib/js/__tests__/DayThree_test.bs.js __tests__/DayThree_test-AdventOfCode2018.cmi : build_cmj_cmi __tests__/DayThree_test.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/__tests__
+  bs_package_includes = $bs_package_includes $bs_package_dev_includes
+  bsc_extra_includes = $bsc_group_1_includes
+build src/day-4-repose-record/GuardOne.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/day-4-repose-record/GuardOne.re
+build src/day-4-repose-record/GuardOne.mlast.d : build_deps src/day-4-repose-record/GuardOne.mlast
+build src/day-4-repose-record/GuardOne-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/day-4-repose-record/GuardOne.bs.js src/day-4-repose-record/GuardOne-AdventOfCode2018.cmi : build_cmj_cmi src/day-4-repose-record/GuardOne.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/day-4-repose-record
+build src/day-4-repose-record/GuardTwo.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/day-4-repose-record/GuardTwo.re
+build src/day-4-repose-record/GuardTwo.mlast.d : build_deps src/day-4-repose-record/GuardTwo.mlast
+build src/day-4-repose-record/GuardTwo-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/day-4-repose-record/GuardTwo.bs.js src/day-4-repose-record/GuardTwo-AdventOfCode2018.cmi : build_cmj_cmi src/day-4-repose-record/GuardTwo.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/day-4-repose-record
+build src/day-4-repose-record/DayFourData.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/day-4-repose-record/DayFourData.re
+build src/day-4-repose-record/DayFourData.mlast.d : build_deps src/day-4-repose-record/DayFourData.mlast
+build src/day-4-repose-record/DayFourData-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/day-4-repose-record/DayFourData.bs.js src/day-4-repose-record/DayFourData-AdventOfCode2018.cmi : build_cmj_cmi src/day-4-repose-record/DayFourData.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/day-4-repose-record
+build src/day-4-repose-record/HelpersFour.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/day-4-repose-record/HelpersFour.re
+build src/day-4-repose-record/HelpersFour.mlast.d : build_deps src/day-4-repose-record/HelpersFour.mlast
+build src/day-4-repose-record/HelpersFour-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/day-4-repose-record/HelpersFour.bs.js src/day-4-repose-record/HelpersFour-AdventOfCode2018.cmi : build_cmj_cmi src/day-4-repose-record/HelpersFour.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/day-4-repose-record
+build src/day-2-inventory-management-system/DayTwoData.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/day-2-inventory-management-system/DayTwoData.re
+build src/day-2-inventory-management-system/DayTwoData.mlast.d : build_deps src/day-2-inventory-management-system/DayTwoData.mlast
+build src/day-2-inventory-management-system/DayTwoData-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/day-2-inventory-management-system/DayTwoData.bs.js src/day-2-inventory-management-system/DayTwoData-AdventOfCode2018.cmi : build_cmj_cmi src/day-2-inventory-management-system/DayTwoData.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/day-2-inventory-management-system
+build src/day-2-inventory-management-system/InventoryOne.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/day-2-inventory-management-system/InventoryOne.re
+build src/day-2-inventory-management-system/InventoryOne.mlast.d : build_deps src/day-2-inventory-management-system/InventoryOne.mlast
+build src/day-2-inventory-management-system/InventoryOne-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/day-2-inventory-management-system/InventoryOne.bs.js src/day-2-inventory-management-system/InventoryOne-AdventOfCode2018.cmi : build_cmj_cmi src/day-2-inventory-management-system/InventoryOne.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/day-2-inventory-management-system
+build src/day-2-inventory-management-system/InventoryTwo.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/day-2-inventory-management-system/InventoryTwo.re
+build src/day-2-inventory-management-system/InventoryTwo.mlast.d : build_deps src/day-2-inventory-management-system/InventoryTwo.mlast
+build src/day-2-inventory-management-system/InventoryTwo-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/day-2-inventory-management-system/InventoryTwo.bs.js src/day-2-inventory-management-system/InventoryTwo-AdventOfCode2018.cmi : build_cmj_cmi src/day-2-inventory-management-system/InventoryTwo.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/day-2-inventory-management-system
+build src/day-5-alchemical-reduction/Alchemical.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/day-5-alchemical-reduction/Alchemical.re
+build src/day-5-alchemical-reduction/Alchemical.mlast.d : build_deps src/day-5-alchemical-reduction/Alchemical.mlast
+build src/day-5-alchemical-reduction/Alchemical-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/day-5-alchemical-reduction/Alchemical.bs.js src/day-5-alchemical-reduction/Alchemical-AdventOfCode2018.cmi : build_cmj_cmi src/day-5-alchemical-reduction/Alchemical.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/day-5-alchemical-reduction
+build src/day-5-alchemical-reduction/DayFiveData.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/day-5-alchemical-reduction/DayFiveData.re
+build src/day-5-alchemical-reduction/DayFiveData.mlast.d : build_deps src/day-5-alchemical-reduction/DayFiveData.mlast
+build src/day-5-alchemical-reduction/DayFiveData-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/day-5-alchemical-reduction/DayFiveData.bs.js src/day-5-alchemical-reduction/DayFiveData-AdventOfCode2018.cmi : build_cmj_cmi src/day-5-alchemical-reduction/DayFiveData.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/day-5-alchemical-reduction
+build src/day-1-chronal-calibration/DayOneData.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/day-1-chronal-calibration/DayOneData.re
+build src/day-1-chronal-calibration/DayOneData.mlast.d : build_deps src/day-1-chronal-calibration/DayOneData.mlast
+build src/day-1-chronal-calibration/DayOneData-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/day-1-chronal-calibration/DayOneData.bs.js src/day-1-chronal-calibration/DayOneData-AdventOfCode2018.cmi : build_cmj_cmi src/day-1-chronal-calibration/DayOneData.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/day-1-chronal-calibration
+build src/day-1-chronal-calibration/CalibrateOne.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/day-1-chronal-calibration/CalibrateOne.re
+build src/day-1-chronal-calibration/CalibrateOne.mlast.d : build_deps src/day-1-chronal-calibration/CalibrateOne.mlast
+build src/day-1-chronal-calibration/CalibrateOne-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/day-1-chronal-calibration/CalibrateOne.bs.js src/day-1-chronal-calibration/CalibrateOne-AdventOfCode2018.cmi : build_cmj_cmi src/day-1-chronal-calibration/CalibrateOne.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/day-1-chronal-calibration
+build src/day-1-chronal-calibration/CalibrateTwo.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/day-1-chronal-calibration/CalibrateTwo.re
+build src/day-1-chronal-calibration/CalibrateTwo.mlast.d : build_deps src/day-1-chronal-calibration/CalibrateTwo.mlast
+build src/day-1-chronal-calibration/CalibrateTwo-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/day-1-chronal-calibration/CalibrateTwo.bs.js src/day-1-chronal-calibration/CalibrateTwo-AdventOfCode2018.cmi : build_cmj_cmi src/day-1-chronal-calibration/CalibrateTwo.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/day-1-chronal-calibration
+build src/day-3-no-matter-how-you-slice-it/SliceIt.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/day-3-no-matter-how-you-slice-it/SliceIt.re
+build src/day-3-no-matter-how-you-slice-it/SliceIt.mlast.d : build_deps src/day-3-no-matter-how-you-slice-it/SliceIt.mlast
+build src/day-3-no-matter-how-you-slice-it/SliceIt-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/day-3-no-matter-how-you-slice-it/SliceIt.bs.js src/day-3-no-matter-how-you-slice-it/SliceIt-AdventOfCode2018.cmi : build_cmj_cmi src/day-3-no-matter-how-you-slice-it/SliceIt.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/day-3-no-matter-how-you-slice-it
+build src/day-3-no-matter-how-you-slice-it/DayThreeData.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/day-3-no-matter-how-you-slice-it/DayThreeData.re
+build src/day-3-no-matter-how-you-slice-it/DayThreeData.mlast.d : build_deps src/day-3-no-matter-how-you-slice-it/DayThreeData.mlast
+build src/day-3-no-matter-how-you-slice-it/DayThreeData-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/day-3-no-matter-how-you-slice-it/DayThreeData.bs.js src/day-3-no-matter-how-you-slice-it/DayThreeData-AdventOfCode2018.cmi : build_cmj_cmi src/day-3-no-matter-how-you-slice-it/DayThreeData.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/day-3-no-matter-how-you-slice-it
+build src/utils/Utils.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/utils/Utils.re
+build src/utils/Utils.mlast.d : build_deps src/utils/Utils.mlast
+build src/utils/Utils-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/utils/Utils.bs.js src/utils/Utils-AdventOfCode2018.cmi : build_cmj_cmi src/utils/Utils.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/utils
+build src/utils/Levenshtein.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/utils/Levenshtein.re
+build src/utils/Levenshtein.mlast.d : build_deps src/utils/Levenshtein.mlast
+build src/utils/Levenshtein-AdventOfCode2018.cmj |  $src_root_dir/lib/js/src/utils/Levenshtein.bs.js src/utils/Levenshtein-AdventOfCode2018.cmi : build_cmj_cmi src/utils/Levenshtein.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:lib/js/src/utils
+rule build_package
+  command = ${bsc} -w -49 -no-alias-deps -c ${in}
+  description = [34mBuilding[39m [2m${out}[22m
+build AdventOfCode2018.cmi : build_package AdventOfCode2018.mlmap
+build build.ninja : phony  ||  AdventOfCode2018.cmi src/utils/Levenshtein.mlast.d src/utils/Utils.mlast.d src/day-3-no-matter-how-you-slice-it/DayThreeData.mlast.d src/day-3-no-matter-how-you-slice-it/SliceIt.mlast.d src/day-1-chronal-calibration/CalibrateTwo.mlast.d src/day-1-chronal-calibration/CalibrateOne.mlast.d src/day-1-chronal-calibration/DayOneData.mlast.d src/day-5-alchemical-reduction/DayFiveData.mlast.d src/day-5-alchemical-reduction/Alchemical.mlast.d src/day-2-inventory-management-system/InventoryTwo.mlast.d src/day-2-inventory-management-system/InventoryOne.mlast.d src/day-2-inventory-management-system/DayTwoData.mlast.d src/day-4-repose-record/HelpersFour.mlast.d src/day-4-repose-record/DayFourData.mlast.d src/day-4-repose-record/GuardTwo.mlast.d src/day-4-repose-record/GuardOne.mlast.d __tests__/DayThree_test.mlast.d __tests__/DayFour_test.mlast.d __tests__/DayFive_test.mlast.d __tests__/DayTwo_test.mlast.d __tests__/DayOne_test.mlast.d
