@@ -16,6 +16,7 @@ jobs:
 
     - name: Run tests and linting
       run: |
+        cd 2019
         npm ci
         npm test
       env:
