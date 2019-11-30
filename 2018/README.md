@@ -2,10 +2,6 @@
 
 I'm doing the Advent of Code for the first time! 🎅🏻 Noticed the event last year, but sadly after the fact. My language of choice this year is ReasonML, which has been my go-to language for the past months.
 
-## What is Advent of Code?
-
-Advent of Code is an online event created by Eric Wastl. Each year, starting on Dec 1st, an advent calendar of small programming puzzles are unlocked once a day at midnight (EST/UTC-5). Developers of all skill sets are encouraged to solve them in any programming language they choose!
-
 ## Advent of Code 2018 Story
 
 "We've detected some temporal anomalies," one of Santa's Elves at the Temporal Anomaly Research and Detection Instrument Station tells you. She sounded pretty worried when she called you down here. "At 500-year intervals into the past, someone has been changing Santa's history!"
@@ -34,10 +30,3 @@ $ cd advent-of-code/2018
 $ npm install
 $ npm run build && npm run test:ci
 ```
-
-## Where to get a hold of me
-
-[Instagram](https://www.instagram.com/rickardlaurin/)
-|
-[Twitter](https://twitter.com/rickardlaurin)
-
