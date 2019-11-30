@@ -1,5 +1,5 @@
 let polymerUnits = input => {
-  let initial = input;
+  let _ = input;
 
   10;
 };
