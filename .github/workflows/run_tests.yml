@@ -18,6 +18,7 @@ jobs:
       run: |
         cd 2019
         npm ci
+        npm run build
         npm test
       env:
         CI: true
