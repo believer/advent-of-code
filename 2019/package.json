@@ -13,11 +13,12 @@
   "keywords": [],
   "author": "believer <rickard.laurin@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "bs-platform": "^7.0.0-dev.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@glennsl/bs-jest": "0.4.9",
+    "@semantic-release/changelog": "3.0.6",
+    "@semantic-release/git": "7.0.18",
+    "bs-platform": "^7.0.0-dev.2",
     "cross-env": "6.0.3",
     "jest-watch-typeahead": "0.4.2"
   }
