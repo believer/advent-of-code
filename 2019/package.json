@@ -7,7 +7,8 @@
     "build": "bsb -make-world",
     "start": "cross-env BS_WATCH_CLEAR=true bsb -make-world -w",
     "clean": "bsb -clean-world",
-    "test": "jest --watch",
+    "test": "is-ci \"test:ci\" \"test:watch\"",
+    "test:watch": "jest --watch",
     "test:ci": "jest"
   },
   "keywords": [],
@@ -18,8 +19,9 @@
     "@glennsl/bs-jest": "0.4.9",
     "@semantic-release/changelog": "3.0.6",
     "@semantic-release/git": "7.0.18",
-    "bs-platform": "^7.0.0-dev.2",
+    "bs-platform": "7.0.0-dev.2",
     "cross-env": "6.0.3",
+    "is-ci-cli": "2.0.0",
     "jest-watch-typeahead": "0.4.2"
   }
 }
