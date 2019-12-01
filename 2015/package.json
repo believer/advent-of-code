@@ -1,0 +1,27 @@
+{
+  "name": "advent-of-code-2019",
+  "version": "1.0.0",
+  "description": "This is my second attempt at Advent of Code, my first time around I only lasted a couple of days. My language of choice is still ReasonML, same as last year.",
+  "main": "index.js",
+  "scripts": {
+    "build": "bsb -make-world",
+    "start": "cross-env BS_WATCH_CLEAR=true bsb -make-world -w",
+    "clean": "bsb -clean-world",
+    "test": "is-ci \"test:ci\" \"test:watch\"",
+    "test:watch": "jest --watch",
+    "test:ci": "jest"
+  },
+  "keywords": [],
+  "author": "believer <rickard.laurin@gmail.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@glennsl/bs-jest": "0.4.9",
+    "@semantic-release/changelog": "3.0.6",
+    "@semantic-release/git": "7.0.18",
+    "bs-platform": "7.0.0-dev.2",
+    "cross-env": "6.0.3",
+    "is-ci-cli": "2.0.0",
+    "jest-watch-typeahead": "0.4.2"
+  }
+}
