@@ -6,9 +6,11 @@ on:
       - master
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest 
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        year: ['2015', '2019']
 
     steps:
     - uses: actions/checkout@v1
@@ -16,9 +18,10 @@ jobs:
 
     - name: Run tests and linting
       run: |
-        cd 2019
+        cd $YEAR
         npm ci
         npm run build
         npm test
       env:
+        YEAR: ${{ matrix.year }}
         CI: true
