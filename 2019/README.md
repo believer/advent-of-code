@@ -15,6 +15,11 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | ----------------------------------------------------------------------------------------------------------------------------------------------------- | --- | --- | ------------ |
 | [Day 1: The Tyranny of the Rocket Equation](https://github.com/believer/advent-of-code/tree/master/2019/src/day-1-the-tyranny-of-the-rocket-equation) | 🌟  | 🌟  | 7 µs / 43 µs |
 
+## Performance
+
+I've tested performance using `performance.now()` and taken the fastest time
+from a couple of runs.
+
 ## Running code and tests
 
 ```bash
