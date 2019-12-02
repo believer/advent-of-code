@@ -1,28 +1,29 @@
+module Memory = {
+  let update = (mem, pos, value) => mem->Array.set(pos, value)->ignore;
+
+  let make = (input) => input->Array.copy;
+}
+
 module Computer = {
   let rec make = (input, ~noun, ~verb, ~offset=0, ()) => {
-    let memory = input->Array.copy;
+    let memory = Memory.make(input);
+    let memoryUpdate = Memory.update(memory);
 
-    memory->Array.set(1, noun)->ignore;
-    memory->Array.set(2, verb)->ignore;
+    memoryUpdate(1, noun);
+    memoryUpdate(2, verb);
 
-    switch (Array.length(input) >= offset) {
+    switch (offset <= Array.length(memory)) {
     | false => memory
     | true =>
-      switch (input->Array.slice(~len=4, ~offset)) {
+      switch (memory->Array.slice(~len=4, ~offset)) {
       | [|cmd, p1, p2, pos|] =>
-        let v1 = input->Array.get(p1);
-        let v2 = input->Array.get(p2);
+        let v1 = memory->Array.get(p1);
+        let v2 = memory->Array.get(p2);
 
-        let value =
-          switch (cmd, v1, v2) {
-          | (1, Some(v1), Some(v2)) => Some(v1 + v2)
-          | (2, Some(v1), Some(v2)) => Some(v1 * v2)
-          | _ => None
-          };
-
-        switch (value) {
-        | Some(v) => memory->Array.set(pos, v)->ignore
-        | None => ()
+        switch (cmd, v1, v2) {
+        | (1, Some(v1), Some(v2)) => memoryUpdate(pos, v1 + v2)
+        | (2, Some(v1), Some(v2)) => memoryUpdate(pos, v1 * v2)
+        | _ => ()
         };
       | _ => ()
       };
