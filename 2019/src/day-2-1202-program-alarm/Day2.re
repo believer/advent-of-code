@@ -45,15 +45,13 @@ module PartTwo = {
     let res =
       nouns
       ->Array.map(noun => {
-          verbs->Array.map(verb => {
-            let res = Computer.make(input, ~noun, ~verb, ())->Array.get(0);
-
-            switch (res) {
+          verbs->Array.map(verb => 
+            switch (Computer.make(input, ~noun, ~verb, ())->Array.get(0)) {
             | Some(19690720) => Some(noun->Int.toString ++ verb->Int.toString)
             | None
             | Some(_) => None
-            };
-          })
+            }
+          )
         })
       ->Array.concatMany
       ->Array.keep(Option.isSome);
