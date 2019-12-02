@@ -7,11 +7,13 @@ describe("PartOne", () => {
     |> expect
     |> toEqual([|2, 0, 0, 0, 99|])
   });
+
   test("test example input", () => {
     Day2.Computer.make([|2, 3, 0, 3, 99|], ~noun=3, ~verb=0, ())
     |> expect
     |> toEqual([|2, 3, 0, 6, 99|])
   });
+
   test("test example input", () => {
     Day2.Computer.make([|2, 4, 4, 5, 99, 0|], ~noun=4, ~verb=4, ())
     |> expect

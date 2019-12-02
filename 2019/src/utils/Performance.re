@@ -4,8 +4,8 @@ type t = float;
 
 module Time = {
   let make = (startTime, endTime) =>
-    Js.log(
-      ((endTime -. startTime) *. 100. |> Js.Math.round |> Belt.Float.toString)
-      ++ {j| µs|j},
-    );
+switch ((endTime -. startTime) *. 100. |> Js.Math.round) {
+| time when time >= 10000. => (time /. 100.)->Belt.Float.toString ++ "ms"
+| time => time->Belt.Float.toString ++ {j| µs|j}
+} |> Js.log
 };
