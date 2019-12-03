@@ -11,11 +11,11 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                                                                   | #1  |  #2 | Performance   |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------- | --- | --- | ------------- |
-| [Day 1: The Tyranny of the Rocket Equation](https://github.com/believer/advent-of-code/tree/master/2019/src/day-1-the-tyranny-of-the-rocket-equation) | 🌟  | 🌟  | 7 µs / 43 µs  |
-| [Day 2: 1202 Program Alarm](https://github.com/believer/advent-of-code/tree/master/2019/src/day-2-1202-program-alarm)                                 | 🌟  | 🌟  | 5 µs / 202 ms |
-| [Day 3: Crossed Wires](https://github.com/believer/advent-of-code/tree/master/2019/src/day-3-crossed-wires)                                           | 🌟  |     |               |
+| Day                                                                                                                                                   | #1  |  #2 | Performance     |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------- | --- | --- | --------------- |
+| [Day 1: The Tyranny of the Rocket Equation](https://github.com/believer/advent-of-code/tree/master/2019/src/day-1-the-tyranny-of-the-rocket-equation) | 🌟  | 🌟  | 7 µs / 43 µs    |
+| [Day 2: 1202 Program Alarm](https://github.com/believer/advent-of-code/tree/master/2019/src/day-2-1202-program-alarm)                                 | 🌟  | 🌟  | 5 µs / 202 ms   |
+| [Day 3: Crossed Wires](https://github.com/believer/advent-of-code/tree/master/2019/src/day-3-crossed-wires)                                           | 🌟  | 🌟  | 615 ms / 553 ms |
 
 ## Performance
 

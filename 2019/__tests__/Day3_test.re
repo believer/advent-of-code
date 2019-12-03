@@ -27,6 +27,6 @@ describe("PartTwo", () => {
   );
 
   test("should solve part two", () =>
-    Day2.PartTwo.make(Day2Data.data) |> expect |> toEqual(Some("6533"))
+    Day3.PartTwo.make(Day3Data.data) |> expect |> toEqual(7534)
   );
 });
