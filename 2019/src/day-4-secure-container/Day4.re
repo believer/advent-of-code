@@ -28,7 +28,7 @@ module HasDigits = {
 
     switch (matcher) {
     | AtLeast(n) => Js.Math.maxMany_int(map) >= n
-    | Exactly(n) => map->Array.keep(v => v === n)->Array.length > 0
+    | Exactly(n) => map->Array.some(v => v === n)
     };
   };
 };
