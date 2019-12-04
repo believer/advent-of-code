@@ -1,19 +1,13 @@
 module NoDecrease = {
-  let make = number => {
-    let values = number->Belt.Int.toString->Js.String2.split("");
-
-    let output =
-      values->Belt.Array.mapWithIndex((i, curr) => {
+  let make = values => {
+    values
+    ->Belt.Array.mapWithIndex((i, curr) => {
         switch (curr, values->Belt.Array.get(i - 1)) {
         | (x, Some(y)) => x >= y
         | (_, None) => true
         }
-      });
-
-    switch (output) {
-    | [|true, true, true, true, true, true|] => true
-    | _ => false
-    };
+      })
+    ->Array.every(v => v === true);
   };
 };
 
@@ -25,16 +19,12 @@ module HasDigits = {
   let make = (password, ~matcher) => {
     let map = Array.make(10, 0);
 
-    password
-    ->Int.toString
-    ->Js.String2.split("")
-    ->Array.map(int_of_string)
-    ->Array.forEach(curr => {
-        switch (map->Array.get(curr)) {
-        | Some(v) => map->Array.set(curr, v + 1)->ignore
-        | None => map->Array.set(curr, 1)->ignore
-        }
-      });
+    password->Array.forEach(curr => {
+      switch (map->Array.get(curr)) {
+      | Some(v) => map->Array.set(curr, v + 1)->ignore
+      | None => map->Array.set(curr, 1)->ignore
+      }
+    });
 
     switch (matcher) {
     | AtLeast(n) => Js.Math.maxMany_int(map) >= n
@@ -43,26 +33,40 @@ module HasDigits = {
   };
 };
 
-module Password = {
+module ElfPassword = {
+  let make = number => {
+    number
+    ->Belt.Int.toString
+    ->Js.String2.split("")
+    ->Array.map(int_of_string);
+  };
+};
+
+module FindPassword = {
   let make = (~bounds, ~matcher) => {
     let (lower, upper) = bounds;
 
     Array.range(lower, upper)
-    ->Array.reduce(0, (acc, curr) => {
-        switch (NoDecrease.make(curr), HasDigits.make(curr, ~matcher)) {
-        | (true, true) => acc + 1
-        | _ => acc
-        }
-      });
+    ->Array.reduce(
+        0,
+        (acc, curr) => {
+          let pass = ElfPassword.make(curr);
+
+          switch (NoDecrease.make(pass), HasDigits.make(pass, ~matcher)) {
+          | (true, true) => acc + 1
+          | _ => acc
+          };
+        },
+      );
   };
 };
 
 module PartOne = {
   let make = (lower, upper) =>
-    Password.make(~bounds=(lower, upper), ~matcher=AtLeast(2));
+    FindPassword.make(~bounds=(lower, upper), ~matcher=AtLeast(2));
 };
 
 module PartTwo = {
   let make = (lower, upper) =>
-    Password.make(~bounds=(lower, upper), ~matcher=Exactly(2));
+    FindPassword.make(~bounds=(lower, upper), ~matcher=Exactly(2));
 };
