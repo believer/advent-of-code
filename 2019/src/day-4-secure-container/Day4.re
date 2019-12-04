@@ -88,16 +88,6 @@ module PartTwo = {
         }
       });
     test;
-    /*[>Js.log(test);<]*/
-    /*let out =*/
-    /*values->Belt.Array.reduceWithIndex(false, (acc, curr, i) => {*/
-    /*switch (acc, curr, values->Belt.Array.get(i - 1)) {*/
-    /*| (false, x, Some(y)) => x === y*/
-    /*| (false, _, None) => false*/
-    /*| (true, _, _) => true*/
-    /*}*/
-    /*});*/
-    /*out;*/
   };
 
   let make = (lower, upper) => {
