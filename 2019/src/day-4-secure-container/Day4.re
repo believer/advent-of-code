@@ -1,8 +1,8 @@
 module NoDecrease = {
   let make = values => {
     values
-    ->Belt.Array.mapWithIndex((i, curr) => {
-        switch (curr, values->Belt.Array.get(i - 1)) {
+    ->Array.mapWithIndex((i, curr) => {
+        switch (curr, values->Array.get(i - 1)) {
         | (x, Some(y)) => x >= y
         | (_, None) => true
         }
@@ -34,12 +34,8 @@ module HasDigits = {
 };
 
 module ElfPassword = {
-  let make = number => {
-    number
-    ->Belt.Int.toString
-    ->Js.String2.split("")
-    ->Array.map(int_of_string);
-  };
+  let make = number =>
+    number->Int.toString->Js.String2.split("")->Array.map(int_of_string);
 };
 
 module FindPassword = {
