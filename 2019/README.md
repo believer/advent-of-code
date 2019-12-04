@@ -11,12 +11,12 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                                                                   | #1  |  #2 | Performance     |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------- | --- | --- | --------------- |
-| [Day 1: The Tyranny of the Rocket Equation](https://github.com/believer/advent-of-code/tree/master/2019/src/day-1-the-tyranny-of-the-rocket-equation) | 🌟  | 🌟  | 7 µs / 43 µs    |
-| [Day 2: 1202 Program Alarm](https://github.com/believer/advent-of-code/tree/master/2019/src/day-2-1202-program-alarm)                                 | 🌟  | 🌟  | 5 µs / 202 ms   |
-| [Day 3: Crossed Wires](https://github.com/believer/advent-of-code/tree/master/2019/src/day-3-crossed-wires)                                           | 🌟  | 🌟  | 643 ms / 771 ms |
-| [Day 4: Secure Container](https://github.com/believer/advent-of-code/tree/master/2019/src/day-4-secure-container)                                     | 🌟  | 🌟  | 701 ms / 699 ms |
+| Day                                                                                                                                                   | #1  |  #2 | Performance       |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------- | --- | --- | ----------------- |
+| [Day 1: The Tyranny of the Rocket Equation](https://github.com/believer/advent-of-code/tree/master/2019/src/day-1-the-tyranny-of-the-rocket-equation) | 🌟  | 🌟  | 7 µs / 43 µs      |
+| [Day 2: 1202 Program Alarm](https://github.com/believer/advent-of-code/tree/master/2019/src/day-2-1202-program-alarm)                                 | 🌟  | 🌟  | 5 µs / 202 ms     |
+| [Day 3: Crossed Wires](https://github.com/believer/advent-of-code/tree/master/2019/src/day-3-crossed-wires)                                           | 🌟  | 🌟  | 643 ms / 771 ms   |
+| [Day 4: Secure Container](https://github.com/believer/advent-of-code/tree/master/2019/src/day-4-secure-container)                                     | 🌟  | 🌟  | 1515 ms / 1545 ms |
 
 ## Performance
 

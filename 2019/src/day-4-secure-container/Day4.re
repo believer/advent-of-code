@@ -1,14 +1,13 @@
 module NoDecrease = {
-  let make = values => {
+  let make = values =>
     values
-    ->Array.mapWithIndex((i, curr) => {
+    ->Array.mapWithIndex((i, curr) =>
         switch (curr, values->Array.get(i - 1)) {
         | (x, Some(y)) => x >= y
         | (_, None) => true
         }
-      })
+      )
     ->Array.every(v => v === true);
-  };
 };
 
 module HasDigits = {
@@ -19,12 +18,12 @@ module HasDigits = {
   let make = (password, ~matcher) => {
     let map = Array.make(10, 0);
 
-    password->Array.forEach(curr => {
+    password->Array.forEach(curr =>
       switch (map->Array.get(curr)) {
       | Some(v) => map->Array.set(curr, v + 1)->ignore
       | None => map->Array.set(curr, 1)->ignore
       }
-    });
+    );
 
     switch (matcher) {
     | AtLeast(n) => Js.Math.maxMany_int(map) >= n
