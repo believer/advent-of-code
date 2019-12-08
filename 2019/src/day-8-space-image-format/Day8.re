@@ -51,3 +51,51 @@ module PartOne = {
     };
   };
 };
+
+module PartTwo = {
+  let make = input => {
+    let imageSize = 25 * 6;
+    let layers = Js.String2.length(input) / imageSize;
+
+    let out =
+      Array.range(0, layers - 1)
+      ->Array.reduce(
+          [||],
+          (acc, i) => {
+            let values =
+              input
+              ->Js.String2.slice(
+                  ~from=i * imageSize,
+                  ~to_=imageSize * (i + 1),
+                )
+              ->Js.String2.split("");
+
+            switch (i) {
+            | 0 => values
+            | _ =>
+              values->Array.mapWithIndex((j, curr) => {
+                switch (acc->Array.get(j), curr) {
+                | (Some("2"), "0") => "0"
+                | (Some("2"), "1") => "1"
+                | (Some("2"), "2") => "2"
+                | (Some("0"), _) => "0"
+                | (Some("1"), _) => "1"
+                | (_, curr) => curr
+                }
+              })
+            };
+          },
+        )
+      ->Array.map(i => {
+          switch (i) {
+          | "0" => "."
+          | _ => "1"
+          }
+        });
+
+    Array.range(0, 6)
+    ->Array.map(i => {
+        Array.slice(out, ~offset=i * 25, ~len=25) |> Js.Array.joinWith("")
+      });
+  };
+};
