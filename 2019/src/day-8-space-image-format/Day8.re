@@ -1,22 +1,32 @@
-module IntCmp =
-  Belt.Id.MakeComparable({
-    type t = int;
-    let cmp = (a, b) => Pervasives.compare(a, b);
-  });
+module Image = {
+  let height = 6;
+  let pixels = 25;
+
+  let size = pixels * height;
+
+  let make = (input, i) => {
+    input
+    ->Js.String2.slice(~from=i * size, ~to_=size * (i + 1))
+    ->Js.String2.split("");
+  };
+};
+
+module Layers = {
+  let make = input => {
+    let layers = Js.String2.length(input) / Image.size;
+
+    Array.range(0, layers - 1);
+  };
+};
 
 module PartOne = {
   let make = input => {
-    let imageSize = 25 * 6;
-    let layers = Js.String2.length(input) / imageSize;
-
     let out =
-      Array.range(0, layers - 1)
+      Layers.make(input)
       ->Array.map(i => {
-          let map = Map.make(~id=(module IntCmp));
+          let map = Map.make(~id=(module Cmp.Int));
 
-          input
-          ->Js.String2.slice(~from=i * imageSize, ~to_=imageSize * (i + 1))
-          ->Js.String2.split("")
+          Image.make(input, i)
           ->Array.reduce(
               map,
               (acc, curr) => {
@@ -54,21 +64,12 @@ module PartOne = {
 
 module PartTwo = {
   let make = input => {
-    let imageSize = 25 * 6;
-    let layers = Js.String2.length(input) / imageSize;
-
     let out =
-      Array.range(0, layers - 1)
+      Layers.make(input)
       ->Array.reduce(
           [||],
           (acc, i) => {
-            let values =
-              input
-              ->Js.String2.slice(
-                  ~from=i * imageSize,
-                  ~to_=imageSize * (i + 1),
-                )
-              ->Js.String2.split("");
+            let values = Image.make(input, i);
 
             switch (i) {
             | 0 => values
@@ -89,13 +90,14 @@ module PartTwo = {
       ->Array.map(i => {
           switch (i) {
           | "0" => "."
-          | _ => "1"
+          | x => x
           }
         });
 
-    Array.range(0, 6)
+    Array.range(0, Image.height)
     ->Array.map(i => {
-        Array.slice(out, ~offset=i * 25, ~len=25) |> Js.Array.joinWith("")
+        Array.slice(out, ~offset=i * Image.pixels, ~len=Image.pixels)
+        |> Js.Array.joinWith("")
       });
   };
 };

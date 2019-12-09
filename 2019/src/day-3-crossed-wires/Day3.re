@@ -1,22 +1,11 @@
-module PairComparator =
-  Id.MakeComparable({
-    type t = (int, int);
-
-    let cmp = ((a0, a1), (b0, b1)) =>
-      switch (Pervasives.compare(a0, b0)) {
-      | 0 => Pervasives.compare(a1, b1)
-      | c => c
-      };
-  });
-
 module GetPoints = {
   let make = wire => {
     let x = ref(0);
     let y = ref(0);
     let length = ref(0);
 
-    let set = Set.make(~id=(module PairComparator))->Set.add((x^, y^));
-    let lengthMap = Map.make(~id=(module PairComparator));
+    let set = Set.make(~id=(module Cmp.IntPair))->Set.add((x^, y^));
+    let lengthMap = Map.make(~id=(module Cmp.IntPair));
 
     wire->List.reduce(
       (set, lengthMap),
@@ -63,7 +52,7 @@ module PartOne = {
 
 module PartTwo = {
   let mapToSet = map =>
-    map->Map.keysToArray->Set.fromArray(~id=(module PairComparator));
+    map->Map.keysToArray->Set.fromArray(~id=(module Cmp.IntPair));
 
   let make = ((wireOne, wireTwo)) => {
     let (_, firstLength) = GetPoints.make(wireOne);

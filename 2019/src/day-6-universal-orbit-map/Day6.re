@@ -1,9 +1,3 @@
-module StrCmp =
-  Belt.Id.MakeComparable({
-    type t = string;
-    let cmp = (a, b) => Pervasives.compare(a, b);
-  });
-
 module PartOne = {
   module WalkTree = {
     let rec make = (id, map) => {
@@ -23,7 +17,7 @@ module PartOne = {
   };
 
   let make = input => {
-    let map = Map.make(~id=(module StrCmp));
+    let map = Map.make(~id=(module Cmp.Str));
 
     let out =
       input->Array.reduce(
