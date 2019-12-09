@@ -1,72 +1,97 @@
+module OpCode = {
+  type t =
+    | Addition
+    | Multiplication
+    | NotImplemented
+    | Halt;
+
+  let make = intcode =>
+    switch (intcode->Int.toString->Js.String2.slice(~from=-2, ~to_=2)) {
+    | "1" => Addition
+    | "2" => Multiplication
+    | "99" => Halt
+    | _ => NotImplemented
+    };
+};
+
 module Memory = {
   let update = (mem, pos, value) => mem->Array.set(pos, value)->ignore;
 
   let make = input => input->Array.copy;
 };
 
-module Computer = {
-  let rec make = (input, ~noun, ~verb, ~offset=0, ()) => {
-    let memory = Memory.make(input);
-    let memoryUpdate = Memory.update(memory);
+module Parameters = {
+  let make = (~opcode, ~program, ~position) => {
+    switch (opcode) {
+    | OpCode.Multiplication
+    | Addition =>
+      let v1 = program->Array.get(program->Array.getUnsafe(position + 1));
+      let v2 = program->Array.get(program->Array.getUnsafe(position + 2));
+      let output = program->Array.getUnsafe(position + 3);
 
-    memoryUpdate(1, noun);
-    memoryUpdate(2, verb);
+      (v1, v2, output);
+    | Halt
+    | NotImplemented => (None, None, 0)
+    };
+  };
+};
 
-    switch (offset <= Array.length(memory)) {
-    | false => memory
-    | true =>
-      switch (memory->Array.slice(~len=4, ~offset)) {
-      | [|cmd, p1, p2, pos|] =>
-        let _ =
-          switch (cmd->Int.toString->Js.String2.length) {
-          | x when x < 4 => "0" ++ cmd->Int.toString
-          | _ => cmd->Int.toString
-          };
+module Operation = {
+  let make = (~opcode, ~program, ~position) => {
+    switch (opcode) {
+    | OpCode.Addition =>
+      let (v1, v2, output) = Parameters.make(~opcode, ~program, ~position);
 
-        let v1 = memory->Array.get(p1);
-        let v2 = memory->Array.get(p2);
-
-        switch (cmd, v1, v2) {
-        | (1, Some(v1), Some(v2)) => memoryUpdate(pos, v1 + v2)
-        | (2, Some(v1), Some(v2)) => memoryUpdate(pos, v1 * v2)
-        | (3, Some(_), Some(_)) => memoryUpdate(pos, 1)
-        | _ => ()
-        };
+      switch (v1, v2) {
+      | (Some(v1), Some(v2)) => program->Array.set(output, v1 + v2)->ignore
       | _ => ()
       };
 
-      make(memory, ~noun, ~verb, ~offset=offset + 4, ());
+    | Multiplication =>
+      let (v1, v2, output) = Parameters.make(~opcode, ~program, ~position);
+
+      switch (v1, v2) {
+      | (Some(v1), Some(v2)) => program->Array.set(output, v1 * v2)->ignore
+      | _ => ()
+      };
+    | _ => ()
+    };
+
+    program;
+  };
+};
+
+module Movement = {
+  let make =
+    fun
+    | OpCode.Addition => 4
+    | Multiplication => 4
+    | Halt
+    | NotImplemented => 0;
+};
+
+module Computer = {
+  let rec make = (input, ~position=0, ()) => {
+    let program = Memory.make(input);
+    let cmd = program->Array.get(position);
+
+    switch (cmd) {
+    | Some(cmd) =>
+      let opcode = OpCode.make(cmd);
+
+      switch (opcode) {
+      | Halt => program
+      | _ =>
+        let program = Operation.make(~opcode, ~program, ~position);
+        let movement = Movement.make(opcode);
+
+        make(program, ~position=position + movement, ());
+      };
+    | None => program
     };
   };
 };
 
 module PartOne = {
-  let make = input =>
-    Computer.make(input, ~noun=12, ~verb=2, ())->Array.get(0);
-};
-
-module PartTwo = {
-  let make = input => {
-    let nouns = Array.range(0, 99);
-    let verbs = Array.range(0, 99);
-
-    let res =
-      nouns
-      ->Array.map(noun => {
-          verbs->Array.map(verb =>
-            switch (Computer.make(input, ~noun, ~verb, ())->Array.get(0)) {
-            | Some(19690720) => Some(noun->Int.toString ++ verb->Int.toString)
-            | None
-            | Some(_) => None
-            }
-          )
-        })
-      ->Array.concatMany
-      ->Array.keep(Option.isSome);
-
-    switch (res->Array.get(0)) {
-    | Some(v) => v
-    | None => None
-    };
-  };
+  let make = input => Computer.make(input, ());
 };
