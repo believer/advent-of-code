@@ -5,14 +5,14 @@ module OpCode = {
   type t =
     | Addition
     | Multiplication
-    | NotImplemented
     | Input
     | Output
     | JumpIfTrue
     | JumpIfFalse
     | LessThan
     | Equals
-    | Halt;
+    | Halt
+    | NotImplemented;
 
   let make = intcode => {
     let code =
@@ -55,20 +55,30 @@ module Steps = {
 module Computer = {
   let stepSize = ref(4);
   let output = ref(0);
+  let isFirst = ref(true);
+  let break = ref(false);
 
   let rec make = (program, ~position=0, ~input, ()) => {
     let (inputValue, prevValue) = input;
     let pos = ref(position);
 
-    switch (position < Array.length(program)) {
-    | false => output^
-    | true =>
+    switch (break^, position < Array.length(program)) {
+    | (_, false)
+    | (true, _) =>
+      let out = output^;
+
+      isFirst := true;
+      output := 0;
+      stepSize := 4;
+      break := false;
+
+      out;
+    | (_, true) =>
       switch (program->Array.slice(~len=stepSize^, ~offset=position)) {
       | arr =>
         let (opcode, mode1, mode2) = OpCode.make(arr->Array.getUnsafe(0));
         let (v1, v2, updateProgram) =
           Action.make(program, ~position, ~modes=(mode1, mode2));
-        Js.log(arr);
 
         switch (opcode) {
         | Addition =>
@@ -88,16 +98,13 @@ module Computer = {
           stepSize := Steps.make(opcode, ());
 
         | Input =>
-          let v =
-            switch (prevValue) {
-            | Some(v) => v
-            | None => inputValue
-            };
+          let v = isFirst^ ? inputValue : prevValue;
 
           program
           ->Array.set(program->Array.getUnsafe(position + 1), v)
           ->ignore;
 
+          isFirst := false;
           stepSize := Steps.make(opcode, ());
 
         | Output =>
@@ -105,6 +112,8 @@ module Computer = {
           | 0 => output := v1
           | _ => ()
           };
+
+          break := true;
 
           stepSize := Steps.make(opcode, ());
 
@@ -144,10 +153,11 @@ module Computer = {
 
 module PartOne = {
   let process = (program, settings) => {
-    let input = ref(None);
+    let input = ref(0);
 
     settings->Array.forEach(setting => {
-      input := Some(Computer.make(program, ~input=(setting, input^), ()))
+      input :=
+        Computer.make(program->Array.copy, ~input=(setting, input^), ())
     });
 
     input^;
@@ -156,12 +166,16 @@ module PartOne = {
   let make = program => {
     let permutations = Heaps.make([|0, 1, 2, 3, 4|]);
 
-    let t = permutations->Array.map(settings => {process(program, settings)});
+    let t =
+      permutations
+      ->Array.map(process(program))
+      ->List.fromArray
+      ->List.sort((a, b) => b - a)
+      ->List.get(0);
 
-    Js.log(t);
-
-    2;
+    switch (t) {
+    | Some(v) => v
+    | None => 0
+    };
   };
 };
-
-PartOne.make(Day7Data.data);
