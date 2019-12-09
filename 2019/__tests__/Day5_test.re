@@ -3,12 +3,15 @@ open Expect;
 
 describe("PartOne", () => {
   test("test example input", () => {
-    Day5.Computer.make([|1, 0, 0, 0, 99|], ())
+    Day5.PartOne.make(
+      [|3, 225, 1, 225, 6, 6, 1100, 1, 238, 225, 104, 0, 99|],
+      (),
+    )
     |> expect
-    |> toEqual([|2, 0, 0, 0, 99|])
+    |> toEqual(0)
   });
 
   test("puzzle data", () => {
-    Day2.PartOne.make(Day2Data.data) |> expect |> toEqual(Some(3790689))
+    Day5.PartOne.make(Day5Data.data, ()) |> expect |> toEqual(9025675)
   });
 });

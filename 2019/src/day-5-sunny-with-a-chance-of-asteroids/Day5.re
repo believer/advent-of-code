@@ -1,97 +1,134 @@
+module Mode = {
+  type t =
+    | Immediate
+    | Position;
+};
+
 module OpCode = {
   type t =
     | Addition
     | Multiplication
     | NotImplemented
+    | Input
+    | Output
     | Halt;
 
-  let make = intcode =>
-    switch (intcode->Int.toString->Js.String2.slice(~from=-2, ~to_=2)) {
-    | "1" => Addition
-    | "2" => Multiplication
-    | "99" => Halt
-    | _ => NotImplemented
-    };
-};
+  let make = intcode => {
+    let code =
+      switch (intcode mod 100) {
+      | 1 => Addition
+      | 2 => Multiplication
+      | 3 => Input
+      | 4 => Output
+      | 99 => Halt
+      | _ => NotImplemented
+      };
 
-module Memory = {
-  let update = (mem, pos, value) => mem->Array.set(pos, value)->ignore;
+    let p1 =
+      switch (intcode / 100 mod 10) {
+      | 0 => Mode.Position
+      | _ => Immediate
+      };
+    let p2 =
+      switch (intcode / 1000) {
+      | 0 => Mode.Position
+      | _ => Immediate
+      };
 
-  let make = input => input->Array.copy;
-};
-
-module Parameters = {
-  let make = (~opcode, ~program, ~position) => {
-    switch (opcode) {
-    | OpCode.Multiplication
-    | Addition =>
-      let v1 = program->Array.get(program->Array.getUnsafe(position + 1));
-      let v2 = program->Array.get(program->Array.getUnsafe(position + 2));
-      let output = program->Array.getUnsafe(position + 3);
-
-      (v1, v2, output);
-    | Halt
-    | NotImplemented => (None, None, 0)
-    };
+    (code, p1, p2);
   };
 };
 
-module Operation = {
-  let make = (~opcode, ~program, ~position) => {
-    switch (opcode) {
-    | OpCode.Addition =>
-      let (v1, v2, output) = Parameters.make(~opcode, ~program, ~position);
-
-      switch (v1, v2) {
-      | (Some(v1), Some(v2)) => program->Array.set(output, v1 + v2)->ignore
-      | _ => ()
-      };
-
-    | Multiplication =>
-      let (v1, v2, output) = Parameters.make(~opcode, ~program, ~position);
-
-      switch (v1, v2) {
-      | (Some(v1), Some(v2)) => program->Array.set(output, v1 * v2)->ignore
-      | _ => ()
-      };
-    | _ => ()
-    };
-
-    program;
-  };
-};
-
-module Movement = {
-  let make =
-    fun
-    | OpCode.Addition => 4
-    | Multiplication => 4
-    | Halt
-    | NotImplemented => 0;
-};
-
-module Computer = {
-  let rec make = (input, ~position=0, ()) => {
-    let program = Memory.make(input);
-    let cmd = program->Array.get(position);
-
-    switch (cmd) {
-    | Some(cmd) =>
-      let opcode = OpCode.make(cmd);
-
-      switch (opcode) {
-      | Halt => program
-      | _ =>
-        let program = Operation.make(~opcode, ~program, ~position);
-        let movement = Movement.make(opcode);
-
-        make(program, ~position=position + movement, ());
-      };
-    | None => program
+module Value = {
+  let make = (program, value, mode) => {
+    switch (mode) {
+    | Mode.Position => program->Array.getUnsafe(value)
+    | Immediate => value
     };
   };
 };
 
 module PartOne = {
-  let make = input => Computer.make(input, ());
+  let stepSize = ref(4);
+  let output = ref(0);
+  let input = 1;
+
+  let rec make = (program, ~position=0, ()) => {
+    switch (position < Array.length(program)) {
+    | false => output^
+    | true =>
+      switch (program->Array.slice(~len=stepSize^, ~offset=position)) {
+      | arr =>
+        let (opcode, mode1, mode2) = OpCode.make(arr->Array.getUnsafe(0));
+
+        switch (opcode) {
+        | Addition =>
+          let v1 =
+            Value.make(
+              program,
+              program->Array.getUnsafe(position + 1),
+              mode1,
+            );
+          let v2 =
+            Value.make(
+              program,
+              program->Array.getUnsafe(position + 2),
+              mode2,
+            );
+
+          program
+          ->Array.set(program->Array.getUnsafe(position + 3), v1 + v2)
+          ->ignore;
+
+          stepSize := 4;
+
+        | Multiplication =>
+          let v1 =
+            Value.make(
+              program,
+              program->Array.getUnsafe(position + 1),
+              mode1,
+            );
+          let v2 =
+            Value.make(
+              program,
+              program->Array.getUnsafe(position + 2),
+              mode2,
+            );
+
+          program
+          ->Array.set(program->Array.getUnsafe(position + 3), v1 * v2)
+          ->ignore;
+
+          stepSize := 4;
+
+        | Input =>
+          program
+          ->Array.set(program->Array.getUnsafe(position + 1), input)
+          ->ignore;
+
+          stepSize := 2;
+
+        | Output =>
+          switch (output^) {
+          | 0 =>
+            output :=
+              Value.make(
+                program,
+                program->Array.getUnsafe(position + 1),
+                mode1,
+              )
+          | _ => ()
+          };
+
+          stepSize := 2;
+
+        | NotImplemented
+        | Halt => ()
+        };
+      };
+
+      make(program, ~position=position + stepSize^, ());
+    };
+  };
 };
