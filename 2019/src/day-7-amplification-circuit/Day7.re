@@ -54,7 +54,7 @@ module Steps = {
 
 module Computer = {
   let stepSize = ref(4);
-  let output = ref(0);
+  let output = ref(`run(0));
   let isFirst = ref(true);
   let break = ref(false);
 
@@ -68,7 +68,7 @@ module Computer = {
       let out = output^;
 
       isFirst := true;
-      output := 0;
+      output := `run(0);
       stepSize := 4;
       break := false;
 
@@ -109,7 +109,7 @@ module Computer = {
 
         | Output =>
           switch (output^) {
-          | 0 => output := v1
+          | `run(0) => output := `halt(v1)
           | _ => ()
           };
 
@@ -157,8 +157,85 @@ module PartOne = {
 
     settings->Array.forEach(setting => {
       input :=
-        Computer.make(program->Array.copy, ~input=(setting, input^), ())
+        (
+          switch (
+            Computer.make(program->Array.copy, ~input=(setting, input^), ())
+          ) {
+          | `halt(value) => value
+          | _ => 0
+          }
+        )
     });
+
+    input^;
+  };
+
+  let make = program => {
+    let permutations = Heaps.make([|0, 1, 2, 3, 4|]);
+
+    let t =
+      permutations
+      ->Array.map(process(program))
+      ->List.fromArray
+      ->List.sort((a, b) => b - a)
+      ->List.get(0);
+
+    switch (t) {
+    | Some(v) => v
+    | None => 0
+    };
+  };
+};
+
+module PartTwo = {
+  let getValue =
+    fun
+    | `halt(v) => v
+    | `run(v) => v;
+
+  let process = (program, settings) => {
+    let input = ref(0);
+    let break = ref(false);
+
+    while (! break^) {
+      let one =
+        Computer.make(
+          program->Array.copy,
+          ~input=(settings->Array.getUnsafe(0), input^),
+          (),
+        );
+      let two =
+        Computer.make(
+          program->Array.copy,
+          ~input=(settings->Array.getUnsafe(1), one->getValue),
+          (),
+        );
+      let three =
+        Computer.make(
+          program->Array.copy,
+          ~input=(settings->Array.getUnsafe(2), two->getValue),
+          (),
+        );
+      let four =
+        Computer.make(
+          program->Array.copy,
+          ~input=(settings->Array.getUnsafe(3), three->getValue),
+          (),
+        );
+      let out =
+        Computer.make(
+          program->Array.copy,
+          ~input=(settings->Array.getUnsafe(4), four->getValue),
+          (),
+        );
+
+      input := out->getValue;
+
+      switch (out) {
+      | `halt(_) => break := true
+      | _ => ()
+      };
+    };
 
     input^;
   };
