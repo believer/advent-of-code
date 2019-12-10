@@ -1,0 +1,12 @@
+{
+  "source": "./package.json",
+  "scripts": {
+    "run": "esy '@bench' x AocBench"
+  },
+  "override": {
+    "install": ["esy-installer AocBench.install"],
+    "devDependencies": {
+      "ocaml": "4.6.1000"
+    }
+  }
+}

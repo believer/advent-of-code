@@ -1,0 +1,20 @@
+(library
+  (name AdventOfCode)
+  (public_name advent-of-code.lib)
+  (flags (-w -40 -w +26))
+  (ocamlopt_flags -linkall -g)
+  (libraries rely.lib tablecloth-native)
+  (modules :standard \ RunTests)
+)
+
+(executable
+  ; the for the library is automatically detected because of the name, but we
+  ; need to explicitly specify the package here
+  (package advent-of-code)
+  (name RunTests)
+  (public_name RunTests.exe)
+  (libraries
+    advent-of-code.lib
+  )
+  (modules RunTests)
+)
