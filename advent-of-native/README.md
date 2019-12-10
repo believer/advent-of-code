@@ -18,4 +18,4 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 I haven't been able to add a real benchmarking framework yet. But I have tests using [Rely](https://reason-native.com/docs/rely/). Which runs the entire test suite in less than 1 ms at the moment.
 
-![Rely](/docs/rely.png)
+![Rely](docs/rely.png)
