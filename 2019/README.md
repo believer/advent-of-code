@@ -21,6 +21,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 6: Universal Orbit Map](https://github.com/believer/advent-of-code/tree/master/2019/src/day-06-universal-orbit-map)                               | 🌟  |     | 118 ms            |
 | [Day 7: Amplification Circuit](https://github.com/believer/advent-of-code/tree/master/2019/src/day-07-amplification-circuit)                           | 🌟  |     | 597 µs            |
 | [Day 8: Space Image Format](https://github.com/believer/advent-of-code/tree/master/2019/src/day-08-space-image-format)                                 | 🌟  | 🌟  | 1.6 ms / 309 µs   |
+| [Day 10: Monitoring Station](https://github.com/believer/advent-of-code/tree/master/2019/src/day-10-monitoring-station)                                | 🌟  |     | 190 ms            |
 
 ## Performance
 

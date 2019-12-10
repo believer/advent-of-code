@@ -15,10 +15,12 @@ module Columns = {
 };
 
 module PartOne = {
-  let rec gcd = ((x, y)) => {
-    switch (x) {
-    | 0 => y
-    | x => gcd((y mod x, y))
+  module GreatestCommonDivisor = {
+    let rec make = ((x, y)) => {
+      switch (x) {
+      | 0 => y
+      | x => make((y mod x, x))
+      };
     };
   };
 
@@ -39,7 +41,10 @@ module PartOne = {
         | "#" =>
           let dr = rr - r;
           let dc = cc - c;
-          let g = gcd((dr, dc))->Js.Math.abs_int->Float.fromInt;
+          let g =
+            GreatestCommonDivisor.make((dr, dc))
+            ->Js.Math.abs_int
+            ->Float.fromInt;
 
           seen := Set.add(seen^, (calculate(dr, g), calculate(dc, g)));
         | _ => ()
