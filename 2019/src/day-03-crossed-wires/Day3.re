@@ -1,3 +1,5 @@
+open Tablecloth;
+
 module GetPoints = {
   let make = wire => {
     let x = ref(0);
@@ -13,10 +15,10 @@ module GetPoints = {
       ((acc, accLength), op) => {
         let (cmd, steps) = Direction.make(op);
 
-        Belt.List.make(steps, 0)
-        ->Belt.List.reduce(
-            (acc, accLength),
-            ((acc, accLength), _) => {
+        List.initialize(steps, _ => 0)
+        ->List.foldr(
+            ~init=(acc, accLength),
+            ~f=(_, (acc, accLength)) => {
               x := x^ + Direction.DX.make(cmd);
               y := y^ + Direction.DY.make(cmd);
               length := length^ + 1;
@@ -41,7 +43,7 @@ module PartOne = {
     let (second, _) = GetPoints.make(wireTwo);
     let intersections = Belt.Set.intersect(first, second)->Belt.Set.toArray;
 
-    intersections->Belt.Array.reduce(0, (acc, (x, y)) =>
+    intersections->Array.foldLeft(~initial=0, ~f=((x, y), acc) =>
       switch (acc, Js.Math.abs_int(x) + Js.Math.abs_int(y)) {
       | (0, value) => value
       | (acc, value) when value < acc => value
@@ -62,9 +64,9 @@ module PartTwo = {
       Belt.Set.intersect(firstLength->mapToSet, secondLength->mapToSet)
       ->Belt.Set.toArray;
 
-    intersections->Belt.Array.reduce(
-      0,
-      (acc, k) => {
+    intersections->Array.foldLeft(
+      ~initial=0,
+      ~f=(k, acc) => {
         let x = firstLength->Belt.Map.get(k);
         let y = secondLength->Belt.Map.get(k);
 

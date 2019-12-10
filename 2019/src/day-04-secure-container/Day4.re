@@ -1,13 +1,15 @@
+open Tablecloth;
+
 module NoDecrease = {
   let make = values =>
     values
-    ->Belt.Array.mapWithIndex((i, curr) =>
-        switch (curr, values->Belt.Array.get(i - 1)) {
+    ->Array.mapi(~f=(i, curr) =>
+        switch (curr, values->Array.get(~index=i - 1)) {
         | (x, Some(y)) => x >= y
         | (_, None) => true
         }
       )
-    ->Belt.Array.every(v => v === true);
+    ->Array.all(~f=v => v === true);
 };
 
 module HasDigits = {
@@ -16,18 +18,18 @@ module HasDigits = {
     | Exactly(int);
 
   let make = (password, ~matcher) => {
-    let map = Belt.Array.make(10, 0);
+    let map = Array.initialize(~length=10, ~f=_ => 0);
 
-    password->Belt.Array.forEach(curr =>
-      switch (map->Belt.Array.get(curr)) {
-      | Some(v) => map->Belt.Array.set(curr, v + 1)->ignore
-      | None => map->Belt.Array.set(curr, 1)->ignore
+    password->Array.forEach(~f=curr =>
+      switch (map->Array.get(~index=curr)) {
+      | Some(v) => map->Array.set(~index=curr, ~value=v + 1)
+      | None => map->Array.set(~index=curr, ~value=1)
       }
     );
 
     switch (matcher) {
     | AtLeast(n) => Js.Math.maxMany_int(map) >= n
-    | Exactly(n) => map->Belt.Array.some(v => v === n)
+    | Exactly(n) => map->Array.any(~f=v => v === n)
     };
   };
 };
@@ -36,18 +38,19 @@ module ElfPassword = {
   let make = number =>
     number
     ->Belt.Int.toString
-    ->Js.String2.split("")
-    ->Belt.Array.map(int_of_string);
+    ->String.split(~on="")
+    ->List.map(~f=int_of_string)
+    ->Array.fromList;
 };
 
 module FindPassword = {
   let make = (~bounds, ~matcher) => {
     let (lower, upper) = bounds;
 
-    Belt.Array.range(lower, upper)
-    ->Belt.Array.reduce(
-        0,
-        (acc, curr) => {
+    Array.range(~from=lower, upper + 1)
+    ->Array.foldLeft(
+        ~initial=0,
+        ~f=(curr, acc) => {
           let pass = ElfPassword.make(curr);
 
           switch (NoDecrease.make(pass), HasDigits.make(pass, ~matcher)) {

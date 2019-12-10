@@ -1,39 +1,42 @@
-open Belt;
+open Tablecloth;
 
 module Rows = {
-  let make = input => {
-    let rows = Array.length(input);
-    Array.range(0, rows);
-  };
+  let make = input => input->Array.length->Array.range;
 };
 
 module Columns = {
-  let make = input => {
-    let cols = input->Array.getUnsafe(0)->Js.String2.length;
-    Array.range(0, cols);
-  };
+  let make = input =>
+    switch (input->Array.get(~index=0)) {
+    | Some(len) => len->String.length->Array.range
+    | None => Array.empty
+    };
+};
+
+module Grid = {
+  let make = input =>
+    Rows.make(input)
+    ->Array.map(~f=r => {Columns.make(input)->Array.map(~f=c => {(r, c)})})
+    ->Array.concatenate;
 };
 
 module PartOne = {
   module GreatestCommonDivisor = {
-    let rec make = ((x, y)) => {
+    let rec make = ((x, y)) =>
       switch (x) {
       | 0 => y
       | x => make((y mod x, x))
       };
-    };
   };
 
   module CanSee = {
-    let calculate = (d, g) => {
+    let calculate = (d, g) =>
       switch (g) {
       | 0.0 => 0
-      | g => Js.Math.floor(d->Float.fromInt /. g)
+      | g => Js.Math.floor(d->Belt.Float.fromInt /. g)
       };
-    };
 
     let make = (input, (r, rr), (c, cc), seen) => {
-      switch (input->Array.get(rr), (rr !== r, cc !== c)) {
+      switch (input->Array.get(~index=rr), (rr !== r, cc !== c)) {
       | (Some(row), (true, true))
       | (Some(row), (false, true))
       | (Some(row), (true, false)) =>
@@ -44,9 +47,13 @@ module PartOne = {
           let g =
             GreatestCommonDivisor.make((dr, dc))
             ->Js.Math.abs_int
-            ->Float.fromInt;
+            ->Belt.Float.fromInt;
 
-          seen := Set.add(seen^, (calculate(dr, g), calculate(dc, g)));
+          seen :=
+            IntPairSet.add(
+              seen^,
+              ~value=(calculate(dr, g), calculate(dc, g)),
+            );
         | _ => ()
         }
       | _ => ()
@@ -58,32 +65,28 @@ module PartOne = {
 
   let make = input => {
     let ans = ref(0);
-    let rows = Rows.make(input);
-    let columns = Columns.make(input);
 
-    rows->Array.forEach(r => {
-      columns->Array.forEach(c => {
-        let seen = ref(Set.make(~id=(module Cmp.IntPair)));
+    Grid.make(input)
+    ->Array.forEach(~f=((r, c)) => {
+        let seen = ref(IntPairSet.make());
 
-        switch (input->Array.get(r)) {
+        switch (input->Array.get(~index=r)) {
         | Some(row) =>
           switch (row->Js.String2.get(c)) {
           | "#" =>
-            rows->Array.forEach(rr => {
-              columns->Array.forEach(cc => {
+            Grid.make(input)
+            ->Array.forEach(~f=((rr, cc)) => {
                 seen := CanSee.make(input, (r, rr), (c, cc), seen)
-              })
-            });
+              });
 
-            if (Set.toArray(seen^)->Array.length > ans^) {
-              ans := Set.toArray(seen^)->Array.length;
+            if (IntPairSet.length(seen^) > ans^) {
+              ans := IntPairSet.length(seen^);
             };
           | _ => ()
           }
         | None => ()
         };
-      })
-    });
+      });
 
     ans^;
   };

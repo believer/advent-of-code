@@ -1,3 +1,5 @@
+open Tablecloth;
+
 module Image = {
   let height = 6;
   let pixels = 25;
@@ -6,30 +8,27 @@ module Image = {
 
   let make = (input, i) => {
     input
-    ->Js.String2.slice(~from=i * size, ~to_=size * (i + 1))
-    ->Js.String2.split("");
+    ->String.slice(~from=i * size, ~to_=size * (i + 1))
+    ->String.split(~on="");
   };
 };
 
 module Layers = {
-  let make = input => {
-    let layers = Js.String2.length(input) / Image.size;
-
-    Belt.Array.range(0, layers - 1);
-  };
+  let make = input =>
+    Array.range(String.length(input) / Image.size)->Array.toList;
 };
 
 module PartOne = {
   let make = input => {
     let out =
       Layers.make(input)
-      ->Belt.Array.map(i => {
+      ->List.map(~f=i => {
           let map = Belt.Map.make(~id=(module Cmp.Int));
 
           Image.make(input, i)
-          ->Belt.Array.reduce(
-              map,
-              (acc, curr) => {
+          ->List.foldl(
+              ~init=map,
+              ~f=(curr, acc) => {
                 let id = curr->int_of_string;
 
                 switch (acc->Belt.Map.get(id)) {
@@ -39,13 +38,15 @@ module PartOne = {
               },
             );
         })
-      ->Belt.List.fromArray
       ->Belt.List.sort((a, b) => {
           let valuesA = Belt.Map.valuesToArray(a);
           let valuesB = Belt.Map.valuesToArray(b);
 
-          switch (valuesA[0], valuesB[0]) {
-          | (a, b) => a - b
+          switch (
+            valuesA->Array.get(~index=0),
+            valuesB->Array.get(~index=0),
+          ) {
+          | (Some(a), Some(b)) => a - b
           | _ => (-1)
           };
         })
@@ -66,16 +67,16 @@ module PartTwo = {
   let make = input => {
     let out =
       Layers.make(input)
-      ->Belt.Array.reduce(
-          [||],
-          (acc, i) => {
+      ->List.foldl(
+          ~init=Array.empty->Array.toList,
+          ~f=(i, acc) => {
             let values = Image.make(input, i);
 
             switch (i) {
             | 0 => values
             | _ =>
-              values->Belt.Array.mapWithIndex((j, curr) => {
-                switch (acc->Belt.Array.get(j), curr) {
+              values->List.mapi(~f=(index, curr) => {
+                switch (acc->List.getAt(~index), curr) {
                 | (Some("2"), "0") => "0"
                 | (Some("2"), "1") => "1"
                 | (Some("2"), "2") => "2"
@@ -87,17 +88,22 @@ module PartTwo = {
             };
           },
         )
-      ->Belt.Array.map(i => {
+      ->List.map(~f=i => {
           switch (i) {
           | "0" => "."
           | x => x
           }
         });
 
-    Belt.Array.range(0, Image.height)
-    ->Belt.Array.map(i => {
-        Belt.Array.slice(out, ~offset=i * Image.pixels, ~len=Image.pixels)
-        |> Js.Array.joinWith("")
+    Array.range(Image.height + 1)
+    ->Array.map(~f=i => {
+        Array.slice(
+          ~from=i * Image.pixels,
+          ~to_=(i + 1) * Image.pixels,
+          out->Array.fromList,
+        )
+        ->Array.toList
+        ->String.join(~sep="")
       });
   };
 };

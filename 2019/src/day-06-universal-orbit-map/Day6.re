@@ -1,11 +1,13 @@
+open Tablecloth;
+
 module PartOne = {
   module WalkTree = {
-    let rec make = (id, map) => {
+    let rec make = (key, map) => {
       let ans = ref(0);
 
-      switch (map->Belt.Map.get(id)) {
+      switch (map->StrDict.get(~key)) {
       | Some(deps) =>
-        deps->Belt.List.forEach(c => {
+        deps->List.iter(~f=c => {
           ans := ans^ + make(c, map);
           ans := ans^ + 1;
         })
@@ -17,28 +19,28 @@ module PartOne = {
   };
 
   let make = input => {
-    let map = Belt.Map.make(~id=(module Cmp.Str));
+    let map = StrDict.empty;
 
     let out =
-      input->Belt.Array.reduce(
-        map,
-        (acc, curr) => {
+      input->Array.foldLeft(
+        ~initial=map,
+        ~f=(curr, acc) => {
           let (a, b) =
-            switch (curr->Js.String2.split(")")) {
-            | [|a, b|] => (a, b)
+            switch (curr->String.split(~on=")")) {
+            | [a, b] => (a, b)
             | _ => ("", "")
             };
 
-          switch (acc->Belt.Map.get(a)) {
-          | Some(v) => acc->Belt.Map.set(a, [b, ...v])
-          | None => acc->Belt.Map.set(a, [b])
+          switch (acc->StrDict.get(~key=a)) {
+          | Some(v) => acc->StrDict.insert(~key=a, ~value=[b, ...v])
+          | None => acc->StrDict.insert(~key=a, ~value=[b])
           };
         },
       );
 
     out
-    ->Belt.Map.toArray
-    ->Belt.Array.reduce(0, (acc, (id, _)) => {
+    ->StrDict.toList
+    ->List.foldl(~init=0, ~f=((id, _), acc) => {
         acc + WalkTree.make(id, out)
       });
   };

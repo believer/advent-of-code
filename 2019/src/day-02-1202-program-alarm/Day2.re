@@ -1,5 +1,8 @@
+open Tablecloth;
+
 module Memory = {
-  let update = (mem, pos, value) => mem->Belt.Array.set(pos, value)->ignore;
+  let update = (mem, pos, value) =>
+    mem->Array.set(~index=pos, ~value)->ignore;
 
   let make = input => input->Belt.Array.copy;
 };
@@ -12,13 +15,13 @@ module Computer = {
     memoryUpdate(1, noun);
     memoryUpdate(2, verb);
 
-    switch (offset <= Belt.Array.length(memory)) {
+    switch (offset <= Array.length(memory)) {
     | false => memory
     | true =>
-      switch (memory->Belt.Array.slice(~len=4, ~offset)) {
+      switch (memory |> Array.slice(~to_=offset + 4, ~from=offset)) {
       | [|cmd, p1, p2, pos|] =>
-        let v1 = memory->Belt.Array.get(p1);
-        let v2 = memory->Belt.Array.get(p2);
+        let v1 = memory->Array.get(~index=p1);
+        let v2 = memory->Array.get(~index=p2);
 
         switch (cmd, v1, v2) {
         | (1, Some(v1), Some(v2)) => memoryUpdate(pos, v1 + v2)
@@ -40,15 +43,15 @@ module PartOne = {
 
 module PartTwo = {
   let make = input => {
-    let nouns = Belt.Array.range(0, 99);
-    let verbs = Belt.Array.range(0, 99);
+    let nouns = Array.range(99);
+    let verbs = Array.range(99);
 
     let res =
       nouns
-      ->Belt.Array.map(noun => {
-          verbs->Belt.Array.map(verb =>
+      ->Array.map(~f=noun => {
+          verbs->Array.map(~f=verb =>
             switch (
-              Computer.make(input, ~noun, ~verb, ())->Belt.Array.get(0)
+              Computer.make(input, ~noun, ~verb, ())->Array.get(~index=0)
             ) {
             | Some(19690720) =>
               Some(noun->Belt.Int.toString ++ verb->Belt.Int.toString)
@@ -57,10 +60,10 @@ module PartTwo = {
             }
           )
         })
-      ->Belt.Array.concatMany
-      ->Belt.Array.keep(Belt.Option.isSome);
+      ->Array.concatenate
+      ->Array.filter(~f=Belt.Option.isSome);
 
-    switch (res->Belt.Array.get(0)) {
+    switch (res->Array.get(~index=0)) {
     | Some(v) => v
     | None => None
     };
