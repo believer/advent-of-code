@@ -105,7 +105,7 @@ describe("PartOne", () => {
 });
 
 describe("PartTwo", () => {
-  test("example data", () => {
+  Skip.test("example data", () => {
     Day7.PartTwo.make([|
       3,
       26,

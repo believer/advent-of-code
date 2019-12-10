@@ -1,5 +1,5 @@
 module Fuel = {
-  let make = mass => Js.Math.floor(Int.toFloat(mass) /. 3.) - 2;
+  let make = mass => Js.Math.floor(Belt.Int.toFloat(mass) /. 3.) - 2;
 };
 
 module AdditionalFuel = {
@@ -13,12 +13,12 @@ module AdditionalFuel = {
 
 module PartOne = {
   let make = masses =>
-    masses->List.reduce(0, (acc, mass) => acc + Fuel.make(mass));
+    masses->Belt.List.reduce(0, (acc, mass) => acc + Fuel.make(mass));
 };
 
 module PartTwo = {
   let make = masses =>
-    masses->List.reduce(
+    masses->Belt.List.reduce(
       0,
       (acc, mass) => {
         let fuel = Fuel.make(mass);

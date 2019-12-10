@@ -3,9 +3,9 @@ module PartOne = {
     let rec make = (id, map) => {
       let ans = ref(0);
 
-      switch (map->Map.get(id)) {
+      switch (map->Belt.Map.get(id)) {
       | Some(deps) =>
-        deps->List.forEach(c => {
+        deps->Belt.List.forEach(c => {
           ans := ans^ + make(c, map);
           ans := ans^ + 1;
         })
@@ -17,10 +17,10 @@ module PartOne = {
   };
 
   let make = input => {
-    let map = Map.make(~id=(module Cmp.Str));
+    let map = Belt.Map.make(~id=(module Cmp.Str));
 
     let out =
-      input->Array.reduce(
+      input->Belt.Array.reduce(
         map,
         (acc, curr) => {
           let (a, b) =
@@ -29,15 +29,17 @@ module PartOne = {
             | _ => ("", "")
             };
 
-          switch (acc->Map.get(a)) {
-          | Some(v) => acc->Map.set(a, [b, ...v])
-          | None => acc->Map.set(a, [b])
+          switch (acc->Belt.Map.get(a)) {
+          | Some(v) => acc->Belt.Map.set(a, [b, ...v])
+          | None => acc->Belt.Map.set(a, [b])
           };
         },
       );
 
     out
-    ->Map.toArray
-    ->Array.reduce(0, (acc, (id, _)) => {acc + WalkTree.make(id, out)});
+    ->Belt.Map.toArray
+    ->Belt.Array.reduce(0, (acc, (id, _)) => {
+        acc + WalkTree.make(id, out)
+      });
   };
 };

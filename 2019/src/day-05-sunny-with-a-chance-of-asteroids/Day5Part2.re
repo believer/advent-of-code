@@ -59,12 +59,13 @@ module Computer = {
   let rec make = (program, ~position=0, ~input, ()) => {
     let pos = ref(position);
 
-    switch (position < Array.length(program)) {
+    switch (position < Belt.Array.length(program)) {
     | false => output^
     | true =>
-      switch (program->Array.slice(~len=stepSize^, ~offset=position)) {
+      switch (program->Belt.Array.slice(~len=stepSize^, ~offset=position)) {
       | arr =>
-        let (opcode, mode1, mode2) = OpCode.make(arr->Array.getUnsafe(0));
+        let (opcode, mode1, mode2) =
+          OpCode.make(arr->Belt.Array.getUnsafe(0));
         let (v1, v2, updateProgram) =
           Action.make(program, ~position, ~modes=(mode1, mode2));
 
@@ -87,7 +88,10 @@ module Computer = {
 
         | Input =>
           program
-          ->Array.set(program->Array.getUnsafe(position + 1), input)
+          ->Belt.Array.set(
+              program->Belt.Array.getUnsafe(position + 1),
+              input,
+            )
           ->ignore;
 
           stepSize := Steps.make(opcode, ());
@@ -134,4 +138,4 @@ module Computer = {
   };
 };
 
-let make = program => Computer.make(program->Array.copy, ~input=5, ());
+let make = program => Computer.make(program->Belt.Array.copy, ~input=5, ());

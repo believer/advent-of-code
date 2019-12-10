@@ -4,28 +4,29 @@ module GetPoints = {
     let y = ref(0);
     let length = ref(0);
 
-    let set = Set.make(~id=(module Cmp.IntPair))->Set.add((x^, y^));
-    let lengthMap = Map.make(~id=(module Cmp.IntPair));
+    let set =
+      Belt.Set.make(~id=(module Cmp.IntPair))->Belt.Set.add((x^, y^));
+    let lengthMap = Belt.Map.make(~id=(module Cmp.IntPair));
 
-    wire->List.reduce(
+    wire->Belt.List.reduce(
       (set, lengthMap),
       ((acc, accLength), op) => {
         let (cmd, steps) = Direction.make(op);
 
-        List.make(steps, 0)
-        ->List.reduce(
+        Belt.List.make(steps, 0)
+        ->Belt.List.reduce(
             (acc, accLength),
             ((acc, accLength), _) => {
               x := x^ + Direction.DX.make(cmd);
               y := y^ + Direction.DY.make(cmd);
               length := length^ + 1;
 
-              switch (accLength->Map.get((x^, y^))) {
+              switch (accLength->Belt.Map.get((x^, y^))) {
               | None => (
-                  acc->Set.add((x^, y^)),
-                  accLength->Map.set((x^, y^), length^),
+                  acc->Belt.Set.add((x^, y^)),
+                  accLength->Belt.Map.set((x^, y^), length^),
                 )
-              | Some(_) => (acc->Set.add((x^, y^)), accLength)
+              | Some(_) => (acc->Belt.Set.add((x^, y^)), accLength)
               };
             },
           );
@@ -38,9 +39,9 @@ module PartOne = {
   let make = ((wireOne, wireTwo)) => {
     let (first, _) = GetPoints.make(wireOne);
     let (second, _) = GetPoints.make(wireTwo);
-    let intersections = Set.intersect(first, second)->Set.toArray;
+    let intersections = Belt.Set.intersect(first, second)->Belt.Set.toArray;
 
-    intersections->Array.reduce(0, (acc, (x, y)) =>
+    intersections->Belt.Array.reduce(0, (acc, (x, y)) =>
       switch (acc, Js.Math.abs_int(x) + Js.Math.abs_int(y)) {
       | (0, value) => value
       | (acc, value) when value < acc => value
@@ -52,20 +53,20 @@ module PartOne = {
 
 module PartTwo = {
   let mapToSet = map =>
-    map->Map.keysToArray->Set.fromArray(~id=(module Cmp.IntPair));
+    map->Belt.Map.keysToArray->Belt.Set.fromArray(~id=(module Cmp.IntPair));
 
   let make = ((wireOne, wireTwo)) => {
     let (_, firstLength) = GetPoints.make(wireOne);
     let (_, secondLength) = GetPoints.make(wireTwo);
     let intersections =
-      Set.intersect(firstLength->mapToSet, secondLength->mapToSet)
-      ->Set.toArray;
+      Belt.Set.intersect(firstLength->mapToSet, secondLength->mapToSet)
+      ->Belt.Set.toArray;
 
-    intersections->Array.reduce(
+    intersections->Belt.Array.reduce(
       0,
       (acc, k) => {
-        let x = firstLength->Map.get(k);
-        let y = secondLength->Map.get(k);
+        let x = firstLength->Belt.Map.get(k);
+        let y = secondLength->Belt.Map.get(k);
 
         switch (acc, x, y) {
         | (0, Some(v1), Some(v2)) => v1 + v2

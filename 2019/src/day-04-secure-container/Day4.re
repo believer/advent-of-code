@@ -1,13 +1,13 @@
 module NoDecrease = {
   let make = values =>
     values
-    ->Array.mapWithIndex((i, curr) =>
-        switch (curr, values->Array.get(i - 1)) {
+    ->Belt.Array.mapWithIndex((i, curr) =>
+        switch (curr, values->Belt.Array.get(i - 1)) {
         | (x, Some(y)) => x >= y
         | (_, None) => true
         }
       )
-    ->Array.every(v => v === true);
+    ->Belt.Array.every(v => v === true);
 };
 
 module HasDigits = {
@@ -16,33 +16,36 @@ module HasDigits = {
     | Exactly(int);
 
   let make = (password, ~matcher) => {
-    let map = Array.make(10, 0);
+    let map = Belt.Array.make(10, 0);
 
-    password->Array.forEach(curr =>
-      switch (map->Array.get(curr)) {
-      | Some(v) => map->Array.set(curr, v + 1)->ignore
-      | None => map->Array.set(curr, 1)->ignore
+    password->Belt.Array.forEach(curr =>
+      switch (map->Belt.Array.get(curr)) {
+      | Some(v) => map->Belt.Array.set(curr, v + 1)->ignore
+      | None => map->Belt.Array.set(curr, 1)->ignore
       }
     );
 
     switch (matcher) {
     | AtLeast(n) => Js.Math.maxMany_int(map) >= n
-    | Exactly(n) => map->Array.some(v => v === n)
+    | Exactly(n) => map->Belt.Array.some(v => v === n)
     };
   };
 };
 
 module ElfPassword = {
   let make = number =>
-    number->Int.toString->Js.String2.split("")->Array.map(int_of_string);
+    number
+    ->Belt.Int.toString
+    ->Js.String2.split("")
+    ->Belt.Array.map(int_of_string);
 };
 
 module FindPassword = {
   let make = (~bounds, ~matcher) => {
     let (lower, upper) = bounds;
 
-    Array.range(lower, upper)
-    ->Array.reduce(
+    Belt.Array.range(lower, upper)
+    ->Belt.Array.reduce(
         0,
         (acc, curr) => {
           let pass = ElfPassword.make(curr);

@@ -39,7 +39,7 @@ module OpCode = {
 module Value = {
   let make = (program, value, mode) => {
     switch (mode) {
-    | Mode.Position => program->Array.getUnsafe(value)
+    | Mode.Position => program->Belt.Array.getUnsafe(value)
     | Immediate => value
     };
   };
@@ -49,16 +49,24 @@ module Action = {
   let make = (program, ~position, ~modes) => {
     let (mode1, mode2) = modes;
     let v1 =
-      Value.make(program, program->Array.getUnsafe(position + 1), mode1);
+      Value.make(
+        program,
+        program->Belt.Array.getUnsafe(position + 1),
+        mode1,
+      );
     let v2 =
-      Value.make(program, program->Array.getUnsafe(position + 2), mode2);
+      Value.make(
+        program,
+        program->Belt.Array.getUnsafe(position + 2),
+        mode2,
+      );
 
     (
       v1,
       v2,
       value =>
         program
-        ->Array.set(program->Array.getUnsafe(position + 3), value)
+        ->Belt.Array.set(program->Belt.Array.getUnsafe(position + 3), value)
         ->ignore,
     );
   };
@@ -81,12 +89,13 @@ module Computer = {
   let output = ref(0);
 
   let rec make = (program, ~position=0, ~input, ()) => {
-    switch (position < Array.length(program)) {
+    switch (position < Belt.Array.length(program)) {
     | false => output^
     | true =>
-      switch (program->Array.slice(~len=stepSize^, ~offset=position)) {
+      switch (program->Belt.Array.slice(~len=stepSize^, ~offset=position)) {
       | arr =>
-        let (opcode, mode1, mode2) = OpCode.make(arr->Array.getUnsafe(0));
+        let (opcode, mode1, mode2) =
+          OpCode.make(arr->Belt.Array.getUnsafe(0));
         let (v1, v2, updateProgram) =
           Action.make(program, ~position, ~modes=(mode1, mode2));
 
@@ -101,7 +110,10 @@ module Computer = {
 
         | Input =>
           program
-          ->Array.set(program->Array.getUnsafe(position + 1), input)
+          ->Belt.Array.set(
+              program->Belt.Array.getUnsafe(position + 1),
+              input,
+            )
           ->ignore;
 
           stepSize := Steps.make(opcode);
@@ -124,4 +136,4 @@ module Computer = {
   };
 };
 
-let make = program => Computer.make(program->Array.copy, ~input=1, ());
+let make = program => Computer.make(program->Belt.Array.copy, ~input=1, ());

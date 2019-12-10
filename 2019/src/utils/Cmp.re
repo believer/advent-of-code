@@ -1,17 +1,17 @@
 module Int =
-  Id.MakeComparable({
+  Belt.Id.MakeComparable({
     type t = int;
     let cmp = (a, b) => Pervasives.compare(a, b);
   });
 
 module Str =
-  Id.MakeComparable({
+  Belt.Id.MakeComparable({
     type t = string;
     let cmp = (a, b) => Pervasives.compare(a, b);
   });
 
 module IntPair =
-  Id.MakeComparable({
+  Belt.Id.MakeComparable({
     type t = (int, int);
 
     let cmp = ((a0, a1), (b0, b1)) =>

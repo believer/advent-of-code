@@ -15,7 +15,7 @@ module Layers = {
   let make = input => {
     let layers = Js.String2.length(input) / Image.size;
 
-    Array.range(0, layers - 1);
+    Belt.Array.range(0, layers - 1);
   };
 };
 
@@ -23,37 +23,37 @@ module PartOne = {
   let make = input => {
     let out =
       Layers.make(input)
-      ->Array.map(i => {
-          let map = Map.make(~id=(module Cmp.Int));
+      ->Belt.Array.map(i => {
+          let map = Belt.Map.make(~id=(module Cmp.Int));
 
           Image.make(input, i)
-          ->Array.reduce(
+          ->Belt.Array.reduce(
               map,
               (acc, curr) => {
                 let id = curr->int_of_string;
 
-                switch (acc->Map.get(id)) {
-                | Some(v) => acc->Map.set(id, v + 1)
-                | None => acc->Map.set(id, 1)
+                switch (acc->Belt.Map.get(id)) {
+                | Some(v) => acc->Belt.Map.set(id, v + 1)
+                | None => acc->Belt.Map.set(id, 1)
                 };
               },
             );
         })
-      ->List.fromArray
-      ->List.sort((a, b) => {
-          let valuesA = Map.valuesToArray(a);
-          let valuesB = Map.valuesToArray(b);
+      ->Belt.List.fromArray
+      ->Belt.List.sort((a, b) => {
+          let valuesA = Belt.Map.valuesToArray(a);
+          let valuesB = Belt.Map.valuesToArray(b);
 
           switch (valuesA[0], valuesB[0]) {
-          | (Some(a), Some(b)) => a - b
+          | (a, b) => a - b
           | _ => (-1)
           };
         })
-      ->List.get(0);
+      ->Belt.List.get(0);
 
     switch (out) {
     | Some(v) =>
-      switch (Map.valuesToArray(v)) {
+      switch (Belt.Map.valuesToArray(v)) {
       | [|_, v1, v2|] => v1 * v2
       | _ => 0
       }
@@ -66,7 +66,7 @@ module PartTwo = {
   let make = input => {
     let out =
       Layers.make(input)
-      ->Array.reduce(
+      ->Belt.Array.reduce(
           [||],
           (acc, i) => {
             let values = Image.make(input, i);
@@ -74,8 +74,8 @@ module PartTwo = {
             switch (i) {
             | 0 => values
             | _ =>
-              values->Array.mapWithIndex((j, curr) => {
-                switch (acc->Array.get(j), curr) {
+              values->Belt.Array.mapWithIndex((j, curr) => {
+                switch (acc->Belt.Array.get(j), curr) {
                 | (Some("2"), "0") => "0"
                 | (Some("2"), "1") => "1"
                 | (Some("2"), "2") => "2"
@@ -87,16 +87,16 @@ module PartTwo = {
             };
           },
         )
-      ->Array.map(i => {
+      ->Belt.Array.map(i => {
           switch (i) {
           | "0" => "."
           | x => x
           }
         });
 
-    Array.range(0, Image.height)
-    ->Array.map(i => {
-        Array.slice(out, ~offset=i * Image.pixels, ~len=Image.pixels)
+    Belt.Array.range(0, Image.height)
+    ->Belt.Array.map(i => {
+        Belt.Array.slice(out, ~offset=i * Image.pixels, ~len=Image.pixels)
         |> Js.Array.joinWith("")
       });
   };

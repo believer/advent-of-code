@@ -74,9 +74,10 @@ module Computer = {
 
       out;
     | (_, true) =>
-      switch (program->Array.slice(~len=stepSize^, ~offset=position)) {
+      switch (program->Belt.Array.slice(~len=stepSize^, ~offset=position)) {
       | arr =>
-        let (opcode, mode1, mode2) = OpCode.make(arr->Array.getUnsafe(0));
+        let (opcode, mode1, mode2) =
+          OpCode.make(arr->Belt.Array.getUnsafe(0));
         let (v1, v2, updateProgram) =
           Action.make(program, ~position, ~modes=(mode1, mode2));
 
@@ -101,7 +102,7 @@ module Computer = {
           let v = isFirst^ ? inputValue : prevValue;
 
           program
-          ->Array.set(program->Array.getUnsafe(position + 1), v)
+          ->Belt.Array.set(program->Belt.Array.getUnsafe(position + 1), v)
           ->ignore;
 
           isFirst := false;
@@ -155,11 +156,15 @@ module PartOne = {
   let process = (program, settings) => {
     let input = ref(0);
 
-    settings->Array.forEach(setting => {
+    settings->Belt.Array.forEach(setting => {
       input :=
         (
           switch (
-            Computer.make(program->Array.copy, ~input=(setting, input^), ())
+            Computer.make(
+              program->Belt.Array.copy,
+              ~input=(setting, input^),
+              (),
+            )
           ) {
           | `halt(value) => value
           | _ => 0
@@ -175,10 +180,10 @@ module PartOne = {
 
     let t =
       permutations
-      ->Array.map(process(program))
-      ->List.fromArray
-      ->List.sort((a, b) => b - a)
-      ->List.get(0);
+      ->Belt.Array.map(process(program))
+      ->Belt.List.fromArray
+      ->Belt.List.sort((a, b) => b - a)
+      ->Belt.List.get(0);
 
     switch (t) {
     | Some(v) => v
@@ -200,32 +205,32 @@ module PartTwo = {
     while (! break^) {
       let one =
         Computer.make(
-          program->Array.copy,
-          ~input=(settings->Array.getUnsafe(0), input^),
+          program->Belt.Array.copy,
+          ~input=(settings->Belt.Array.getUnsafe(0), input^),
           (),
         );
       let two =
         Computer.make(
-          program->Array.copy,
-          ~input=(settings->Array.getUnsafe(1), one->getValue),
+          program->Belt.Array.copy,
+          ~input=(settings->Belt.Array.getUnsafe(1), one->getValue),
           (),
         );
       let three =
         Computer.make(
-          program->Array.copy,
-          ~input=(settings->Array.getUnsafe(2), two->getValue),
+          program->Belt.Array.copy,
+          ~input=(settings->Belt.Array.getUnsafe(2), two->getValue),
           (),
         );
       let four =
         Computer.make(
-          program->Array.copy,
-          ~input=(settings->Array.getUnsafe(3), three->getValue),
+          program->Belt.Array.copy,
+          ~input=(settings->Belt.Array.getUnsafe(3), three->getValue),
           (),
         );
       let out =
         Computer.make(
-          program->Array.copy,
-          ~input=(settings->Array.getUnsafe(4), four->getValue),
+          program->Belt.Array.copy,
+          ~input=(settings->Belt.Array.getUnsafe(4), four->getValue),
           (),
         );
 
@@ -245,10 +250,10 @@ module PartTwo = {
 
     let t =
       permutations
-      ->Array.map(process(program))
-      ->List.fromArray
-      ->List.sort((a, b) => b - a)
-      ->List.get(0);
+      ->Belt.Array.map(process(program))
+      ->Belt.List.fromArray
+      ->Belt.List.sort((a, b) => b - a)
+      ->Belt.List.get(0);
 
     switch (t) {
     | Some(v) => v
