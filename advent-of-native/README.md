@@ -1,76 +1,21 @@
-# hello-reason
+# Advent of Code 2019
 
-[![Build Status](https://dev.azure.com/esy-ocaml/esy-ocaml/_apis/build/status/esy-ocaml.hello-reason?branchName=master)](https://dev.azure.com/esy-ocaml/esy-ocaml/_build/latest?definitionId=1?branchName=master)
+Trying some solutions for ReasonML on the Native side. Solutions are mostly transferable from the BuckleScript implementations due to [Tablecloth](https://github.com/darklang/tablecloth). 
 
-A project which demonstrates a Reason workflow with [Esy][].
+## Advent of Code 2019 Story
 
-[Esy]: https://github.com/esy-ocaml/esy
+Santa has become stranded at the edge of the Solar System while delivering presents to other planets! To accurately calculate his position in space, safely align his warp drive, and return to Earth in time to save Christmas, he needs you to bring him measurements from fifty stars.
 
+Collect stars by solving puzzles. Two puzzles will be made available on each day in the Advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
 
-## Usage
+## Days
 
-You need Esy, you can install the beta using [npm](https://npmjs.com):
+| Day                                                                                                                                                    | #1  |  #2 | Performance       |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ | --- | --- | ----------------- |
+| [Day 1: The Tyranny of the Rocket Equation](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/DayOne.re) | 🌟  | 🌟  | < 1ms / < 1ms      |
 
-    % npm install -g esy@latest
+## Performance
 
-> NOTE: Make sure `esy --version` returns at least `0.5.4` for this project to build.
+I haven't been able to add a real benchmarking framework yet. But I have tests using [Rely](https://reason-native.com/docs/rely/). Which runs the entire test suite in less than 1 ms at the moment.
 
-Then run the `esy` command from this project root to install and build dependencies.
-
-    % esy
-
-Now you can run your editor within the environment (which also includes merlin):
-
-    % esy $EDITOR
-    % esy vim
-
-Alternatively you can try [vim-reasonml](https://github.com/jordwalke/vim-reasonml)
-which loads esy project environments automatically.
-
-After you make some changes to source code, you can re-run project's build
-again with the same simple `esy` command.
-
-    % esy
-
-And test compiled executable (runs `scripts.tests` specified in
-`package.json`):
-
-    % esy test
-
-Documentation for the libraries in the project can be generated with:
-
-    % esy doc
-    % esy open '#{self.target_dir}/default/_doc/_html/index.html'
-
-Shell into environment:
-
-    % esy shell
-
-
-## Create Prebuilt Release:
-
-`esy` allows creating prebuilt binary packages for your current platform, with
-no dependencies.
-
-    % esy npm-release
-    % cd _release
-    % npm publish
-
-## Continuous Integration:
-`hello-reason` includes CI configuration for Azure
-[DevOps](https://dev.azure.com) pipelines out of the box.
-
-- Create your Azure DevOps account.
-- Add a new project, and point that new Azure DevOps project to your github
-  repo that includes the CI (`./azure-pipelines.yml` and the `.ci/` directory)
-  from `hello-reason`.
-- Create a new Pipeline within that project.
-  - When asked how to configure the new pipeline, select the option to use
-    existing configuration inside the repo.
-
-The CI is configured to build caches on the `master` branch, and also any
-branch named one of (`global`, `release-*`, `releases-*`). That means that pull
-requests to any branch with those names will be fast, once you have landed at
-least one commit to that branch. The first time you submit a pull request to
-one of those branches, the builds will be slow but then subsequent pull
-requests will be faster once a pull request is merged to it.
+![Rely](/docs/rely.png)
