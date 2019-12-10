@@ -1,6 +1,6 @@
 # Advent of Code 2019
 
-Trying some solutions for ReasonML on the Native side. Solutions are mostly transferable from the BuckleScript implementations due to [Tablecloth](https://github.com/darklang/tablecloth). 
+Trying some solutions for ReasonML on the Native side. Solutions are mostly transferable from the BuckleScript implementations due to [Tablecloth](https://github.com/darklang/tablecloth).
 
 ## Advent of Code 2019 Story
 
@@ -10,12 +10,13 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                                                                    | #1  |  #2 | Performance       |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------ | --- | --- | ----------------- |
-| [Day 1: The Tyranny of the Rocket Equation](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/DayOne.re) | 🌟  | 🌟  | < 1ms / < 1ms      |
+| Day                                                                                                                                | #1  |  #2 |
+| ---------------------------------------------------------------------------------------------------------------------------------- | --- | --- |
+| [Day 1: The Tyranny of the Rocket Equation](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/DayOne.re) | 🌟  | 🌟  |
+| [Day 2: 1202 Program Alarm](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/DayTwo.re)                 | 🌟  | 🌟  |
 
 ## Performance
 
-I haven't been able to add a real benchmarking framework yet. But I have tests using [Rely](https://reason-native.com/docs/rely/). Which runs the entire test suite in less than 1 ms at the moment.
+I haven't been able to add a real benchmarking framework yet. But I have tests using [Rely](https://reason-native.com/docs/rely/) which runs the entire test suite in **0.045s** at the moment.
 
 ![Rely](docs/rely.png)

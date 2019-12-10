@@ -1,9 +1,10 @@
+let copy = Array.copy;
 open Tablecloth;
 
 module Memory = {
-  let update = (mem, pos, value) => mem->Array.set(~index=pos, ~value);
+  let update = (mem, pos, value) => mem |> Array.set(~index=pos, ~value);
 
-  let make = input => input->Belt.Array.copy;
+  let make = input => input |> copy;
 };
 
 module Computer = {
@@ -19,8 +20,8 @@ module Computer = {
     | true =>
       switch (memory |> Array.slice(~to_=offset + 4, ~from=offset)) {
       | [|cmd, p1, p2, pos|] =>
-        let v1 = memory->Array.get(~index=p1);
-        let v2 = memory->Array.get(~index=p2);
+        let v1 = memory |> Array.get(~index=p1);
+        let v2 = memory |> Array.get(~index=p2);
 
         switch (cmd, v1, v2) {
         | (1, Some(v1), Some(v2)) => memoryUpdate(pos, v1 + v2)
@@ -37,7 +38,7 @@ module Computer = {
 
 module PartOne = {
   let make = input =>
-    Computer.make(input, ~noun=12, ~verb=2, ())->Array.get(~index=0);
+    Computer.make(input, ~noun=12, ~verb=2, ()) |> Array.get(~index=0);
 };
 
 module PartTwo = {
@@ -47,22 +48,24 @@ module PartTwo = {
 
     let res =
       nouns
-      ->Array.map(~f=noun => {
-          verbs->Array.map(~f=verb =>
-            switch (
-              Computer.make(input, ~noun, ~verb, ())->Array.get(~index=0)
-            ) {
-            | Some(19690720) =>
-              Some(noun->Belt.Int.toString ++ verb->Belt.Int.toString)
-            | None
-            | Some(_) => None
-            }
-          )
-        })
-      ->Array.concatenate
-      ->Array.filter(~f=Option.isSome);
+      |> Array.map(~f=noun => {
+           verbs
+           |> Array.map(~f=verb =>
+                switch (
+                  Computer.make(input, ~noun, ~verb, ())
+                  |> Array.get(~index=0)
+                ) {
+                | Some(19690720) =>
+                  Some((noun |> string_of_int) ++ (verb |> string_of_int))
+                | None
+                | Some(_) => None
+                }
+              )
+         })
+      |> Array.concatenate
+      |> Array.filter(~f=Option.isSome);
 
-    switch (res->Array.get(~index=0)) {
+    switch (res |> Array.get(~index=0)) {
     | Some(v) => v
     | None => None
     };
