@@ -9,6 +9,13 @@ Santa has become stranded at the edge of the Solar System while delivering prese
 
 Collect stars by solving puzzles. Two puzzles will be made available on each day in the Advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
 
+## Native Reason
+
+I'm also making some of the solutions in native Reason to compare performance
+and to have even more fun! Those solutions are [found
+here](https://github.com/believer/advent-of-code/tree/master/advent-of-native)
+or via the relevant native link in the table below.
+
 ## Days
 
 | Day                                                                                                                                                    | #1  |  #2 | Performance       | Native                                                                                        |
