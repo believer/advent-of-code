@@ -22,7 +22,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 7: Amplification Circuit](https://github.com/believer/advent-of-code/tree/master/2019/src/day-07-amplification-circuit)                           | 🌟  |     | 597 µs            |                                                                                               |
 | [Day 8: Space Image Format](https://github.com/believer/advent-of-code/tree/master/2019/src/day-08-space-image-format)                                 | 🌟  | 🌟  | 1.6 ms / 309 µs   |                                                                                               |
 | [Day 10: Monitoring Station](https://github.com/believer/advent-of-code/tree/master/2019/src/day-10-monitoring-station)                                | 🌟  |     | 190 ms            |                                                                                               |
-| [Day 12: The N-Body Problem](https://github.com/believer/advent-of-code/tree/master/2019/src/day-12-the-n-body-problem)                                | 🌟  |     | 190 ms            | [Link](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/DayTwo.re) |
+| [Day 12: The N-Body Problem](https://github.com/believer/advent-of-code/tree/master/2019/src/day-12-the-n-body-problem)                                | 🌟  | 🌟  |                   | [Link](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/Day12.re)  |
 
 ## Performance
 
