@@ -236,3 +236,27 @@ module Day2 = {
     0,
   |];
 };
+
+module Moon = {
+  type t =
+    | Io
+    | Europa
+    | Ganymede
+    | Callisto;
+
+  let toString =
+    fun
+    | Io => "Io"
+    | Europa => "Europa"
+    | Ganymede => "Ganymede"
+    | Callisto => "Callisto";
+};
+
+module Day12 = {
+  let data = [
+    (Moon.Io, ((-10), (-10), (-13)), (0, 0, 0)),
+    (Europa, (5, 5, (-9)), (0, 0, 0)),
+    (Ganymede, (3, 8, (-16)), (0, 0, 0)),
+    (Callisto, (1, 3, (-3)), (0, 0, 0)),
+  ];
+};

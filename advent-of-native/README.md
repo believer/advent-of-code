@@ -14,6 +14,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | ---------------------------------------------------------------------------------------------------------------------------------- | --- | --- |
 | [Day 1: The Tyranny of the Rocket Equation](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/DayOne.re) | 🌟  | 🌟  |
 | [Day 2: 1202 Program Alarm](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/DayTwo.re)                 | 🌟  | 🌟  |
+| [Day 12: The N-Body Problem](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/Day12.re)                 | 🌟  |     |
 
 ## Performance
 
