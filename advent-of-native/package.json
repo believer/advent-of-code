@@ -6,21 +6,13 @@
   "esy": {
     "build": "refmterr dune build -p #{self.name}",
     "NOTE": "Optional release Section. Customizes result of `esy release`",
-    "release": {
-      "bin": [
-        "Hello"
-      ]
-    },
-    "buildEnv": {
-      "ODOC_SYNTAX": "re"
-    }
+    "release": { "bin": [ "Hello" ] },
+    "buildEnv": { "ODOC_SYNTAX": "re" }
   },
-  "scripts": {
-    "test": "esy x RunTests.exe",
-    "doc": "esy dune build @doc"
-  },
+  "scripts": { "test": "esy x RunTests.exe", "doc": "esy dune build @doc" },
   "dependencies": {
     "@esy-ocaml/reason": ">= 3.4.0 < 3.6.0",
+    "@opam/core": "v0.11.3",
     "@opam/dune": "*",
     "@opam/tablecloth-native": "0.0.6",
     "@reason-native/console": "*",
@@ -35,4 +27,3 @@
     "@opam/odoc": "*"
   }
 }
-

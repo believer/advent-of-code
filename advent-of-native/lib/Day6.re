@@ -19,26 +19,25 @@ module PartOne = {
   };
 
   let make = input => {
-    let map = StrDict.empty;
-
     let out =
-      input->Array.foldLeft(
-        ~initial=map,
-        ~f=(curr, acc) => {
-          let (key, target) = Orbit.make(curr);
+      input
+      |> List.foldl(
+           ~init=StrDict.empty,
+           ~f=(curr, acc) => {
+             let (key, target) = Orbit.make(curr);
 
-          switch (acc->StrDict.get(~key)) {
-          | Some(v) => acc->StrDict.insert(~key, ~value=[target, ...v])
-          | None => acc->StrDict.insert(~key, ~value=[target])
-          };
-        },
-      );
+             switch (acc |> StrDict.get(~key)) {
+             | Some(v) => acc |> StrDict.insert(~key, ~value=[target, ...v])
+             | None => acc |> StrDict.insert(~key, ~value=[target])
+             };
+           },
+         );
 
     out
-    ->StrDict.toList
-    ->List.foldl(~init=0, ~f=((id, _), acc) => {
-        acc + WalkTree.make(id, out)
-      });
+    |> StrDict.toList
+    |> List.foldl(~init=0, ~f=((id, _), acc) => {
+         acc + WalkTree.make(id, out)
+       });
   };
 };
 
@@ -66,6 +65,9 @@ module PartTwo = {
           make(paths, ~steps, ~index=index + 1, ())
         | _ =>
           // -2 because we want them to orbit the same planet
+          // Somehow I need to add 1 to index because this part "lags behind"
+          // Response in here is the last matching values
+          let index = index + 1;
           let steps =
             List.length(santa) - index + (List.length(you) - index) - 2;
 

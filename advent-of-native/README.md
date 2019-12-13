@@ -14,10 +14,11 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | ---------------------------------------------------------------------------------------------------------------------------------- | --- | --- |
 | [Day 1: The Tyranny of the Rocket Equation](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/DayOne.re) | 🌟  | 🌟  |
 | [Day 2: 1202 Program Alarm](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/DayTwo.re)                 | 🌟  | 🌟  |
+| [Day 6: Universal Orbit Map](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/Day6.re)                  | 🌟  | 🌟  |
 | [Day 12: The N-Body Problem](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/Day12.re)                 | 🌟  | 🌟  |
 
 ## Performance
 
-I haven't been able to add a real benchmarking framework yet. But I have tests using [Rely](https://reason-native.com/docs/rely/) which runs the entire test suite in **1.990s** at the moment.
+I haven't been able to add a real benchmarking framework yet. But I have tests using [Rely](https://reason-native.com/docs/rely/) which runs the entire test suite in **2.187s** at the moment. Most of the time is for Day 12 part 2.
 
 ![Rely](docs/rely.png)
