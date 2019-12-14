@@ -20,6 +20,6 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Performance
 
-I haven't been able to add a real benchmarking framework yet. But I have tests using [Rely](https://reason-native.com/docs/rely/) which runs the entire test suite in **2.187s** at the moment. Most of the time is for Day 12 part 2.
+I haven't been able to add a real benchmarking framework yet. But I have tests using [Rely](https://reason-native.com/docs/rely/) which runs the entire test suite in **1.958** at the moment. Most of the time is for Day 12 part 2.
 
 ![Rely](docs/rely.png)
