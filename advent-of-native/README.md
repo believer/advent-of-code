@@ -16,6 +16,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 2: 1202 Program Alarm](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/DayTwo.re)                 | 🌟  | 🌟  |
 | [Day 6: Universal Orbit Map](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/Day6.re)                  | 🌟  | 🌟  |
 | [Day 12: The N-Body Problem](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/Day12.re)                 | 🌟  | 🌟  |
+| [Day 13: Care Package](https://github.com/believer/advent-of-code/blob/master/advent-of-native/lib/Day13.re)                       | 🌟  |     |
 
 ## Performance
 
