@@ -1,45 +1,8 @@
 use std::time::Instant;
 
-struct IntCode {
-    input: Vec<u32>,
-    pointer: usize,
-}
-
-impl IntCode {
-    fn new(input: &Vec<u32>) -> IntCode {
-        IntCode {
-            input: input.clone(),
-            pointer: 0,
-        }
-    }
-
-    fn patch(&mut self, index: usize, value: u32) {
-        self.input[index] = value
-    }
-
-    fn run(&mut self) -> u32 {
-        self.pointer = 0;
-
-        loop {
-            match self.input[self.pointer] {
-                99 => break self.input[0],
-                opcode => {
-                    let noun = self.input[self.input[self.pointer + 1] as usize];
-                    let verb = self.input[self.input[self.pointer + 2] as usize];
-                    let output_position = self.input[self.pointer + 3] as usize;
-
-                    self.input[output_position] = match opcode {
-                        1 => noun + verb,
-                        2 => noun * verb,
-                        _ => panic!("Unexpected code {}", opcode),
-                    };
-
-                    self.pointer += 4;
-                }
-            }
-        }
-    }
-}
+mod int_code;
+mod part_01;
+mod part_02;
 
 fn main() {
     let input = parse_input(include_str!("../input"));
@@ -49,29 +12,15 @@ fn main() {
 
     // Part 1
     let now = Instant::now();
-    let mut part_01 = IntCode::new(&input);
+    let part_01_result = part_01::main(&input, 12, 2);
 
-    part_01.patch(1, 12);
-    part_01.patch(2, 2);
-
-    println!("Part 1: {:?} ({:.2?})", part_01.run(), now.elapsed());
+    println!("Part 1: {:?} ({:.2?})", part_01_result, now.elapsed());
 
     // Part 2
     let now = Instant::now();
-    let needle = 19690720;
+    let part_02_result = part_02::main(&input);
 
-    for noun in 0..=99 {
-        for verb in 0..=99 {
-            let mut part_02 = IntCode::new(&input);
-            part_02.patch(1, noun);
-            part_02.patch(2, verb);
-
-            if part_02.run() == needle {
-                println!("Part 2: {:?} ({:.2?})", 100 * noun + verb, now.elapsed());
-                break;
-            }
-        }
-    }
+    println!("Part 2: {:?} ({:.2?})", part_02_result, now.elapsed());
 }
 
 fn parse_input(input: &str) -> Vec<u32> {
@@ -86,6 +35,7 @@ fn parse_input(input: &str) -> Vec<u32> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::int_code::IntCode;
 
     const EXAMPLE_DATA_1: &'static str = "1,0,0,0,99";
     const EXAMPLE_DATA_2: &'static str = "1,1,1,4,99,5,6,0,99";
