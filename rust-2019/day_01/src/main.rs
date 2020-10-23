@@ -1,21 +1,23 @@
 use std::io;
+use std::time::Instant;
 
 mod part_01;
 mod part_02;
 
 fn main() -> io::Result<()> {
     let input = parse_input(include_str!("../input"));
+    let now = Instant::now();
 
     println!("Results for Day 1");
     println!("============================");
 
     // Part 1
     let part_01_fuel = part_01::main(&input)?;
-    println!("Part 1: {:?}", part_01_fuel);
+    println!("Part 1: {:?} ({:.2?})", part_01_fuel, now.elapsed());
 
     // Part 1
     let part_02_fuel = part_02::main(&input)?;
-    println!("Part 2: {:?}", part_02_fuel);
+    println!("Part 2: {:?} ({:.2?})", part_02_fuel, now.elapsed());
 
     Ok(())
 }
