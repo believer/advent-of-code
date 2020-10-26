@@ -16,7 +16,7 @@ fn main() -> io::Result<()> {
 
     println!("Part 1: {:?} ({:.2?})", part_01_fuel, now.elapsed());
 
-    // Part 1
+    // Part 2
     let now = Instant::now();
     let part_02_fuel = part_02::main(&input)?;
 
