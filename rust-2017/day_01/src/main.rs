@@ -38,4 +38,13 @@ mod tests {
         assert_eq!(day_01::part_01(&parse_input("1234")).unwrap(), 0);
         assert_eq!(day_01::part_01(&parse_input("91212129")).unwrap(), 9);
     }
+
+    #[test]
+    fn part_02() {
+        assert_eq!(day_01::part_02(&parse_input("1212")).unwrap(), 6);
+        assert_eq!(day_01::part_02(&parse_input("1221")).unwrap(), 0);
+        assert_eq!(day_01::part_02(&parse_input("123425")).unwrap(), 4);
+        assert_eq!(day_01::part_02(&parse_input("123123")).unwrap(), 12);
+        assert_eq!(day_01::part_02(&parse_input("12131415")).unwrap(), 4);
+    }
 }
