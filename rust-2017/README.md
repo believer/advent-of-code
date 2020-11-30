@@ -12,9 +12,10 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                               | #1  |  #2 | Performance        |
-| ------------------------------------------------------------------------------------------------- | --- | --- | ------------------ |
-| [Day 1: Inverse Captcha](https://github.com/believer/advent-of-code/blob/master/rust-2017/day_01) | 🌟  | 🌟  | 3.49 µs / 15.01 µs |
+| Day                                                                                                   | #1  |  #2 | Performance         |
+| ----------------------------------------------------------------------------------------------------- | --- | --- | ------------------- |
+| [Day 1: Inverse Captcha](https://github.com/believer/advent-of-code/blob/master/rust-2017/day_01)     | 🌟  | 🌟  | 3.49 µs / 15.01 µs  |
+| [Day 2: Corruption Checksum](https://github.com/believer/advent-of-code/blob/master/rust-2017/day_02) | 🌟  | 🌟  | 72.00 ns / 46.28 µs |
 
 ## Performance
 

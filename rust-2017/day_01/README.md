@@ -19,7 +19,7 @@ For example:
 
 What is the solution to your captcha?
 
-Your puzzle answer was `1216`.
+**Your puzzle answer was `1216`.**
 
 ## Part Two
 
@@ -39,4 +39,4 @@ For example:
 
 What is the solution to your new captcha?
 
-Your puzzle answer was `1072`.
+**Your puzzle answer was `1072`.**
