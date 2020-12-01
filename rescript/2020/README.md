@@ -17,7 +17,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 | Day                                                                                                 | #1  |  #2 | Performance |
 | --------------------------------------------------------------------------------------------------- | --- | --- | ----------- |
-| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rescript/2020/day-01) | 🌟  | 🌟  | 5 ms / 6 ms |
+| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-01) | 🌟  | 🌟  | 5 ms / 6 ms |
 
 ## Performance
 
