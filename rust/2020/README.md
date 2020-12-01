@@ -1,6 +1,6 @@
 # Advent of Code 2020
 
-This year I'm doing the solutions in Rust.
+This year I'm doing the solutions in Rust. I've started liking it a lot during the year and want to see what type of performance I can get.
 
 ## Advent of Code 2020 Story
 
@@ -14,10 +14,14 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                             | #1  |  #2 | Performance                                                |
-| ----------------------------------------------------------------------------------------------- | --- | --- | ---------------------------------------------------------- |
-| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rust/2020/day_01) | 🌟  | 🌟  | 2.23 µs / 18.12 µs (naive solution was 16.06 µs / 4.38 ms) |
+| Day                                                                                             | #1            |  #2              |
+| ----------------------------------------------------------------------------------------------- | ------------- | ---------------- |
+| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rust/2020/day_01) | **898299** 🌟 | **143933922** 🌟 |
 
 ## Performance
 
-I've tested performance using `std::time::Instant` and taken the fastest time from a couple of runs with release build. This is not the most exact measure and times this fast can probably be wrong, but it's at least some form of measure of how fast Rust is. Computer is a MacBook 2,6 GHz 6-Core i7, 32 GB RAM, Radeon 5300M 4 GB.
+With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro 2,6 GHz 6-Core i7, 32 GB RAM, Radeon 5300M 4 GB.
+
+| Day | #1      | #2      | Note                              |
+| --- | ------- | ------- | --------------------------------- |
+| 1   | 1.21 µs | 16.7 µs | Naive solution 16.06 µs / 4.38 ms |
