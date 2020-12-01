@@ -31,3 +31,36 @@ fn parse_input(input: &str) -> Vec<i32> {
         .map(|l| l.parse::<i32>().unwrap())
         .collect::<Vec<i32>>()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_data_part_01() {
+        let data = "
+1721
+979
+366
+299
+675
+1456
+";
+
+        assert_eq!(day_01::part_01(&parse_input(data)).unwrap(), 514579)
+    }
+
+    #[test]
+    fn test_data_part_02() {
+        let data = "
+1721
+979
+366
+299
+675
+1456
+";
+
+        assert_eq!(day_01::part_02(&parse_input(data)).unwrap(), 241861950)
+    }
+}
