@@ -37,7 +37,7 @@ pub fn input_generator(input: &str) -> HashSet<u32> {
 */
 /// Your puzzle answer was
 /// ```
-/// use advent_of_code_2020::day1::*;
+/// use advent_of_code_2020::day_01::*;
 /// let data = include_str!("../input/2020/day1.txt");
 /// assert_eq!(solve_part_01(&input_generator(data)), 898299);
 /// ```
@@ -65,7 +65,7 @@ pub fn solve_part_01(input: &HashSet<u32>) -> u32 {
 */
 /// Your puzzle answer was
 /// ```
-/// use advent_of_code_2020::day1::*;
+/// use advent_of_code_2020::day_01::*;
 /// let data = include_str!("../input/2020/day1.txt");
 /// assert_eq!(solve_part_02(&input_generator(data)), 143933922);
 /// ```
