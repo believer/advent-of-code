@@ -1,6 +1,4 @@
-pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
-
-pub fn part_01(input: &Vec<i32>) -> Result<i32> {
+pub fn part_01(input: &Vec<i32>) -> i32 {
     let mut s = 0;
 
     for x in input {
@@ -12,10 +10,10 @@ pub fn part_01(input: &Vec<i32>) -> Result<i32> {
         }
     }
 
-    Ok(s)
+    s
 }
 
-pub fn part_02(input: &Vec<i32>) -> Result<i32> {
+pub fn part_02(input: &Vec<i32>) -> i32 {
     let mut s = 0;
 
     for x in input {
@@ -29,5 +27,5 @@ pub fn part_02(input: &Vec<i32>) -> Result<i32> {
         }
     }
 
-    Ok(s)
+    s
 }
