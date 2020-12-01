@@ -1,0 +1,20 @@
+{
+  "name": "2020",
+  "version": "0.1.0",
+  "scripts": {
+    "test": "is-ci test:ci test:watch",
+    "test:ci": "jest",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [
+    "ReScript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "bs-platform": "8.3.3",
+    "cross-env": "7.0.2",
+    "is-ci-cli": "2.1.2"
+  }
+}

@@ -7,6 +7,7 @@ Advent of Code is an online event created by Eric Wastl. Each year, starting on 
 ## Years
 
 - [2020 (Rust)](/rust-2020)
+- [2020 (ReScript)](/2020)
 - [2019 (ReScript)](/2019)
 - [2019 (Rust)](/rust-2019)
 - [2019 (ReasonML Native)](/advent-of-native)

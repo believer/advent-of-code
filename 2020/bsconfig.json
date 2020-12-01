@@ -1,0 +1,26 @@
+{
+  "name": "2020",
+  "reason": {
+    "react-jsx": 3
+  },
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    }
+  ],
+  "package-specs": [
+    {
+      "module": "commonjs",
+      "in-source": true
+    }
+  ],
+  "suffix": ".bs.js",
+  "namespace": true,
+  "bs-dependencies": ["reason-react"],
+  "refmt": 3,
+  "warnings": {
+    "number": "+A-9-40-42-48",
+    "error": "+A-3-40-42-44-102"
+  }
+}
