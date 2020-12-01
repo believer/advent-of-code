@@ -3,6 +3,11 @@ use std::collections::HashSet;
 // Day 1: Report Repair
 // A version of "Two Sum Problem"
 // https://leetcode.com/problems/two-sum/solution/
+//
+// I did the naive solutions first which are O(n^2) and O(n^3).
+// It was fast enough to get a quick answer. I then refactored
+// using a HashSet which gets it down to O(n) and O(n^2) and it
+// could be seen in the performance testing.
 
 #[aoc_generator(day1)]
 pub fn input_generator(input: &str) -> HashSet<u32> {
