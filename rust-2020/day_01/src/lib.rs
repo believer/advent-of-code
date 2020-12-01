@@ -1,31 +1,30 @@
-pub fn part_01(input: &Vec<i32>) -> i32 {
-    let mut s = 0;
+use std::collections::HashSet;
 
+pub fn part_01(input: &HashSet<u64>) -> u64 {
     for x in input {
-        for y in input {
-            match x + y {
-                2020 => s = x * y,
-                _ => continue,
-            }
+        let y = 2020 - x;
+        if input.contains(&y) {
+            return x * y;
         }
     }
 
-    s
+    0
 }
 
-pub fn part_02(input: &Vec<i32>) -> i32 {
-    let mut s = 0;
-
+pub fn part_02(input: &HashSet<u64>) -> u64 {
     for x in input {
         for y in input {
-            for z in input {
-                match x + y + z {
-                    2020 => s = x * y * z,
-                    _ => continue,
-                }
+            if x + y > 2020 {
+                continue;
+            }
+
+            let z = 2020 - x - y;
+
+            if input.contains(&z) {
+                return x * y * z;
             }
         }
     }
 
-    s
+    0
 }

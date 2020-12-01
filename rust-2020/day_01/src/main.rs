@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 use std::time::Instant;
 
 fn main() {
@@ -19,13 +20,13 @@ fn main() {
     println!("Part 2: {:?} ({:.2?})", part_02, now.elapsed());
 }
 
-fn parse_input(input: &str) -> Vec<i32> {
+fn parse_input(input: &str) -> HashSet<u64> {
     input
         .lines()
         .map(|l| l.trim())
         .filter(|l| !l.is_empty())
-        .map(|l| l.parse::<i32>().unwrap())
-        .collect::<Vec<i32>>()
+        .map(|l| l.parse().unwrap())
+        .collect()
 }
 
 #[cfg(test)]
