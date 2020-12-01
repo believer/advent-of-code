@@ -16,7 +16,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 | Day                                                                                             | #1            |  #2              |
 | ----------------------------------------------------------------------------------------------- | ------------- | ---------------- |
-| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rust/2020/day_01) | **898299** 🌟 | **143933922** 🌟 |
+| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rust/2020/day_01) | 🌟 **898299** | 🌟 **143933922**  |
 
 ## Performance
 
