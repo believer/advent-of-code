@@ -10,9 +10,9 @@ Collect stars by helping Santa solve puzzles. Two puzzles will be made available
 
 ## Days
 
-| Day                                                                                                           | #1  |  #2 |
-| ------------------------------------------------------------------------------------------------------------- | --- | --- |
-| [Day 1: Not Quite Lisp](https://github.com/believer/advent-of-code/tree/master/2015/src/day-1-not-quite-lisp) | 🌟  | 🌟  |
+| Day                                                                                                                    | #1  |  #2 |
+| ---------------------------------------------------------------------------------------------------------------------- | --- | --- |
+| [Day 1: Not Quite Lisp](https://github.com/believer/advent-of-code/tree/master/rescript/2015/src/day-1-not-quite-lisp) | 🌟  | 🌟  |
 
 ## Running code and tests
 

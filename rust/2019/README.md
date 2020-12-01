@@ -12,8 +12,8 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 | Day                                                                                                                              | #1  |  #2 | Performance       |
 | -------------------------------------------------------------------------------------------------------------------------------- | --- | --- | ----------------- |
-| [Day 1: The Tyranny of the Rocket Equation](https://github.com/believer/advent-of-code/blob/master/rust-2019/day_01/src/main.rs) | 🌟  | 🌟  | 3.92 µs / 8.06 µs |
-| [Day 2: 1202 Program Alarm](https://github.com/believer/advent-of-code/blob/master/rust-2019/day_02/src/main.rs)                 | 🌟  | 🌟  | 2.13 µs / 3.24 ms |
+| [Day 1: The Tyranny of the Rocket Equation](https://github.com/believer/advent-of-code/blob/master/rust/2019/day_01/src/main.rs) | 🌟  | 🌟  | 3.92 µs / 8.06 µs |
+| [Day 2: 1202 Program Alarm](https://github.com/believer/advent-of-code/blob/master/rust/2019/day_02/src/main.rs)                 | 🌟  | 🌟  | 2.13 µs / 3.24 ms |
 
 ## Performance
 

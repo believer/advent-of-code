@@ -6,11 +6,13 @@ Advent of Code is an online event created by Eric Wastl. Each year, starting on 
 
 ## Years
 
-- [2020 (Rust)](/rust-2020)
-- [2020 (ReScript)](/2020)
-- [2019 (ReScript)](/2019)
-- [2019 (Rust)](/rust-2019)
-- [2019 (ReasonML Native)](/advent-of-native)
-- [2018 (ReScript)](/2018)
-- [2017 (Rust)](/rust-2017)
-- [2015 (ReScript)](/2015)
+| Year | Language | Main solution | Link                   |
+| ---- | -------- | ------------- | ---------------------- |
+| 2020 | Rust     | X             | [Link](/rust/2020)     |
+| 2020 | ReScript |               | [Link](/rescript/2020) |
+| 2019 | ReScript | X             | [Link](/rescript/2019) |
+| 2019 | ReasonML |               | [Link](/reasonml/2019) |
+| 2019 | Rust     |               | [Link](/rust/2019)     |
+| 2018 | ReScript | X             | [Link](/rescript/2018) |
+| 2017 | Rust     | X             | [Link](/rust/2017)     |
+| 2015 | ReScript | X             | [Link](/rescript/2015) |
