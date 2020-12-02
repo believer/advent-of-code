@@ -25,5 +25,5 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 
 | Day |       #1 |       #2 | Previous solutions                    |
 | --- | -------: | -------: | ------------------------------------- |
-| 1   |  1.21 µs | 16.70 µs | 16.06 µs / 4.38 ms (naive)            |
-| 2   | 16.62 µs | 39.57 µs | 446.02 µs / 77.35 µs :: - / 470.28 µs |
+| 1   |  1.21 µs | 16.70 µs | [16.06 µs / 4.38 ms](https://github.com/believer/advent-of-code/blob/7e0bc4927db3a9d4f8fd0fd1a0f34feba4f6f3dc/rust-2020/day_01/src/lib.rs)           |
+| 2   | 16.62 µs | 39.57 µs | [446.02 µs / 77.35 µs](https://github.com/believer/advent-of-code/blob/0cce6ca175c8d89e43772bc386f152bc6167edbd/rust/2020/src/day_02.rs) :: [446.02 µs / 470.28 µs](https://github.com/believer/advent-of-code/blob/aee8289c2ffd0c20968c43e573fc5828d88a82a6/rust/2020/src/day_02.rs) |
