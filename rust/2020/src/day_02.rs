@@ -1,12 +1,34 @@
+use lazy_static::lazy_static;
+use regex::Regex;
 use std::ops::RangeInclusive;
 
 // Day 2 - Password Philosophy
+//
+// Updated multiple times to get faster speeds.
+// Fastest, also a very clean solution, seems to be using a RegEx
+
+lazy_static! {
+    /// Input is in the form "1-3 a: abcdef"
+    static ref RE: Regex = Regex::new(r"(\d+)-(\d+) (\w): (\w*)").unwrap();
+}
 
 /// Official Toboggan Corporate Policy
 pub struct OTCP {
     password: String,
-    policy: String,
+    policy: char,
     bounds: RangeInclusive<usize>,
+}
+
+fn parse(line: &str) -> Option<OTCP> {
+    let results = RE.captures(line)?;
+    let lower_bound = results.get(1)?.as_str().parse().ok()?;
+    let upper_bound = results.get(2)?.as_str().parse().ok()?;
+
+    Some(OTCP {
+        password: results.get(4)?.as_str().to_string(),
+        bounds: (lower_bound..=upper_bound),
+        policy: results.get(3)?.as_str().chars().next()?,
+    })
 }
 
 #[aoc_generator(day2)]
@@ -15,21 +37,7 @@ pub fn input_generator(input: &str) -> Vec<OTCP> {
         .lines()
         .map(|l| l.trim())
         .filter(|l| !l.is_empty())
-        .map(|l| {
-            let password_terms: Vec<_> = l.split_whitespace().collect();
-            let password = password_terms[2].trim().to_string();
-            let bounds: Vec<usize> = password_terms[0]
-                .split("-")
-                .map(|x| x.parse().unwrap())
-                .collect();
-            let policy = password_terms[1][..1].to_string();
-
-            OTCP {
-                password,
-                policy,
-                bounds: RangeInclusive::new(bounds[0], bounds[1]),
-            }
-        })
+        .filter_map(|l| parse(l))
         .collect()
 }
 
@@ -73,15 +81,18 @@ pub fn input_generator(input: &str) -> Vec<OTCP> {
 /// assert_eq!(solve_part_01(&input_generator(input)), 524);
 /// ```
 #[aoc(day2, part1)]
-pub fn solve_part_01(input: &Vec<OTCP>) -> u32 {
-    input.iter().fold(0, |acc, password| {
-        let matched: Vec<_> = password.password.match_indices(&password.policy).collect();
-
-        match password.bounds.contains(&matched.len()) {
-            true => acc + 1,
-            false => acc,
-        }
-    })
+pub fn solve_part_01(input: &Vec<OTCP>) -> usize {
+    input
+        .iter()
+        .filter(|otcp| {
+            otcp.bounds.contains(
+                &(*otcp.password)
+                    .chars()
+                    .filter(|c| c == &otcp.policy)
+                    .count(),
+            )
+        })
+        .count()
 }
 
 /* Part Two
@@ -113,24 +124,20 @@ pub fn solve_part_01(input: &Vec<OTCP>) -> u32 {
 /// assert_eq!(solve_part_02(&input_generator(input)), 485);
 /// ```
 #[aoc(day2, part2)]
-pub fn solve_part_02(input: &Vec<OTCP>) -> u32 {
-    input.iter().fold(0, |acc, password| {
-        let (lower, upper) = password.bounds.clone().into_inner();
-        let occurrences =
-            password
-                .password
-                .match_indices(&password.policy)
-                .fold(0, |acc, (i, _)| match (i + 1 == lower, i + 1 == upper) {
-                    (false, false) => acc,
-                    _ => acc + 1,
-                });
+pub fn solve_part_02(input: &Vec<OTCP>) -> usize {
+    input
+        .iter()
+        .filter_map(|otcp| {
+            let (lower, upper) = otcp.bounds.clone().into_inner();
 
-        if occurrences == 1 {
-            acc + 1
-        } else {
-            acc
-        }
-    })
+            Some((
+                otcp.password.chars().nth(lower - 1)?,
+                otcp.password.chars().nth(upper - 1)?,
+                otcp.policy,
+            ))
+        })
+        .filter(|(lower, upper, policy)| (*lower == *policy) != (*upper == *policy))
+        .count()
 }
 
 #[cfg(test)]
