@@ -2,14 +2,15 @@ use std::ops::RangeInclusive;
 
 // Day 2 - Password Philosophy
 
-pub struct Password {
+/// Official Toboggan Corporate Policy
+pub struct OTCP {
     password: String,
     policy: String,
-    policy_bounds: RangeInclusive<usize>,
+    bounds: RangeInclusive<usize>,
 }
 
 #[aoc_generator(day2)]
-pub fn input_generator(input: &str) -> Vec<Password> {
+pub fn input_generator(input: &str) -> Vec<OTCP> {
     input
         .lines()
         .map(|l| l.trim())
@@ -23,10 +24,10 @@ pub fn input_generator(input: &str) -> Vec<Password> {
                 .collect();
             let policy = password_terms[1][..1].to_string();
 
-            Password {
+            OTCP {
                 password,
                 policy,
-                policy_bounds: RangeInclusive::new(bounds[0], bounds[1]),
+                bounds: RangeInclusive::new(bounds[0], bounds[1]),
             }
         })
         .collect()
@@ -72,11 +73,11 @@ pub fn input_generator(input: &str) -> Vec<Password> {
 /// assert_eq!(solve_part_01(&input_generator(input)), 524);
 /// ```
 #[aoc(day2, part1)]
-pub fn solve_part_01(input: &Vec<Password>) -> u32 {
+pub fn solve_part_01(input: &Vec<OTCP>) -> u32 {
     input.iter().fold(0, |acc, password| {
         let matched: Vec<_> = password.password.match_indices(&password.policy).collect();
 
-        match password.policy_bounds.contains(&matched.len()) {
+        match password.bounds.contains(&matched.len()) {
             true => acc + 1,
             false => acc,
         }
@@ -112,10 +113,10 @@ pub fn solve_part_01(input: &Vec<Password>) -> u32 {
 /// assert_eq!(solve_part_02(&input_generator(input)), 485);
 /// ```
 #[aoc(day2, part2)]
-pub fn solve_part_02(input: &Vec<Password>) -> u32 {
+pub fn solve_part_02(input: &Vec<OTCP>) -> u32 {
     input.iter().fold(0, |acc, password| {
-        let (lower, upper) = password.policy_bounds.clone().into_inner();
-        let inner =
+        let (lower, upper) = password.bounds.clone().into_inner();
+        let occurrences =
             password
                 .password
                 .match_indices(&password.policy)
@@ -124,7 +125,7 @@ pub fn solve_part_02(input: &Vec<Password>) -> u32 {
                     _ => acc + 1,
                 });
 
-        if inner == 1 {
+        if occurrences == 1 {
             acc + 1
         } else {
             acc
