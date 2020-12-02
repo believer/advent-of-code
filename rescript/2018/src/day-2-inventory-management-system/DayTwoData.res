@@ -1,4 +1,4 @@
-let data = [|
+let data = [
   "dghfbsyiznoumojleevappwqtr",
   "dghfbsyiznoumkjljevacpmqer",
   "dghfbbyizioumkjlxevacpwdtr",
@@ -249,4 +249,4 @@ let data = [|
   "dchfbsyiznoumkjlxyvacpwqtc",
   "dgyfbsyiznouckjlxewacpwqtr",
   "dakfbsyeznoumkjlxevacpwqtr",
-|];
+]
