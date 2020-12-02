@@ -23,7 +23,17 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro 2,6 GHz 6-Core i7, 32 GB RAM, Radeon 5300M 4 GB.
 
-| Day |       #1 |       #2 | Previous solutions                    |
-| --- | -------: | -------: | ------------------------------------- |
-| 1   |  1.21 µs | 16.70 µs | [16.06 µs / 4.38 ms](https://github.com/believer/advent-of-code/blob/7e0bc4927db3a9d4f8fd0fd1a0f34feba4f6f3dc/rust-2020/day_01/src/lib.rs)           |
-| 2   | 16.62 µs | 39.57 µs | [446.02 µs / 77.35 µs](https://github.com/believer/advent-of-code/blob/0cce6ca175c8d89e43772bc386f152bc6167edbd/rust/2020/src/day_02.rs) :: [446.02 µs / 470.28 µs](https://github.com/believer/advent-of-code/blob/aee8289c2ffd0c20968c43e573fc5828d88a82a6/rust/2020/src/day_02.rs) |
+| Day |       #1 |       #2 |                                                                                                                                        Improvement\* |
+| --- | -------: | -------: | ---------------------------------------------------------------------------------------------------------------------------------------------------: |
+| 1   |  1.21 µs | 16.70 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−92.46` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−99.61%` |
+| 2   | 16.62 µs | 39.57 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−96.27` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-91.57%` |
+
+\* compared to first solution
+
+### Previous solutions
+
+| Day | Solution # |        #1 |        #2 |                                                                    Improvement | Link                                                                                                                         |
+| --- | ---------: | --------: | --------: | -----------------------------------------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------- |
+| 1   |          1 |  16.06 µs |   4.38 ms |                                                                       Baseline | [Link](https://github.com/believer/advent-of-code/blob/7e0bc4927db3a9d4f8fd0fd1a0f34feba4f6f3dc/rust-2020/day_01/src/lib.rs) |
+| 2   |          1 | 446.02 µs | 470.28 µs |                                                                       Baseline | [Link](https://github.com/believer/advent-of-code/blob/aee8289c2ffd0c20968c43e573fc5828d88a82a6/rust/2020/src/day_02.rs)     |
+| 2   |          2 | 446.02 µs |  77.35 µs | `0` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−83.55` | [Link](https://github.com/believer/advent-of-code/blob/0cce6ca175c8d89e43772bc386f152bc6167edbd/rust/2020/src/day_02.rs)     |
