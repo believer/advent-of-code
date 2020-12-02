@@ -127,16 +127,13 @@ pub fn solve_part_01(input: &Vec<OTCP>) -> usize {
 pub fn solve_part_02(input: &Vec<OTCP>) -> usize {
     input
         .iter()
-        .filter_map(|otcp| {
+        .filter(|otcp| {
             let (lower, upper) = otcp.bounds.clone().into_inner();
+            let lower_value = otcp.password.chars().nth(lower - 1).unwrap();
+            let upper_value = otcp.password.chars().nth(upper - 1).unwrap();
 
-            Some((
-                otcp.password.chars().nth(lower - 1)?,
-                otcp.password.chars().nth(upper - 1)?,
-                otcp.policy,
-            ))
+            (lower_value == otcp.policy) ^ (upper_value == otcp.policy)
         })
-        .filter(|(lower, upper, policy)| (*lower == *policy) != (*upper == *policy))
         .count()
 }
 
