@@ -1,10 +1,11 @@
+use std::ops::RangeInclusive;
+
 // Day 2 - Password Philosophy
 
-#[derive(Debug)]
 pub struct Password {
     password: String,
-    policy_char: String,
-    policy_bounds: (u32, u32),
+    policy: String,
+    policy_bounds: RangeInclusive<usize>,
 }
 
 #[aoc_generator(day2)]
@@ -14,16 +15,18 @@ pub fn input_generator(input: &str) -> Vec<Password> {
         .map(|l| l.trim())
         .filter(|l| !l.is_empty())
         .map(|l| {
-            let t = l.split_whitespace().collect::<Vec<&str>>();
-            let bounds = t[0]
+            let password_terms: Vec<_> = l.split_whitespace().collect();
+            let password = password_terms[2].trim().to_string();
+            let bounds: Vec<usize> = password_terms[0]
                 .split("-")
-                .map(|x| x.parse::<u32>().unwrap())
-                .collect::<Vec<u32>>();
+                .map(|x| x.parse().unwrap())
+                .collect();
+            let policy = password_terms[1][..1].to_string();
 
             Password {
-                password: t[2].trim().to_string(),
-                policy_char: t[1][..1].to_string(),
-                policy_bounds: (bounds[0], bounds[1]),
+                password,
+                policy,
+                policy_bounds: RangeInclusive::new(bounds[0], bounds[1]),
             }
         })
         .collect()
@@ -70,21 +73,14 @@ pub fn input_generator(input: &str) -> Vec<Password> {
 /// ```
 #[aoc(day2, part1)]
 pub fn solve_part_01(input: &Vec<Password>) -> u32 {
-    let mut sum = 0;
+    input.iter().fold(0, |acc, password| {
+        let matched: Vec<_> = password.password.match_indices(&password.policy).collect();
 
-    for password in input {
-        let (lower, upper) = password.policy_bounds;
-        let t = password
-            .password
-            .match_indices(&password.policy_char)
-            .collect::<Vec<_>>();
-
-        if t.len() >= lower as usize && t.len() <= upper as usize {
-            sum += 1;
+        match password.policy_bounds.contains(&matched.len()) {
+            true => acc + 1,
+            false => acc,
         }
-    }
-
-    sum
+    })
 }
 
 /* Part Two
@@ -117,36 +113,30 @@ pub fn solve_part_01(input: &Vec<Password>) -> u32 {
 /// ```
 #[aoc(day2, part2)]
 pub fn solve_part_02(input: &Vec<Password>) -> u32 {
-    let mut sum = 0;
-
-    for password in input {
-        let mut inner = 0;
-        let (lower, upper) = password.policy_bounds;
-        let t = password
-            .password
-            .match_indices(&password.policy_char)
-            .collect::<Vec<_>>();
-
-        for v in t {
-            let (i, _j) = v;
-
-            if i + 1 == lower as usize || i + 1 == upper as usize {
-                inner += 1
-            }
-        }
+    input.iter().fold(0, |acc, password| {
+        let (lower, upper) = password.policy_bounds.clone().into_inner();
+        let inner =
+            password
+                .password
+                .match_indices(&password.policy)
+                .fold(0, |acc, (i, _)| match (i + 1 == lower, i + 1 == upper) {
+                    (false, false) => acc,
+                    _ => acc + 1,
+                });
 
         if inner == 1 {
-            sum += 1
+            acc + 1
+        } else {
+            acc
         }
-    }
-
-    sum
+    })
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
+    /// Test example data on part 1
     #[test]
     fn sample_01() {
         let data = "
@@ -158,6 +148,7 @@ mod tests {
         assert_eq!(solve_part_01(&input_generator(data)), 2)
     }
 
+    /// Test example data on part 2
     #[test]
     fn sample_02() {
         let data = "
