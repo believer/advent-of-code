@@ -12,7 +12,8 @@
     }
   ],
   "package-specs": {
-    "module": "commonjs"
+    "module": "commonjs",
+    "in-source": true
   },
   "suffix": ".bs.js",
   "bs-dependencies": [],
@@ -24,4 +25,3 @@
   "namespace": true,
   "refmt": 3
 }
-

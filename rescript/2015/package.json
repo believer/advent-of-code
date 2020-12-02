@@ -16,12 +16,12 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "@glennsl/bs-jest": "0.4.9",
-    "@semantic-release/changelog": "3.0.6",
-    "@semantic-release/git": "7.0.18",
-    "bs-platform": "7.0.0-dev.2",
-    "cross-env": "6.0.3",
+    "@glennsl/bs-jest": "0.6.0",
+    "@semantic-release/changelog": "5.0.1",
+    "@semantic-release/git": "9.0.0",
+    "bs-platform": "8.3.3",
+    "cross-env": "7.0.3",
     "is-ci-cli": "2.0.0",
-    "jest-watch-typeahead": "0.4.2"
+    "jest-watch-typeahead": "0.6.1"
   }
 }
