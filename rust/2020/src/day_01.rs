@@ -19,7 +19,8 @@ pub fn input_generator(input: &str) -> HashSet<u32> {
         .collect()
 }
 
-/*
+/* Part One
+ *
  * Before you leave, the Elves in accounting just need you to fix your
  * expense report (your puzzle input); apparently, something isn't quite adding up.
  *
@@ -58,7 +59,8 @@ pub fn solve_part_01(input: &HashSet<u32>) -> u32 {
     0
 }
 
-/*
+/* Part Two
+ *
  * The Elves in accounting are thankful for your help; one of them even offers you
  * a starfish coin they had left over from a past vacation. They offer you a second
  * one if you can find three numbers in your expense report that meet the same criteria.
