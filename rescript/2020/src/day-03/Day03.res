@@ -27,4 +27,4 @@ let partTwo = () =>
   ->Js.Array2.map(((rs, cs)) => slopeFinder(Day03Data.data, rs, cs))
   ->Js.Array2.reduce((acc, v) => acc *. v, 1.0)
 
-Result.make(partOne, partTwo)
+/* Result.make(partOne, partTwo) */

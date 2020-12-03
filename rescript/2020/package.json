@@ -16,8 +16,10 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "@glennsl/bs-jest": "^0.6.0",
     "bs-platform": "8.3.3",
     "cross-env": "7.0.2",
-    "is-ci-cli": "2.1.2"
+    "is-ci-cli": "2.1.2",
+    "jest": "26.6.3"
   }
 }

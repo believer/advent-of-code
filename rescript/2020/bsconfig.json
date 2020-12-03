@@ -7,6 +7,11 @@
     {
       "dir": "src",
       "subdirs": true
+    },
+    {
+      "dir": "__tests__",
+      "subdirs": true,
+      "type": "dev"
     }
   ],
   "package-specs": [
@@ -16,6 +21,7 @@
     }
   ],
   "suffix": ".bs.js",
+  "bs-dev-dependencies": ["@glennsl/bs-jest"],
   "namespace": true,
   "refmt": 3,
   "warnings": {

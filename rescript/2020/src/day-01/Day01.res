@@ -44,4 +44,4 @@ let partTwo = () => {
   s.contents
 }
 
-Result.make(partOne, partTwo)
+/* Result.make(partOne, partTwo) */

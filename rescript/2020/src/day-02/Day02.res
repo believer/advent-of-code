@@ -68,4 +68,4 @@ let partTwo = () => {
   }, 0)
 }
 
-Result.make(partOne, partTwo)
+/* Result.make(partOne, partTwo) */
