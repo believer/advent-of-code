@@ -90,12 +90,8 @@ pub fn solve_part_01(input: &Vec<OTCP>) -> usize {
     input
         .iter()
         .filter(|otcp| {
-            otcp.bounds.contains(
-                &(*otcp.password)
-                    .chars()
-                    .filter(|c| c == &otcp.policy)
-                    .count(),
-            )
+            otcp.bounds
+                .contains(&otcp.password.chars().filter(|c| c == &otcp.policy).count())
         })
         .count()
 }
