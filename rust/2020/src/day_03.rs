@@ -10,17 +10,20 @@ pub fn input_generator(input: &str) -> Vec<String> {
         .collect()
 }
 
-fn slope_finder(input: &Vec<String>, rs: usize, cs: usize) -> u32 {
+fn slope_finder(input: &Vec<String>, rs: &usize, cs: &usize) -> u32 {
     let rows = input.len();
     let mut trees = 0;
-    let mut pos = (0, 0);
+    let (mut row, mut col) = (0, 0);
 
-    while pos.1 < rows {
-        if input[pos.1].as_bytes()[pos.0 % input[pos.1].len()] == b'#' {
+    while row < rows {
+        let cols = input[row].len();
+
+        if input[row].as_bytes()[col % cols] == b'#' {
             trees += 1
         }
 
-        pos = (pos.0 + cs, pos.1 + rs)
+        row += rs;
+        col += cs;
     }
 
     trees
@@ -99,7 +102,7 @@ fn slope_finder(input: &Vec<String>, rs: usize, cs: usize) -> u32 {
 /// ```
 #[aoc(day3, part1)]
 pub fn solve_part_01(input: &Vec<String>) -> u32 {
-    slope_finder(input, 1, 3)
+    slope_finder(input, &1, &3)
 }
 
 /* Part Two
@@ -128,11 +131,11 @@ pub fn solve_part_01(input: &Vec<String>) -> u32 {
 /// ```
 #[aoc(day3, part2)]
 pub fn solve_part_02(input: &Vec<String>) -> u32 {
-    slope_finder(input, 1, 1)
-        * slope_finder(input, 1, 3)
-        * slope_finder(input, 1, 5)
-        * slope_finder(input, 1, 7)
-        * slope_finder(input, 2, 1)
+    let slopes: Vec<(usize, usize)> = vec![(1, 1), (1, 3), (1, 5), (1, 7), (2, 1)];
+
+    slopes
+        .iter()
+        .fold(1, |acc, (rows, cols)| acc * slope_finder(input, rows, cols))
 }
 
 #[cfg(test)]
