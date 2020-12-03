@@ -7,21 +7,52 @@ on:
 
 jobs:
   test:
+    name: Test ReScript solutions
     runs-on: ubuntu-latest
     strategy:
       matrix:
         year: ['2015', '2019']
 
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
 
-    - name: Run tests and linting
-      run: |
-        cd rescript/$YEAR
-        npm ci
-        npm run build
-        npm test
-      env:
-        YEAR: ${{ matrix.year }}
-        CI: true
+      - name: Run tests
+        run: |
+          cd rescript/$YEAR
+          npm ci
+          npm run build
+          npm test
+        env:
+          YEAR: ${{ matrix.year }}
+          CI: true
+
+  rust:
+    name: Test Rust 2020 solutions
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Rust (nightly)
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          components: rustfmt, clippy
+          override: true
+
+      - name: Move to Rust folder
+        run: |
+          cd rust/2020
+
+      - name: Run tests
+        run: |
+          cargo test --locked
+
+      - name: Run linting
+        run: |
+          cargo clippy
+
