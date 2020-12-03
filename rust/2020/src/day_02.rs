@@ -74,7 +74,7 @@ pub fn input_generator(input: &str) -> Vec<OTCP> {
  *
  * How many passwords are valid according to their policies?
 */
-///Your puzzle answer was 524.
+///Your puzzle answer was
 /// ```
 /// use advent_of_code_2020::day_02::*;
 /// let input = include_str!("../input/2020/day2.txt");
@@ -117,7 +117,7 @@ pub fn solve_part_01(input: &Vec<OTCP>) -> usize {
  *
  * How many passwords are valid according to the new interpretation of the policies?
 */
-///Your puzzle answer was 485.
+///your puzzle answer was
 /// ```
 /// use advent_of_code_2020::day_02::*;
 /// let input = include_str!("../input/2020/day2.txt");
