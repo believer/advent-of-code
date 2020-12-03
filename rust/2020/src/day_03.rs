@@ -7,7 +7,7 @@ pub fn input_generator(input: &str) -> Vec<String> {
     common::input_vec(input)
 }
 
-fn slope_finder(input: &Vec<String>, rs: &usize, cs: &usize) -> u32 {
+fn slope_finder(input: &[String], rs: &usize, cs: &usize) -> u32 {
     let rows = input.len();
     let mut trees = 0;
     let (mut row, mut col) = (0, 0);
@@ -98,7 +98,7 @@ fn slope_finder(input: &Vec<String>, rs: &usize, cs: &usize) -> u32 {
 /// assert_eq!(solve_part_01(&input_generator(input)), 259);
 /// ```
 #[aoc(day3, part1)]
-pub fn solve_part_01(input: &Vec<String>) -> u32 {
+pub fn solve_part_01(input: &[String]) -> u32 {
     slope_finder(input, &1, &3)
 }
 
@@ -127,7 +127,7 @@ pub fn solve_part_01(input: &Vec<String>) -> u32 {
 /// assert_eq!(solve_part_02(&input_generator(input)), 2224913600);
 /// ```
 #[aoc(day3, part2)]
-pub fn solve_part_02(input: &Vec<String>) -> u32 {
+pub fn solve_part_02(input: &[String]) -> u32 {
     [(1, 1), (1, 3), (1, 5), (1, 7), (2, 1)]
         .iter()
         .fold(1, |acc, (rows, cols)| acc * slope_finder(input, rows, cols))

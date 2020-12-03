@@ -25,7 +25,7 @@ impl std::str::FromStr for OTCP {
     type Err = Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        parse(s).ok_or(anyhow!("Unable to parse"))
+        parse(s).ok_or_else(|| anyhow!("Unable to parse"))
     }
 }
 
