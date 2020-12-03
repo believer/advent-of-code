@@ -1,3 +1,4 @@
+use crate::common;
 use std::collections::HashSet;
 
 // Day 1: Report Repair
@@ -11,12 +12,7 @@ use std::collections::HashSet;
 
 #[aoc_generator(day1)]
 pub fn input_generator(input: &str) -> HashSet<u32> {
-    input
-        .lines()
-        .map(|l| l.trim())
-        .filter(|l| !l.is_empty())
-        .map(|l| l.parse().unwrap())
-        .collect()
+    common::input_hashset(input)
 }
 
 /* Part One

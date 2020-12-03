@@ -1,13 +1,10 @@
+use crate::common;
+
 // Day 3 - Toboggan Trajectory
 
 #[aoc_generator(day3)]
 pub fn input_generator(input: &str) -> Vec<String> {
-    input
-        .lines()
-        .map(|l| l.trim())
-        .filter(|l| !l.is_empty())
-        .map(|l| l.to_string())
-        .collect()
+    common::input_vec(input)
 }
 
 fn slope_finder(input: &Vec<String>, rs: &usize, cs: &usize) -> u32 {
@@ -131,9 +128,7 @@ pub fn solve_part_01(input: &Vec<String>) -> u32 {
 /// ```
 #[aoc(day3, part2)]
 pub fn solve_part_02(input: &Vec<String>) -> u32 {
-    let slopes: Vec<(usize, usize)> = vec![(1, 1), (1, 3), (1, 5), (1, 7), (2, 1)];
-
-    slopes
+    [(1, 1), (1, 3), (1, 5), (1, 7), (2, 1)]
         .iter()
         .fold(1, |acc, (rows, cols)| acc * slope_finder(input, rows, cols))
 }

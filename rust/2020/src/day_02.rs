@@ -1,3 +1,5 @@
+use crate::common;
+use anyhow::{anyhow, Error};
 use lazy_static::lazy_static;
 use regex::Regex;
 use std::ops::RangeInclusive;
@@ -19,6 +21,14 @@ pub struct OTCP {
     bounds: RangeInclusive<usize>,
 }
 
+impl std::str::FromStr for OTCP {
+    type Err = Error;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        parse(s).ok_or(anyhow!("Unable to parse"))
+    }
+}
+
 fn parse(line: &str) -> Option<OTCP> {
     let results = RE.captures(line)?;
     let lower_bound = results.get(1)?.as_str().parse().ok()?;
@@ -33,12 +43,7 @@ fn parse(line: &str) -> Option<OTCP> {
 
 #[aoc_generator(day2)]
 pub fn input_generator(input: &str) -> Vec<OTCP> {
-    input
-        .lines()
-        .map(|l| l.trim())
-        .filter(|l| !l.is_empty())
-        .filter_map(|l| parse(l))
-        .collect()
+    common::input_vec(input)
 }
 
 /* Part One
