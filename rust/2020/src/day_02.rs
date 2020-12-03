@@ -86,7 +86,7 @@ pub fn input_generator(input: &str) -> Vec<OTCP> {
 /// assert_eq!(solve_part_01(&input_generator(input)), 524);
 /// ```
 #[aoc(day2, part1)]
-pub fn solve_part_01(input: &Vec<OTCP>) -> usize {
+pub fn solve_part_01(input: &[OTCP]) -> usize {
     input
         .iter()
         .filter(|otcp| {
@@ -125,7 +125,7 @@ pub fn solve_part_01(input: &Vec<OTCP>) -> usize {
 /// assert_eq!(solve_part_02(&input_generator(input)), 485);
 /// ```
 #[aoc(day2, part2)]
-pub fn solve_part_02(input: &Vec<OTCP>) -> usize {
+pub fn solve_part_02(input: &[OTCP]) -> usize {
     input
         .iter()
         .filter(|otcp| {
