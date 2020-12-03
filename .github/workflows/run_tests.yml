@@ -44,13 +44,13 @@ jobs:
           components: rustfmt, clippy
           override: true
 
+      - name: Run linting
+        run: |
+          cd rust/2020
+          cargo clippy --all-targets --all-features -- -D warnings
+
       - name: Run tests
         run: |
           cd rust/2020
           cargo test --locked
-
-      - name: Run linting
-        run: |
-          cd rust/2020
-          cargo clippy
 
