@@ -1,3 +1,5 @@
+// Had to convert to float in order to be able to multiply the values
+// in part two. Multiplying int would overflow and the result would be incorrect.
 let slopeFinder = (input, rs, cs) => {
   let rows = Js.Array2.length(input)
   let trees = ref(0)
