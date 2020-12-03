@@ -15,12 +15,15 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                           | #1  |  #2 | Performance  |
-| ------------------------------------------------------------------------------------------------------------- | --- | --- | ------------ |
-| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-01)       | 🌟  | 🌟  | 5 ms / 6 ms  |
-| [Day 2: Password Philosophy](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-02) | 🌟  | 🌟  | 13 ms / 7 ms |
+| Day                                                                                                           | #1  |  #2 | Performance   |
+| ------------------------------------------------------------------------------------------------------------- | --- | --- | ------------- |
+| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-01)       | 🌟  | 🌟  | 5 ms / 6 ms   |
+| [Day 2: Password Philosophy](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-02) | 🌟  | 🌟  | 13 ms / 7 ms  |
+| [Day 3: Toboggan Trajectory](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-03) | 🌟  | 🌟  | 8 ms / 0 ms\* |
 
 ## Performance
 
 I've tested performance using `performance.now()` and taken the fastest time
 from a couple of runs. Computer is a MacBook 2,6 GHz 6-Core i7, 32 GB RAM, Radeon 5300M 4 GB.
+
+\* `0 ms` when performance is microseconds (I guess).
