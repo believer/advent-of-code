@@ -3,7 +3,7 @@ use itertools::Itertools;
 use lazy_static::lazy_static;
 use regex::Regex;
 
-// Day 4
+// Day 4 - Passport Processing
 
 lazy_static! {
     static ref BYR_RE_LOOSE: Regex = Regex::new(r"byr:(\d+)\s?").unwrap();

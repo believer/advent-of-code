@@ -20,6 +20,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-01)       | 🌟  | 🌟  | 5.5 ms / 6.5 ms  |
 | [Day 2: Password Philosophy](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-02) | 🌟  | 🌟  | 10 ms / 6.3 ms   |
 | [Day 3: Toboggan Trajectory](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-03) | 🌟  | 🌟  | 6.7 ms / 0.50 ms |
+| [Day 4: Passport Processing](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-04) | 🌟  | 🌟  | 7.6 ms / 3.3 ms  |
 
 ## Performance
 
