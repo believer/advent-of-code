@@ -115,7 +115,7 @@ impl Passport {
             _ => return false,
         }
 
-        return true;
+        true
     }
 
     pub fn new(line: &str, loose: bool) -> Option<Passport> {
@@ -173,7 +173,7 @@ fn parse_lines(input: &str, loose: bool) -> Vec<Passport> {
     let data: Vec<&str> = input.lines().collect();
 
     data.iter()
-        .group_by(|&&l| l == "")
+        .group_by(|&&l| l.is_empty())
         .into_iter()
         .map(|(_, g)| join(g, " "))
         .filter(|l| !l.is_empty())
