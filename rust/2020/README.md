@@ -19,16 +19,18 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_01.rs)       | 🌟  | **898299** | 🌟  |  **143933922** |
 | [Day 2: Password Philosophy](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_02.rs) | 🌟  |    **524** | 🌟  |        **485** |
 | [Day 3: Toboggan Trajectory](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_03.rs) | 🌟  |    **259** | 🌟  | **2224913600** |
+| [Day 4: Passport Processing](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_04.rs) | 🌟  |    **200** | 🌟  |        **116** |
 
 ## Performance
 
 With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro 2,6 GHz 6-Core i7, 32 GB RAM, Radeon 5300M 4 GB.
 
-| Day |       #1 |       #2 |                                                                                                                                         Improvement\* |
-| --- | -------: | -------: | ----------------------------------------------------------------------------------------------------------------------------------------------------: |
-| 1   |  1.21 µs | 16.70 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−92.46%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−99.61%` |
-| 2   | 16.62 µs | 39.57 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−96.27%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-91.57%` |
-| 3   |  2.04 µs |  9.51 µs |                                                                                                                                                       |
+| Day |        #1 |        #2 |                                                                                                                                         Improvement\* |
+| --- | --------: | --------: | ----------------------------------------------------------------------------------------------------------------------------------------------------: |
+| 1   |   1.21 µs |  16.70 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−92.46%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−99.61%` |
+| 2   |  16.62 µs |  39.57 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−96.27%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-91.57%` |
+| 3   |   2.04 µs |   9.51 µs |                                                                                                                                                       |
+| 4   | 528.92 ns | 731.94 ns |                                                                                                                                                       |
 
 \* compared to first solution
 
