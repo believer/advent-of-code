@@ -124,15 +124,17 @@ pub fn solve_part_01(input: &[String]) -> u32 {
 /// ```
 #[aoc(day5, part2)]
 pub fn solve_part_02(input: &[String]) -> u32 {
+    let mut my_seat = 0;
     let seats: Vec<u32> = find_airplane_seats(input).into_iter().sorted().collect();
 
     for (i, seat_id) in seats.iter().enumerate() {
         if seat_id + 1 != seats[i + 1] {
-            return seat_id + 1;
+            my_seat = seat_id + 1;
+            break;
         }
     }
 
-    0
+    my_seat
 }
 
 #[cfg(test)]

@@ -32,3 +32,11 @@ test("Day 4 | Part 1", () => {
 test("Day 4 | Part 2", () => {
   expect(Day04.partTwo()) |> toEqual(116)
 })
+
+test("Day 5 | Part 1", () => {
+  expect(Day05.partOne()) |> toEqual(866)
+})
+
+test("Day 5 | Part 2", () => {
+  expect(Day05.partTwo()) |> toEqual(583)
+})
