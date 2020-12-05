@@ -1,6 +1,6 @@
 # Advent of Code
 
-![Run tests](https://github.com/believer/advent-of-code/workflows/Run%20tests/badge.svg)
+[![Run tests](https://github.com/believer/advent-of-code/workflows/Run%20tests/badge.svg)](https://github.com/believer/advent-of-code/actions?query=workflow%3A%22Run+tests%22)
 
 ## What is Advent of Code?
 
