@@ -21,26 +21,25 @@ fn lower_half(range: &RangeInclusive<u32>) -> RangeInclusive<u32> {
     *range.start()..=*range.end() - half_range(range)
 }
 
+fn find_my_seat(seat: &str) -> u32 {
+    let mut row = 0..=127;
+    let mut col = 0..=7;
+
+    for c in seat.chars() {
+        match c {
+            'F' => row = lower_half(&row),
+            'B' => row = upper_half(&row),
+            'L' => col = lower_half(&col),
+            'R' => col = upper_half(&col),
+            _ => (),
+        }
+    }
+
+    *row.end() * 8 + *col.end()
+}
+
 fn find_airplane_seats(input: &[String]) -> Vec<u32> {
-    input
-        .iter()
-        .map(|v| {
-            let mut row = 0..=127;
-            let mut col = 0..=7;
-
-            for r in v.chars() {
-                match r {
-                    'F' => row = lower_half(&row),
-                    'B' => row = upper_half(&row),
-                    'L' => col = lower_half(&col),
-                    'R' => col = upper_half(&col),
-                    _ => (),
-                }
-            }
-
-            *row.end() * 8 + *col.end()
-        })
-        .collect()
+    input.iter().map(|seat| find_my_seat(seat)).collect()
 }
 
 /* Part One
