@@ -3,6 +3,10 @@ use itertools::Itertools;
 use std::ops::RangeInclusive;
 
 // Day 5 - Binary Boarding
+//
+// Later in the day I learned that the boarding pass ID can be expressed
+// as a binary number. It was a much cleaner solution, BUT it was a whole lot
+// slower in the benchmarks (~1.7 ms vs. ~100 µs). So I'll use my original solution.
 
 #[aoc_generator(day5)]
 pub fn input_generator(input: &str) -> Vec<String> {
