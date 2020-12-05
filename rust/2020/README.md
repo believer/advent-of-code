@@ -20,6 +20,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 2: Password Philosophy](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_02.rs) | 🌟  |    **524** | 🌟  |        **485** |
 | [Day 3: Toboggan Trajectory](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_03.rs) | 🌟  |    **259** | 🌟  | **2224913600** |
 | [Day 4: Passport Processing](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_04.rs) | 🌟  |    **200** | 🌟  |        **116** |
+| [Day 5: Binary Boarding](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_05.rs)     | 🌟  |    **866** | 🌟  |        **583** |
 
 ## Performance
 
@@ -31,6 +32,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 2   |  16.62 µs |  39.57 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−96.27%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-91.57%` |
 | 3   |   2.04 µs |   9.51 µs |                                                                                                                                                       |
 | 4   | 528.92 ns | 731.94 ns |                                                                                                                                                       |
+| 5   | 103.69 µs | 127.14 µs |                                                                                                                                                       |
 
 \* compared to first solution
 
