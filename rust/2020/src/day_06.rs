@@ -73,7 +73,7 @@ pub fn input_generator(input: &str) -> Vec<Vec<String>> {
 /// assert_eq!(solve_part_01(&input_generator(input)), 6778);
 /// ```
 #[aoc(day6, part1)]
-pub fn solve_part_01(input: &Vec<Vec<String>>) -> usize {
+pub fn solve_part_01(input: &[Vec<String>]) -> usize {
     let mut answers = 0;
 
     for group in input {
@@ -85,7 +85,7 @@ pub fn solve_part_01(input: &Vec<Vec<String>>) -> usize {
             }
         }
 
-        answers = answers + yes_answers.len()
+        answers += yes_answers.len()
     }
 
     answers
@@ -132,7 +132,7 @@ pub fn solve_part_01(input: &Vec<Vec<String>>) -> usize {
 /// assert_eq!(solve_part_02(&input_generator(input)), 3406);
 /// ```
 #[aoc(day6, part2)]
-pub fn solve_part_02(input: &Vec<Vec<String>>) -> usize {
+pub fn solve_part_02(input: &[Vec<String>]) -> usize {
     let mut answers = 0;
 
     for group in input {
@@ -143,7 +143,7 @@ pub fn solve_part_02(input: &Vec<Vec<String>>) -> usize {
         for person in group {
             for answer in person.chars() {
                 if let Some(a) = yes_answers.get_mut(&answer) {
-                    *a = *a + 1;
+                    *a += 1;
                 } else {
                     yes_answers.insert(answer, 1);
                 }
@@ -152,11 +152,11 @@ pub fn solve_part_02(input: &Vec<Vec<String>>) -> usize {
 
         for answer in yes_answers.values() {
             if *answer == persons_in_group as u32 {
-                yes_answers_in_group = yes_answers_in_group + 1
+                yes_answers_in_group += 1
             }
         }
 
-        answers = answers + yes_answers_in_group
+        answers += yes_answers_in_group
     }
 
     answers
