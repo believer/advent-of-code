@@ -40,3 +40,11 @@ test("Day 5 | Part 1", () => {
 test("Day 5 | Part 2", () => {
   expect(Day05.partTwo()) |> toEqual(583)
 })
+
+test("Day 6 | Part 1", () => {
+  expect(Day06.partOne()) |> toEqual(6778)
+})
+
+test("Day 6 | Part 2", () => {
+  expect(Day06.partTwo()) |> toEqual(3406)
+})

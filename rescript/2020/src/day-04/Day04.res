@@ -1,12 +1,3 @@
-module Map = {
-  type t
-
-  @new external make: array<array<string>> => t = "Map"
-
-  @send external get: (t, string) => string = "get"
-  @send external has: (t, string) => bool = "has"
-}
-
 module Eye = {
   let isValid = eyeColor => {
     switch eyeColor {
