@@ -2,6 +2,11 @@ use itertools::{join, Itertools};
 use std::collections::{HashMap, HashSet};
 
 // Day 6 - Custom Customs
+//
+// I did a cleaner solution for part 2 by grouping the answers and matching the
+// number of answers to the group size. But it was slower than my original
+// solution (~1.5 ms vs. ~700 µs) so I scrapped it. The alternative solution is kept
+// in the branch chore/day-06-alternate.
 
 #[aoc_generator(day6)]
 pub fn input_generator(input: &str) -> Vec<Vec<String>> {
