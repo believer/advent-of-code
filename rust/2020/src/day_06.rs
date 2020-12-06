@@ -74,9 +74,7 @@ pub fn input_generator(input: &str) -> Vec<Vec<String>> {
 /// ```
 #[aoc(day6, part1)]
 pub fn solve_part_01(input: &[Vec<String>]) -> usize {
-    let mut answers = 0;
-
-    for group in input {
+    input.iter().fold(0, |acc, group| {
         let mut yes_answers: HashSet<char> = HashSet::new();
 
         for person in group {
@@ -85,10 +83,8 @@ pub fn solve_part_01(input: &[Vec<String>]) -> usize {
             }
         }
 
-        answers += yes_answers.len()
-    }
-
-    answers
+        acc + yes_answers.len()
+    })
 }
 
 /* Part Two
@@ -133,12 +129,10 @@ pub fn solve_part_01(input: &[Vec<String>]) -> usize {
 /// ```
 #[aoc(day6, part2)]
 pub fn solve_part_02(input: &[Vec<String>]) -> usize {
-    let mut answers = 0;
-
-    for group in input {
-        let mut yes_answers: HashMap<char, u32> = HashMap::new();
-        let persons_in_group = group.len();
+    input.iter().fold(0, |acc, group| {
         let mut yes_answers_in_group = 0;
+        let mut yes_answers: HashMap<char, u32> = HashMap::new();
+        let persons_in_group = group.len() as u32;
 
         for person in group {
             for answer in person.chars() {
@@ -151,15 +145,13 @@ pub fn solve_part_02(input: &[Vec<String>]) -> usize {
         }
 
         for answer in yes_answers.values() {
-            if *answer == persons_in_group as u32 {
+            if *answer == persons_in_group {
                 yes_answers_in_group += 1
             }
         }
 
-        answers += yes_answers_in_group
-    }
-
-    answers
+        acc + yes_answers_in_group
+    })
 }
 
 #[cfg(test)]
