@@ -8,8 +8,20 @@ use std::collections::{HashMap, HashSet};
 // solution (~1.5 ms vs. ~700 µs) so I scrapped it. The alternative solution is kept
 // in the branch chore/day-06-alternate.
 
-#[aoc_generator(day6)]
-pub fn input_generator(input: &str) -> Vec<Vec<String>> {
+#[aoc_generator(day6, part1)]
+pub fn input_generator_part_01(input: &str) -> Vec<String> {
+    let data: Vec<&str> = input.lines().collect();
+
+    data.iter()
+        .group_by(|&&l| l.is_empty())
+        .into_iter()
+        .map(|(_, g)| join(g, ""))
+        .filter(|l| !l.is_empty())
+        .collect()
+}
+
+#[aoc_generator(day6, part2)]
+pub fn input_generator_part_02(input: &str) -> Vec<Vec<String>> {
     let data: Vec<&str> = input.lines().collect();
 
     data.iter()
@@ -75,13 +87,13 @@ pub fn input_generator(input: &str) -> Vec<Vec<String>> {
 /// ```
 /// use advent_of_code_2020::day_06::*;
 /// let input = include_str!("../input/2020/day6.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)), 6778);
+/// assert_eq!(solve_part_01(&input_generator_part_01(input)), 6778);
 /// ```
 #[aoc(day6, part1)]
-pub fn solve_part_01(input: &[Vec<String>]) -> usize {
+pub fn solve_part_01(input: &[String]) -> usize {
     input
         .iter()
-        .map(|group| join(group, "").chars().collect::<HashSet<_>>().len())
+        .map(|group| group.chars().collect::<HashSet<_>>().len())
         .sum()
 }
 
@@ -123,7 +135,7 @@ pub fn solve_part_01(input: &[Vec<String>]) -> usize {
 /// ```
 /// use advent_of_code_2020::day_06::*;
 /// let input = include_str!("../input/2020/day6.txt");
-/// assert_eq!(solve_part_02(&input_generator(input)), 3406);
+/// assert_eq!(solve_part_02(&input_generator_part_02(input)), 3406);
 /// ```
 #[aoc(day6, part2)]
 pub fn solve_part_02(input: &[Vec<String>]) -> usize {
@@ -177,7 +189,7 @@ a
 b
 ";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 11)
+        assert_eq!(solve_part_01(&input_generator_part_01(data)), 11)
     }
     /// Test example data on part 2
     #[test]
@@ -200,6 +212,6 @@ a
 b
 ";
 
-        assert_eq!(solve_part_02(&input_generator(data)), 6)
+        assert_eq!(solve_part_02(&input_generator_part_02(data)), 6)
     }
 }
