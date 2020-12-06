@@ -1,7 +1,9 @@
 use itertools::{join, Itertools};
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 // Day 6 - Custom Customs
+//
+// This is the alternate, slower version
 
 #[aoc_generator(day6)]
 pub fn input_generator(input: &str) -> Vec<Vec<String>> {
@@ -122,29 +124,21 @@ pub fn solve_part_01(input: &[Vec<String>]) -> usize {
 /// ```
 #[aoc(day6, part2)]
 pub fn solve_part_02(input: &[Vec<String>]) -> usize {
-    input.iter().fold(0, |acc, group| {
-        let mut yes_answers_in_group = 0;
-        let mut yes_answers: HashMap<char, u32> = HashMap::new();
-        let persons_in_group = group.len() as u32;
-
-        for person in group {
-            for answer in person.chars() {
-                if let Some(a) = yes_answers.get_mut(&answer) {
-                    *a += 1;
-                } else {
-                    yes_answers.insert(answer, 1);
-                }
-            }
-        }
-
-        for answer in yes_answers.values() {
-            if *answer == persons_in_group {
-                yes_answers_in_group += 1
-            }
-        }
-
-        acc + yes_answers_in_group
-    })
+    input
+        .iter()
+        .map(|group| {
+            join(group, "")
+                .chars()
+                .sorted()
+                .group_by(|&c| c)
+                .into_iter()
+                .map(|(_, g)| join(g, ""))
+                .fold(0, |acc, answers| match (answers.len(), group.len()) {
+                    (a, g) if a == g => acc + 1,
+                    _ => acc,
+                })
+        })
+        .sum()
 }
 
 #[cfg(test)]
