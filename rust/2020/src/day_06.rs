@@ -74,17 +74,10 @@ pub fn input_generator(input: &str) -> Vec<Vec<String>> {
 /// ```
 #[aoc(day6, part1)]
 pub fn solve_part_01(input: &[Vec<String>]) -> usize {
-    input.iter().fold(0, |acc, group| {
-        let mut yes_answers: HashSet<char> = HashSet::new();
-
-        for person in group {
-            for answer in person.chars() {
-                yes_answers.insert(answer);
-            }
-        }
-
-        acc + yes_answers.len()
-    })
+    input
+        .iter()
+        .map(|group| join(group, "").chars().collect::<HashSet<_>>().len())
+        .sum()
 }
 
 /* Part Two
