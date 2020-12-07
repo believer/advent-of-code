@@ -34,4 +34,4 @@ let partTwo = () => {
   })->Js.Array2.reduce((acc, curr) => acc + curr, 0)
 }
 
-Result.make(partOne, partTwo)
+/* Result.make(partOne, partTwo) */

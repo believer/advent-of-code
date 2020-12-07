@@ -22,7 +22,8 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 3: Toboggan Trajectory](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-03) | 🌟  | 🌟  | 6.7 ms / 0.50 ms |
 | [Day 4: Passport Processing](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-04) | 🌟  | 🌟  | 7.6 ms / 3.3 ms  |
 | [Day 5: Binary Boarding](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-05)     | 🌟  | 🌟  | 7.1 ms / 1.9 ms  |
-| [Day 6: Custom Customs](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-06)      | 🌟  | 🌟  | 9.0 ms / 4.1 ms  |
+| [Day 6: Custom Customs](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-06)      | 🌟  | 🌟  | 9.0 ms / 4.9 ms  |
+| [Day 7: Handy Haversacks](https://github.com/believer/advent-of-code/blob/master/rescript/2020/src/day-07)    | 🌟  | 🌟  | 9.5 ms / 3.8 ms  |
 
 ## Performance
 
