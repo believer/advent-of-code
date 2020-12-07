@@ -98,4 +98,4 @@ let partTwo = () => {
   calculate_cost(bags, "shiny gold")
 }
 
-Result.make(partOne, partTwo)
+/* Result.make(partOne, partTwo) */
