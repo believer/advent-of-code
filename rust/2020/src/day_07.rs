@@ -10,57 +10,63 @@ lazy_static! {
     static ref BAG_RE: Regex = Regex::new(r"(\d+) (.+?) bags?[,.]").unwrap();
 }
 
+type BagsCanContain = HashMap<String, HashSet<String>>;
+type BagsRequired = HashMap<String, HashMap<String, u32>>;
+
 #[aoc_generator(day7, part1)]
-pub fn input_generator_part_01(input: &str) -> HashMap<String, HashSet<String>> {
+pub fn input_generator_part_01(input: &str) -> Option<BagsCanContain> {
     let data: Vec<String> = common::input_vec(input);
 
     let mut bag_in: HashMap<String, HashSet<String>> = HashMap::new();
 
     for bag in data {
-        let color = COLOR_RE.captures(&bag).unwrap();
+        let colors = COLOR_RE.captures(&bag)?;
 
         for b in BAG_RE.captures_iter(&bag) {
-            if let Some(inner) = bag_in.get_mut(&b[2]) {
-                inner.insert(color.get(1).unwrap().as_str().to_string());
+            let color = colors.get(1)?.as_str().to_string();
+            let inner_color = b[2].to_string();
+
+            if let Some(inner) = bag_in.get_mut(&inner_color) {
+                inner.insert(color);
             } else {
                 let mut data = HashSet::new();
-                data.insert(color.get(1).unwrap().as_str().to_string());
-                bag_in.insert(b[2].to_owned(), data);
+                data.insert(color);
+                bag_in.insert(inner_color, data);
             }
         }
     }
 
-    bag_in
+    Some(bag_in)
 }
 
 #[aoc_generator(day7, part2)]
-pub fn input_generator_part_02(input: &str) -> HashMap<String, HashMap<String, u32>> {
+pub fn input_generator_part_02(input: &str) -> Option<BagsRequired> {
     let data: Vec<String> = common::input_vec(input);
 
     let mut bag_contains: HashMap<String, HashMap<String, u32>> = HashMap::new();
 
     for bag in data {
-        let color = COLOR_RE.captures(&bag).unwrap();
+        let colors = COLOR_RE.captures(&bag).unwrap();
 
         for b in BAG_RE.captures_iter(&bag) {
-            if let Some(inner) = bag_contains.get_mut(&color.get(1).unwrap().as_str().to_string()) {
-                inner.insert(b[2].to_owned(), b[1].to_string().parse().unwrap());
+            let color = colors.get(1)?.as_str().to_string();
+            let number_of_bags = b[1].to_string().parse().unwrap();
+            let inner_color = b[2].to_string();
+
+            if let Some(inner) = bag_contains.get_mut(&color) {
+                inner.insert(inner_color, number_of_bags);
             } else {
                 let mut data = HashMap::new();
-                data.insert(b[2].to_owned(), b[1].to_string().parse().unwrap());
-                bag_contains.insert(color.get(1).unwrap().as_str().to_string(), data);
+                data.insert(inner_color, number_of_bags);
+                bag_contains.insert(color, data);
             }
         }
     }
 
-    bag_contains
+    Some(bag_contains)
 }
 
-fn search(
-    input: &HashMap<String, HashSet<String>>,
-    holds_gold_bags: &mut HashSet<String>,
-    color: String,
-) {
+fn search(input: &BagsCanContain, holds_gold_bags: &mut HashSet<String>, color: String) {
     if let Some(c) = input.get(&color) {
         for cc in c.iter() {
             holds_gold_bags.insert(cc.to_string());
@@ -111,23 +117,23 @@ fn search(
 /// ```
 /// use advent_of_code_2020::day_07::*;
 /// let input = include_str!("../input/2020/day7.txt");
-/// assert_eq!(solve_part_01(&input_generator_part_01(input)), 226);
+/// assert_eq!(solve_part_01(&input_generator_part_01(input).unwrap()), 226);
 /// ```
 #[aoc(day7, part1)]
-pub fn solve_part_01(input: &HashMap<String, HashSet<String>>) -> usize {
+pub fn solve_part_01(input: &BagsCanContain) -> usize {
     let mut holds_gold_bags: HashSet<String> = HashSet::new();
     search(input, &mut holds_gold_bags, "shiny gold".to_string());
 
     holds_gold_bags.len()
 }
 
-fn cost(input: &HashMap<String, HashMap<String, u32>>, color: &str) -> u32 {
+fn calculate_cost(input: &BagsRequired, color: &str) -> u32 {
     let mut total = 0;
 
     if let Some(c) = input.get(color) {
         for (c, ct) in c {
             total += ct;
-            total += ct * cost(input, c);
+            total += ct * calculate_cost(input, c);
         }
     }
 
@@ -168,11 +174,11 @@ fn cost(input: &HashMap<String, HashMap<String, u32>>, color: &str) -> u32 {
 /// ```
 /// use advent_of_code_2020::day_07::*;
 /// let input = include_str!("../input/2020/day7.txt");
-/// assert_eq!(solve_part_02(&input_generator_part_02(input)), 9569);
+/// assert_eq!(solve_part_02(&input_generator_part_02(input).unwrap()), 9569);
 /// ```
 #[aoc(day7, part2)]
-pub fn solve_part_02(input: &HashMap<String, HashMap<String, u32>>) -> u32 {
-    cost(input, "shiny gold")
+pub fn solve_part_02(input: &BagsRequired) -> u32 {
+    calculate_cost(input, "shiny gold")
 }
 
 #[cfg(test)]
@@ -194,7 +200,7 @@ faded blue bags contain no other bags.
 dotted black bags contain no other bags.
 ";
 
-        assert_eq!(solve_part_01(&input_generator_part_01(data)), 4)
+        assert_eq!(solve_part_01(&input_generator_part_01(data).unwrap()), 4)
     }
 
     /// Test example data on part 2
@@ -212,6 +218,6 @@ faded blue bags contain no other bags.
 dotted black bags contain no other bags.
 ";
 
-        assert_eq!(solve_part_02(&input_generator_part_02(data)), 32)
+        assert_eq!(solve_part_02(&input_generator_part_02(data).unwrap()), 32)
     }
 }
