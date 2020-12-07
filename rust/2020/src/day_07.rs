@@ -13,24 +13,41 @@ lazy_static! {
 type BagsCanContain = HashMap<String, HashSet<String>>;
 type BagsRequired = HashMap<String, HashMap<String, u32>>;
 
+struct Bag {
+    color: String,
+    bags: Vec<(String, u32)>,
+}
+
+impl std::str::FromStr for Bag {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let color = COLOR_RE
+            .captures_iter(s)
+            .map(|c| c[1].to_string())
+            .collect();
+
+        let bags = BAG_RE
+            .captures_iter(s)
+            .map(|b| (b[2].to_string(), b[1].to_string().parse().unwrap()))
+            .collect();
+
+        Ok(Bag { color, bags })
+    }
+}
+
 #[aoc_generator(day7, part1)]
 pub fn input_generator_part_01(input: &str) -> Option<BagsCanContain> {
-    let data: Vec<String> = common::input_vec(input);
-
+    let bags: Vec<Bag> = common::input_vec(input);
     let mut bag_in: BagsCanContain = HashMap::new();
 
-    for bag in data {
-        let colors = COLOR_RE.captures(&bag)?;
-
-        for b in BAG_RE.captures_iter(&bag) {
-            let color = colors.get(1)?.as_str().to_string();
-            let inner_color = b[2].to_string();
-
+    for bag in bags {
+        for (inner_color, _) in bag.bags {
             if let Some(inner) = bag_in.get_mut(&inner_color) {
-                inner.insert(color);
+                inner.insert(bag.color.to_string());
             } else {
                 let mut data = HashSet::new();
-                data.insert(color);
+                data.insert(bag.color.to_string());
                 bag_in.insert(inner_color, data);
             }
         }
@@ -41,24 +58,17 @@ pub fn input_generator_part_01(input: &str) -> Option<BagsCanContain> {
 
 #[aoc_generator(day7, part2)]
 pub fn input_generator_part_02(input: &str) -> Option<BagsRequired> {
-    let data: Vec<String> = common::input_vec(input);
-
+    let bags: Vec<Bag> = common::input_vec(input);
     let mut bag_contains: BagsRequired = HashMap::new();
 
-    for bag in data {
-        let colors = COLOR_RE.captures(&bag).unwrap();
-
-        for b in BAG_RE.captures_iter(&bag) {
-            let color = colors.get(1)?.as_str().to_string();
-            let number_of_bags = b[1].to_string().parse().unwrap();
-            let inner_color = b[2].to_string();
-
-            if let Some(inner) = bag_contains.get_mut(&color) {
+    for bag in bags {
+        for (inner_color, number_of_bags) in bag.bags {
+            if let Some(inner) = bag_contains.get_mut(&bag.color.to_string()) {
                 inner.insert(inner_color, number_of_bags);
             } else {
                 let mut data = HashMap::new();
                 data.insert(inner_color, number_of_bags);
-                bag_contains.insert(color, data);
+                bag_contains.insert(bag.color.to_string(), data);
             }
         }
     }
