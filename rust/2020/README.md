@@ -22,7 +22,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 4: Passport Processing](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_04.rs) | 🌟  |    **200** | 🌟  |        **116** |
 | [Day 5: Binary Boarding](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_05.rs)     | 🌟  |    **866** | 🌟  |        **583** |
 | [Day 6: Custom Customs](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_06.rs)      | 🌟  |   **6778** | 🌟  |       **3406** |
-| [Day 7: Custom Customs](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_07.rs)      | 🌟  |    **226** | 🌟  |       **9569** |
+| [Day 7: Handy Haversacks](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_07.rs)    | 🌟  |    **226** | 🌟  |       **9569** |
 
 ## Performance
 
