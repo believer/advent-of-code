@@ -17,7 +17,7 @@ type BagsRequired = HashMap<String, HashMap<String, u32>>;
 pub fn input_generator_part_01(input: &str) -> Option<BagsCanContain> {
     let data: Vec<String> = common::input_vec(input);
 
-    let mut bag_in: HashMap<String, HashSet<String>> = HashMap::new();
+    let mut bag_in: BagsCanContain = HashMap::new();
 
     for bag in data {
         let colors = COLOR_RE.captures(&bag)?;
@@ -43,7 +43,7 @@ pub fn input_generator_part_01(input: &str) -> Option<BagsCanContain> {
 pub fn input_generator_part_02(input: &str) -> Option<BagsRequired> {
     let data: Vec<String> = common::input_vec(input);
 
-    let mut bag_contains: HashMap<String, HashMap<String, u32>> = HashMap::new();
+    let mut bag_contains: BagsRequired = HashMap::new();
 
     for bag in data {
         let colors = COLOR_RE.captures(&bag).unwrap();
