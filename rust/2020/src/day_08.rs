@@ -197,7 +197,6 @@ pub fn input_generator(input: &str) -> Vec<Instruction> {
  *
  * Run your copy of the boot code. Immediately before any instruction is executed a second time, what value is in the accumulator?
 */
-
 ///your puzzle answer was.
 /// ```
 /// use advent_of_code_2020::day_08::*;
