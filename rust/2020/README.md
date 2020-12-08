@@ -23,6 +23,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 5: Binary Boarding](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_05.rs)     | 🌟  |    **866** | 🌟  |        **583** |
 | [Day 6: Custom Customs](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_06.rs)      | 🌟  |   **6778** | 🌟  |       **3406** |
 | [Day 7: Handy Haversacks](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_07.rs)    | 🌟  |    **226** | 🌟  |       **9569** |
+| [Day 8: Handheld Halting](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_08.rs)    | 🌟  |   **1489** | 🌟  |       **1539** |
 
 ## Performance
 
@@ -37,14 +38,15 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 5   | 103.69 µs | 127.14 µs |                                                                                                                                                       |
 | 6   | 477.60 µs | 696.92 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−23.83%` / `0%`                                                                      |
 | 7   | 179.43 µs |   1.70 µs |                                                                                                                                                       |
+| 8   |  23.66 µs | 49.398 ms |                                                                                                                                                       |
 
 \* compared to first solution
 
 ### Previous solutions
 
-| Day |         #1 |        #2 |                                                                      Improvement | Link                                                                                                                         |
-| --- |  --------: | --------: | -------------------------------------------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------- |
-| 1   |     16.06 µs |   4.38 ms |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/7e0bc4927db3a9d4f8fd0fd1a0f34feba4f6f3dc/rust-2020/day_01/src/lib.rs) |
-| 2   |         446.02 µs | 470.28 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/aee8289c2ffd0c20968c43e573fc5828d88a82a6/rust/2020/src/day_02.rs)     |
-| 2   |          446.02 µs |  77.35 µs | `0%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−83.55%` | [Link](https://github.com/believer/advent-of-code/blob/0cce6ca175c8d89e43772bc386f152bc6167edbd/rust/2020/src/day_02.rs)     |
-| 6   |         627.01 µs | 696.92 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/65cc61f1745db7579b47577769ba00f04f7e5f99/rust/2020/src/day_06.rs)     |
+| Day |        #1 |        #2 |                                                                      Improvement | Link                                                                                                                         |
+| --- | --------: | --------: | -------------------------------------------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------- |
+| 1   |  16.06 µs |   4.38 ms |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/7e0bc4927db3a9d4f8fd0fd1a0f34feba4f6f3dc/rust-2020/day_01/src/lib.rs) |
+| 2   | 446.02 µs | 470.28 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/aee8289c2ffd0c20968c43e573fc5828d88a82a6/rust/2020/src/day_02.rs)     |
+| 2   | 446.02 µs |  77.35 µs | `0%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−83.55%` | [Link](https://github.com/believer/advent-of-code/blob/0cce6ca175c8d89e43772bc386f152bc6167edbd/rust/2020/src/day_02.rs)     |
+| 6   | 627.01 µs | 696.92 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/65cc61f1745db7579b47577769ba00f04f7e5f99/rust/2020/src/day_06.rs)     |
