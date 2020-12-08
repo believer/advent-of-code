@@ -81,10 +81,9 @@ impl Program {
 
                     self.add_seen_and_step(&instruction);
 
-                    match instruction.operation {
-                        Operation::Jump => continue,
-                        _ => (),
-                    };
+                    if let Operation::Jump = instruction.operation {
+                        continue;
+                    }
 
                     self.step_one();
                 }
@@ -109,10 +108,9 @@ impl Program {
 
                     self.add_seen_and_step(&instruction);
 
-                    match instruction.operation {
-                        Operation::Jump => continue,
-                        _ => (),
-                    };
+                    if let Operation::Jump = instruction.operation {
+                        continue;
+                    }
 
                     self.step_one();
                 }
