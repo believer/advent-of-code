@@ -64,7 +64,7 @@ fn program(instructions: &[Instruction]) -> Option<i32> {
                     break Some(accumulator);
                 }
 
-                if let Some(_) = seen.get(&instruction.id) {
+                if seen.get(&instruction.id).is_some() {
                     break None;
                 }
 
@@ -163,7 +163,7 @@ pub fn solve_part_01(input: &[Instruction]) -> i32 {
     let result = loop {
         match input.get(n) {
             Some(instruction) => {
-                if let Some(_) = seen.get(&instruction.id) {
+                if seen.get(&instruction.id).is_some() {
                     break Some(accumulator);
                 }
 
