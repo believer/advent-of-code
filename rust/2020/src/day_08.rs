@@ -47,45 +47,94 @@ impl std::str::FromStr for Instruction {
     }
 }
 
+struct Program {
+    accumulator: i32,
+    seen: HashSet<String>,
+    step: usize,
+}
+
+impl Program {
+    fn next_step(&mut self, instruction: &Instruction) {
+        match instruction.operation {
+            Operation::NoOp => (),
+            Operation::Accumulate => self.accumulator += instruction.argument,
+            Operation::Jump => self.step = (self.step as i32 + instruction.argument) as usize,
+        };
+    }
+
+    fn step_one(&mut self) {
+        self.step += 1
+    }
+
+    fn add_seen_and_step(&mut self, instruction: &Instruction) {
+        self.seen.insert(instruction.id.to_string());
+        self.next_step(instruction);
+    }
+
+    fn calculate_to_error(&mut self, instructions: &[Instruction]) -> i32 {
+        let result = loop {
+            match instructions.get(self.step) {
+                Some(instruction) => {
+                    if self.seen.get(&instruction.id).is_some() {
+                        break Some(self.accumulator);
+                    }
+
+                    self.add_seen_and_step(&instruction);
+
+                    match instruction.operation {
+                        Operation::Jump => continue,
+                        _ => (),
+                    };
+
+                    self.step_one();
+                }
+                None => break None,
+            }
+        };
+
+        result.unwrap()
+    }
+
+    fn calculate_with_fix(&mut self, instructions: &[Instruction]) -> Option<i32> {
+        let result = loop {
+            match instructions.get(self.step) {
+                Some(instruction) => {
+                    if self.step == instructions.len() {
+                        break Some(self.accumulator);
+                    }
+
+                    if self.seen.get(&instruction.id).is_some() {
+                        break None;
+                    }
+
+                    self.add_seen_and_step(&instruction);
+
+                    match instruction.operation {
+                        Operation::Jump => continue,
+                        _ => (),
+                    };
+
+                    self.step_one();
+                }
+                None => break Some(self.accumulator),
+            }
+        };
+
+        result
+    }
+
+    fn new() -> Program {
+        Program {
+            accumulator: 0,
+            seen: HashSet::new(),
+            step: 0,
+        }
+    }
+}
+
 #[aoc_generator(day8)]
 pub fn input_generator(input: &str) -> Vec<Instruction> {
     common::input_vec(input)
-}
-
-fn program(instructions: &[Instruction]) -> Option<i32> {
-    let mut accumulator = 0;
-    let mut n = 0;
-    let mut seen: HashSet<&String> = HashSet::new();
-
-    let result = loop {
-        match instructions.get(n) {
-            Some(instruction) => {
-                if n == instructions.len() {
-                    break Some(accumulator);
-                }
-
-                if seen.get(&instruction.id).is_some() {
-                    break None;
-                }
-
-                seen.insert(&instruction.id);
-
-                match instruction.operation {
-                    Operation::NoOp => (),
-                    Operation::Accumulate => accumulator += instruction.argument,
-                    Operation::Jump => {
-                        n = (n as i32 + instruction.argument) as usize;
-                        continue;
-                    }
-                };
-
-                n += 1
-            }
-            None => break Some(accumulator),
-        }
-    };
-
-    result
 }
 
 /* Part One
@@ -148,6 +197,7 @@ fn program(instructions: &[Instruction]) -> Option<i32> {
  *
  * Run your copy of the boot code. Immediately before any instruction is executed a second time, what value is in the accumulator?
 */
+
 ///your puzzle answer was.
 /// ```
 /// use advent_of_code_2020::day_08::*;
@@ -156,35 +206,7 @@ fn program(instructions: &[Instruction]) -> Option<i32> {
 /// ```
 #[aoc(day8, part1)]
 pub fn solve_part_01(input: &[Instruction]) -> i32 {
-    let mut accumulator = 0;
-    let mut n = 0;
-    let mut seen: HashSet<&String> = HashSet::new();
-
-    let result = loop {
-        match input.get(n) {
-            Some(instruction) => {
-                if seen.get(&instruction.id).is_some() {
-                    break Some(accumulator);
-                }
-
-                seen.insert(&instruction.id);
-
-                match instruction.operation {
-                    Operation::NoOp => (),
-                    Operation::Accumulate => accumulator += instruction.argument,
-                    Operation::Jump => {
-                        n = (n as i32 + instruction.argument) as usize;
-                        continue;
-                    }
-                };
-
-                n += 1
-            }
-            None => break None,
-        }
-    };
-
-    result.unwrap()
+    Program::new().calculate_to_error(&input)
 }
 
 /* Part Two
@@ -245,7 +267,7 @@ pub fn solve_part_02(input: &[Instruction]) -> i32 {
     let mut result: Option<i32> = None;
 
     for i in 0..input.len() {
-        let t: Vec<Instruction> = input
+        let instructions: Vec<Instruction> = input
             .iter()
             .enumerate()
             .map(|(j, l)| {
@@ -271,7 +293,7 @@ pub fn solve_part_02(input: &[Instruction]) -> i32 {
             })
             .collect();
 
-        if let Some(v) = program(&t) {
+        if let Some(v) = Program::new().calculate_with_fix(&instructions) {
             result = Some(v);
             break;
         } else {
