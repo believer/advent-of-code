@@ -34,10 +34,10 @@ fn find_broken_number(input: &[u64], preamble: usize) -> u64 {
 }
 
 fn find_weakness(input: &[u64], preamble: usize) -> u64 {
-    let weakness = find_broken_number(input, preamble);
+    let broken = find_broken_number(input, preamble);
     let mut acc = 0;
     let mut sums = vec![0];
-    let mut answer = 0;
+    let mut weakness = 0;
 
     // Find all sums
     for v in input {
@@ -49,12 +49,12 @@ fn find_weakness(input: &[u64], preamble: usize) -> u64 {
     'outer: for i in 0..sums.len() {
         let mut j = i + 2;
 
-        while j < sums.len() && sums[j] - sums[i] <= weakness {
-            if sums[j] - sums[i] == weakness {
+        while j < sums.len() && sums[j] - sums[i] <= broken {
+            if sums[j] - sums[i] == broken {
                 let max = input[i..j].iter().max().unwrap();
                 let min = input[i..j].iter().min().unwrap();
 
-                answer = *max + *min;
+                weakness = *max + *min;
 
                 break 'outer;
             }
@@ -63,7 +63,7 @@ fn find_weakness(input: &[u64], preamble: usize) -> u64 {
         }
     }
 
-    answer
+    weakness
 }
 
 /* Part One
