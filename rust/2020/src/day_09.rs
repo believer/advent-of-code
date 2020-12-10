@@ -1,4 +1,5 @@
 use crate::common;
+use itertools::iproduct;
 
 // Day 9 - Encoding Error
 
@@ -7,30 +8,20 @@ pub fn input_generator(input: &str) -> Vec<u64> {
     common::input_vec(input)
 }
 
-// This solution is so much faster than my initial version. The first
-// solution is linked in the previous performance results table in th README.
-// Courtesy of @chsiedentop
-// https://twitter.com/chsiedentop/status/1336947802887180290
+fn calculate_sums(input: &[u64]) -> Vec<u64> {
+    iproduct!(input.iter(), input.iter())
+        .map(|tuple| tuple.0 + tuple.1)
+        .collect()
+}
+
 fn find_broken_number(input: &[u64], preamble: usize) -> Option<u64> {
-    let mut sums = vec![];
-    let input_without_preamble = input.len() - preamble;
+    for i in preamble..input.len() {
+        let last_five = &input[(i - preamble)..i];
+        let sums = calculate_sums(last_five);
+        let v = input[i];
 
-    // Create all sums
-    for i in 0..input_without_preamble {
-        for j in 1..preamble {
-            sums.push(input[i] + input[i + j])
-        }
-    }
-
-    let window_size = preamble * (preamble - 1);
-
-    for i in 0..input_without_preamble {
-        let target = input[i + preamble];
-        let start = (preamble - 1) * i;
-        let end = start + window_size;
-
-        if let false = sums[start..end].iter().any(|p| *p == target) {
-            return Some(target);
+        if !sums.contains(&v) {
+            return Some(v);
         }
     }
 
