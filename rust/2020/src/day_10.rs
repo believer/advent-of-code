@@ -1,4 +1,3 @@
-use itertools::Itertools;
 use std::collections::{BTreeSet, HashMap};
 
 // Day 10 - Adapter Array
@@ -239,7 +238,7 @@ pub fn solve_part_02(input: &BTreeSet<u64>) -> u64 {
         None => panic!("No max value found"),
     };
     let mut memory = HashMap::new();
-    let sorted_input = input.iter().sorted().collect::<Vec<_>>();
+    let sorted_input = input.iter().collect::<Vec<_>>();
 
     count_connections(&sorted_input, 0, max, &mut memory)
 }
