@@ -1,34 +1,20 @@
-use crate::common;
-use itertools::zip;
 use itertools::Itertools;
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeSet, HashMap};
 
 // Day 10 - Adapter Array
 
 #[aoc_generator(day10)]
-pub fn input_generator(input: &str) -> HashSet<u64> {
-    common::input_hashset(input)
+pub fn input_generator(input: &str) -> BTreeSet<u64> {
+    input.lines().map(|l| l.parse().unwrap()).collect()
 }
 
-struct Joltage {
-    min: u64,
-    max: u64,
-}
+fn find_differences(input: &BTreeSet<u64>) -> impl Iterator<Item = u64> + '_ {
+    input.iter().scan(0, |acc, x| {
+        let diff = *x - *acc;
+        *acc = *x;
 
-impl Joltage {
-    fn max_joltage(hash: &HashSet<u64>) -> u64 {
-        match hash.iter().max_by(|a, b| a.cmp(&b)) {
-            Some(max) => *max + 3,
-            None => panic!("No max value found"),
-        }
-    }
-
-    fn new(hash: &HashSet<u64>) -> Joltage {
-        Joltage {
-            min: 0,
-            max: Joltage::max_joltage(hash),
-        }
-    }
+        Some(diff)
+    })
 }
 
 /* Part One
@@ -140,27 +126,12 @@ impl Joltage {
 /// assert_eq!(solve_part_01(&input_generator(input)), 2475);
 /// ```
 #[aoc(day10, part1)]
-pub fn solve_part_01(input: &HashSet<u64>) -> u64 {
-    let mut ones = 0;
-    let mut threes = 0;
-    let mut data = input.clone();
-    let joltage = Joltage::new(input);
+pub fn solve_part_01(input: &BTreeSet<u64>) -> u64 {
+    let mut results = vec![0, 0, 1];
 
-    // Add min and max joltages
-    data.insert(joltage.min);
-    data.insert(joltage.max);
+    find_differences(input).for_each(|d| results[d as usize - 1] += 1);
 
-    let sorted = data.iter().sorted().collect::<Vec<_>>();
-
-    for (a, b) in zip(&sorted, &sorted[1..]) {
-        match *b - *a {
-            1 => ones += 1,
-            3 => threes += 1,
-            _ => (),
-        }
-    }
-
-    ones * threes
+    results[0] * results[2]
 }
 
 fn count_connections(
@@ -262,12 +233,15 @@ fn count_connections(
 /// assert_eq!(solve_part_02(&input_generator(input)), 442136281481216);
 /// ```
 #[aoc(day10, part2)]
-pub fn solve_part_02(input: &HashSet<u64>) -> u64 {
-    let joltage = Joltage::new(input);
+pub fn solve_part_02(input: &BTreeSet<u64>) -> u64 {
+    let max = match input.iter().max_by(|a, b| a.cmp(&b)) {
+        Some(max) => *max + 3,
+        None => panic!("No max value found"),
+    };
     let mut memory = HashMap::new();
     let sorted_input = input.iter().sorted().collect::<Vec<_>>();
 
-    count_connections(&sorted_input, joltage.min, joltage.max, &mut memory)
+    count_connections(&sorted_input, 0, max, &mut memory)
 }
 
 #[cfg(test)]
