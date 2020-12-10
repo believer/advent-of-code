@@ -10,6 +10,27 @@ pub fn input_generator(input: &str) -> HashSet<u64> {
     common::input_hashset(input)
 }
 
+struct Joltage {
+    min: u64,
+    max: u64,
+}
+
+impl Joltage {
+    fn max_joltage(hash: &HashSet<u64>) -> u64 {
+        match hash.iter().max_by(|a, b| a.cmp(&b)) {
+            Some(max) => *max + 3,
+            None => panic!("No max value found"),
+        }
+    }
+
+    fn new(hash: &HashSet<u64>) -> Joltage {
+        Joltage {
+            min: 0,
+            max: Joltage::max_joltage(hash),
+        }
+    }
+}
+
 /* Part One
  *
  * Patched into the aircraft's data port, you discover weather forecasts of a massive tropical storm.
@@ -123,10 +144,11 @@ pub fn solve_part_01(input: &HashSet<u64>) -> u64 {
     let mut ones = 0;
     let mut threes = 0;
     let mut data = input.clone();
+    let joltage = Joltage::new(input);
 
     // Add min and max joltages
-    data.insert(0);
-    data.insert(*input.iter().max().unwrap() + 3);
+    data.insert(joltage.min);
+    data.insert(joltage.max);
 
     let sorted = data.iter().sorted().collect::<Vec<_>>();
 
@@ -241,11 +263,11 @@ fn count_connections(
 /// ```
 #[aoc(day10, part2)]
 pub fn solve_part_02(input: &HashSet<u64>) -> u64 {
+    let joltage = Joltage::new(input);
     let mut memory = HashMap::new();
     let sorted_input = input.iter().sorted().collect::<Vec<_>>();
-    let max = *input.iter().max().unwrap() + 3;
 
-    count_connections(&sorted_input, 0, max, &mut memory)
+    count_connections(&sorted_input, joltage.min, joltage.max, &mut memory)
 }
 
 #[cfg(test)]
