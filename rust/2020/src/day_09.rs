@@ -38,7 +38,7 @@ fn find_broken_number(input: &[u64], preamble: usize) -> Option<u64> {
 }
 
 fn find_weakness(input: &[u64], preamble: usize) -> Option<u64> {
-    let broken = find_broken_number(input, preamble).unwrap();
+    let broken = find_broken_number(input, preamble)?;
     let mut acc = 0;
     let mut sums = vec![0];
 
