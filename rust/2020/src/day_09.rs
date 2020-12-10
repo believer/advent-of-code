@@ -1,6 +1,4 @@
 use crate::common;
-use itertools::iproduct;
-use std::collections::HashSet;
 
 // Day 9 - Encoding Error
 
@@ -9,35 +7,40 @@ pub fn input_generator(input: &str) -> Vec<u64> {
     common::input_vec(input)
 }
 
-fn calculate_sums(input: &[u64]) -> HashSet<u64> {
-    iproduct!(input.iter(), input.iter())
-        .map(|tuple| tuple.0 + tuple.1)
-        .collect()
-}
+// This solution is so much faster than my initial version. The first
+// solution is linked in the previous performance results table in th README.
+// Courtesy of @chsiedentop
+// https://twitter.com/chsiedentop/status/1336947802887180290
+fn find_broken_number(input: &[u64], preamble: usize) -> Option<u64> {
+    let mut sums = vec![];
+    let input_without_preamble = input.len() - preamble;
 
-fn find_broken_number(input: &[u64], preamble: usize) -> u64 {
-    let mut not_in: HashSet<u64> = HashSet::new();
-
-    for i in preamble..input.len() {
-        let (previous, _) = input.split_at(i);
-        let (_, last_five) = previous.split_at(i - preamble);
-        let sums = calculate_sums(last_five);
-
-        let v = input[i];
-
-        if !sums.contains(&v) {
-            not_in.insert(v);
+    // Create all sums
+    for i in 0..input_without_preamble {
+        for j in 1..preamble {
+            sums.push(input[i] + input[i + j])
         }
     }
 
-    *not_in.iter().next().unwrap()
+    let window_size = preamble * (preamble - 1);
+
+    for i in 0..input_without_preamble {
+        let target = input[i + preamble];
+        let start = (preamble - 1) * i;
+        let end = start + window_size;
+
+        if let false = sums[start..end].iter().any(|p| *p == target) {
+            return Some(target);
+        }
+    }
+
+    None
 }
 
-fn find_weakness(input: &[u64], preamble: usize) -> u64 {
-    let broken = find_broken_number(input, preamble);
+fn find_weakness(input: &[u64], preamble: usize) -> Option<u64> {
+    let broken = find_broken_number(input, preamble).unwrap();
     let mut acc = 0;
     let mut sums = vec![0];
-    let mut weakness = 0;
 
     // Find all sums
     for v in input {
@@ -46,7 +49,7 @@ fn find_weakness(input: &[u64], preamble: usize) -> u64 {
     }
 
     // Find the sums that match our weakness
-    'outer: for i in 0..sums.len() {
+    for i in 0..sums.len() {
         let mut j = i + 2;
 
         while j < sums.len() && sums[j] - sums[i] <= broken {
@@ -54,16 +57,14 @@ fn find_weakness(input: &[u64], preamble: usize) -> u64 {
                 let max = input[i..j].iter().max().unwrap();
                 let min = input[i..j].iter().min().unwrap();
 
-                weakness = *max + *min;
-
-                break 'outer;
+                return Some(*max + *min);
             }
 
             j += 1;
         }
     }
 
-    weakness
+    None
 }
 
 /* Part One
@@ -128,10 +129,10 @@ fn find_weakness(input: &[u64], preamble: usize) -> u64 {
 /// ```
 /// use advent_of_code_2020::day_09::*;
 /// let input = include_str!("../input/2020/day9.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)), 21806024);
+/// assert_eq!(solve_part_01(&input_generator(input)).unwrap(), 21806024);
 /// ```
 #[aoc(day9, part1)]
-pub fn solve_part_01(input: &[u64]) -> u64 {
+pub fn solve_part_01(input: &[u64]) -> Option<u64> {
     find_broken_number(input, 25)
 }
 
@@ -139,10 +140,10 @@ pub fn solve_part_01(input: &[u64]) -> u64 {
 /// ```
 /// use advent_of_code_2020::day_09::*;
 /// let input = include_str!("../input/2020/day9.txt");
-/// assert_eq!(solve_part_02(&input_generator(input)), 2986195);
+/// assert_eq!(solve_part_02(&input_generator(input)).unwrap(), 2986195);
 /// ```
 #[aoc(day9, part2)]
-pub fn solve_part_02(input: &[u64]) -> u64 {
+pub fn solve_part_02(input: &[u64]) -> Option<u64> {
     find_weakness(input, 25)
 }
 
@@ -175,7 +176,7 @@ mod tests {
 576
 ";
 
-        assert_eq!(find_broken_number(&input_generator(data), 5), 127)
+        assert_eq!(find_broken_number(&input_generator(data), 5).unwrap(), 127)
     }
 
     /// Test example data on part 2
@@ -203,6 +204,6 @@ mod tests {
 576
 ";
 
-        assert_eq!(find_weakness(&input_generator(data), 5), 62)
+        assert_eq!(find_weakness(&input_generator(data), 5).unwrap(), 62)
     }
 }
