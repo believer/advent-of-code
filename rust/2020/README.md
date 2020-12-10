@@ -14,18 +14,18 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                          | #1  |    #1 Answer | #2  |      #2 Answer |
-| ------------------------------------------------------------------------------------------------------------ | --- | -----------: | --- | -------------: |
-| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_01.rs)       | 🌟  |   **898299** | 🌟  |  **143933922** |
-| [Day 2: Password Philosophy](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_02.rs) | 🌟  |      **524** | 🌟  |        **485** |
-| [Day 3: Toboggan Trajectory](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_03.rs) | 🌟  |      **259** | 🌟  | **2224913600** |
-| [Day 4: Passport Processing](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_04.rs) | 🌟  |      **200** | 🌟  |        **116** |
-| [Day 5: Binary Boarding](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_05.rs)     | 🌟  |      **866** | 🌟  |        **583** |
-| [Day 6: Custom Customs](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_06.rs)      | 🌟  |     **6778** | 🌟  |       **3406** |
-| [Day 7: Handy Haversacks](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_07.rs)    | 🌟  |      **226** | 🌟  |       **9569** |
-| [Day 8: Handheld Halting](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_08.rs)    | 🌟  |     **1489** | 🌟  |       **1539** |
-| [Day 9: Encoding Error](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_09.rs)      | 🌟  | **21806024** | 🌟  |    **2986195** |
-| [Day 10: Adapter Array](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_10.rs)      | 🌟  |     **2475** |     |                |
+| Day                                                                                                          | #1  |    #1 Answer | #2  |           #2 Answer |
+| ------------------------------------------------------------------------------------------------------------ | --- | -----------: | --- | ------------------: |
+| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_01.rs)       | 🌟  |   **898299** | 🌟  |       **143933922** |
+| [Day 2: Password Philosophy](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_02.rs) | 🌟  |      **524** | 🌟  |             **485** |
+| [Day 3: Toboggan Trajectory](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_03.rs) | 🌟  |      **259** | 🌟  |      **2224913600** |
+| [Day 4: Passport Processing](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_04.rs) | 🌟  |      **200** | 🌟  |             **116** |
+| [Day 5: Binary Boarding](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_05.rs)     | 🌟  |      **866** | 🌟  |             **583** |
+| [Day 6: Custom Customs](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_06.rs)      | 🌟  |     **6778** | 🌟  |            **3406** |
+| [Day 7: Handy Haversacks](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_07.rs)    | 🌟  |      **226** | 🌟  |            **9569** |
+| [Day 8: Handheld Halting](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_08.rs)    | 🌟  |     **1489** | 🌟  |            **1539** |
+| [Day 9: Encoding Error](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_09.rs)      | 🌟  | **21806024** | 🌟  |         **2986195** |
+| [Day 10: Adapter Array](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_10.rs)      | 🌟  |     **2475** | 🌟  | **442136281481216** |
 
 ## Performance
 
@@ -42,6 +42,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 7   | 179.43 µs |   1.70 µs |                                                                                                                                                       |
 | 8   |  23.66 µs | 49.398 ms |                                                                                                                                                       |
 | 9   |  13.50 ms |  13.66 ms |                                                                                                                                                       |
+| 10  |   2.69 µs | 653.28 µs |                                                                                                                                                       |
 
 \* compared to first solution
 
