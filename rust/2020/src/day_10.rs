@@ -180,7 +180,7 @@ fn count_connections(
         ways += 1;
     }
 
-    if input.len() == 0 {
+    if input.is_empty() {
         return ways;
     }
 
