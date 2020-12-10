@@ -42,18 +42,17 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 7   | 179.43 µs |   1.70 µs |                                                                                                                                                       |
 | 8   |  23.66 µs | 49.398 ms |                                                                                                                                                       |
 | 9   |  66.03 µs |  128.95 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−99.51%` / `−99.49%`                                                                                                                                                       |
-| 10  |   2.69 µs | 653.28 µs |                                                                                                                                                       |
+| 10  |   725.70 ns | 455.67 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−73.02 %` / `−30,25%`                                                                                                                                                     |
 
 \* compared to first solution
 
 ### Previous solutions
 
 | Day |        #1 |        #2 |                                                                      Improvement | Link                                                                                                                         |
-| --- | --------: | --------: | -------------------------------------------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------- |
+| ---: | --------: | --------: | -------------------------------------------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------- |
 | 1   |  16.06 µs |   4.38 ms |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/7e0bc4927db3a9d4f8fd0fd1a0f34feba4f6f3dc/rust-2020/day_01/src/lib.rs) |
 | 2   | 446.02 µs | 470.28 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/aee8289c2ffd0c20968c43e573fc5828d88a82a6/rust/2020/src/day_02.rs)     |
 | 2   | 446.02 µs |  77.35 µs | `0%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−83.55%` | [Link](https://github.com/believer/advent-of-code/blob/0cce6ca175c8d89e43772bc386f152bc6167edbd/rust/2020/src/day_02.rs)     |
 | 6   | 627.01 µs | 696.92 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/65cc61f1745db7579b47577769ba00f04f7e5f99/rust/2020/src/day_06.rs)     |
 | 9   | 13.50 ms | 13.66 ms |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/cc12a3d53eeb1deebc747ca2daeafaed5a97b3f3/rust/2020/src/day_09.rs)     |
-
-
+| 10   | 2.69 µs | 653.28 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/7570c1e6123a3acb8687160e4415bf9aeac2d878/rust/2020/src/day_10.rs)     |
