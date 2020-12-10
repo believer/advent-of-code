@@ -1,5 +1,4 @@
 use crate::common;
-use anyhow::{anyhow, Error};
 use lazy_static::lazy_static;
 use regex::Regex;
 use std::ops::RangeInclusive;
@@ -22,10 +21,10 @@ pub struct OTCP {
 }
 
 impl std::str::FromStr for OTCP {
-    type Err = Error;
+    type Err = ();
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        parse(s).ok_or_else(|| anyhow!("Unable to parse"))
+        parse(s).ok_or_else(|| unreachable!("Unable to parse"))
     }
 }
 

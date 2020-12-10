@@ -1,9 +1,16 @@
 use crate::common;
+use lazy_static::lazy_static;
 use rand::distributions::Alphanumeric;
 use rand::{thread_rng, Rng};
+use regex::Regex;
 use std::collections::HashSet;
+use std::str::FromStr;
 
 // Day 8 - Handheld Halting
+
+lazy_static! {
+    static ref RE: Regex = Regex::new(r"(acc|jmp|nop)\s([+-]\d+)").unwrap();
+}
 
 #[derive(Debug, Clone, Copy)]
 pub enum Operation {
@@ -12,7 +19,7 @@ pub enum Operation {
     Accumulate,
 }
 
-impl std::str::FromStr for Operation {
+impl FromStr for Operation {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -32,18 +39,24 @@ pub struct Instruction {
     argument: i32,
 }
 
-impl std::str::FromStr for Instruction {
+impl Instruction {
+    fn new(s: &str) -> Option<Instruction> {
+        let ins = RE.captures(&s)?;
+        let id: String = thread_rng().sample_iter(&Alphanumeric).take(30).collect();
+
+        Some(Instruction {
+            id,
+            operation: ins.get(1)?.as_str().parse().unwrap(),
+            argument: ins.get(2)?.as_str().parse().unwrap(),
+        })
+    }
+}
+
+impl FromStr for Instruction {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let ins: Vec<String> = s.split_whitespace().map(|l| l.to_string()).collect();
-        let id: String = thread_rng().sample_iter(&Alphanumeric).take(30).collect();
-
-        Ok(Instruction {
-            id,
-            operation: ins[0].parse().unwrap(),
-            argument: ins[1].parse().unwrap(),
-        })
+        Instruction::new(s).ok_or_else(|| panic!("Invalid Instruction"))
     }
 }
 
@@ -71,12 +84,12 @@ impl Program {
         self.next_step(instruction);
     }
 
-    fn calculate_to_error(&mut self, instructions: &[Instruction]) -> i32 {
-        let result = loop {
+    fn calculate_to_error(&mut self, instructions: &[Instruction]) -> Option<i32> {
+        loop {
             match instructions.get(self.step) {
                 Some(instruction) => {
                     if self.seen.get(&instruction.id).is_some() {
-                        break Some(self.accumulator);
+                        return Some(self.accumulator);
                     }
 
                     self.add_seen_and_step(&instruction);
@@ -87,23 +100,21 @@ impl Program {
 
                     self.step_one();
                 }
-                None => break None,
+                None => return None,
             }
-        };
-
-        result.unwrap()
+        }
     }
 
     fn calculate_with_fix(&mut self, instructions: &[Instruction]) -> Option<i32> {
-        let result = loop {
+        loop {
             match instructions.get(self.step) {
                 Some(instruction) => {
                     if self.step == instructions.len() {
-                        break Some(self.accumulator);
+                        return Some(self.accumulator);
                     }
 
                     if self.seen.get(&instruction.id).is_some() {
-                        break None;
+                        return None;
                     }
 
                     self.add_seen_and_step(&instruction);
@@ -114,11 +125,9 @@ impl Program {
 
                     self.step_one();
                 }
-                None => break Some(self.accumulator),
+                None => return Some(self.accumulator),
             }
-        };
-
-        result
+        }
     }
 
     fn new() -> Program {
@@ -199,10 +208,10 @@ pub fn input_generator(input: &str) -> Vec<Instruction> {
 /// ```
 /// use advent_of_code_2020::day_08::*;
 /// let input = include_str!("../input/2020/day8.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)), 1489);
+/// assert_eq!(solve_part_01(&input_generator(input)).unwrap(), 1489);
 /// ```
 #[aoc(day8, part1)]
-pub fn solve_part_01(input: &[Instruction]) -> i32 {
+pub fn solve_part_01(input: &[Instruction]) -> Option<i32> {
     Program::new().calculate_to_error(&input)
 }
 
@@ -257,12 +266,10 @@ pub fn solve_part_01(input: &[Instruction]) -> i32 {
 /// ```
 /// use advent_of_code_2020::day_08::*;
 /// let input = include_str!("../input/2020/day8.txt");
-/// assert_eq!(solve_part_02(&input_generator(input)), 1539);
+/// assert_eq!(solve_part_02(&input_generator(input)).unwrap(), 1539);
 /// ```
 #[aoc(day8, part2)]
-pub fn solve_part_02(input: &[Instruction]) -> i32 {
-    let mut result: Option<i32> = None;
-
+pub fn solve_part_02(input: &[Instruction]) -> Option<i32> {
     for i in 0..input.len() {
         let instructions: Vec<Instruction> = input
             .iter()
@@ -290,15 +297,13 @@ pub fn solve_part_02(input: &[Instruction]) -> i32 {
             })
             .collect();
 
-        if let Some(v) = Program::new().calculate_with_fix(&instructions) {
-            result = Some(v);
-            break;
-        } else {
-            continue;
+        match Program::new().calculate_with_fix(&instructions) {
+            Some(v) => return Some(v),
+            None => continue,
         }
     }
 
-    result.unwrap()
+    None
 }
 
 #[cfg(test)]
@@ -320,7 +325,7 @@ jmp -4
 acc +6
 ";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 5)
+        assert_eq!(solve_part_01(&input_generator(data)).unwrap(), 5)
     }
 
     /// Test example data on part 2
@@ -338,6 +343,6 @@ jmp -4
 acc +6
 ";
 
-        assert_eq!(solve_part_02(&input_generator(data)), 8)
+        assert_eq!(solve_part_02(&input_generator(data)).unwrap(), 8)
     }
 }

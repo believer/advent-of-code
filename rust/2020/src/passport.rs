@@ -1,6 +1,6 @@
-use anyhow::{anyhow, Error};
 use lazy_static::lazy_static;
 use regex::Regex;
+use std::str::FromStr;
 
 lazy_static! {
     static ref BYR_RE_LOOSE: Regex = Regex::new(r"byr:(\d+)\s?").unwrap();
@@ -27,14 +27,14 @@ enum Height {
     Inches,
 }
 
-impl std::str::FromStr for Height {
-    type Err = Error;
+impl FromStr for Height {
+    type Err = ();
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "cm" => Ok(Height::Centimeters),
             "in" => Ok(Height::Inches),
-            _ => Err(anyhow!("Not supported")),
+            _ => unreachable!("Invalid Height value"),
         }
     }
 }
