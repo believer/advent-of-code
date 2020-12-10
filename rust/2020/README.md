@@ -25,6 +25,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 7: Handy Haversacks](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_07.rs)    | 🌟  |      **226** | 🌟  |       **9569** |
 | [Day 8: Handheld Halting](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_08.rs)    | 🌟  |     **1489** | 🌟  |       **1539** |
 | [Day 9: Encoding Error](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_09.rs)      | 🌟  | **21806024** | 🌟  |    **2986195** |
+| [Day 10: Adapter Array](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_10.rs)      | 🌟  |     **2475** |     |                |
 
 ## Performance
 
