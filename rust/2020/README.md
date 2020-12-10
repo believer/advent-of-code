@@ -41,7 +41,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 6   | 477.60 µs | 696.92 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−23.83%` / `0%`                                                                      |
 | 7   | 179.43 µs |   1.70 µs |                                                                                                                                                       |
 | 8   |  23.66 µs | 49.398 ms |                                                                                                                                                       |
-| 9   |  13.50 ms |  13.66 ms |                                                                                                                                                       |
+| 9   |  66.03 µs |  128.95 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−99.51%` / `−99.49%`                                                                                                                                                       |
 | 10  |   2.69 µs | 653.28 µs |                                                                                                                                                       |
 
 \* compared to first solution
@@ -54,3 +54,6 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 2   | 446.02 µs | 470.28 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/aee8289c2ffd0c20968c43e573fc5828d88a82a6/rust/2020/src/day_02.rs)     |
 | 2   | 446.02 µs |  77.35 µs | `0%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−83.55%` | [Link](https://github.com/believer/advent-of-code/blob/0cce6ca175c8d89e43772bc386f152bc6167edbd/rust/2020/src/day_02.rs)     |
 | 6   | 627.01 µs | 696.92 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/65cc61f1745db7579b47577769ba00f04f7e5f99/rust/2020/src/day_06.rs)     |
+| 9   | 13.50 ms | 13.66 ms |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/cc12a3d53eeb1deebc747ca2daeafaed5a97b3f3/rust/2020/src/day_09.rs)     |
+
+
