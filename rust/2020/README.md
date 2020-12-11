@@ -26,7 +26,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 8: Handheld Halting](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_08.rs)    | 🌟  |     **1489** | 🌟  |            **1539** |
 | [Day 9: Encoding Error](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_09.rs)      | 🌟  | **21806024** | 🌟  |         **2986195** |
 | [Day 10: Adapter Array](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_10.rs)      | 🌟  |     **2475** | 🌟  | **442136281481216** |
-| [Day 11: Seating System](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_11.rs)     | 🌟  |     **2183** |     |                     |
+| [Day 11: Seating System](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_11.rs)     | 🌟  |     **2183** | 🌟  |            **1990** |
 
 ## Performance
 
@@ -44,7 +44,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 8   |  23.66 µs | 49.398 ms |                                                                                                                                                       |
 | 9   | 299.88 µs | 363.98 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−97.78%` / `−−97.33%`                                                                |
 | 10  | 646.78 ns | 455.67 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−75.95 %` / `−30.25%`                                                                |
-| 11  |  11.30 ms |           |                                                                                                                                                       |
+| 11  |  10.38 ms |  15.29 ms |                                                                                                                                                       |
 
 \* compared to first solution
 
