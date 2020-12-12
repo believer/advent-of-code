@@ -1,4 +1,3 @@
-use crate::common;
 use lazy_static::lazy_static;
 use regex::Regex;
 
@@ -8,40 +7,68 @@ lazy_static! {
     static ref RE: Regex = Regex::new(r"(N|S|E|W|L|R|F)(\d{1,3})").unwrap();
 }
 
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug)]
 pub enum Instruction {
-    North(i32),
-    East(i32),
-    South(i32),
-    West(i32),
-    Left(i32),
-    Right(i32),
-    Forward(i32),
+    North,
+    East,
+    South,
+    West,
+    Left,
+    Right,
+    Forward,
+}
+
+impl Instruction {
+    fn as_point(&self) -> (i32, i32) {
+        match self {
+            Instruction::East => (1, 0),
+            Instruction::South => (0, -1),
+            Instruction::West => (-1, 0),
+            Instruction::North => (0, 1),
+            _ => unreachable!(),
+        }
+    }
+
+    fn new(point: (i32, i32)) -> Instruction {
+        match point {
+            (1, 0) => Instruction::East,
+            (0, -1) => Instruction::South,
+            (-1, 0) => Instruction::West,
+            (0, 1) => Instruction::North,
+            _ => unreachable!(),
+        }
+    }
 }
 
 impl std::str::FromStr for Instruction {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let caps = RE.captures(s).unwrap();
-        let amount = caps.get(2).unwrap().as_str().parse().unwrap();
-
-        Ok(match caps.get(1).unwrap().as_str() {
-            "N" => Instruction::North(amount),
-            "E" => Instruction::East(amount),
-            "S" => Instruction::South(amount),
-            "W" => Instruction::West(amount),
-            "L" => Instruction::Left(amount),
-            "R" => Instruction::Right(amount),
-            "F" => Instruction::Forward(amount),
+        Ok(match s {
+            "N" => Instruction::North,
+            "E" => Instruction::East,
+            "S" => Instruction::South,
+            "W" => Instruction::West,
+            "L" => Instruction::Left,
+            "R" => Instruction::Right,
+            "F" => Instruction::Forward,
             _ => unreachable!("Invalid instruction"),
         })
     }
 }
 
 #[aoc_generator(day12)]
-pub fn input_generator(input: &str) -> Vec<Instruction> {
-    common::input_vec(input)
+pub fn input_generator(input: &str) -> Vec<(Instruction, i32)> {
+    input
+        .lines()
+        .map(|l| {
+            let caps = RE.captures(l).unwrap();
+            let instruction = caps.get(1).unwrap().as_str().parse().unwrap();
+            let amount = caps.get(2).unwrap().as_str().parse().unwrap();
+
+            (instruction, amount)
+        })
+        .collect()
 }
 
 fn manhattan_distance(x: i32, y: i32) -> u32 {
@@ -56,6 +83,11 @@ fn rotation_2d(x: i32, y: i32, angle: i32) -> (i32, i32) {
     let ny = (y as f64 * radians.cos() + x as f64 * radians.sin()).round();
 
     (nx as i32, ny as i32)
+}
+
+fn turn(facing: Instruction, angle: i32) -> Instruction {
+    let (x, y) = facing.as_point();
+    Instruction::new(rotation_2d(x, y, angle))
 }
 
 /* Part One
@@ -110,101 +142,25 @@ fn rotation_2d(x: i32, y: i32, angle: i32) -> (i32, i32) {
 /// let input = include_str!("../input/2020/day12.txt");
 /// assert_eq!(solve_part_01(&input_generator(input)), 1294);
 #[aoc(day12, part1)]
-pub fn solve_part_01(instructions: &[Instruction]) -> u32 {
+pub fn solve_part_01(instructions: &[(Instruction, i32)]) -> u32 {
     let (mut x, mut y): (i32, i32) = (0, 0);
-    let mut facing = Instruction::East(0);
+    let mut facing = Instruction::East;
 
-    for instruction in instructions {
+    for (instruction, a) in instructions {
         match instruction {
-            Instruction::Forward(a) => match facing {
-                Instruction::East(_) => x += a,
-                Instruction::West(_) => x -= a,
-                Instruction::North(_) => y += a,
-                Instruction::South(_) => y -= a,
+            Instruction::Forward => match facing {
+                Instruction::East => x += a,
+                Instruction::West => x -= a,
+                Instruction::North => y += a,
+                Instruction::South => y -= a,
                 _ => unreachable!("Not a valid facing direction"),
             },
-            Instruction::Right(r) => match facing {
-                Instruction::East(_) => {
-                    facing = match r {
-                        90 => Instruction::South(0),
-                        180 => Instruction::West(0),
-                        270 => Instruction::North(0),
-                        360 => Instruction::East(0),
-                        _ => todo!(),
-                    }
-                }
-                Instruction::South(_) => {
-                    facing = match r {
-                        90 => Instruction::West(0),
-                        180 => Instruction::North(0),
-                        270 => Instruction::East(0),
-                        360 => Instruction::South(0),
-                        _ => todo!(),
-                    }
-                }
-                Instruction::North(_) => {
-                    facing = match r {
-                        90 => Instruction::East(0),
-                        180 => Instruction::South(0),
-                        270 => Instruction::West(0),
-                        360 => Instruction::North(0),
-                        _ => todo!(),
-                    }
-                }
-                Instruction::West(_) => {
-                    facing = match r {
-                        90 => Instruction::North(0),
-                        180 => Instruction::East(0),
-                        270 => Instruction::South(0),
-                        360 => Instruction::West(0),
-                        _ => todo!(),
-                    }
-                }
-                _ => unreachable!("Invalid facing"),
-            },
-            Instruction::Left(r) => match facing {
-                Instruction::East(_) => {
-                    facing = match r {
-                        90 => Instruction::North(0),
-                        180 => Instruction::West(0),
-                        270 => Instruction::South(0),
-                        360 => Instruction::East(0),
-                        _ => todo!(),
-                    }
-                }
-                Instruction::South(_) => {
-                    facing = match r {
-                        90 => Instruction::East(0),
-                        180 => Instruction::North(0),
-                        270 => Instruction::West(0),
-                        360 => Instruction::South(0),
-                        _ => todo!(),
-                    }
-                }
-                Instruction::North(_) => {
-                    facing = match r {
-                        90 => Instruction::West(0),
-                        180 => Instruction::South(0),
-                        270 => Instruction::East(0),
-                        360 => Instruction::North(0),
-                        _ => todo!(),
-                    }
-                }
-                Instruction::West(_) => {
-                    facing = match r {
-                        90 => Instruction::South(0),
-                        180 => Instruction::East(0),
-                        270 => Instruction::North(0),
-                        360 => Instruction::West(0),
-                        _ => todo!(),
-                    }
-                }
-                _ => unreachable!("Invalid facing"),
-            },
-            Instruction::North(a) => y += a,
-            Instruction::South(a) => y -= a,
-            Instruction::West(a) => x -= a,
-            Instruction::East(a) => x += a,
+            Instruction::Right => facing = turn(facing, -a),
+            Instruction::Left => facing = turn(facing, *a),
+            Instruction::North => y += a,
+            Instruction::South => y -= a,
+            Instruction::West => x -= a,
+            Instruction::East => x += a,
         }
     }
 
@@ -252,30 +208,30 @@ pub fn solve_part_01(instructions: &[Instruction]) -> u32 {
 /// assert_eq!(solve_part_02(&input_generator(input)), 20592);
 /// ```
 #[aoc(day12, part2)]
-pub fn solve_part_02(instructions: &[Instruction]) -> u32 {
+pub fn solve_part_02(instructions: &[(Instruction, i32)]) -> u32 {
     let (mut wx, mut wy): (i32, i32) = (10, 1);
     let (mut x, mut y): (i32, i32) = (0, 0);
 
-    for instruction in instructions {
+    for (instruction, a) in instructions {
         match instruction {
-            Instruction::Forward(a) => {
+            Instruction::Forward => {
                 x += wx * a;
                 y += wy * a;
             }
-            Instruction::Right(angle) => {
-                let (nx, ny) = rotation_2d(wx, wy, -*angle);
+            Instruction::Right => {
+                let (nx, ny) = rotation_2d(wx, wy, -*a);
                 wx = nx;
                 wy = ny;
             }
-            Instruction::Left(angle) => {
-                let (nx, ny) = rotation_2d(wx, wy, *angle);
+            Instruction::Left => {
+                let (nx, ny) = rotation_2d(wx, wy, *a);
                 wx = nx;
                 wy = ny;
             }
-            Instruction::North(i) => wy += i,
-            Instruction::South(i) => wy -= i,
-            Instruction::East(i) => wx += i,
-            Instruction::West(i) => wx -= i,
+            Instruction::North => wy += a,
+            Instruction::South => wy -= a,
+            Instruction::East => wx += a,
+            Instruction::West => wx -= a,
         }
     }
 
@@ -293,8 +249,7 @@ mod tests {
 N3
 F7
 R90
-F11
-";
+F11";
 
         assert_eq!(solve_part_01(&input_generator(data)), 25)
     }
@@ -303,11 +258,10 @@ F11
     #[test]
     fn test_example_part_2() {
         let data = "F10
-N3
-F7
-R90
-F11
-";
+    N3
+    F7
+    R90
+    F11";
 
         assert_eq!(solve_part_02(&input_generator(data)), 286)
     }
