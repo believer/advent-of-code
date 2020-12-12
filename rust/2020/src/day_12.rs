@@ -1,3 +1,4 @@
+use crate::math;
 use lazy_static::lazy_static;
 use regex::Regex;
 
@@ -7,7 +8,7 @@ lazy_static! {
     static ref RE: Regex = Regex::new(r"(N|S|E|W|L|R|F)(\d{1,3})").unwrap();
 }
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub enum Instruction {
     North,
     East,
@@ -16,28 +17,6 @@ pub enum Instruction {
     Left,
     Right,
     Forward,
-}
-
-impl Instruction {
-    fn as_point(&self) -> (i32, i32) {
-        match self {
-            Instruction::East => (1, 0),
-            Instruction::South => (0, -1),
-            Instruction::West => (-1, 0),
-            Instruction::North => (0, 1),
-            _ => unreachable!(),
-        }
-    }
-
-    fn new(point: (i32, i32)) -> Instruction {
-        match point {
-            (1, 0) => Instruction::East,
-            (0, -1) => Instruction::South,
-            (-1, 0) => Instruction::West,
-            (0, 1) => Instruction::North,
-            _ => unreachable!(),
-        }
-    }
 }
 
 impl std::str::FromStr for Instruction {
@@ -57,6 +36,90 @@ impl std::str::FromStr for Instruction {
     }
 }
 
+#[derive(Debug, PartialEq, Eq)]
+struct Ship {
+    x: i32,
+    y: i32,
+    angle: i32,
+}
+
+impl Ship {
+    fn north(&mut self, step: &i32) {
+        self.y += step;
+    }
+
+    fn south(&mut self, step: &i32) {
+        self.y -= step;
+    }
+
+    fn east(&mut self, step: &i32) {
+        self.x += step;
+    }
+
+    fn west(&mut self, step: &i32) {
+        self.x -= step;
+    }
+
+    fn turn(&mut self, angle: &i32) {
+        self.angle += angle
+    }
+
+    fn forward(&mut self, distance: &i32) {
+        let radians = math::degrees_to_radians(self.angle);
+
+        self.x = (radians.cos() * *distance as f32 + self.x as f32).round() as i32;
+        self.y = (radians.sin() * *distance as f32 + self.y as f32).round() as i32;
+    }
+
+    fn move_by_waypoint(&mut self, waypoint: &Waypoint, value: &i32) {
+        self.x += waypoint.x * value;
+        self.y += waypoint.y * value;
+    }
+
+    fn new() -> Self {
+        Self {
+            x: 0,
+            y: 0,
+            angle: 0,
+        }
+    }
+}
+
+#[derive(Debug, Eq, PartialEq)]
+struct Waypoint {
+    x: i32,
+    y: i32,
+}
+
+impl Waypoint {
+    fn north(&mut self, step: &i32) {
+        self.y += step;
+    }
+
+    fn south(&mut self, step: &i32) {
+        self.y -= step;
+    }
+
+    fn east(&mut self, step: &i32) {
+        self.x += step;
+    }
+
+    fn west(&mut self, step: &i32) {
+        self.x -= step;
+    }
+
+    fn rotate(&mut self, angle: &i32) {
+        let (nx, ny) = math::rotation_2d(self.x, self.y, *angle);
+
+        self.x = nx;
+        self.y = ny;
+    }
+
+    fn new(x: i32, y: i32) -> Self {
+        Self { x, y }
+    }
+}
+
 #[aoc_generator(day12)]
 pub fn input_generator(input: &str) -> Vec<(Instruction, i32)> {
     input
@@ -69,25 +132,6 @@ pub fn input_generator(input: &str) -> Vec<(Instruction, i32)> {
             (instruction, amount)
         })
         .collect()
-}
-
-fn manhattan_distance(x: i32, y: i32) -> u32 {
-    (x.abs() + y.abs()) as u32
-}
-
-/// 2D rotation of a point
-fn rotation_2d(x: i32, y: i32, angle: i32) -> (i32, i32) {
-    let radians = angle as f64 * std::f64::consts::PI / 180_f64;
-
-    let nx = (x as f64 * radians.cos() - y as f64 * radians.sin()).round();
-    let ny = (y as f64 * radians.cos() + x as f64 * radians.sin()).round();
-
-    (nx as i32, ny as i32)
-}
-
-fn turn(facing: Instruction, angle: i32) -> Instruction {
-    let (x, y) = facing.as_point();
-    Instruction::new(rotation_2d(x, y, angle))
 }
 
 /* Part One
@@ -143,28 +187,21 @@ fn turn(facing: Instruction, angle: i32) -> Instruction {
 /// assert_eq!(solve_part_01(&input_generator(input)), 1294);
 #[aoc(day12, part1)]
 pub fn solve_part_01(instructions: &[(Instruction, i32)]) -> u32 {
-    let (mut x, mut y): (i32, i32) = (0, 0);
-    let mut facing = Instruction::East;
+    let mut ship = Ship::new();
 
-    for (instruction, a) in instructions {
+    for (instruction, x) in instructions {
         match instruction {
-            Instruction::Forward => match facing {
-                Instruction::East => x += a,
-                Instruction::West => x -= a,
-                Instruction::North => y += a,
-                Instruction::South => y -= a,
-                _ => unreachable!("Not a valid facing direction"),
-            },
-            Instruction::Right => facing = turn(facing, -a),
-            Instruction::Left => facing = turn(facing, *a),
-            Instruction::North => y += a,
-            Instruction::South => y -= a,
-            Instruction::West => x -= a,
-            Instruction::East => x += a,
+            Instruction::North => ship.north(x),
+            Instruction::South => ship.south(x),
+            Instruction::West => ship.west(x),
+            Instruction::East => ship.east(x),
+            Instruction::Right => ship.turn(&-x),
+            Instruction::Left => ship.turn(&x),
+            Instruction::Forward => ship.forward(x),
         }
     }
 
-    manhattan_distance(x, y)
+    math::manhattan_distance(ship.x, ship.y)
 }
 
 /* Part Two
@@ -209,33 +246,22 @@ pub fn solve_part_01(instructions: &[(Instruction, i32)]) -> u32 {
 /// ```
 #[aoc(day12, part2)]
 pub fn solve_part_02(instructions: &[(Instruction, i32)]) -> u32 {
-    let (mut wx, mut wy): (i32, i32) = (10, 1);
-    let (mut x, mut y): (i32, i32) = (0, 0);
+    let mut waypoint = Waypoint::new(10, 1);
+    let mut ship = Ship::new();
 
-    for (instruction, a) in instructions {
+    for (instruction, x) in instructions {
         match instruction {
-            Instruction::Forward => {
-                x += wx * a;
-                y += wy * a;
-            }
-            Instruction::Right => {
-                let (nx, ny) = rotation_2d(wx, wy, -*a);
-                wx = nx;
-                wy = ny;
-            }
-            Instruction::Left => {
-                let (nx, ny) = rotation_2d(wx, wy, *a);
-                wx = nx;
-                wy = ny;
-            }
-            Instruction::North => wy += a,
-            Instruction::South => wy -= a,
-            Instruction::East => wx += a,
-            Instruction::West => wx -= a,
+            Instruction::Forward => ship.move_by_waypoint(&waypoint, x),
+            Instruction::Right => waypoint.rotate(&-x),
+            Instruction::Left => waypoint.rotate(x),
+            Instruction::North => waypoint.north(x),
+            Instruction::South => waypoint.south(x),
+            Instruction::East => waypoint.east(x),
+            Instruction::West => waypoint.west(x),
         }
     }
 
-    manhattan_distance(x, y)
+    math::manhattan_distance(ship.x, ship.y)
 }
 
 #[cfg(test)]
@@ -264,5 +290,168 @@ F11";
     F11";
 
         assert_eq!(solve_part_02(&input_generator(data)), 286)
+    }
+
+    #[test]
+    fn create_ship() {
+        assert_eq!(
+            Ship::new(),
+            Ship {
+                x: 0,
+                y: 0,
+                angle: 0
+            }
+        )
+    }
+
+    #[test]
+    fn move_ship_north() {
+        let mut ship = Ship::new();
+        ship.north(&1);
+
+        assert_eq!(
+            ship,
+            Ship {
+                x: 0,
+                y: 1,
+                angle: 0
+            }
+        )
+    }
+
+    #[test]
+    fn move_ship_south() {
+        let mut ship = Ship::new();
+        ship.south(&1);
+
+        assert_eq!(
+            ship,
+            Ship {
+                x: 0,
+                y: -1,
+                angle: 0
+            }
+        )
+    }
+
+    #[test]
+    fn move_ship_east() {
+        let mut ship = Ship::new();
+        ship.east(&1);
+
+        assert_eq!(
+            ship,
+            Ship {
+                x: 1,
+                y: 0,
+                angle: 0
+            }
+        )
+    }
+
+    #[test]
+    fn move_ship_west() {
+        let mut ship = Ship::new();
+        ship.west(&1);
+
+        assert_eq!(
+            ship,
+            Ship {
+                x: -1,
+                y: 0,
+                angle: 0
+            }
+        )
+    }
+
+    #[test]
+    fn turn_ship() {
+        let mut ship = Ship::new();
+        ship.turn(&90);
+
+        assert_eq!(
+            ship,
+            Ship {
+                x: 0,
+                y: 0,
+                angle: 90
+            }
+        )
+    }
+
+    #[test]
+    fn move_ship() {
+        let mut ship = Ship::new();
+        ship.forward(&10);
+
+        assert_eq!(
+            ship,
+            Ship {
+                x: 10,
+                y: 0,
+                angle: 0
+            }
+        )
+    }
+
+    #[test]
+    fn move_ship_by_waypoint() {
+        let wp = Waypoint::new(10, 4);
+        let mut ship = Ship::new();
+        ship.move_by_waypoint(&wp, &10);
+
+        assert_eq!(
+            ship,
+            Ship {
+                x: 100,
+                y: 40,
+                angle: 0
+            }
+        )
+    }
+
+    #[test]
+    fn create_waypoint() {
+        assert_eq!(Waypoint::new(10, 1), Waypoint { x: 10, y: 1 })
+    }
+
+    #[test]
+    fn move_waypoint_north() {
+        let mut wp = Waypoint::new(0, 0);
+        wp.north(&1);
+
+        assert_eq!(wp, Waypoint { x: 0, y: 1 })
+    }
+
+    #[test]
+    fn move_waypoint_south() {
+        let mut wp = Waypoint::new(0, 0);
+        wp.south(&1);
+
+        assert_eq!(wp, Waypoint { x: 0, y: -1 })
+    }
+
+    #[test]
+    fn move_waypoint_east() {
+        let mut wp = Waypoint::new(0, 0);
+        wp.east(&1);
+
+        assert_eq!(wp, Waypoint { x: 1, y: 0 })
+    }
+
+    #[test]
+    fn move_waypoint_west() {
+        let mut wp = Waypoint::new(0, 0);
+        wp.west(&1);
+
+        assert_eq!(wp, Waypoint { x: -1, y: 0 })
+    }
+
+    #[test]
+    fn rotate_waypoint() {
+        let mut wp = Waypoint::new(10, 4);
+        wp.rotate(&90);
+
+        assert_eq!(wp, Waypoint { x: -4, y: 10 })
     }
 }

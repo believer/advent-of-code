@@ -43,10 +43,10 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 6   | 477.60 µs | 696.92 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−23.83%` / `0%`                                                                      |
 | 7   | 179.43 µs |   1.70 µs |                                                                                                                                                       |
 | 8   |  23.66 µs | 49.398 ms |                                                                                                                                                       |
-| 9   | 299.88 µs | 363.98 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−97.78%` / `−−97.33%`                                                                |
-| 10  | 646.78 ns | 455.67 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−75.95 %` / `−30.25%`                                                                |
+| 9   | 299.88 µs | 363.98 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−97.78%` / `−97.33%`                                                                 |
+| 10  | 646.78 ns | 455.67 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−75.95%` / `−30.25%`                                                                 |
 | 11  |  10.38 ms |  15.29 ms |                                                                                                                                                       |
-| 12  |  12.63 µs |  12.72 µs |                                                                                                                                                       |
+| 12  |   9.02 µs |  12.72 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−28.58%` / `0%`                                                                      |
 
 \* compared to first solution
 
@@ -60,3 +60,4 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 |   6 | 627.01 µs | 696.92 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/65cc61f1745db7579b47577769ba00f04f7e5f99/rust/2020/src/day_06.rs)     |
 |   9 |  13.50 ms |  13.66 ms |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/cc12a3d53eeb1deebc747ca2daeafaed5a97b3f3/rust/2020/src/day_09.rs)     |
 |  10 |   2.69 µs | 653.28 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/7570c1e6123a3acb8687160e4415bf9aeac2d878/rust/2020/src/day_10.rs)     |
+|  12 |  12.63 µs |  12.72 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/209b56f57390cc6cc9fdc23a52369d2b0e7fb877/rust/2020/src/day_12.rs)     |

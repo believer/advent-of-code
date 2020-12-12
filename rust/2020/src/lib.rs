@@ -3,6 +3,7 @@ extern crate aoc_runner;
 #[macro_use]
 extern crate aoc_runner_derive;
 
+pub mod math;
 pub mod passport;
 
 pub mod common;
