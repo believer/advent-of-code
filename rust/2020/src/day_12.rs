@@ -1,36 +1,32 @@
-use crate::math;
-use lazy_static::lazy_static;
-use regex::Regex;
+use crate::{common, math};
 
 // Day 12 - Rain Risk
 
-lazy_static! {
-    static ref RE: Regex = Regex::new(r"(N|S|E|W|L|R|F)(\d{1,3})").unwrap();
-}
-
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub enum Instruction {
-    North,
-    East,
-    South,
-    West,
-    Left,
-    Right,
-    Forward,
+    North(i32),
+    East(i32),
+    South(i32),
+    West(i32),
+    Left(i32),
+    Right(i32),
+    Forward(i32),
 }
 
 impl std::str::FromStr for Instruction {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(match s {
-            "N" => Instruction::North,
-            "E" => Instruction::East,
-            "S" => Instruction::South,
-            "W" => Instruction::West,
-            "L" => Instruction::Left,
-            "R" => Instruction::Right,
-            "F" => Instruction::Forward,
+        let amount = s[1..].parse().unwrap();
+
+        Ok(match &s[..1] {
+            "N" => Instruction::North(amount),
+            "E" => Instruction::East(amount),
+            "S" => Instruction::South(amount),
+            "W" => Instruction::West(amount),
+            "L" => Instruction::Left(amount),
+            "R" => Instruction::Right(amount),
+            "F" => Instruction::Forward(amount),
             _ => unreachable!("Invalid instruction"),
         })
     }
@@ -121,17 +117,8 @@ impl Waypoint {
 }
 
 #[aoc_generator(day12)]
-pub fn input_generator(input: &str) -> Vec<(Instruction, i32)> {
-    input
-        .lines()
-        .map(|l| {
-            let caps = RE.captures(l).unwrap();
-            let instruction = caps.get(1).unwrap().as_str().parse().unwrap();
-            let amount = caps.get(2).unwrap().as_str().parse().unwrap();
-
-            (instruction, amount)
-        })
-        .collect()
+pub fn input_generator(input: &str) -> Vec<Instruction> {
+    common::input_vec(input)
 }
 
 /* Part One
@@ -186,18 +173,18 @@ pub fn input_generator(input: &str) -> Vec<(Instruction, i32)> {
 /// let input = include_str!("../input/2020/day12.txt");
 /// assert_eq!(solve_part_01(&input_generator(input)), 1294);
 #[aoc(day12, part1)]
-pub fn solve_part_01(instructions: &[(Instruction, i32)]) -> u32 {
+pub fn solve_part_01(instructions: &[Instruction]) -> u32 {
     let mut ship = Ship::new();
 
-    for (instruction, x) in instructions {
+    for instruction in instructions {
         match instruction {
-            Instruction::North => ship.north(x),
-            Instruction::South => ship.south(x),
-            Instruction::West => ship.west(x),
-            Instruction::East => ship.east(x),
-            Instruction::Right => ship.turn(&-x),
-            Instruction::Left => ship.turn(&x),
-            Instruction::Forward => ship.forward(x),
+            Instruction::North(x) => ship.north(x),
+            Instruction::South(x) => ship.south(x),
+            Instruction::West(x) => ship.west(x),
+            Instruction::East(x) => ship.east(x),
+            Instruction::Right(x) => ship.turn(&-x),
+            Instruction::Left(x) => ship.turn(&x),
+            Instruction::Forward(x) => ship.forward(x),
         }
     }
 
@@ -245,19 +232,19 @@ pub fn solve_part_01(instructions: &[(Instruction, i32)]) -> u32 {
 /// assert_eq!(solve_part_02(&input_generator(input)), 20592);
 /// ```
 #[aoc(day12, part2)]
-pub fn solve_part_02(instructions: &[(Instruction, i32)]) -> u32 {
+pub fn solve_part_02(instructions: &[Instruction]) -> u32 {
     let mut waypoint = Waypoint::new(10, 1);
     let mut ship = Ship::new();
 
-    for (instruction, x) in instructions {
+    for instruction in instructions {
         match instruction {
-            Instruction::Forward => ship.move_by_waypoint(&waypoint, x),
-            Instruction::Right => waypoint.rotate(&-x),
-            Instruction::Left => waypoint.rotate(x),
-            Instruction::North => waypoint.north(x),
-            Instruction::South => waypoint.south(x),
-            Instruction::East => waypoint.east(x),
-            Instruction::West => waypoint.west(x),
+            Instruction::Forward(x) => ship.move_by_waypoint(&waypoint, x),
+            Instruction::Right(x) => waypoint.rotate(&-x),
+            Instruction::Left(x) => waypoint.rotate(x),
+            Instruction::North(x) => waypoint.north(x),
+            Instruction::South(x) => waypoint.south(x),
+            Instruction::East(x) => waypoint.east(x),
+            Instruction::West(x) => waypoint.west(x),
         }
     }
 
