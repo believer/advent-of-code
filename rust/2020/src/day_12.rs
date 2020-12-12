@@ -167,7 +167,7 @@ pub fn input_generator(input: &str) -> Vec<Instruction> {
  * Figure out where the navigation instructions lead. What is the Manhattan distance
  * between that location and the ship's starting position?
  */
-/// Your puzzle answer was.
+/// Your puzzle answer was
 /// ```
 /// use advent_of_code_2020::day_12::*;
 /// let input = include_str!("../input/2020/day12.txt");
@@ -225,7 +225,7 @@ pub fn solve_part_01(instructions: &[Instruction]) -> u32 {
  *
  * Figure out where the navigation instructions actually lead. What is the Manhattan distance between that location and the ship's starting position?
 */
-/// Your puzzle answer was.
+/// Your puzzle answer was
 /// ```
 /// use advent_of_code_2020::day_12::*;
 /// let input = include_str!("../input/2020/day12.txt");

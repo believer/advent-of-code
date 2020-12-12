@@ -258,7 +258,7 @@ fn simulate_seating<F: Fn(&[Vec<SeatingSystem>], usize, usize) -> bool>(
  * Simulate your seating area by applying the seating rules repeatedly until no seats change state.
  * How many seats end up occupied?
 */
-/// Your puzzle answer was.
+/// Your puzzle answer was
 /// ```
 /// use advent_of_code_2020::day_11::*;
 /// let input = include_str!("../input/2020/day11.txt");
@@ -394,7 +394,7 @@ pub fn solve_part_01(grid: &[Vec<SeatingSystem>]) -> usize {
  * Given the new visibility method and the rule change for occupied seats becoming empty,
  * once equilibrium is reached, how many seats end up occupied?
 */
-/// Your puzzle answer was.
+/// Your puzzle answer was
 /// ```
 /// use advent_of_code_2020::day_11::*;
 /// let input = include_str!("../input/2020/day11.txt");
