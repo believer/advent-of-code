@@ -27,6 +27,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 9: Encoding Error](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_09.rs)      | 🌟  | **21806024** | 🌟  |         **2986195** |
 | [Day 10: Adapter Array](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_10.rs)      | 🌟  |     **2475** | 🌟  | **442136281481216** |
 | [Day 11: Seating System](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_11.rs)     | 🌟  |     **2183** | 🌟  |            **1990** |
+| [Day 12: Rain Risk](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_12.rs)          | 🌟  |     **1294** | 🌟  |           **20592** |
 
 ## Performance
 
@@ -45,6 +46,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 9   | 299.88 µs | 363.98 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−97.78%` / `−−97.33%`                                                                |
 | 10  | 646.78 ns | 455.67 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−75.95 %` / `−30.25%`                                                                |
 | 11  |  10.38 ms |  15.29 ms |                                                                                                                                                       |
+| 12  |   4.91 µs |  13.99 µs |                                                                                                                                                       |
 
 \* compared to first solution
 
