@@ -155,15 +155,51 @@ pub fn solve_part_01(instructions: &[Instruction]) -> u32 {
     manhattan_distance(x, y)
 }
 
-// /// ```
-// /// use advent_of_code_2020::day_12::*;
-// /// let input = include_str!("../input/2020/day12.txt");
-// /// assert_eq!(solve_part_02(&input_generator(input)), 1990);
-// /// ```
-// #[aoc(day12, part2)]
-// pub fn solve_part_02(input: &[i32]) -> usize {
-//     0
-// }
+/// 2D rotation of a point
+fn rotation_2d(x: i32, y: i32, angle: i32) -> (i32, i32) {
+    let radians = angle as f64 * std::f64::consts::PI / 180 as f64;
+
+    let nx = (x as f64 * radians.cos() - y as f64 * radians.sin()).round();
+    let ny = (y as f64 * radians.cos() + x as f64 * radians.sin()).round();
+
+    (nx as i32, ny as i32)
+}
+
+/// ```
+/// use advent_of_code_2020::day_12::*;
+/// let input = include_str!("../input/2020/day12.txt");
+/// assert_eq!(solve_part_02(&input_generator(input)), 20592);
+/// ```
+#[aoc(day12, part2)]
+pub fn solve_part_02(instructions: &[Instruction]) -> u32 {
+    let (mut wx, mut wy): (i32, i32) = (10, 1);
+    let (mut x, mut y): (i32, i32) = (0, 0);
+
+    for instruction in instructions {
+        match instruction {
+            Instruction::Forward(a) => {
+                x += wx * a;
+                y += wy * a;
+            }
+            Instruction::Right(angle) => {
+                let (nx, ny) = rotation_2d(wx, wy, -*angle);
+                wx = nx;
+                wy = ny;
+            }
+            Instruction::Left(angle) => {
+                let (nx, ny) = rotation_2d(wx, wy, *angle);
+                wx = nx;
+                wy = ny;
+            }
+            Instruction::North(i) => wy += i,
+            Instruction::South(i) => wy -= i,
+            Instruction::East(i) => wx += i,
+            Instruction::West(i) => wx -= i,
+        }
+    }
+
+    manhattan_distance(x, y)
+}
 
 #[cfg(test)]
 mod tests {
@@ -180,5 +216,18 @@ F11
 ";
 
         assert_eq!(solve_part_01(&input_generator(data)), 25)
+    }
+
+    /// Test example data on part 2
+    #[test]
+    fn test_example_part_2() {
+        let data = "F10
+N3
+F7
+R90
+F11
+";
+
+        assert_eq!(solve_part_02(&input_generator(data)), 286)
     }
 }
