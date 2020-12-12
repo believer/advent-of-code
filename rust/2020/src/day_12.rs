@@ -77,7 +77,7 @@ fn manhattan_distance(x: i32, y: i32) -> u32 {
 
 /// 2D rotation of a point
 fn rotation_2d(x: i32, y: i32, angle: i32) -> (i32, i32) {
-    let radians = angle as f64 * std::f64::consts::PI / 180 as f64;
+    let radians = angle as f64 * std::f64::consts::PI / 180_f64;
 
     let nx = (x as f64 * radians.cos() - y as f64 * radians.sin()).round();
     let ny = (y as f64 * radians.cos() + x as f64 * radians.sin()).round();
