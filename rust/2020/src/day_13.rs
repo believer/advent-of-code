@@ -28,6 +28,8 @@ pub fn input_generator_part_1(input: &str) -> (u64, Vec<u64>) {
 #[aoc_generator(day13, part2)]
 pub fn input_generator_part_2(input: &str) -> Vec<String> {
     let mut lines = input.lines();
+
+    // Skip first line
     lines.next();
 
     lines

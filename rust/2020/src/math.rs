@@ -20,7 +20,10 @@ pub fn degrees_to_radians(angle: i32) -> f32 {
     angle as f32 * PI / 180_f32
 }
 
-fn egcd(a: i64, b: i64) -> (i64, i64, i64) {
+/// Extended Euclidean algorithm
+/// Find the the greatest common denominator of two integers a,b
+/// https://en.wikipedia.org/wiki/Modular_multiplicative_inverse
+pub fn egcd(a: i64, b: i64) -> (i64, i64, i64) {
     if a == 0 {
         (b, 0, 1)
     } else {
@@ -29,7 +32,9 @@ fn egcd(a: i64, b: i64) -> (i64, i64, i64) {
     }
 }
 
-fn mod_inv(x: i64, n: i64) -> Option<i64> {
+/// Finds the modular multiplicative inverse
+/// https://en.wikipedia.org/wiki/Modular_multiplicative_inverse
+pub fn mod_inv(x: i64, n: i64) -> Option<i64> {
     let (g, x, _) = egcd(x, n);
 
     if g == 1 {
@@ -47,7 +52,7 @@ pub fn chinese_remainder(residues: &[i64], modulii: &[i64]) -> Option<i64> {
 
     for (&residue, &modulus) in residues.iter().zip(modulii) {
         let p = prod / modulus;
-        sum += residue * mod_inv(p, modulus)? * p
+        sum += residue * p * mod_inv(p, modulus)?;
     }
 
     Some(sum % prod)
