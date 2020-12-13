@@ -17,7 +17,7 @@ pub fn input_generator_part_1(input: &str) -> (u64, Vec<u64>) {
     let buses = lines
         .next()
         .unwrap()
-        .split(",")
+        .split(',')
         .filter(|&b| b != "x")
         .map(|b| b.parse().unwrap())
         .collect::<Vec<u64>>();
@@ -35,7 +35,7 @@ pub fn input_generator_part_2(input: &str) -> Vec<String> {
     lines
         .next()
         .unwrap()
-        .split(",")
+        .split(',')
         .map(|l| l.to_string())
         .collect()
 }
@@ -212,7 +212,7 @@ pub fn solve_part_01((timestamp, buses): &(u64, Vec<u64>)) -> u64 {
 /// assert_eq!(solve_part_02(&input_generator_part_2(input)), 1010182346291467);
 /// ```
 #[aoc(day13, part2)]
-pub fn solve_part_02(buses: &Vec<String>) -> i64 {
+pub fn solve_part_02(buses: &[String]) -> i64 {
     let mut residues = vec![];
     let mut valid_buses = vec![];
 

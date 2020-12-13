@@ -23,6 +23,7 @@ pub fn degrees_to_radians(angle: i32) -> f32 {
 /// Extended Euclidean algorithm
 /// Find the the greatest common denominator of two integers a,b
 /// https://en.wikipedia.org/wiki/Modular_multiplicative_inverse
+#[allow(clippy::many_single_char_names)]
 pub fn egcd(a: i64, b: i64) -> (i64, i64, i64) {
     if a == 0 {
         (b, 0, 1)
