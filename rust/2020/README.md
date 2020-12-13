@@ -14,20 +14,21 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                          | #1  |    #1 Answer | #2  |           #2 Answer |
-| ------------------------------------------------------------------------------------------------------------ | --- | -----------: | --- | ------------------: |
-| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_01.rs)       | 🌟  |   **898299** | 🌟  |       **143933922** |
-| [Day 2: Password Philosophy](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_02.rs) | 🌟  |      **524** | 🌟  |             **485** |
-| [Day 3: Toboggan Trajectory](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_03.rs) | 🌟  |      **259** | 🌟  |      **2224913600** |
-| [Day 4: Passport Processing](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_04.rs) | 🌟  |      **200** | 🌟  |             **116** |
-| [Day 5: Binary Boarding](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_05.rs)     | 🌟  |      **866** | 🌟  |             **583** |
-| [Day 6: Custom Customs](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_06.rs)      | 🌟  |     **6778** | 🌟  |            **3406** |
-| [Day 7: Handy Haversacks](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_07.rs)    | 🌟  |      **226** | 🌟  |            **9569** |
-| [Day 8: Handheld Halting](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_08.rs)    | 🌟  |     **1489** | 🌟  |            **1539** |
-| [Day 9: Encoding Error](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_09.rs)      | 🌟  | **21806024** | 🌟  |         **2986195** |
-| [Day 10: Adapter Array](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_10.rs)      | 🌟  |     **2475** | 🌟  | **442136281481216** |
-| [Day 11: Seating System](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_11.rs)     | 🌟  |     **2183** | 🌟  |            **1990** |
-| [Day 12: Rain Risk](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_12.rs)          | 🌟  |     **1294** | 🌟  |           **20592** |
+| Day                                                                                                          | #1  |    #1 Answer | #2  |            #2 Answer |
+| ------------------------------------------------------------------------------------------------------------ | --- | -----------: | --- | -------------------: |
+| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_01.rs)       | 🌟  |   **898299** | 🌟  |        **143933922** |
+| [Day 2: Password Philosophy](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_02.rs) | 🌟  |      **524** | 🌟  |              **485** |
+| [Day 3: Toboggan Trajectory](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_03.rs) | 🌟  |      **259** | 🌟  |       **2224913600** |
+| [Day 4: Passport Processing](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_04.rs) | 🌟  |      **200** | 🌟  |              **116** |
+| [Day 5: Binary Boarding](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_05.rs)     | 🌟  |      **866** | 🌟  |              **583** |
+| [Day 6: Custom Customs](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_06.rs)      | 🌟  |     **6778** | 🌟  |             **3406** |
+| [Day 7: Handy Haversacks](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_07.rs)    | 🌟  |      **226** | 🌟  |             **9569** |
+| [Day 8: Handheld Halting](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_08.rs)    | 🌟  |     **1489** | 🌟  |             **1539** |
+| [Day 9: Encoding Error](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_09.rs)      | 🌟  | **21806024** | 🌟  |          **2986195** |
+| [Day 10: Adapter Array](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_10.rs)      | 🌟  |     **2475** | 🌟  |  **442136281481216** |
+| [Day 11: Seating System](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_11.rs)     | 🌟  |     **2183** | 🌟  |             **1990** |
+| [Day 12: Rain Risk](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_12.rs)          | 🌟  |     **1294** | 🌟  |            **20592** |
+| [Day 13: Shuttle Search](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_13.rs)     | 🌟  |     **3246** | 🌟  | **1010182346291467** |
 
 ## Performance
 
@@ -47,6 +48,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 10  | 646.78 ns | 455.67 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−75.95%` / `−30.25%`                                                                 |
 | 11  |  10.38 ms |  15.29 ms |                                                                                                                                                       |
 | 12  |   9.02 µs |  12.72 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−28.58%` / `0%`                                                                      |
+| 13  |  34.44 ms |   1.82 µs |                                                                                                                                                       |
 
 \* compared to first solution
 
