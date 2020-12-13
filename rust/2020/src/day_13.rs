@@ -1,5 +1,4 @@
 use crate::math;
-use std::collections::BTreeMap;
 
 // Day 13 - Shuttle Search
 //
@@ -7,8 +6,12 @@ use std::collections::BTreeMap;
 // to use Chinese Remainder Theorem. Found a solution on Rosetta Code which
 // I added to my math library (it seems to be a recurring puzzle solution).
 //
-// 99% performance increase in part 1 was achieved by not adding every time
+// 99.28% performance increase in part 1 was achieved by not adding every time
 // to the timetable since we're only interested in the ones after our timestamp.
+//
+// I later found a even simpler an faster solution where a number and a timestamp
+// are evenly divisible with the bus ID. This squeezed out even more performance,
+// bringing the total improvement to 99.99% (-99.81% over previous).
 
 #[aoc_generator(day13, part1)]
 pub fn input_generator_part_1(input: &str) -> (u64, Vec<u64>) {
@@ -114,22 +117,15 @@ pub fn input_generator_part_2(input: &str) -> Vec<String> {
 /// let input = include_str!("../input/2020/day13.txt");
 /// assert_eq!(solve_part_01(&input_generator_part_1(input)), 3246);
 #[aoc(day13, part1)]
-pub fn solve_part_01((timestamp, buses): &(u64, Vec<u64>)) -> u64 {
-    let mut timetable: BTreeMap<u64, u64> = BTreeMap::new();
-
-    for bus in buses {
-        let mut time = 0;
-
-        while time <= *timestamp + bus {
-            if time >= *timestamp {
-                timetable.insert(time, *bus);
-            }
-            time += bus;
-        }
-    }
-
-    let (time, bus) = timetable.pop_first().unwrap();
-    bus * (time - timestamp)
+pub fn solve_part_01((timestamp, buses): &(u64, Vec<u64>)) -> Option<u64> {
+    (0..)
+        .filter_map(|num| {
+            buses
+                .iter()
+                .find(|&bus| (num + timestamp) % bus == 0)
+                .map(|bus| bus * num)
+        })
+        .next()
 }
 
 /* Part Two
