@@ -115,7 +115,7 @@ pub fn input_generator_part_2(input: &str) -> Vec<String> {
 /// ```
 /// use advent_of_code_2020::day_13::*;
 /// let input = include_str!("../input/2020/day13.txt");
-/// assert_eq!(solve_part_01(&input_generator_part_1(input)), 3246);
+/// assert_eq!(solve_part_01(&input_generator_part_1(input)).unwrap(), 3246);
 #[aoc(day13, part1)]
 pub fn solve_part_01((timestamp, buses): &(u64, Vec<u64>)) -> Option<u64> {
     (0..)
@@ -239,7 +239,7 @@ mod tests {
         let data = "939
 7,13,x,x,59,x,31,19";
 
-        assert_eq!(solve_part_01(&input_generator_part_1(data)), 295)
+        assert_eq!(solve_part_01(&input_generator_part_1(data)).unwrap(), 295)
     }
 
     // Test example data on part 2
