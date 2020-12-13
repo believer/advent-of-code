@@ -6,6 +6,9 @@ use std::collections::BTreeMap;
 // I had no idea how to solve part 2, but got the tip from Reddit
 // to use Chinese Remainder Theorem. Found a solution on Rosetta Code which
 // I added to my math library (it seems to be a recurring puzzle solution).
+//
+// 99% performance increase in part 1 was achieved by not adding every time
+// to the timetable since we're only interested in the ones after our timestamp.
 
 #[aoc_generator(day13, part1)]
 pub fn input_generator_part_1(input: &str) -> (u64, Vec<u64>) {
@@ -116,12 +119,14 @@ pub fn solve_part_01((timestamp, buses): &(u64, Vec<u64>)) -> u64 {
         let mut time = 0;
 
         while time <= *timestamp + bus {
-            timetable.insert(time, *bus);
+            if time >= *timestamp {
+                timetable.insert(time, *bus);
+            }
             time += bus;
         }
     }
 
-    let (time, bus) = timetable.range(timestamp..).next().unwrap();
+    let (time, bus) = timetable.pop_first().unwrap();
     bus * (time - timestamp)
 }
 
