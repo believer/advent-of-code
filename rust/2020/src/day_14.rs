@@ -21,7 +21,7 @@ pub fn input_generator(input: &str) -> Vec<(String, String)> {
 }
 
 fn parse_mask(value: usize, mask: &str) -> usize {
-    let mut result = value.clone();
+    let mut result = value;
 
     // Convert mask to two different binary strings
     // in order to run bitwise operations with them
@@ -110,7 +110,7 @@ fn parse_mask(value: usize, mask: &str) -> usize {
 /// assert_eq!(solve_part_01(&input_generator(input)), 5055782549997);
 /// ```
 #[aoc(day14, part1)]
-pub fn solve_part_01(input: &Vec<(String, String)>) -> usize {
+pub fn solve_part_01(input: &[(String, String)]) -> usize {
     let mut memory: HashMap<u32, usize> = HashMap::new();
     let mut mask = "";
 
