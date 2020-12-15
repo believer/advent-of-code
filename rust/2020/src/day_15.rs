@@ -3,6 +3,9 @@ use std::collections::HashMap;
 
 // Day 15 - Rambunctious Recitation
 //
+// This is The Van Eck Sequence
+// https://www.youtube.com/watch?v=etMJxB-igrc
+//
 // I had multiple lookups in the HashMap which slowed down my first solution
 // significantly. Got a tip from Reddit to use the Entry API, this way I could
 // reduce the HashMap to only contain the last value. It also made the solution a
