@@ -55,6 +55,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 15  | 252.60 µs | 10.54 s\*\* |                                                                                                                                                       |
 
 \* compared to first solution
+
 \*\* super-slow, didn't run through criterion
 
 ### Previous solutions
