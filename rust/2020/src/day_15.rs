@@ -1,49 +1,36 @@
-use std::collections::BTreeMap;
+use std::collections::hash_map::Entry;
+use std::collections::HashMap;
 
 // Day 15 - Rambunctious Recitation
+//
+// I had multiple lookups in the HashMap which slowed down my first solution
+// significantly. Got a tip from Reddit to use the Entry API, this way I could
+// reduce the HashMap to only contain the last value. It also made the solution a
+// whole lot faster.
 
 #[aoc_generator(day15)]
-pub fn input_generator(input: &str) -> Vec<u32> {
+pub fn input_generator(input: &str) -> Vec<usize> {
     input
         .split(',')
         .map(|s| s.trim().parse().unwrap())
         .collect()
 }
 
-fn solver(input: &[u32], end_on_turn: u32) -> u32 {
-    let mut spoken: BTreeMap<u32, Vec<u32>> = BTreeMap::new();
-    let mut turn = 1;
-    let mut last = 0;
+fn solver(input: &[usize], end_on_turn: usize) -> usize {
+    let mut seen: HashMap<_, _> = input[..input.len() - 1]
+        .iter()
+        .copied()
+        .enumerate()
+        .map(|(i, n)| (n, i))
+        .collect();
 
-    for i in input {
-        spoken.insert(*i, vec![turn]);
-        last = *i;
-        turn += 1;
-    }
-
-    loop {
-        if let Some(l) = spoken.get(&last) {
-            if l.len() > 1 {
-                last = l[l.len() - 1] - l[l.len() - 2]
-            } else {
-                last = 0;
-            }
-
-            if let Some(s) = spoken.get_mut(&last) {
-                s.push(turn);
-            } else {
-                spoken.insert(last, vec![turn]);
-            }
-        } else {
-            spoken.insert(last, vec![turn]);
+    (input.len()..end_on_turn).fold(*input.last().unwrap(), |n, i| match seen.entry(n) {
+        Entry::Occupied(mut occ) => i - occ.insert(i - 1) - 1,
+        Entry::Vacant(vac) => {
+            vac.insert(i - 1);
+            0
         }
-
-        if turn == end_on_turn {
-            break last;
-        }
-
-        turn += 1;
-    }
+    })
 }
 
 /* Part One
@@ -106,7 +93,7 @@ fn solver(input: &[u32], end_on_turn: u32) -> u32 {
 /// assert_eq!(solve_part_01(&input_generator(input)), 1696);
 /// ```
 #[aoc(day15, part1)]
-pub fn solve_part_01(input: &[u32]) -> u32 {
+pub fn solve_part_01(input: &[usize]) -> usize {
     solver(&input, 2020)
 }
 
@@ -132,8 +119,8 @@ pub fn solve_part_01(input: &[u32]) -> u32 {
 /// assert_eq!(solve_part_02(&input_generator(input)), 37385);
 /// ```
 #[aoc(day15, part2)]
-pub fn solve_part_02(input: &[u32]) -> u32 {
-    solver(&input, 30000000)
+pub fn solve_part_02(input: &[usize]) -> usize {
+    solver(&input, 30_000_000)
 }
 
 #[cfg(test)]
@@ -196,7 +183,10 @@ mod tests {
         assert_eq!(solve_part_01(&input_generator(data)), 1836)
     }
 
+    // This test is too slow
+    // To run, use cargo test -- --ignored
     #[test]
+    #[ignore]
     fn test_example_part_2() {
         let data = "0,3,6";
 

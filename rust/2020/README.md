@@ -36,23 +36,23 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro 2,6 GHz 6-Core i7, 32 GB RAM, Radeon 5300M 4 GB.
 
-| Day |        #1 |          #2 | Improvement\*                                                                                                                                         |
-| --- | --------: | ----------: | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   |   1.21 µs |    16.70 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−92.46%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−99.61%` |
-| 2   |  16.62 µs |    39.57 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−96.27%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-91.57%` |
-| 3   |   2.04 µs |     9.51 µs |                                                                                                                                                       |
-| 4   | 528.92 ns |   731.94 ns |                                                                                                                                                       |
-| 5   | 103.69 µs |   127.14 µs |                                                                                                                                                       |
-| 6   | 477.60 µs |   696.92 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−23.83%` / `0%`                                                                      |
-| 7   | 179.43 µs |     1.70 µs |                                                                                                                                                       |
-| 8   |  23.66 µs |   49.398 ms |                                                                                                                                                       |
-| 9   | 299.88 µs |   363.98 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−97.78%` / `−97.33%`                                                                 |
-| 10  | 646.78 ns |   455.67 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−75.95%` / `−30.25%`                                                                 |
-| 11  |  10.38 ms |    15.29 ms |                                                                                                                                                       |
-| 12  |   9.02 µs |    12.72 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−28.58%` / `0%`                                                                      |
-| 13  | 479.50 ns |     1.82 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-99.99%` / `0%`                                                                      |
-| 14  | 730.08 µs |             |                                                                                                                                                       |
-| 15  | 252.60 µs | 10.54 s\*\* |                                                                                                                                                       |
+| Day |        #1 |         #2 | Improvement\*                                                                                                                                         |
+| --- | --------: | ---------: | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   |   1.21 µs |   16.70 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−92.46%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−99.61%` |
+| 2   |  16.62 µs |   39.57 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−96.27%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-91.57%` |
+| 3   |   2.04 µs |    9.51 µs |                                                                                                                                                       |
+| 4   | 528.92 ns |  731.94 ns |                                                                                                                                                       |
+| 5   | 103.69 µs |  127.14 µs |                                                                                                                                                       |
+| 6   | 477.60 µs |  696.92 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−23.83%` / `0%`                                                                      |
+| 7   | 179.43 µs |    1.70 µs |                                                                                                                                                       |
+| 8   |  23.66 µs |  49.398 ms |                                                                                                                                                       |
+| 9   | 299.88 µs |  363.98 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−97.78%` / `−97.33%`                                                                 |
+| 10  | 646.78 ns |  455.67 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−75.95%` / `−30.25%`                                                                 |
+| 11  |  10.38 ms |   15.29 ms |                                                                                                                                                       |
+| 12  |   9.02 µs |   12.72 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−28.58%` / `0%`                                                                      |
+| 13  | 479.50 ns |    1.82 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-99.99%` / `0%`                                                                      |
+| 14  | 730.08 µs |            |                                                                                                                                                       |
+| 15  | 134.16 µs | 2.92 s\*\* | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−46.89%` / `−72.30%`                                                                 |
 
 \* compared to first solution
 
@@ -71,3 +71,4 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 |  12 |  12.63 µs |  12.72 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/209b56f57390cc6cc9fdc23a52369d2b0e7fb877/rust/2020/src/day_12.rs)     |
 |  13 |  34.44 ms |   1.82 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/ab0d72e1c582699ef888609a7b7555e8e514c5db/rust/2020/src/day_13.rs)     |
 |  13 | 246.04 µs |   1.82 µs |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/ebb46bf2ed026f034601bea8434374b19fcc410c/rust/2020/src/day_13.rs)     |
+|  15 | 252.60 µs |   10.54 s |                                                                         Baseline | [Link](https://github.com/believer/advent-of-code/blob/88d3b986791fff98db7551acc7a77c8069a1b6f8/rust/2020/src/day_15.rs)     |
