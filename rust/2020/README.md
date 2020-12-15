@@ -14,45 +14,48 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                          | #1  |         #1 Answer | #2  |            #2 Answer |
-| ------------------------------------------------------------------------------------------------------------ | --- | ----------------: | --- | -------------------: |
-| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_01.rs)       | 🌟  |        **898299** | 🌟  |        **143933922** |
-| [Day 2: Password Philosophy](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_02.rs) | 🌟  |           **524** | 🌟  |              **485** |
-| [Day 3: Toboggan Trajectory](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_03.rs) | 🌟  |           **259** | 🌟  |       **2224913600** |
-| [Day 4: Passport Processing](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_04.rs) | 🌟  |           **200** | 🌟  |              **116** |
-| [Day 5: Binary Boarding](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_05.rs)     | 🌟  |           **866** | 🌟  |              **583** |
-| [Day 6: Custom Customs](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_06.rs)      | 🌟  |          **6778** | 🌟  |             **3406** |
-| [Day 7: Handy Haversacks](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_07.rs)    | 🌟  |           **226** | 🌟  |             **9569** |
-| [Day 8: Handheld Halting](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_08.rs)    | 🌟  |          **1489** | 🌟  |             **1539** |
-| [Day 9: Encoding Error](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_09.rs)      | 🌟  |      **21806024** | 🌟  |          **2986195** |
-| [Day 10: Adapter Array](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_10.rs)      | 🌟  |          **2475** | 🌟  |  **442136281481216** |
-| [Day 11: Seating System](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_11.rs)     | 🌟  |          **2183** | 🌟  |             **1990** |
-| [Day 12: Rain Risk](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_12.rs)          | 🌟  |          **1294** | 🌟  |            **20592** |
-| [Day 13: Shuttle Search](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_13.rs)     | 🌟  |          **3246** | 🌟  | **1010182346291467** |
-| [Day 14: Docking Data](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_14.rs)       | 🌟  | **5055782549997** |     |                      |
+| Day                                                                                                               | #1  |         #1 Answer | #2  |            #2 Answer |
+| ----------------------------------------------------------------------------------------------------------------- | --- | ----------------: | --- | -------------------: |
+| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_01.rs)            | 🌟  |        **898299** | 🌟  |        **143933922** |
+| [Day 2: Password Philosophy](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_02.rs)      | 🌟  |           **524** | 🌟  |              **485** |
+| [Day 3: Toboggan Trajectory](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_03.rs)      | 🌟  |           **259** | 🌟  |       **2224913600** |
+| [Day 4: Passport Processing](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_04.rs)      | 🌟  |           **200** | 🌟  |              **116** |
+| [Day 5: Binary Boarding](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_05.rs)          | 🌟  |           **866** | 🌟  |              **583** |
+| [Day 6: Custom Customs](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_06.rs)           | 🌟  |          **6778** | 🌟  |             **3406** |
+| [Day 7: Handy Haversacks](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_07.rs)         | 🌟  |           **226** | 🌟  |             **9569** |
+| [Day 8: Handheld Halting](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_08.rs)         | 🌟  |          **1489** | 🌟  |             **1539** |
+| [Day 9: Encoding Error](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_09.rs)           | 🌟  |      **21806024** | 🌟  |          **2986195** |
+| [Day 10: Adapter Array](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_10.rs)           | 🌟  |          **2475** | 🌟  |  **442136281481216** |
+| [Day 11: Seating System](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_11.rs)          | 🌟  |          **2183** | 🌟  |             **1990** |
+| [Day 12: Rain Risk](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_12.rs)               | 🌟  |          **1294** | 🌟  |            **20592** |
+| [Day 13: Shuttle Search](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_13.rs)          | 🌟  |          **3246** | 🌟  | **1010182346291467** |
+| [Day 14: Docking Data](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_14.rs)            | 🌟  | **5055782549997** |     |                      |
+| [Day 15: Rambunctious Recitation](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_15.rs) | 🌟  |          **1696** | 🌟  |            **37385** |
 
 ## Performance
 
 With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro 2,6 GHz 6-Core i7, 32 GB RAM, Radeon 5300M 4 GB.
 
-| Day |        #1 |        #2 | Improvement\*                                                                                                                                         |
-| --- | --------: | --------: | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   |   1.21 µs |  16.70 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−92.46%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−99.61%` |
-| 2   |  16.62 µs |  39.57 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−96.27%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-91.57%` |
-| 3   |   2.04 µs |   9.51 µs |                                                                                                                                                       |
-| 4   | 528.92 ns | 731.94 ns |                                                                                                                                                       |
-| 5   | 103.69 µs | 127.14 µs |                                                                                                                                                       |
-| 6   | 477.60 µs | 696.92 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−23.83%` / `0%`                                                                      |
-| 7   | 179.43 µs |   1.70 µs |                                                                                                                                                       |
-| 8   |  23.66 µs | 49.398 ms |                                                                                                                                                       |
-| 9   | 299.88 µs | 363.98 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−97.78%` / `−97.33%`                                                                 |
-| 10  | 646.78 ns | 455.67 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−75.95%` / `−30.25%`                                                                 |
-| 11  |  10.38 ms |  15.29 ms |                                                                                                                                                       |
-| 12  |   9.02 µs |  12.72 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−28.58%` / `0%`                                                                      |
-| 13  | 479.50 ns |   1.82 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-99.99%` / `0%`                                                                      |
-| 14  | 730.08 µs |           |                                                                                                                                                       |
+| Day |        #1 |          #2 | Improvement\*                                                                                                                                         |
+| --- | --------: | ----------: | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   |   1.21 µs |    16.70 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−92.46%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−99.61%` |
+| 2   |  16.62 µs |    39.57 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−96.27%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-91.57%` |
+| 3   |   2.04 µs |     9.51 µs |                                                                                                                                                       |
+| 4   | 528.92 ns |   731.94 ns |                                                                                                                                                       |
+| 5   | 103.69 µs |   127.14 µs |                                                                                                                                                       |
+| 6   | 477.60 µs |   696.92 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−23.83%` / `0%`                                                                      |
+| 7   | 179.43 µs |     1.70 µs |                                                                                                                                                       |
+| 8   |  23.66 µs |   49.398 ms |                                                                                                                                                       |
+| 9   | 299.88 µs |   363.98 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−97.78%` / `−97.33%`                                                                 |
+| 10  | 646.78 ns |   455.67 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−75.95%` / `−30.25%`                                                                 |
+| 11  |  10.38 ms |    15.29 ms |                                                                                                                                                       |
+| 12  |   9.02 µs |    12.72 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−28.58%` / `0%`                                                                      |
+| 13  | 479.50 ns |     1.82 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-99.99%` / `0%`                                                                      |
+| 14  | 730.08 µs |             |                                                                                                                                                       |
+| 15  | 252.60 µs | 10.54 s\*\* |                                                                                                                                                       |
 
 \* compared to first solution
+\*\* super-slow, didn't run through criterion
 
 ### Previous solutions
 
