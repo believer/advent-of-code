@@ -31,6 +31,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 13: Shuttle Search](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_13.rs)          | 🌟  |          **3246** | 🌟  | **1010182346291467** |
 | [Day 14: Docking Data](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_14.rs)            | 🌟  | **5055782549997** |     |                      |
 | [Day 15: Rambunctious Recitation](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_15.rs) | 🌟  |          **1696** | 🌟  |            **37385** |
+| [Day 16: Ticket Translation](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_16.rs)      | 🌟  |         **26980** |     |                      |
 
 ## Performance
 
@@ -53,6 +54,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 13  | 479.50 ns |    1.82 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-99.99%` / `0%`                                                                      |
 | 14  | 730.08 µs |            |                                                                                                                                                       |
 | 15  | 134.16 µs | 2.92 s\*\* | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−46.89%` / `−72.30%`                                                                 |
+| 16  | 381.21 µs |            |                                                                                                                                                       |
 
 \* compared to first solution
 
