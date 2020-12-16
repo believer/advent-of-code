@@ -115,12 +115,13 @@ pub fn solve_part_01(input: &[usize]) -> usize {
  *
  * Given your starting numbers, what will be the 30000000th number spoken?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_15::*;
-/// let input = include_str!("../input/2020/day15.txt");
-/// assert_eq!(solve_part_02(&input_generator(input)), 37385);
-/// ```
+// Ignored test, takes too long
+// /// Your puzzle answer was
+// /// ```
+// /// use advent_of_code_2020::day_15::*;
+// /// let input = include_str!("../input/2020/day15.txt");
+// /// assert_eq!(solve_part_02(&input_generator(input)), 37385);
+// /// ```
 #[aoc(day15, part2)]
 pub fn solve_part_02(input: &[usize]) -> usize {
     solver(&input, 30_000_000)

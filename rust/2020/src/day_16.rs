@@ -19,7 +19,7 @@ pub struct Train {
 pub fn input_generator(input: &str) -> Train {
     let s: Vec<Vec<&str>> = input
         .split("\n\n")
-        .map(|l| l.split('\n').collect())
+        .map(|l| l.trim().split('\n').collect())
         .collect();
 
     let rules: Vec<Vec<RangeInclusive<u32>>> = s[0]
