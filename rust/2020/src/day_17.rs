@@ -9,6 +9,22 @@ mod cube {
         Inactive,
     }
 
+    impl CubeState {
+        pub fn is_active(&self) -> bool {
+            self == &CubeState::Active
+        }
+
+        pub fn next_state(&self, active_neighbors: usize) -> Option<Self> {
+            match (self, active_neighbors) {
+                (CubeState::Active, count) if !(2..=3).contains(&count) => {
+                    Some(CubeState::Inactive)
+                }
+                (CubeState::Inactive, 3) => Some(CubeState::Active),
+                _ => None,
+            }
+        }
+    }
+
     impl std::str::FromStr for CubeState {
         type Err = ();
 
@@ -97,21 +113,22 @@ fn simulate_next_step_3d(cube: &[Cube]) -> Vec<Cube> {
     for i in 1..CUBE_SIZE - 1 {
         for j in 1..CUBE_SIZE - 1 {
             for k in 1..CUBE_SIZE - 1 {
-                let alive_neighbor_count = DELTA_NEIGHBORS
+                let current_cube = cube[i][j][k];
+
+                let active_neighbors = DELTA_NEIGHBORS
                     .iter()
                     .filter(|(di, dj, dk)| {
                         let ii = (i as i32 + di) as usize;
                         let jj = (j as i32 + dj) as usize;
                         let kk = (k as i32 + dk) as usize;
 
-                        cube[ii][jj][kk] == CubeState::Active
+                        cube[ii][jj][kk].is_active()
                     })
                     .count();
 
-                if cube[i][j][k] == CubeState::Active && !(2..=3).contains(&alive_neighbor_count) {
-                    next_cube[i][j][k] = CubeState::Inactive;
-                } else if cube[i][j][k] == CubeState::Inactive && alive_neighbor_count == 3 {
-                    next_cube[i][j][k] = CubeState::Active;
+                match current_cube.next_state(active_neighbors) {
+                    Some(state) => next_cube[i][j][k] = state,
+                    None => (),
                 }
             }
         }
@@ -127,7 +144,9 @@ fn simulate_next_step_4d(cube: &[HyperCube], deltas: &[(i32, i32, i32, i32)]) ->
         for j in 1..CUBE_SIZE - 1 {
             for k in 1..CUBE_SIZE - 1 {
                 for l in 1..CUBE_SIZE - 1 {
-                    let alive_neighbor_count = deltas
+                    let current_cube = cube[i][j][k][l];
+
+                    let active_neighbors = deltas
                         .iter()
                         .filter(|(di, dj, dk, dl)| {
                             let ii = (i as i32 + di) as usize;
@@ -135,16 +154,13 @@ fn simulate_next_step_4d(cube: &[HyperCube], deltas: &[(i32, i32, i32, i32)]) ->
                             let kk = (k as i32 + dk) as usize;
                             let ll = (l as i32 + dl) as usize;
 
-                            cube[ii][jj][kk][ll] == CubeState::Active
+                            cube[ii][jj][kk][ll].is_active()
                         })
                         .count();
 
-                    if cube[i][j][k][l] == CubeState::Active
-                        && !(2..=3).contains(&alive_neighbor_count)
-                    {
-                        next_cube[i][j][k][l] = CubeState::Inactive;
-                    } else if cube[i][j][k][l] == CubeState::Inactive && alive_neighbor_count == 3 {
-                        next_cube[i][j][k][l] = CubeState::Active;
+                    match current_cube.next_state(active_neighbors) {
+                        Some(state) => next_cube[i][j][k][l] = state,
+                        None => (),
                     }
                 }
             }
@@ -154,28 +170,21 @@ fn simulate_next_step_4d(cube: &[HyperCube], deltas: &[(i32, i32, i32, i32)]) ->
     next_cube
 }
 
-fn active_cubes_3d(cube: &[Cube]) -> u32 {
-    cube.iter().fold(0, |a, i| {
-        a + i.iter().fold(0, |b, j| {
-            b + j.iter().fold(0, |c, k| match k {
-                CubeState::Active => c + 1,
-                CubeState::Inactive => c,
-            })
-        })
-    })
+fn active_cubes_3d(cube: &[Cube]) -> usize {
+    cube.iter()
+        .flatten()
+        .flatten()
+        .filter(|&v| v.is_active())
+        .count()
 }
 
-fn active_cubes_4d(cube: &[HyperCube]) -> u32 {
-    cube.iter().fold(0, |a, i| {
-        a + i.iter().fold(0, |b, j| {
-            b + j.iter().fold(0, |c, k| {
-                c + k.iter().fold(0, |c, l| match l {
-                    CubeState::Active => c + 1,
-                    CubeState::Inactive => c,
-                })
-            })
-        })
-    })
+fn active_cubes_4d(cube: &[HyperCube]) -> usize {
+    cube.iter()
+        .flatten()
+        .flatten()
+        .flatten()
+        .filter(|&v| v.is_active())
+        .count()
 }
 
 fn hyper_cube_neighbors() -> Vec<(i32, i32, i32, i32)> {
@@ -260,7 +269,7 @@ fn hyper_cube_neighbors() -> Vec<(i32, i32, i32, i32)> {
 /// assert_eq!(solve_part_01(&input_generator_part_01(input)), 242);
 /// ```
 #[aoc(day17, part1)]
-pub fn solve_part_01(input: &[Cube]) -> u32 {
+pub fn solve_part_01(input: &[Cube]) -> usize {
     let mut cube = input.to_owned();
 
     for _ in 0..6 {
@@ -305,7 +314,7 @@ pub fn solve_part_01(input: &[Cube]) -> u32 {
  * NO DOC TEST because slow
 */
 #[aoc(day17, part2)]
-pub fn solve_part_02(input: &[HyperCube]) -> u32 {
+pub fn solve_part_02(input: &[HyperCube]) -> usize {
     let mut cube = input.to_owned();
     let neighbors = hyper_cube_neighbors();
 
