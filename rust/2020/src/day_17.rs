@@ -21,7 +21,7 @@ mod cube {
         }
     }
 
-    pub type Cube = Vec<Vec<Vec<CubeState>>>;
+    pub type Cube = Vec<Vec<CubeState>>;
     pub type HyperCube = Vec<Cube>;
 
     pub const CUBE_SIZE: usize = 27;
@@ -60,8 +60,9 @@ const DELTA_NEIGHBORS: [(i32, i32, i32); 26] = [
 ];
 
 #[aoc_generator(day17, part1)]
-pub fn input_generator_part_01(input: &str) -> Cube {
-    let mut cube: Cube = vec![vec![vec![CubeState::Inactive; CUBE_SIZE]; CUBE_SIZE]; CUBE_SIZE];
+pub fn input_generator_part_01(input: &str) -> Vec<Cube> {
+    let mut cube: Vec<Cube> =
+        vec![vec![vec![CubeState::Inactive; CUBE_SIZE]; CUBE_SIZE]; CUBE_SIZE];
 
     for (i, x) in input.lines().enumerate() {
         for (j, y) in x.chars().enumerate() {
@@ -75,8 +76,8 @@ pub fn input_generator_part_01(input: &str) -> Cube {
 }
 
 #[aoc_generator(day17, part2)]
-pub fn input_generator_part_02(input: &str) -> HyperCube {
-    let mut cube: HyperCube =
+pub fn input_generator_part_02(input: &str) -> Vec<HyperCube> {
+    let mut cube: Vec<HyperCube> =
         vec![vec![vec![vec![CubeState::Inactive; CUBE_SIZE]; CUBE_SIZE]; CUBE_SIZE]; CUBE_SIZE];
 
     for (i, x) in input.lines().enumerate() {
@@ -90,7 +91,7 @@ pub fn input_generator_part_02(input: &str) -> HyperCube {
     cube
 }
 
-fn simulate_next_step_3d(cube: &Cube) -> Cube {
+fn simulate_next_step_3d(cube: &[Cube]) -> Vec<Cube> {
     let mut next_cube = cube.to_owned();
 
     for i in 1..CUBE_SIZE - 1 {
@@ -119,7 +120,7 @@ fn simulate_next_step_3d(cube: &Cube) -> Cube {
     next_cube
 }
 
-fn simulate_next_step_4d(cube: &HyperCube, deltas: &[(i32, i32, i32, i32)]) -> HyperCube {
+fn simulate_next_step_4d(cube: &[HyperCube], deltas: &[(i32, i32, i32, i32)]) -> Vec<HyperCube> {
     let mut next_cube = cube.to_owned();
 
     for i in 1..CUBE_SIZE - 1 {
@@ -153,7 +154,7 @@ fn simulate_next_step_4d(cube: &HyperCube, deltas: &[(i32, i32, i32, i32)]) -> H
     next_cube
 }
 
-fn active_cubes_3d(cube: &Cube) -> u32 {
+fn active_cubes_3d(cube: &[Cube]) -> u32 {
     cube.iter().fold(0, |a, i| {
         a + i.iter().fold(0, |b, j| {
             b + j.iter().fold(0, |c, k| match k {
@@ -164,7 +165,7 @@ fn active_cubes_3d(cube: &Cube) -> u32 {
     })
 }
 
-fn active_cubes_4d(cube: &HyperCube) -> u32 {
+fn active_cubes_4d(cube: &[HyperCube]) -> u32 {
     cube.iter().fold(0, |a, i| {
         a + i.iter().fold(0, |b, j| {
             b + j.iter().fold(0, |c, k| {
@@ -259,8 +260,8 @@ fn hyper_cube_neighbors() -> Vec<(i32, i32, i32, i32)> {
 /// assert_eq!(solve_part_01(&input_generator_part_01(input)), 242);
 /// ```
 #[aoc(day17, part1)]
-pub fn solve_part_01(input: &Cube) -> u32 {
-    let mut cube = input.clone();
+pub fn solve_part_01(input: &[Cube]) -> u32 {
+    let mut cube = input.to_owned();
 
     for _ in 0..6 {
         cube = simulate_next_step_3d(&cube);
@@ -304,8 +305,8 @@ pub fn solve_part_01(input: &Cube) -> u32 {
  * NO DOC TEST because slow
 */
 #[aoc(day17, part2)]
-pub fn solve_part_02(input: &HyperCube) -> u32 {
-    let mut cube = input.clone();
+pub fn solve_part_02(input: &[HyperCube]) -> u32 {
+    let mut cube = input.to_owned();
     let neighbors = hyper_cube_neighbors();
 
     for _ in 0..6 {
