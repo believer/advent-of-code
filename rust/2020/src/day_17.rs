@@ -126,9 +126,8 @@ fn simulate_next_step_3d(cube: &[Cube]) -> Vec<Cube> {
                     })
                     .count();
 
-                match current_cube.next_state(active_neighbors) {
-                    Some(state) => next_cube[i][j][k] = state,
-                    None => (),
+                if let Some(state) = current_cube.next_state(active_neighbors) {
+                    next_cube[i][j][k] = state;
                 }
             }
         }
@@ -158,9 +157,8 @@ fn simulate_next_step_4d(cube: &[HyperCube], deltas: &[(i32, i32, i32, i32)]) ->
                         })
                         .count();
 
-                    match current_cube.next_state(active_neighbors) {
-                        Some(state) => next_cube[i][j][k][l] = state,
-                        None => (),
+                    if let Some(state) = current_cube.next_state(active_neighbors) {
+                        next_cube[i][j][k][l] = state;
                     }
                 }
             }
