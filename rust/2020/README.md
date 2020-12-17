@@ -32,33 +32,35 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 14: Docking Data](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_14.rs)            | 🌟  | **5055782549997** |     |                      |
 | [Day 15: Rambunctious Recitation](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_15.rs) | 🌟  |          **1696** | 🌟  |            **37385** |
 | [Day 16: Ticket Translation](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_16.rs)      | 🌟  |         **26980** |     |                      |
+| [Day 17: Conway Cubes](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_17.rs)            | 🌟  |           **242** | 🌟  |             **2292** |
 
 ## Performance
 
 With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro 2,6 GHz 6-Core i7, 32 GB RAM, Radeon 5300M 4 GB.
 
-| Day |        #1 |         #2 | Improvement\*                                                                                                                                         |
-| --- | --------: | ---------: | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   |   1.21 µs |   16.70 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−92.46%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−99.61%` |
-| 2   |  16.62 µs |   39.57 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−96.27%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-91.57%` |
-| 3   |   2.04 µs |    9.51 µs |                                                                                                                                                       |
-| 4   | 528.92 ns |  731.94 ns |                                                                                                                                                       |
-| 5   | 103.69 µs |  127.14 µs |                                                                                                                                                       |
-| 6   | 477.60 µs |  696.92 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−23.83%` / `0%`                                                                      |
-| 7   | 179.43 µs |    1.70 µs |                                                                                                                                                       |
-| 8   |  23.66 µs |  49.398 ms |                                                                                                                                                       |
-| 9   | 299.88 µs |  363.98 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−97.78%` / `−97.33%`                                                                 |
-| 10  | 646.78 ns |  455.67 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−75.95%` / `−30.25%`                                                                 |
-| 11  |  10.38 ms |   15.29 ms |                                                                                                                                                       |
-| 12  |   9.02 µs |   12.72 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−28.58%` / `0%`                                                                      |
-| 13  | 479.50 ns |    1.82 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-99.99%` / `0%`                                                                      |
-| 14  | 730.08 µs |            |                                                                                                                                                       |
-| 15  | 134.16 µs | 2.92 s\*\* | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−46.89%` / `−72.30%`                                                                 |
-| 16  | 381.21 µs |            |                                                                                                                                                       |
+| Day |        #1 |            #2 | Improvement\*                                                                                                                                         |
+| --- | --------: | ------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   |   1.21 µs |      16.70 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−92.46%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−99.61%` |
+| 2   |  16.62 µs |      39.57 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−96.27%` / ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-91.57%` |
+| 3   |   2.04 µs |       9.51 µs |                                                                                                                                                       |
+| 4   | 528.92 ns |     731.94 ns |                                                                                                                                                       |
+| 5   | 103.69 µs |     127.14 µs |                                                                                                                                                       |
+| 6   | 477.60 µs |     696.92 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−23.83%` / `0%`                                                                      |
+| 7   | 179.43 µs |       1.70 µs |                                                                                                                                                       |
+| 8   |  23.66 µs |     49.398 ms |                                                                                                                                                       |
+| 9   | 299.88 µs |     363.98 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−97.78%` / `−97.33%`                                                                 |
+| 10  | 646.78 ns |     455.67 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−75.95%` / `−30.25%`                                                                 |
+| 11  |  10.38 ms |      15.29 ms |                                                                                                                                                       |
+| 12  |   9.02 µs |      12.72 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−28.58%` / `0%`                                                                      |
+| 13  | 479.50 ns |       1.82 µs | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `-99.99%` / `0%`                                                                      |
+| 14  | 730.08 µs |               |                                                                                                                                                       |
+| 15  | 134.16 µs |    2.92 s\*\* | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−46.89%` / `−72.30%`                                                                 |
+| 16  | 381.21 µs |               |                                                                                                                                                       |
+| 17  |   8.52 ms | 704.03 ms\*\* |                                                                                                                                                       |
 
 \* compared to first solution
 
-\*\* super-slow, didn't run through criterion
+\*\* slow, didn't run through criterion
 
 ### Previous solutions
 
