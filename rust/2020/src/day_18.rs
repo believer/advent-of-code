@@ -9,26 +9,21 @@ lazy_static! {
 }
 
 fn calculator(exp: &str) -> u64 {
-    let mut sum = 0;
-    let mut op = "+";
-
-    for value in exp.split_whitespace() {
-        match value {
-            "+" => op = "+",
-            "*" => op = "*",
+    exp.split_whitespace()
+        .fold((0, "+"), |(sum, op), v| match v {
+            "+" => (sum, "+"),
+            "*" => (sum, "*"),
             v => {
                 let number: u64 = v.parse().unwrap();
 
                 match op {
-                    "+" => sum += number,
-                    "*" => sum *= number,
+                    "+" => (sum + number, op),
+                    "*" => (sum * number, op),
                     _ => unreachable!(),
-                };
+                }
             }
-        }
-    }
-
-    sum
+        })
+        .0
 }
 
 #[aoc_generator(day18, part1)]
