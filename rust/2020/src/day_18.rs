@@ -5,6 +5,7 @@ use regex::Regex;
 
 lazy_static! {
     static ref PAREN: Regex = Regex::new(r"\(([^\(\)]+)\)").unwrap();
+    static ref ADD: Regex = Regex::new(r"\d+ \+ \d+").unwrap();
 }
 
 fn calculator(exp: &str) -> u64 {
@@ -30,19 +31,53 @@ fn calculator(exp: &str) -> u64 {
     sum
 }
 
-#[aoc_generator(day18)]
-pub fn input_generator(input: &str) -> Vec<String> {
+#[aoc_generator(day18, part1)]
+pub fn input_generator_part_1(input: &str) -> Vec<String> {
     let mut expressions = Vec::new();
 
     for line in input.lines() {
         let mut expression = line.to_owned();
 
-        while expression.contains("(") {
+        while expression.contains('(') {
             let paren = PAREN.captures(&expression).unwrap();
             let old_exp = paren.get(0).unwrap().as_str();
             let exp = paren.get(1).unwrap().as_str();
 
             expression = expression.replace(old_exp, &calculator(exp).to_string());
+        }
+
+        expressions.push(expression)
+    }
+
+    expressions
+}
+
+fn calculate_addition(exp: &str) -> u64 {
+    let mut expression = exp.to_owned();
+
+    while expression.contains('+') {
+        let add = ADD.captures(&expression).unwrap();
+        let exp = add.get(0).unwrap().as_str();
+
+        expression = expression.replace(exp, &calculator(exp).to_string());
+    }
+
+    calculator(&expression)
+}
+
+#[aoc_generator(day18, part2)]
+pub fn input_generator_part_2(input: &str) -> Vec<String> {
+    let mut expressions = Vec::new();
+
+    for line in input.lines() {
+        let mut expression = line.to_owned();
+
+        while expression.contains('(') {
+            let paren = PAREN.captures(&expression).unwrap();
+            let old_exp = paren.get(0).unwrap().as_str();
+            let exp = paren.get(1).unwrap().as_str();
+
+            expression = expression.replace(old_exp, &calculate_addition(exp).to_string());
         }
 
         expressions.push(expression)
@@ -103,7 +138,7 @@ pub fn input_generator(input: &str) -> Vec<String> {
 /// ```
 /// use advent_of_code_2020::day_18::*;
 /// let input = include_str!("../input/2020/day18.txt");
-/// assert_eq!(solve_part_01(&input_generator_part_01(input)), 29839238838303);
+/// assert_eq!(solve_part_01(&input_generator_part_1(input)), 29839238838303);
 /// ```
 #[aoc(day18, part1)]
 pub fn solve_part_01(input: &[String]) -> u64 {
@@ -112,10 +147,44 @@ pub fn solve_part_01(input: &[String]) -> u64 {
         .fold(0, |acc, expression| acc + calculator(expression))
 }
 
-// #[aoc(day18, part2)]
-// pub fn solve_part_02(input: &[HyperCube]) -> usize {
-//     0
-// }
+/* Part Two
+ *
+ * You manage to answer the child's questions and they finish part 1 of their homework,
+ * but get stuck when they reach the next section: advanced math.
+ *
+ * Now, addition and multiplication have different precedence levels,
+ * but they're not the ones you're familiar with. Instead, addition is evaluated before multiplication.
+ *
+ * For example, the steps to evaluate the expression 1 + 2 * 3 + 4 * 5 + 6 are now as follows:
+ *
+ * 1 + 2 * 3 + 4 * 5 + 6
+ *   3   * 3 + 4 * 5 + 6
+ *   3   *   7   * 5 + 6
+ *   3   *   7   *  11
+ *      21       *  11
+ *          231
+ * Here are the other examples from above:
+ *
+ * 1 + (2 * 3) + (4 * (5 + 6)) still becomes 51.
+ * 2 * 3 + (4 * 5) becomes 46.
+ * 5 + (8 * 3 + 9 + 3 * 4 * 3) becomes 1445.
+ * 5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4)) becomes 669060.
+ * ((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2 becomes 23340.
+ *
+ * What do you get if you add up the results of evaluating the homework problems using these new rules?
+ */
+/// Your puzzle answer was
+/// ```
+/// use advent_of_code_2020::day_18::*;
+/// let input = include_str!("../input/2020/day18.txt");
+/// assert_eq!(solve_part_02(&input_generator_part_2(input)), 201376568795521);
+/// ```
+#[aoc(day18, part2)]
+pub fn solve_part_02(input: &[String]) -> u64 {
+    input
+        .iter()
+        .fold(0, |acc, expression| acc + calculate_addition(&expression))
+}
 
 #[cfg(test)]
 mod tests {
@@ -126,7 +195,7 @@ mod tests {
     fn test_example_part_1() {
         let data = "2 * 3 + (4 * 5)";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 26)
+        assert_eq!(solve_part_01(&input_generator_part_1(data)), 26)
     }
     // Test example data on part 1
     #[test]
@@ -134,7 +203,7 @@ mod tests {
         let data = "2 * 3 + (4 * 5)
 2 * 3 + (4 * 5)";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 52)
+        assert_eq!(solve_part_01(&input_generator_part_1(data)), 52)
     }
 
     // Test example data on part 1
@@ -142,7 +211,7 @@ mod tests {
     fn test_example_part_1_2() {
         let data = "5 + (8 * 3 + 9 + 3 * 4 * 3)";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 437)
+        assert_eq!(solve_part_01(&input_generator_part_1(data)), 437)
     }
 
     // Test example data on part 1
@@ -150,7 +219,7 @@ mod tests {
     fn test_example_part_1_3() {
         let data = "5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 12240)
+        assert_eq!(solve_part_01(&input_generator_part_1(data)), 12240)
     }
 
     // Test example data on part 1
@@ -158,6 +227,46 @@ mod tests {
     fn test_example_part_1_4() {
         let data = "((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 13632)
+        assert_eq!(solve_part_01(&input_generator_part_1(data)), 13632)
+    }
+
+    // Test example data on part 2
+    #[test]
+    fn test_example_part_2() {
+        let data = "1 + (2 * 3) + (4 * (5 + 6))";
+
+        assert_eq!(solve_part_02(&input_generator_part_2(data)), 51)
+    }
+
+    // Test example data on part 2
+    #[test]
+    fn test_example_part_2_1() {
+        let data = "2 * 3 + (4 * 5)";
+
+        assert_eq!(solve_part_02(&input_generator_part_2(data)), 46)
+    }
+
+    // Test example data on part 2
+    #[test]
+    fn test_example_part_2_2() {
+        let data = "5 + (8 * 3 + 9 + 3 * 4 * 3)";
+
+        assert_eq!(solve_part_02(&input_generator_part_2(data)), 1445)
+    }
+
+    // Test example data on part 2
+    #[test]
+    fn test_example_part_2_3() {
+        let data = "5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))";
+
+        assert_eq!(solve_part_02(&input_generator_part_2(data)), 669060)
+    }
+
+    // Test example data on part 2
+    #[test]
+    fn test_example_part_2_4() {
+        let data = "((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2";
+
+        assert_eq!(solve_part_02(&input_generator_part_2(data)), 23340)
     }
 }

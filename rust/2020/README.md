@@ -33,7 +33,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 15: Rambunctious Recitation](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_15.rs) | 🌟  |           **1696** | 🌟  |            **37385** |
 | [Day 16: Ticket Translation](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_16.rs)      | 🌟  |          **26980** |     |                      |
 | [Day 17: Conway Cubes](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_17.rs)            | 🌟  |            **242** | 🌟  |             **2292** |
-| [Day 18: Operation Order](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_18.rs)         | 🌟  | **29839238838303** |     |                      |
+| [Day 18: Operation Order](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_18.rs)         | 🌟  | **29839238838303** | 🌟  |  **201376568795521** |
 
 ## Performance
 
@@ -58,7 +58,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 15  | 134.16 µs |    2.92 s\*\* | ![#006b1d](https://via.placeholder.com/15/006b1d/000000?text=+) `−46.89%` / `−72.30%`                                                                 |
 | 16  | 381.21 µs |               |                                                                                                                                                       |
 | 17  |   8.52 ms | 704.03 ms\*\* |                                                                                                                                                       |
-| 18  |  41.72 µs |               |                                                                                                                                                       |
+| 18  |  41.72 µs |     779.27 µs |                                                                                                                                                       |
 
 \* compared to first solution
 
