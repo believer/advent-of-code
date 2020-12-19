@@ -34,6 +34,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 16: Ticket Translation](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_16.rs)      | 🌟  |          **26980** |     |                      |
 | [Day 17: Conway Cubes](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_17.rs)            | 🌟  |            **242** | 🌟  |             **2292** |
 | [Day 18: Operation Order](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_18.rs)         | 🌟  | **29839238838303** | 🌟  |  **201376568795521** |
+| [Day 19: Operation Order](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_19.rs)         | 🌟  |            **122** | 🌟  |              **287** |
 
 ## Performance
 
@@ -59,6 +60,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 16  | 381.21 µs |               |                                                                                                                                                       |
 | 17  |   8.52 ms | 704.03 ms\*\* |                                                                                                                                                       |
 | 18  |  41.72 µs |     779.27 µs |                                                                                                                                                       |
+| 19  |  11.42 ms |      74.10 ms |                                                                                                                                                       |
 
 \* compared to first solution
 
