@@ -3,7 +3,7 @@ use std::collections::BTreeMap;
 
 // Day 19 - Monster Messages
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub enum Rule {
     Ref(u32),
     Or(Box<Rule>, Box<Rule>),
@@ -48,24 +48,22 @@ impl std::str::FromStr for Rule {
 }
 
 impl Rule {
-    fn matches<'a>(&self, rules: &'a BTreeMap<u32, Rule>, unparsed: &'a [char]) -> Vec<&'a [char]> {
-        if unparsed.is_empty() {
+    fn matches<'a>(&self, rules: &'a BTreeMap<u32, Rule>, msg: &'a [char]) -> Vec<&'a [char]> {
+        if msg.is_empty() {
             return vec![];
         }
 
         match self {
-            Rule::Ref(i) => rules.get(i).unwrap().matches(rules, unparsed),
-            Rule::Or(a, b) => {
-                merge(a.matches(rules, unparsed), b.matches(rules, unparsed)).collect()
-            }
-            Rule::Ch(c) => match unparsed[0] == *c {
-                true => vec![&unparsed[1..]],
+            Rule::Ref(i) => rules.get(i).unwrap().matches(rules, msg),
+            Rule::Or(a, b) => merge(a.matches(rules, msg), b.matches(rules, msg)).collect(),
+            Rule::Ch(c) => match msg[0] == *c {
+                true => vec![&msg[1..]],
                 false => vec![],
             },
             Rule::And3(a, b, c) => {
                 let mut r = Vec::new();
 
-                for m in a.matches(rules, unparsed).into_iter() {
+                for m in a.matches(rules, msg) {
                     for n in b.matches(rules, m) {
                         for o in c.matches(rules, n) {
                             r.push(o);
@@ -78,7 +76,7 @@ impl Rule {
             Rule::And(a, b) => {
                 let mut r = Vec::new();
 
-                for m in a.matches(rules, unparsed).into_iter() {
+                for m in a.matches(rules, msg) {
                     for n in b.matches(rules, m) {
                         r.push(n);
                     }
@@ -90,8 +88,14 @@ impl Rule {
     }
 }
 
+#[derive(Clone)]
+pub struct Program {
+    messages: Vec<Vec<char>>,
+    rules: BTreeMap<u32, Rule>,
+}
+
 #[aoc_generator(day19)]
-pub fn input_generator(input: &str) -> (BTreeMap<u32, Rule>, Vec<String>) {
+pub fn input_generator(input: &str) -> Program {
     let mut parts = input.split("\n\n");
 
     let rules = parts
@@ -112,22 +116,22 @@ pub fn input_generator(input: &str) -> (BTreeMap<u32, Rule>, Vec<String>) {
         .next()
         .unwrap()
         .lines()
-        .map(|l| l.to_string())
+        .map(|l| l.chars().collect())
         .collect();
 
-    (rules, messages)
+    Program { rules, messages }
 }
 
-fn count_matches((rules, messages): &(BTreeMap<u32, Rule>, Vec<String>)) -> usize {
-    messages
+fn count_matches(program: &Program) -> usize {
+    program
+        .messages
         .iter()
         .filter(|message| {
-            let msg: Vec<_> = message.chars().collect();
-
-            rules
+            program
+                .rules
                 .get(&0)
                 .unwrap()
-                .matches(&rules, &msg)
+                .matches(&program.rules, &message)
                 .iter()
                 .filter(|m| m.is_empty())
                 .count()
@@ -219,8 +223,8 @@ fn count_matches((rules, messages): &(BTreeMap<u32, Rule>, Vec<String>)) -> usiz
 /// assert_eq!(solve_part_01(&input_generator(input)), 122);
 /// ```
 #[aoc(day19, part1)]
-pub fn solve_part_01(data: &(BTreeMap<u32, Rule>, Vec<String>)) -> usize {
-    count_matches(data)
+pub fn solve_part_01(program: &Program) -> usize {
+    count_matches(program)
 }
 
 /* Part Two
@@ -316,13 +320,15 @@ pub fn solve_part_01(data: &(BTreeMap<u32, Rule>, Vec<String>)) -> usize {
 /// assert_eq!(solve_part_02(&input_generator(input)), 287);
 /// ```
 #[aoc(day19, part2)]
-pub fn solve_part_02((rules, messages): &(BTreeMap<u32, Rule>, Vec<String>)) -> usize {
-    let mut rules = rules.to_owned();
+pub fn solve_part_02(program: &Program) -> usize {
+    let mut program = program.to_owned();
 
-    rules.insert(8, "42 | 42 8".parse().unwrap());
-    rules.insert(11, "42 31 | 42 11 31".parse().unwrap());
+    program.rules.insert(8, "42 | 42 8".parse().unwrap());
+    program
+        .rules
+        .insert(11, "42 31 | 42 11 31".parse().unwrap());
 
-    count_matches(&(rules, messages.to_vec()))
+    count_matches(&program)
 }
 
 #[cfg(test)]
