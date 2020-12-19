@@ -34,7 +34,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 16: Ticket Translation](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_16.rs)      | 🌟  |          **26980** |     |                      |
 | [Day 17: Conway Cubes](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_17.rs)            | 🌟  |            **242** | 🌟  |             **2292** |
 | [Day 18: Operation Order](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_18.rs)         | 🌟  | **29839238838303** | 🌟  |  **201376568795521** |
-| [Day 19: Operation Order](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_19.rs)         | 🌟  |            **122** | 🌟  |              **287** |
+| [Day 19: Monster Messages](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_19.rs)         | 🌟  |            **122** | 🌟  |              **287** |
 
 ## Performance
 
