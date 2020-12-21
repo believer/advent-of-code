@@ -14,27 +14,28 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                               | #1  |          #1 Answer | #2  |            #2 Answer |
-| ----------------------------------------------------------------------------------------------------------------- | --- | -----------------: | --- | -------------------: |
-| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_01.rs)            | 🌟  |         **898299** | 🌟  |        **143933922** |
-| [Day 2: Password Philosophy](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_02.rs)      | 🌟  |            **524** | 🌟  |              **485** |
-| [Day 3: Toboggan Trajectory](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_03.rs)      | 🌟  |            **259** | 🌟  |       **2224913600** |
-| [Day 4: Passport Processing](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_04.rs)      | 🌟  |            **200** | 🌟  |              **116** |
-| [Day 5: Binary Boarding](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_05.rs)          | 🌟  |            **866** | 🌟  |              **583** |
-| [Day 6: Custom Customs](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_06.rs)           | 🌟  |           **6778** | 🌟  |             **3406** |
-| [Day 7: Handy Haversacks](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_07.rs)         | 🌟  |            **226** | 🌟  |             **9569** |
-| [Day 8: Handheld Halting](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_08.rs)         | 🌟  |           **1489** | 🌟  |             **1539** |
-| [Day 9: Encoding Error](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_09.rs)           | 🌟  |       **21806024** | 🌟  |          **2986195** |
-| [Day 10: Adapter Array](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_10.rs)           | 🌟  |           **2475** | 🌟  |  **442136281481216** |
-| [Day 11: Seating System](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_11.rs)          | 🌟  |           **2183** | 🌟  |             **1990** |
-| [Day 12: Rain Risk](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_12.rs)               | 🌟  |           **1294** | 🌟  |            **20592** |
-| [Day 13: Shuttle Search](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_13.rs)          | 🌟  |           **3246** | 🌟  | **1010182346291467** |
-| [Day 14: Docking Data](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_14.rs)            | 🌟  |  **5055782549997** |     |                      |
-| [Day 15: Rambunctious Recitation](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_15.rs) | 🌟  |           **1696** | 🌟  |            **37385** |
-| [Day 16: Ticket Translation](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_16.rs)      | 🌟  |          **26980** |     |                      |
-| [Day 17: Conway Cubes](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_17.rs)            | 🌟  |            **242** | 🌟  |             **2292** |
-| [Day 18: Operation Order](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_18.rs)         | 🌟  | **29839238838303** | 🌟  |  **201376568795521** |
-| [Day 19: Monster Messages](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_19.rs)         | 🌟  |            **122** | 🌟  |              **287** |
+| Day                                                                                                               | #1  |          #1 Answer | #2  |                                   #2 Answer |
+| ----------------------------------------------------------------------------------------------------------------- | --- | -----------------: | --- | ------------------------------------------: |
+| [Day 1: Report Repair](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_01.rs)            | 🌟  |         **898299** | 🌟  |                               **143933922** |
+| [Day 2: Password Philosophy](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_02.rs)      | 🌟  |            **524** | 🌟  |                                     **485** |
+| [Day 3: Toboggan Trajectory](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_03.rs)      | 🌟  |            **259** | 🌟  |                              **2224913600** |
+| [Day 4: Passport Processing](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_04.rs)      | 🌟  |            **200** | 🌟  |                                     **116** |
+| [Day 5: Binary Boarding](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_05.rs)          | 🌟  |            **866** | 🌟  |                                     **583** |
+| [Day 6: Custom Customs](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_06.rs)           | 🌟  |           **6778** | 🌟  |                                    **3406** |
+| [Day 7: Handy Haversacks](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_07.rs)         | 🌟  |            **226** | 🌟  |                                    **9569** |
+| [Day 8: Handheld Halting](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_08.rs)         | 🌟  |           **1489** | 🌟  |                                    **1539** |
+| [Day 9: Encoding Error](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_09.rs)           | 🌟  |       **21806024** | 🌟  |                                 **2986195** |
+| [Day 10: Adapter Array](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_10.rs)           | 🌟  |           **2475** | 🌟  |                         **442136281481216** |
+| [Day 11: Seating System](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_11.rs)          | 🌟  |           **2183** | 🌟  |                                    **1990** |
+| [Day 12: Rain Risk](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_12.rs)               | 🌟  |           **1294** | 🌟  |                                   **20592** |
+| [Day 13: Shuttle Search](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_13.rs)          | 🌟  |           **3246** | 🌟  |                        **1010182346291467** |
+| [Day 14: Docking Data](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_14.rs)            | 🌟  |  **5055782549997** |     |                                             |
+| [Day 15: Rambunctious Recitation](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_15.rs) | 🌟  |           **1696** | 🌟  |                                   **37385** |
+| [Day 16: Ticket Translation](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_16.rs)      | 🌟  |          **26980** |     |                                             |
+| [Day 17: Conway Cubes](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_17.rs)            | 🌟  |            **242** | 🌟  |                                    **2292** |
+| [Day 18: Operation Order](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_18.rs)         | 🌟  | **29839238838303** | 🌟  |                         **201376568795521** |
+| [Day 19: Monster Messages](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_19.rs)        | 🌟  |            **122** | 🌟  |                                     **287** |
+| [Day 21: Allergen Assessment](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_21.rs)     | 🌟  |           **2517** | 🌟  | **rhvbn,mmcpg,kjf,fvk,lbmt,jgtb,hcbdb,zrb** |
 
 ## Performance
 
@@ -60,7 +61,8 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 16  | 381.21 µs |               |                                                                                                                                                       |
 | 17  |   8.52 ms | 704.03 ms\*\* |                                                                                                                                                       |
 | 18  |  41.72 µs |     779.27 µs |                                                                                                                                                       |
-| 19  |  11.42 ms |      74.10 ms |                                                                                                                                                       |
+| 19  |  11.42 ms |      74.00 ms |                                                                                                                                                       |
+| 21  | 163.07 µs |     901.73 ns |                                                                                                                                                       |
 
 \* compared to first solution
 
