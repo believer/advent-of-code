@@ -36,6 +36,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 18: Operation Order](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_18.rs)         | 🌟  | **29839238838303** | 🌟  |                         **201376568795521** |
 | [Day 19: Monster Messages](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_19.rs)        | 🌟  |            **122** | 🌟  |                                     **287** |
 | [Day 21: Allergen Assessment](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_21.rs)     | 🌟  |           **2517** | 🌟  | **rhvbn,mmcpg,kjf,fvk,lbmt,jgtb,hcbdb,zrb** |
+| [Day 22: Crab Combat](https://github.com/believer/advent-of-code/blob/master/rust/2020/src/day_22.rs)             | 🌟  |          **32472** | 🌟  |                                   **36463** |
 
 ## Performance
 
@@ -63,6 +64,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 18  |  41.72 µs |     779.27 µs |                                                                                                                                                       |
 | 19  |  11.42 ms |      74.00 ms |                                                                                                                                                       |
 | 21  | 163.07 µs |     901.73 ns |                                                                                                                                                       |
+| 22  |  10.91 µs |     974.42 ms |                                                                                                                                                       |
 
 \* compared to first solution
 
