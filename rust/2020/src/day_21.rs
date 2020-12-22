@@ -40,7 +40,7 @@ pub fn input_generator(input: &str) -> (Vec<String>, BTreeMap<String, String>) {
 
         allergens.insert(a.to_string(), i.to_string());
 
-        for (_, s) in &mut possible_allergens {
+        for s in possible_allergens.values_mut() {
             s.remove(&i);
         }
     }
