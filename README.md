@@ -10,6 +10,7 @@ Advent of Code is an online event created by Eric Wastl. Each year, starting on 
 
 | Year | Language | Main solution | Link                   |
 | ---- | -------- | ------------- | ---------------------- |
+| 2021 | Rust     | X             | [Link](/rust/2021)     |
 | 2020 | Rust     | X             | [Link](/rust/2020)     |
 | 2020 | ReScript |               | [Link](/rescript/2020) |
 | 2019 | ReScript | X             | [Link](/rescript/2019) |
