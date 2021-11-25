@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  test:
+  rescript:
     name: Test ReScript solutions
     runs-on: ubuntu-latest
     strategy:
@@ -30,8 +30,12 @@ jobs:
           CI: true
 
   rust:
-    name: Test Rust 2020 solutions
+    name: Test Rust solutions
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        year: ['2020']
+        #year: ['2020', '2021']
 
     steps:
       - name: Checkout code
@@ -46,11 +50,15 @@ jobs:
 
       - name: Run linting
         run: |
-          cd rust/2020
+          cd rust/$YEAR
           cargo clippy --all-targets --all-features -- -D warnings
+        env:
+          YEAR: ${{ matrix.year }}
 
       - name: Run tests
         run: |
-          cd rust/2020
+          cd rust/$YEAR
           cargo test --locked
+        env:
+          YEAR: ${{ matrix.year }}
 
