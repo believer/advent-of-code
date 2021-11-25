@@ -11,7 +11,6 @@ lazy_static! {
 #[derive(Debug)]
 pub struct Train {
     rules: Vec<Vec<RangeInclusive<u32>>>,
-    my_ticket: Vec<u32>,
     nearby_tickets: Vec<Vec<u32>>,
 }
 
@@ -42,12 +41,6 @@ pub fn input_generator(input: &str) -> Train {
         })
         .collect();
 
-    let my_ticket: Vec<u32> = s[1][1..]
-        .iter()
-        .map(|s| s.split(',').map(|v| v.parse().unwrap()))
-        .flatten()
-        .collect();
-
     let nearby_tickets: Vec<Vec<u32>> = s[2][1..]
         .iter()
         .map(|s| s.split(',').map(|v| v.parse().unwrap()).collect())
@@ -55,7 +48,6 @@ pub fn input_generator(input: &str) -> Train {
 
     Train {
         rules,
-        my_ticket,
         nearby_tickets,
     }
 }

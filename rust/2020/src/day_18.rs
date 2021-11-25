@@ -178,7 +178,7 @@ pub fn solve_part_01(input: &[String]) -> u64 {
 pub fn solve_part_02(input: &[String]) -> u64 {
     input
         .iter()
-        .fold(0, |acc, expression| acc + calculate_addition(&expression))
+        .fold(0, |acc, expression| acc + calculate_addition(expression))
 }
 
 #[cfg(test)]

@@ -97,7 +97,7 @@ fn solver(input: &[usize], end_on_turn: usize) -> usize {
 /// ```
 #[aoc(day15, part1)]
 pub fn solve_part_01(input: &[usize]) -> usize {
-    solver(&input, 2020)
+    solver(input, 2020)
 }
 
 /* Part Two
@@ -124,7 +124,7 @@ pub fn solve_part_01(input: &[usize]) -> usize {
 // /// ```
 #[aoc(day15, part2)]
 pub fn solve_part_02(input: &[usize]) -> usize {
-    solver(&input, 30_000_000)
+    solver(input, 30_000_000)
 }
 
 #[cfg(test)]

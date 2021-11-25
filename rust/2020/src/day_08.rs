@@ -41,7 +41,7 @@ pub struct Instruction {
 
 impl Instruction {
     fn new(s: &str) -> Option<Instruction> {
-        let ins = RE.captures(&s)?;
+        let ins = RE.captures(s)?;
         let id: String = thread_rng().sample_iter(&Alphanumeric).take(30).collect();
 
         Some(Instruction {
@@ -92,7 +92,7 @@ impl Program {
                         return Some(self.accumulator);
                     }
 
-                    self.add_seen_and_step(&instruction);
+                    self.add_seen_and_step(instruction);
 
                     if let Operation::Jump = instruction.operation {
                         continue;
@@ -117,7 +117,7 @@ impl Program {
                         return None;
                     }
 
-                    self.add_seen_and_step(&instruction);
+                    self.add_seen_and_step(instruction);
 
                     if let Operation::Jump = instruction.operation {
                         continue;
@@ -212,7 +212,7 @@ pub fn input_generator(input: &str) -> Vec<Instruction> {
 /// ```
 #[aoc(day8, part1)]
 pub fn solve_part_01(input: &[Instruction]) -> Option<i32> {
-    Program::new().calculate_to_error(&input)
+    Program::new().calculate_to_error(input)
 }
 
 /* Part Two

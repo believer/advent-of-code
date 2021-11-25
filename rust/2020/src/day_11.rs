@@ -113,7 +113,7 @@ fn should_swap_part_1(grid: &[Vec<SeatingSystem>], r: usize, c: usize) -> bool {
 fn should_swap_part_2(grid: &[Vec<SeatingSystem>], r: usize, c: usize) -> bool {
     let mut neighbors = ADJACENT_SEATS
         .iter()
-        .filter_map(|&dir| find_neighbors(&grid, dir, (r, c)));
+        .filter_map(|&dir| find_neighbors(grid, dir, (r, c)));
 
     match grid[r][c] {
         SeatingSystem::Empty => neighbors.all(|c| c != SeatingSystem::Occupied),

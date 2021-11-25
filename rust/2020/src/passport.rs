@@ -10,7 +10,6 @@ lazy_static! {
     static ref HCL_RE_LOOSE: Regex = Regex::new(r"hcl:(#?\w+)\s?").unwrap();
     static ref ECL_RE_LOOSE: Regex = Regex::new(r"ecl:(#?\w+)\s?").unwrap();
     static ref PID_RE_LOOSE: Regex = Regex::new(r"pid:(#?\w+)\s?").unwrap();
-    static ref CID_RE_LOOSE: Regex = Regex::new(r"cid:(\w+)\s?").unwrap();
     static ref BYR_RE: Regex = Regex::new(r"byr:(\d{4})\s?").unwrap();
     static ref IYR_RE: Regex = Regex::new(r"iyr:(\d{4})\s?").unwrap();
     static ref EYR_RE: Regex = Regex::new(r"eyr:(\d{4})\s?").unwrap();
@@ -18,7 +17,6 @@ lazy_static! {
     static ref HCL_RE: Regex = Regex::new(r"hcl:(#[0-9a-f]{6})\s?").unwrap();
     static ref ECL_RE: Regex = Regex::new(r"ecl:(amb|blu|brn|gry|grn|hzl|oth)\s?").unwrap();
     static ref PID_RE: Regex = Regex::new(r"pid:(\d+)").unwrap();
-    static ref CID_RE: Regex = Regex::new(r"cid:(\w+)\s?").unwrap();
 }
 
 #[derive(Debug)]
@@ -44,8 +42,6 @@ pub struct Passport {
     /// Birth year
     /// Valid 1920 - 2002
     byr: Option<u32>,
-    /// Country ID
-    cid: Option<String>,
     /// Eye color
     /// (amb|blu|brn|gry|grn|hzl|oth)
     ecl: Option<String>,
@@ -116,24 +112,22 @@ impl Passport {
     }
 
     pub fn new(line: &str, loose: bool) -> Option<Passport> {
-        let mut byr = BYR_RE.captures(&line);
-        let mut cid = CID_RE.captures(&line);
-        let mut ecl = ECL_RE.captures(&line);
-        let mut eyr = EYR_RE.captures(&line);
-        let mut hcl = HCL_RE.captures(&line);
-        let mut hgt = HGT_RE.captures(&line);
-        let mut iyr = IYR_RE.captures(&line);
-        let mut pid = PID_RE.captures(&line);
+        let mut byr = BYR_RE.captures(line);
+        let mut ecl = ECL_RE.captures(line);
+        let mut eyr = EYR_RE.captures(line);
+        let mut hcl = HCL_RE.captures(line);
+        let mut hgt = HGT_RE.captures(line);
+        let mut iyr = IYR_RE.captures(line);
+        let mut pid = PID_RE.captures(line);
 
         if loose {
-            byr = BYR_RE_LOOSE.captures(&line);
-            cid = CID_RE_LOOSE.captures(&line);
-            ecl = ECL_RE_LOOSE.captures(&line);
-            eyr = EYR_RE_LOOSE.captures(&line);
-            hcl = HCL_RE_LOOSE.captures(&line);
-            hgt = HGT_RE_LOOSE.captures(&line);
-            iyr = IYR_RE_LOOSE.captures(&line);
-            pid = PID_RE_LOOSE.captures(&line);
+            byr = BYR_RE_LOOSE.captures(line);
+            ecl = ECL_RE_LOOSE.captures(line);
+            eyr = EYR_RE_LOOSE.captures(line);
+            hcl = HCL_RE_LOOSE.captures(line);
+            hgt = HGT_RE_LOOSE.captures(line);
+            iyr = IYR_RE_LOOSE.captures(line);
+            pid = PID_RE_LOOSE.captures(line);
         }
 
         let height: Option<Height> = match (&hgt, loose) {
@@ -153,7 +147,6 @@ impl Passport {
 
         Some(Passport {
             byr: get_int_value(byr),
-            cid: get_string_value(cid),
             ecl: get_string_value(ecl),
             eyr: get_int_value(eyr),
             hcl: get_string_value(hcl),

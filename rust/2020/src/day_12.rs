@@ -183,7 +183,7 @@ pub fn solve_part_01(instructions: &[Instruction]) -> u32 {
             Instruction::West(x) => ship.west(x),
             Instruction::East(x) => ship.east(x),
             Instruction::Right(x) => ship.turn(&-x),
-            Instruction::Left(x) => ship.turn(&x),
+            Instruction::Left(x) => ship.turn(x),
             Instruction::Forward(x) => ship.forward(x),
         }
     }

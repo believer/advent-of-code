@@ -131,7 +131,7 @@ fn count_matches(program: &Program) -> usize {
                 .rules
                 .get(&0)
                 .unwrap()
-                .matches(&program.rules, &message)
+                .matches(&program.rules, message)
                 .iter()
                 .filter(|m| m.is_empty())
                 .count()

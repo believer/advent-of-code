@@ -233,7 +233,7 @@ fn count_connections(
 /// ```
 #[aoc(day10, part2)]
 pub fn solve_part_02(input: &BTreeSet<u64>) -> u64 {
-    let max = match input.iter().max_by(|a, b| a.cmp(&b)) {
+    let max = match input.iter().max_by(|a, b| a.cmp(b)) {
         Some(max) => *max + 3,
         None => panic!("No max value found"),
     };
