@@ -2,7 +2,6 @@
 .merlin
 .bsb.lock
 npm-debug.log
-2015/lib
-2018/lib
-2019/lib
 node_modules
+rust/**/target
+
