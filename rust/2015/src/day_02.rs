@@ -38,7 +38,7 @@ All numbers in the elves' list are in feet. How many total square feet of wrappi
 /// assert_eq!(solve_part_01(&input_generator(data)), 1586300);
 /// ```
 #[aoc(day2, part1)]
-pub fn solve_part_01(input: &Vec<(u32, u32, u32)>) -> u32 {
+pub fn solve_part_01(input: &[(u32, u32, u32)]) -> u32 {
     // 2*l*w + 2*w*h + 2*h*l
     let mut total_paper = 0;
 
@@ -47,7 +47,7 @@ pub fn solve_part_01(input: &Vec<(u32, u32, u32)>) -> u32 {
         let second_side = width * height;
         let third_side = height * length;
         let mut all_sides = [first_side, second_side, third_side];
-        all_sides.sort();
+        all_sides.sort_unstable();
 
         total_paper += 2 * first_side + 2 * second_side + 2 * third_side + all_sides[0];
     }
@@ -72,7 +72,7 @@ How many total feet of ribbon should they order?
 /// assert_eq!(solve_part_02(&input_generator(data)), 3737498);
 /// ```
 #[aoc(day2, part2)]
-pub fn solve_part_02(input: &Vec<(u32, u32, u32)>) -> u32 {
+pub fn solve_part_02(input: &[(u32, u32, u32)]) -> u32 {
     let mut total_ribbon = 0;
 
     for (length, width, height) in input {
