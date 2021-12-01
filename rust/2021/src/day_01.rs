@@ -54,14 +54,14 @@ How many measurements are larger than the previous measurement?
 #[aoc(day1, part1)]
 pub fn solve_part_01(input: &[u32]) -> u32 {
     let mut increases = 0;
-    let mut last_value = input[0];
+    let mut previous_value = input[0];
 
     for i in input {
-        if i > &last_value {
+        if i > &previous_value {
             increases += 1
         }
 
-        last_value = *i
+        previous_value = *i
     }
 
     increases
@@ -111,17 +111,17 @@ Consider sums of a three-measurement sliding window. How many sums are larger th
 /// ```
 #[aoc(day1, part2)]
 pub fn solve_part_02(input: &[u32]) -> u32 {
-    let mut last_sum: u32 = input.windows(3).next().unwrap().iter().sum();
+    let mut previous_sum: u32 = input.windows(3).next().unwrap().iter().sum();
     let mut increases = 0;
 
     for i in input.windows(3) {
         let new_sum = i.iter().sum();
 
-        if new_sum > last_sum {
+        if new_sum > previous_sum {
             increases += 1;
         }
 
-        last_sum = new_sum;
+        previous_sum = new_sum;
     }
 
     increases
