@@ -52,7 +52,7 @@ How many measurements are larger than the previous measurement?
 /// assert_eq!(solve_part_01(&input_generator(data)), 1713);
 /// ```
 #[aoc(day1, part1)]
-pub fn solve_part_01(input: &Vec<u32>) -> u32 {
+pub fn solve_part_01(input: &[u32]) -> u32 {
     let mut increases = 0;
     let mut last_value = input[0];
 
@@ -110,7 +110,7 @@ Consider sums of a three-measurement sliding window. How many sums are larger th
 /// assert_eq!(solve_part_02(&input_generator(data)), 1734);
 /// ```
 #[aoc(day1, part2)]
-pub fn solve_part_02(input: &Vec<u32>) -> u32 {
+pub fn solve_part_02(input: &[u32]) -> u32 {
     let mut last_sum: u32 = input.windows(3).next().unwrap().iter().sum();
     let mut increases = 0;
 
