@@ -22,8 +22,8 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro 2,6 GHz 6-Core i7, 32 GB RAM, Radeon 5300M 4 GB.
 
-| Day |  #1 |  #2 | Improvement\* |
-| --- | --: | --: | ------------- |
-| 1   |     |     |               |
+| Day |        #1 |        #2 | Improvement\* |
+| --- | --------: | --------: | ------------- |
+| 1   | 272.11 ns | 923.48 ns |               |
 
 \* compared to first solution
