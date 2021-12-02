@@ -14,9 +14,10 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                  | #1  | #1 Answer | #2  | #2 Answer |
-| ---------------------------------------------------------------------------------------------------- | --- | --------: | --- | --------: |
-| [Day 1: Sonar Sweep](https://github.com/believer/advent-of-code/blob/master/rust/2021/src/day_01.rs) | 🌟  |  **1713** | 🌟  |  **1734** |
+| Day                                                                                                  | #1  |   #1 Answer | #2  |      #2 Answer |
+| ---------------------------------------------------------------------------------------------------- | --- | ----------: | --- | -------------: |
+| [Day 1: Sonar Sweep](https://github.com/believer/advent-of-code/blob/master/rust/2021/src/day_01.rs) | 🌟  |    **1713** | 🌟  |       **1734** |
+| [Day 2: Dive!](https://github.com/believer/advent-of-code/blob/master/rust/2021/src/day_02.rs)       | 🌟  | **1947824** | 🌟  | **1813062561** |
 
 ## Performance
 
@@ -25,5 +26,6 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | Day |        #1 |        #2 | Improvement\* |
 | --- | --------: | --------: | ------------- |
 | 1   | 272.11 ns | 923.48 ns |               |
+| 2   | 157.07 µs | 166.28 µs |               |
 
 \* compared to first solution
