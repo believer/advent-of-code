@@ -97,7 +97,7 @@ Using this new interpretation of the commands, calculate the horizontal position
 /// ```
 /// use advent_of_code_2021::day_02::*;
 /// let data = include_str!("../input/2021/day2.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 0);
+/// assert_eq!(solve_part_02(&input_generator(data)), 1813062561);
 /// ```
 #[aoc(day2, part2)]
 pub fn solve_part_02(input: &[String]) -> u32 {
