@@ -23,7 +23,6 @@ pub fn solve_part_01(input: &[String]) -> u32 {
     for i in input {
         let parts = i.split_whitespace().collect::<Vec<_>>();
         let value = parts[1].parse::<u32>().unwrap();
-        println!("{:?}", parts);
 
         match parts[0] {
             "forward" => horizontal_position += value,
@@ -45,8 +44,27 @@ pub fn solve_part_01(input: &[String]) -> u32 {
 /// assert_eq!(solve_part_02(&input_generator(data)), 0);
 /// ```
 #[aoc(day2, part2)]
-pub fn solve_part_02(_input: &[String]) -> u32 {
-    0
+pub fn solve_part_02(input: &[String]) -> u32 {
+    let mut aim = 0;
+    let mut depth = 0;
+    let mut horizontal_position = 0;
+
+    for i in input {
+        let parts = i.split_whitespace().collect::<Vec<_>>();
+        let value = parts[1].parse::<u32>().unwrap();
+
+        match parts[0] {
+            "forward" => {
+                horizontal_position += value;
+                depth += value * aim;
+            }
+            "down" => aim += value,
+            "up" => aim -= value,
+            _ => unreachable!("Invalid command"),
+        }
+    }
+
+    depth * horizontal_position
 }
 
 #[cfg(test)]
@@ -63,5 +81,17 @@ down 8
 forward 2";
 
         assert_eq!(solve_part_01(&input_generator(data)), 150)
+    }
+
+    #[test]
+    fn sample_02() {
+        let data = "forward 5
+down 5
+forward 8
+up 3
+down 8
+forward 2";
+
+        assert_eq!(solve_part_02(&input_generator(data)), 900)
     }
 }
