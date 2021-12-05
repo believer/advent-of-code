@@ -17,5 +17,5 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | Day                                                                                                  | #1  |   #1 Answer | #2  |      #2 Answer |
 | ---------------------------------------------------------------------------------------------------- | --- | ----------: | --- | -------------: |
 | [Day 3: Binary Diagnostic](https://github.com/believer/advent-of-code/blob/master/python/2021/day_03.py) | 🌟  |    **4103154** | 🌟  |       **4245351** |
-| [Day 4: Giant Squid](https://github.com/believer/advent-of-code/blob/master/python/2021/day_4.py)    | 🌟  | **28082** | 🌟  | **8224** |
+| [Day 4: Giant Squid](https://github.com/believer/advent-of-code/blob/master/python/2021/day_04.py)    | 🌟  | **28082** | 🌟  | **8224** |
 | [Day 5: Hydrothermal Venture](https://github.com/believer/advent-of-code/blob/master/python/2021/day_05.py) | 🌟 | **6548** | 🌟 | **19663** |
