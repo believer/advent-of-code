@@ -26,8 +26,8 @@ fn parse_mask(value: usize, mask: &str) -> usize {
     // Convert mask to two different binary strings
     // in order to run bitwise operations with them
     // https://en.wikipedia.org/wiki/Mask_(computing)
-    let or_op_binary = mask.replace("X", "0");
-    let and_op_binary = mask.replace("X", "1");
+    let or_op_binary = mask.replace('X', "0");
+    let and_op_binary = mask.replace('X', "1");
     let or_op = isize::from_str_radix(&or_op_binary, 2).unwrap();
     let and_op = isize::from_str_radix(&and_op_binary, 2).unwrap();
 
