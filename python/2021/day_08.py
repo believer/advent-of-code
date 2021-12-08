@@ -15,6 +15,16 @@ def part_01():
 		return numbers
 
 
+# Find if every segment matches the other
+def every_segment(first, second):
+	return all([c in first for c in second])
+
+
+# Find number of matching segments
+def matching_segments(first, second):
+	return sum([c in first for c in second])
+
+
 def part_02():
 	with open('input_08.txt') as d:
 		outputs = []
@@ -37,21 +47,34 @@ def part_02():
 				elif len(i) == 3: decrypt[7] = i
 				elif len(i) == 4: decrypt[4] = i
 				elif len(i) == 5:
-					if all([c in i for c in decrypt[1]]): decrypt[3] = i
-					elif sum([c in i for c in decrypt[4]]) == 3: decrypt[5] = i
-					else: decrypt[2] = i
+					# If the word contains all segments of 1, it's a 3
+					if every_segment(i, decrypt[1]):
+						decrypt[3] = i
+						# If the word contains 3 parts of a 4, it's a 5
+					elif matching_segments(i, decrypt[4]) == 3:
+						decrypt[5] = i
+						# Otherwise it's a 2
+					else:
+						decrypt[2] = i
 				elif len(i) == 6:
-					if all([c in i for c in decrypt[4]]): decrypt[9] = i
-					elif all([c in i for c in decrypt[7]]): decrypt[0] = i
-					else: decrypt[6] = i
-				else: decrypt[8] = i
+					# If the word contains all segments of 4, it's a 9
+					if every_segment(i, decrypt[4]):
+						decrypt[9] = i
+						# If the word contains all segments of 7, it's a 0
+					elif every_segment(i, decrypt[7]):
+						decrypt[0] = i
+						# Otherwise it's a 6
+					else:
+						decrypt[6] = i
+				else:
+					decrypt[8] = i
 
 			# Calculate the output number
 			output_number = 0
 
 			for j, n in enumerate(output[::-1]):
 				for i in range(10):
-					if all([c in n for c in decrypt[i]]) and len(decrypt[i]) == len(n):
+					if every_segment(n, decrypt[i]) and len(decrypt[i]) == len(n):
 						output_number += i * 10**j
 						break
 
