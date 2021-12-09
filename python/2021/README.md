@@ -22,4 +22,5 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 6: Lanternfish](https://github.com/believer/advent-of-code/blob/master/python/2021/day_06.py) | 🌟 | **350149** | 🌟 | **1590327954513** |
 | [Day 7: The Treachery of Whales](https://github.com/believer/advent-of-code/blob/master/python/2021/day_07.py) | 🌟 | **364898** | 🌟 | **104149091** |
 | [Day 8: Seven Segment Search](https://github.com/believer/advent-of-code/blob/master/python/2021/day_08.py) | 🌟 | **369** | 🌟 | **1031553** |
+| [Day 9: Smoke Basin](https://github.com/believer/advent-of-code/blob/master/python/2021/day_09.py) | 🌟 | **524** | 🌟 | **1235430** |
 
