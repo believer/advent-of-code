@@ -1,6 +1,6 @@
 # Advent of Code 2021
 
-I had to return my work laptop. I'm doing the solutions in Python, which I'm not good at, on my iPad from day 3 until I get the computer for my new job.
+I had to return my work laptop. I'm doing the solutions in Python on my iPad from day 3 until I get the computer for my new job.
 
 ## Advent of Code 2021 Story
 
