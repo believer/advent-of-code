@@ -24,4 +24,5 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 8: Seven Segment Search](https://github.com/believer/advent-of-code/blob/master/python/2021/day_08.py) | 🌟 | **369** | 🌟 | **1031553** |
 | [Day 9: Smoke Basin](https://github.com/believer/advent-of-code/blob/master/python/2021/day_09.py) | 🌟 | **524** | 🌟 | **1235430** |
 | [Day 10: Syntax Scoring](https://github.com/believer/advent-of-code/blob/master/python/2021/day_10.py) | 🌟 | **240123** | 🌟 | **3260812321** |
+| [Day 11: Dumbo Octopus](https://github.com/believer/advent-of-code/blob/master/python/2021/day_11.py) | 🌟 | **1632** | 🌟 | **303** |
 
