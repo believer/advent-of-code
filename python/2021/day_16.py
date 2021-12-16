@@ -34,7 +34,7 @@ def parse(bits, i):
 	# The packet is an operator
 	else:
 		length_id = int(bits[i+6], 2)
-		vs = []
+		values = []
 		
 		# Length ID 0 indicates a 15-bit numbert
 		if length_id == 0:
@@ -45,6 +45,7 @@ def parse(bits, i):
 			
 			while True:
 				v, next_iter = parse(bits, i)
+				values.append(v)
 				i = next_iter
 				if next_iter - start_iter == bits_length:
 					break
@@ -56,10 +57,35 @@ def parse(bits, i):
 			
 			for n in range(number_of_packets):
 				v, next_iter = parse(bits, i)
+				values.append(v)
 				i = next_iter
 		
-		return v,i
+		# Sum packets
+		if id == 0:
+			return sum(values), i
+		# Product packets
+		elif id == 1:
+			output = 1
+			for v in values:
+				output *= v
+			return output, i
+		# Minimum packets
+		elif id == 2:
+			return min(values), i
+		# Maximum packets
+		elif id == 3:
+			return max(values), i
+		# Greater than packets
+		elif id == 5:
+			return (1 if values[0] > values[1] else 0), i
+		# Less than packets
+		elif id == 6:
+			return (1 if values[0] < values[1] else 0), i
+		# Equal to packets
+		elif id == 7:
+			return (1 if values[0] == values[1] else 0), i\
 	
-parse(binary, 0)
+part_two, _ = parse(binary, 0)
 
 print('Part 1:', part_one)
+print('Part 2:', part_two)
