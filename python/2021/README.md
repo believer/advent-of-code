@@ -28,4 +28,5 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 12: Passage Pathing](https://github.com/believer/advent-of-code/blob/master/python/2021/day_12.py) | 🌟 | **3510** | 🌟 | **122880** |
 | [Day 13: Transparent Origami](https://github.com/believer/advent-of-code/blob/master/python/2021/day_13.py) | 🌟 | **763** | 🌟 | **RHALRCRA** |
 | [Day 14: Extended Polymerization](https://github.com/believer/advent-of-code/blob/master/python/2021/day_14.py) | 🌟 | **3095** | 🌟 | **3152788426516** |
+| [Day 16: Packet Decoder](https://github.com/believer/advent-of-code/blob/master/python/2021/day_16.py) | 🌟 | **967** | 🌟 | **12883091136209** |
 
