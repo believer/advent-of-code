@@ -20,14 +20,13 @@ def part_01():
 	player_one = Player(2)
 	player_two = Player(8)
 	rolls = 0
-	turn = 0
 	die = 1
 
 	while True:
 		rolls += 3
 
 		# Player 1
-		if turn % 2 == 0:
+		if rolls % 2 != 0:
 			player_one.play(die)
 		else:
 			player_two.play(die)
@@ -36,7 +35,6 @@ def part_01():
 			break
 
 		die += 3
-		turn += 1
 
 	losing_score = player_two.score if player_one.has_won() else player_one.score
 
