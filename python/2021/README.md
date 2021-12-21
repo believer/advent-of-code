@@ -30,4 +30,5 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 14: Extended Polymerization](https://github.com/believer/advent-of-code/blob/master/python/2021/day_14.py) | 🌟 | **3095** | 🌟 | **3152788426516** |
 | [Day 16: Packet Decoder](https://github.com/believer/advent-of-code/blob/master/python/2021/day_16.py) | 🌟 | **967** | 🌟 | **12883091136209** |
 | [Day 17: Trick Shot](https://github.com/believer/advent-of-code/blob/master/python/2021/day_17.py) | 🌟 | **3003** | 🌟 | **940** |
+| [Day 21: Dirac Dice](https://github.com/believer/advent-of-code/blob/master/python/2021/day_21.py) | 🌟 | **1196172** | | |
 
