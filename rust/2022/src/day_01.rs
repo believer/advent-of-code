@@ -16,7 +16,7 @@ pub fn input_generator(input: &str) -> Vec<u32> {
 /// assert_eq!(solve_part_01(&input_generator(data)), 0);
 /// ```
 #[aoc(day1, part1)]
-pub fn solve_part_01(input: &Vec<u32>) -> u32 {
+pub fn solve_part_01(_input: &[u32]) -> u32 {
     0
 }
 
@@ -29,7 +29,7 @@ pub fn solve_part_01(input: &Vec<u32>) -> u32 {
 /// assert_eq!(solve_part_02(&input_generator(data)), 0);
 /// ```
 #[aoc(day1, part2)]
-pub fn solve_part_02(input: &Vec<u32>) -> u32 {
+pub fn solve_part_02(_input: &[u32]) -> u32 {
     0
 }
 

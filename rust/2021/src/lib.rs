@@ -1,5 +1,3 @@
-#![feature(map_first_last)]
-
 extern crate aoc_runner;
 
 #[macro_use]
