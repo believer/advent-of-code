@@ -1,6 +1,10 @@
 use std::{cmp, num::ParseIntError};
 
 // Day 1 - Calorie Counting
+//
+// Clippy suggested changing all.sort() to all.sort_unstable().
+// It performs faster when sorting a primitive type without any
+// difference in the result. It made the solution > 37% faster.
 
 type Input = Vec<Result<u32, ParseIntError>>;
 
@@ -129,7 +133,7 @@ pub fn solve_part_02(input: &Input) -> u32 {
         }
     }
 
-    all.sort();
+    all.sort_unstable();
     // Convert to an iterator, reverse it, get the first three values, and sum them
     all.iter().rev().take(3).sum::<u32>()
 }
