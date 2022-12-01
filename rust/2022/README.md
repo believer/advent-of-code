@@ -30,4 +30,4 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 
 | Day |  #1 |      #2 | Improvement | Link                                                                                                                     |
 | --: | --: | ------: | ----------: | ------------------------------------------------------------------------------------------------------------------------ |
-|   1 | --- | 5.51 ms |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/5e1dbfdf07be5916d8d323360cf1f86767009ca2/rust/2022/src/day_01.rs) |
+|   1 | --- | 5.51 µs |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/5e1dbfdf07be5916d8d323360cf1f86767009ca2/rust/2022/src/day_01.rs) |
