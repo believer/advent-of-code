@@ -20,7 +20,7 @@ pub fn input_generator(input: &str) -> CaloriesPerElf {
         .split("\n\n")
         .map(|elf| {
             // Parse the Elf's item calories to u32
-            elf.split("\n")
+            elf.lines()
                 .filter(|l| !l.is_empty())
                 .map(|item| item.parse().unwrap())
                 .collect()
