@@ -5,6 +5,9 @@ use std::{cmp, num::ParseIntError};
 // Clippy suggested changing all.sort() to all.sort_unstable().
 // It performs faster when sorting a primitive type without any
 // difference in the result. It made the solution > 37% faster.
+//
+// I tried using a Peekable for part two, but it made the solution slower.
+// So, I'll keep the faster/naive solution.
 
 type Input = Vec<Result<u32, ParseIntError>>;
 
