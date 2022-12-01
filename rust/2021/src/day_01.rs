@@ -1,6 +1,6 @@
 use crate::common;
 
-// Day 1: Sonar Sweep
+// Day 1 - Sonar Sweep
 
 #[aoc_generator(day1)]
 pub fn input_generator(input: &str) -> Vec<u32> {

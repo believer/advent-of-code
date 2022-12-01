@@ -1,4 +1,4 @@
-// Day 2: I Was Told There Would Be No Math
+// Day 2 - I Was Told There Would Be No Math
 
 #[aoc_generator(day2)]
 pub fn input_generator(input: &str) -> Vec<(u32, u32, u32)> {

@@ -1,6 +1,6 @@
 use crate::common;
 
-// Day 2: Dive!
+// Day 2 - Dive!
 
 #[aoc_generator(day2)]
 pub fn input_generator(input: &str) -> Vec<String> {

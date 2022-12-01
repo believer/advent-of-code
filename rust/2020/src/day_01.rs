@@ -1,7 +1,7 @@
 use crate::common;
 use std::collections::HashSet;
 
-// Day 1: Report Repair
+// Day 1 - Report Repair
 // A version of "Two Sum Problem"
 // https://leetcode.com/problems/two-sum/solution/
 //
