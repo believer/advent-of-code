@@ -7,21 +7,20 @@
     "build": "bsb -make-world",
     "start": "cross-env BS_WATCH_CLEAR=true bsb -make-world -w",
     "clean": "bsb -clean-world",
-    "test": "is-ci \"test:ci\" \"test:watch\"",
+    "test": "is-ci-cli test:ci test:watch",
     "test:watch": "jest --watch",
     "test:ci": "jest"
   },
   "keywords": [],
   "author": "believer <rickard.laurin@gmail.com>",
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
-    "@glennsl/bs-jest": "0.6.0",
-    "@semantic-release/changelog": "5.0.1",
-    "@semantic-release/git": "9.0.0",
-    "bs-platform": "8.3.3",
+    "@glennsl/bs-jest": "0.7.0",
+    "@semantic-release/changelog": "6.0.2",
+    "@semantic-release/git": "10.0.1",
+    "bs-platform": "9.0.2",
     "cross-env": "7.0.3",
-    "is-ci-cli": "2.0.0",
-    "jest-watch-typeahead": "0.6.1"
+    "is-ci-cli": "2.2.0",
+    "jest-watch-typeahead": "2.2.1"
   }
 }

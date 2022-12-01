@@ -5,8 +5,9 @@
     "build": "bsb -make-world",
     "start": "cross-env BS_WATCH_CLEAR=true bsb -make-world -w",
     "clean": "bsb -clean-world",
-    "test": "jest --watch",
-    "test:ci": "jest"
+    "test": "is-ci-cli test:ci test:watch",
+    "test:ci": "jest",
+    "test:watch": "jest --watch"
   },
   "keywords": [
     "advent of code",
@@ -24,8 +25,9 @@
     "url": "https://github.com/believer/advent-of-code-2018.git"
   },
   "devDependencies": {
-    "@glennsl/bs-jest": "0.6.0",
-    "bs-platform": "8.3.3",
-    "cross-env": "7.0.3"
+    "@glennsl/bs-jest": "0.7.0",
+    "bs-platform": "9.0.2",
+    "cross-env": "7.0.3",
+    "is-ci-cli": "2.2.0"
   }
 }
