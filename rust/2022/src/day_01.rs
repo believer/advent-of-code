@@ -91,7 +91,7 @@ pub fn input_generator(input: &str) -> CaloriesPerElf {
 #[aoc(day1, part1)]
 pub fn solve_part_01(elves: &CaloriesPerElf) -> u32 {
     // Get the Elf carrying the most calories of snacks
-    *elves.get(0).unwrap()
+    *elves.first().unwrap()
 }
 
 /* Part Two
