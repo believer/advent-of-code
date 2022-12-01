@@ -1,5 +1,3 @@
-use std::{cmp, num::ParseIntError};
-
 // Day 1 - Calorie Counting
 //
 // Clippy suggested changing all.sort() to all.sort_unstable().
@@ -8,12 +6,35 @@ use std::{cmp, num::ParseIntError};
 //
 // I tried using a Peekable for part two, but it made the solution slower.
 // So, I'll keep the faster/naive solution.
+//
+// After having stressed down during the day, I remembered that I can split by
+// double line breaks and handle each Elf separetely. This made the solution a whopping
+// 99% faster. For both parts!
 
-type Input = Vec<Result<u32, ParseIntError>>;
+type CaloriesPerElf = Vec<u32>;
 
 #[aoc_generator(day1)]
-pub fn input_generator(input: &str) -> Input {
-    input.lines().map(|l| l.trim()).map(|l| l.parse()).collect()
+pub fn input_generator(input: &str) -> CaloriesPerElf {
+    // Split by double space, i.e., each Elf
+    let elves: Vec<Vec<u32>> = input
+        .split("\n\n")
+        .map(|elf| {
+            // Parse the Elf's item calories to u32
+            elf.split("\n")
+                .filter(|l| !l.is_empty())
+                .map(|item| item.parse().unwrap())
+                .collect()
+        })
+        .collect();
+
+    // Sum up the calories carried by each Elf
+    let mut calories_per_elf: Vec<u32> = elves.iter().map(|elf| elf.iter().sum()).collect();
+
+    // Sort unstable is faster than sort. See comment in header.
+    calories_per_elf.sort_unstable();
+    calories_per_elf.reverse();
+
+    calories_per_elf
 }
 
 /* Part One
@@ -68,23 +89,9 @@ pub fn input_generator(input: &str) -> Input {
 /// assert_eq!(solve_part_01(&input_generator(data)), 69528);
 /// ```
 #[aoc(day1, part1)]
-pub fn solve_part_01(input: &Input) -> u32 {
-    let mut max: u32 = 0;
-    let mut current: u32 = 0;
-
-    for i in input {
-        match i {
-            Ok(v) => {
-                current += v;
-            }
-            Err(_) => {
-                max = cmp::max(max, current);
-                current = 0;
-            }
-        }
-    }
-
-    max
+pub fn solve_part_01(elves: &CaloriesPerElf) -> u32 {
+    // Get the Elf carrying the most calories of snacks
+    *elves.get(0).unwrap()
 }
 
 /* Part Two
@@ -112,33 +119,9 @@ pub fn solve_part_01(input: &Input) -> u32 {
 /// assert_eq!(solve_part_02(&input_generator(data)), 206152);
 /// ```
 #[aoc(day1, part2)]
-pub fn solve_part_02(input: &Input) -> u32 {
-    let mut all = vec![];
-    let mut current: u32 = 0;
-    let mut iter = 0;
-
-    for i in input {
-        iter += 1;
-
-        match i {
-            Ok(v) => {
-                current += v;
-
-                // Handle last value
-                if iter == input.len() {
-                    all.push(current);
-                }
-            }
-            Err(_) => {
-                all.push(current);
-                current = 0;
-            }
-        }
-    }
-
-    all.sort_unstable();
-    // Convert to an iterator, reverse it, get the first three values, and sum them
-    all.iter().rev().take(3).sum::<u32>()
+pub fn solve_part_02(elves: &CaloriesPerElf) -> u32 {
+    // Get the amount of calories carried by the top three Elves and sum it
+    elves.iter().take(3).sum::<u32>()
 }
 
 #[cfg(test)]

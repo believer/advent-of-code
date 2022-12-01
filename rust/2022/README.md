@@ -20,14 +20,15 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro M1 Pro, 32 GB RAM.
 
-| Day |        #1 |      #2 | Improvement\*    |
-| --- | --------: | ------: | ---------------- |
-| 1   | 865.43 ns | 3.47 µs | `0%` / `-37.84%` |
+| Day |      #1 |      #2 | Improvement\*         |
+| --- | ------: | ------: | --------------------- |
+| 1   | 1.56 ns | 2.18 ns | `-99.82%` / `-99.96%` |
 
 \* compared to first solution
 
 ### Previous solutions
 
-| Day |  #1 |      #2 | Improvement | Link                                                                                                                     |
-| --: | --: | ------: | ----------: | ------------------------------------------------------------------------------------------------------------------------ |
-|   1 | --- | 5.51 µs |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/5e1dbfdf07be5916d8d323360cf1f86767009ca2/rust/2022/src/day_01.rs) |
+| Day |        #1 |      #2 |      Improvement | Link                                                                                                                     |
+| --: | --------: | ------: | ---------------: | ------------------------------------------------------------------------------------------------------------------------ |
+|   1 | 865.43 ns | 5.51 µs |         Baseline | [Link](https://github.com/believer/advent-of-code/blob/5e1dbfdf07be5916d8d323360cf1f86767009ca2/rust/2022/src/day_01.rs) |
+|   1 |       --- | 3.47 µs | `0%` / `-37.84%` | [Link](https://github.com/believer/advent-of-code/blob/1cf6a750e0e899c25e9cffbc433cc46087d5a3e8/rust/2022/src/day_01.rs) |
