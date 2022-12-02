@@ -12,9 +12,10 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                       | #1  | #1 Answer | #2  |  #2 Answer |
-| --------------------------------------------------------------------------------------------------------- | --- | --------: | --- | ---------: |
-| [Day 1: Calorie Counting](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_01.rs) | 🌟  | **69528** | 🌟  | **206152** |
+| Day                                                                                                          | #1  | #1 Answer | #2  |  #2 Answer |
+| ------------------------------------------------------------------------------------------------------------ | --- | --------: | --- | ---------: |
+| [Day 1: Calorie Counting](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_01.rs)    | 🌟  | **69528** | 🌟  | **206152** |
+| [Day 2: Rock Paper Scissors](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_02.rs) | 🌟  | **13809** | 🌟  |  **12316** |
 
 ## Performance
 
@@ -23,6 +24,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | Day |      #1 |      #2 | Improvement\*         |
 | --- | ------: | ------: | --------------------- |
 | 1   | 1.56 ns | 2.18 ns | `-99.82%` / `-99.96%` |
+| 2   | 8.08 µs | 7.71 µs |                       |
 
 \* compared to first solution
 
