@@ -1,9 +1,20 @@
 // Day 2 - Rock Paper Scissors
 
-type Input = Vec<Vec<String>>;
+type Game = Vec<Vec<String>>;
+
+#[non_exhaustive]
+struct Score;
+
+impl Score {
+    pub const ROCK: u32 = 1;
+    pub const PAPER: u32 = 2;
+    pub const SCISSORS: u32 = 3;
+    pub const WIN: u32 = 6;
+    pub const DRAW: u32 = 3;
+}
 
 #[aoc_generator(day2)]
-pub fn input_generator(input: &str) -> Input {
+pub fn input_generator(input: &str) -> Game {
     input
         .lines()
         .map(|l| l.split_whitespace().map(|l| l.to_string()).collect())
@@ -16,8 +27,8 @@ pub fn input_generator(input: &str) -> Input {
  * To decide whose tent gets to be closest to the snack storage,
  * a giant Rock Paper Scissors tournament is already in progress.
  *
- * Rock Paper Scissors is a game between two players.
- * Each game contains many rounds; in each round, the players each
+ * Rock Paper Scissors is a Score between two players.
+ * Each Score contains many rounds; in each round, the players each
  * simultaneously choose one of Rock, Paper, or Scissors using a hand shape.
  * Then, a winner for that round is selected: Rock defeats Scissors,
  * Scissors defeats Paper, and Paper defeats Rock.
@@ -70,38 +81,32 @@ pub fn input_generator(input: &str) -> Input {
 /// assert_eq!(solve_part_01(&input_generator(data)), 13809);
 /// ```
 #[aoc(day2, part1)]
-pub fn solve_part_01(input: &Input) -> u32 {
-    let rock = 1;
-    let paper = 2;
-    let scissors = 3;
-    let win = 6;
-    let draw = 3;
-    let mut my_score = 0;
+pub fn solve_part_01(game: &Game) -> u32 {
+    game.iter()
+        .map(|l| {
+            match (l.first(), l.get(1)) {
+                (Some(opponent), Some(me)) => match (opponent.as_str(), me.as_str()) {
+                    // My win, we get win points and selection points
+                    ("A", "Y") => Score::WIN + Score::PAPER,
+                    ("B", "Z") => Score::WIN + Score::SCISSORS,
+                    ("C", "X") => Score::WIN + Score::ROCK,
 
-    input.iter().for_each(|l| {
-        if let (Some(a), Some(b)) = (l.first(), l.get(1)) {
-            match (a.as_str(), b.as_str()) {
-                // My win
-                ("A", "Y") => my_score += win + paper,
-                ("B", "Z") => my_score += win + scissors,
-                ("C", "X") => my_score += win + rock,
+                    // Their win, we get selection points
+                    ("A", "Z") => Score::SCISSORS,
+                    ("B", "X") => Score::ROCK,
+                    ("C", "Y") => Score::PAPER,
 
-                // Their win
-                ("A", "Z") => my_score += scissors,
-                ("B", "X") => my_score += rock,
-                ("C", "Y") => my_score += paper,
+                    // Draw, split win points and get selection points
+                    ("A", "X") => Score::DRAW + Score::ROCK,
+                    ("B", "Y") => Score::DRAW + Score::PAPER,
+                    ("C", "Z") => Score::DRAW + Score::SCISSORS,
 
-                // Draw
-                ("A", "X") => my_score += draw + rock,
-                ("B", "Y") => my_score += draw + paper,
-                ("C", "Z") => my_score += draw + scissors,
-
-                _ => (),
+                    _ => 0,
+                },
+                _ => 0,
             }
-        }
-    });
-
-    my_score
+        })
+        .sum()
 }
 
 /* Part Two
@@ -138,38 +143,32 @@ pub fn solve_part_01(input: &Input) -> u32 {
 /// assert_eq!(solve_part_02(&input_generator(data)), 12316);
 /// ```
 #[aoc(day2, part2)]
-pub fn solve_part_02(input: &Input) -> u32 {
-    let rock = 1;
-    let paper = 2;
-    let scissors = 3;
-    let win = 6;
-    let draw = 3;
-    let mut my_score = 0;
+pub fn solve_part_02(game: &Game) -> u32 {
+    game.iter()
+        .map(|l| {
+            match (l.first(), l.get(1)) {
+                (Some(a), Some(b)) => match (a.as_str(), b.as_str()) {
+                    // My win, we get win points and selection points
+                    ("A", "Z") => Score::WIN + Score::PAPER,
+                    ("B", "Z") => Score::WIN + Score::SCISSORS,
+                    ("C", "Z") => Score::WIN + Score::ROCK,
 
-    input.iter().for_each(|l| {
-        if let (Some(a), Some(b)) = (l.first(), l.get(1)) {
-            match (a.as_str(), b.as_str()) {
-                // My win
-                ("A", "Z") => my_score += win + paper,
-                ("B", "Z") => my_score += win + scissors,
-                ("C", "Z") => my_score += win + rock,
+                    // Their win, we get selection points
+                    ("A", "X") => Score::SCISSORS,
+                    ("B", "X") => Score::ROCK,
+                    ("C", "X") => Score::PAPER,
 
-                // Their win
-                ("A", "X") => my_score += scissors,
-                ("B", "X") => my_score += rock,
-                ("C", "X") => my_score += paper,
+                    // Draw, split win points and get selection points
+                    ("A", "Y") => Score::DRAW + Score::ROCK,
+                    ("B", "Y") => Score::DRAW + Score::PAPER,
+                    ("C", "Y") => Score::DRAW + Score::SCISSORS,
 
-                // Draw
-                ("A", "Y") => my_score += draw + rock,
-                ("B", "Y") => my_score += draw + paper,
-                ("C", "Y") => my_score += draw + scissors,
-
-                _ => (),
+                    _ => 0,
+                },
+                _ => 0,
             }
-        }
-    });
-
-    my_score
+        })
+        .sum()
 }
 
 #[cfg(test)]
