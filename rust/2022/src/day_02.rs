@@ -79,12 +79,9 @@ pub fn solve_part_01(input: &Input) -> u32 {
     let mut my_score = 0;
     let mut their_score = 0;
 
-    // a,x = rock
-    // b,y = paper
-    // c,z = scissors
     input.iter().for_each(|l| {
-        match (l.first(), l.get(1)) {
-            (Some(a), Some(b)) => match (a.as_str(), b.as_str()) {
+        if let (Some(a), Some(b)) = (l.first(), l.get(1)) {
+            match (a.as_str(), b.as_str()) {
                 // My win
                 ("A", "Y") => {
                     my_score += win + paper;
@@ -127,8 +124,7 @@ pub fn solve_part_01(input: &Input) -> u32 {
                     their_score += draw + scissors;
                 }
                 _ => (),
-            },
-            _ => (),
+            }
         }
     });
 
@@ -178,15 +174,9 @@ pub fn solve_part_02(input: &Input) -> u32 {
     let mut my_score = 0;
     let mut their_score = 0;
 
-    // a = rock
-    // b = paper
-    // c = scissors
-    // x = loss
-    // y = draw
-    // z = win
     input.iter().for_each(|l| {
-        match (l.first(), l.get(1)) {
-            (Some(a), Some(b)) => match (a.as_str(), b.as_str()) {
+        if let (Some(a), Some(b)) = (l.first(), l.get(1)) {
+            match (a.as_str(), b.as_str()) {
                 // My win
                 ("A", "Z") => {
                     my_score += win + paper;
@@ -229,8 +219,7 @@ pub fn solve_part_02(input: &Input) -> u32 {
                     their_score += draw + scissors;
                 }
                 _ => (),
-            },
-            _ => (),
+            }
         }
     });
 
