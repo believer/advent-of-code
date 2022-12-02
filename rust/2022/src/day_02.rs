@@ -77,52 +77,25 @@ pub fn solve_part_01(input: &Input) -> u32 {
     let win = 6;
     let draw = 3;
     let mut my_score = 0;
-    let mut their_score = 0;
 
     input.iter().for_each(|l| {
         if let (Some(a), Some(b)) = (l.first(), l.get(1)) {
             match (a.as_str(), b.as_str()) {
                 // My win
-                ("A", "Y") => {
-                    my_score += win + paper;
-                    their_score += rock;
-                }
-                ("B", "Z") => {
-                    my_score += win + scissors;
-                    their_score += paper;
-                }
-                ("C", "X") => {
-                    my_score += win + rock;
-                    their_score += scissors;
-                }
+                ("A", "Y") => my_score += win + paper,
+                ("B", "Z") => my_score += win + scissors,
+                ("C", "X") => my_score += win + rock,
 
                 // Their win
-                ("A", "Z") => {
-                    their_score += win + rock;
-                    my_score += scissors;
-                }
-                ("B", "X") => {
-                    their_score += win + paper;
-                    my_score += rock;
-                }
-                ("C", "Y") => {
-                    their_score += win + scissors;
-                    my_score += paper;
-                }
+                ("A", "Z") => my_score += scissors,
+                ("B", "X") => my_score += rock,
+                ("C", "Y") => my_score += paper,
 
                 // Draw
-                ("A", "X") => {
-                    my_score += draw + rock;
-                    their_score += draw + rock;
-                }
-                ("B", "Y") => {
-                    my_score += draw + paper;
-                    their_score += draw + paper;
-                }
-                ("C", "Z") => {
-                    my_score += draw + scissors;
-                    their_score += draw + scissors;
-                }
+                ("A", "X") => my_score += draw + rock,
+                ("B", "Y") => my_score += draw + paper,
+                ("C", "Z") => my_score += draw + scissors,
+
                 _ => (),
             }
         }
@@ -172,52 +145,25 @@ pub fn solve_part_02(input: &Input) -> u32 {
     let win = 6;
     let draw = 3;
     let mut my_score = 0;
-    let mut their_score = 0;
 
     input.iter().for_each(|l| {
         if let (Some(a), Some(b)) = (l.first(), l.get(1)) {
             match (a.as_str(), b.as_str()) {
                 // My win
-                ("A", "Z") => {
-                    my_score += win + paper;
-                    their_score += rock;
-                }
-                ("B", "Z") => {
-                    my_score += win + scissors;
-                    their_score += paper;
-                }
-                ("C", "Z") => {
-                    my_score += win + rock;
-                    their_score += scissors;
-                }
+                ("A", "Z") => my_score += win + paper,
+                ("B", "Z") => my_score += win + scissors,
+                ("C", "Z") => my_score += win + rock,
 
                 // Their win
-                ("A", "X") => {
-                    their_score += win + rock;
-                    my_score += scissors;
-                }
-                ("B", "X") => {
-                    their_score += win + paper;
-                    my_score += rock;
-                }
-                ("C", "X") => {
-                    their_score += win + scissors;
-                    my_score += paper;
-                }
+                ("A", "X") => my_score += scissors,
+                ("B", "X") => my_score += rock,
+                ("C", "X") => my_score += paper,
 
                 // Draw
-                ("A", "Y") => {
-                    my_score += draw + rock;
-                    their_score += draw + rock;
-                }
-                ("B", "Y") => {
-                    my_score += draw + paper;
-                    their_score += draw + paper;
-                }
-                ("C", "Y") => {
-                    my_score += draw + scissors;
-                    their_score += draw + scissors;
-                }
+                ("A", "Y") => my_score += draw + rock,
+                ("B", "Y") => my_score += draw + paper,
+                ("C", "Y") => my_score += draw + scissors,
+
                 _ => (),
             }
         }
