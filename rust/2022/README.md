@@ -12,19 +12,21 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                          | #1  | #1 Answer | #2  |  #2 Answer |
-| ------------------------------------------------------------------------------------------------------------ | --- | --------: | --- | ---------: |
-| [Day 1: Calorie Counting](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_01.rs)    | 🌟  | **69528** | 🌟  | **206152** |
-| [Day 2: Rock Paper Scissors](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_02.rs) | 🌟  | **13809** | 🌟  |  **12316** |
+| Day                                                                                                              | #1  | #1 Answer | #2  |  #2 Answer |
+| ---------------------------------------------------------------------------------------------------------------- | --- | --------: | --- | ---------: |
+| [Day 1: Calorie Counting](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_01.rs)        | 🌟  | **69528** | 🌟  | **206152** |
+| [Day 2: Rock Paper Scissors](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_02.rs)     | 🌟  | **13809** | 🌟  |  **12316** |
+| [Day 3: Rucksack Reorganization](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_03.rs) | 🌟  |  **7831** | 🌟  |   **2683** |
 
 ## Performance
 
 With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro M1 Pro, 32 GB RAM.
 
-| Day |      #1 |      #2 | Improvement\*         |
-| --- | ------: | ------: | --------------------- |
-| 1   | 1.56 ns | 2.18 ns | `-99.82%` / `-99.96%` |
-| 2   | 8.08 µs | 7.71 µs |                       |
+| Day |        #1 |        #2 | Improvement\*         |
+| --- | --------: | --------: | --------------------- |
+| 1   |   1.56 ns |   2.18 ns | `-99.82%` / `-99.96%` |
+| 2   |   8.08 µs |   7.71 µs |                       |
+| 3   | 189.11 µs | 325.65 µs |                       |
 
 \* compared to first solution
 
