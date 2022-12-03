@@ -1,9 +1,26 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 // Day 3 - Rucksack Reorganization
 
 type Input = Vec<(String, String)>;
 type InputPartTwo = Vec<String>;
+
+struct Alphabet;
+
+impl Alphabet {
+    fn new() -> Alphabet {
+        Alphabet
+    }
+
+    fn find_character_value(&self, letter: &char) -> u32 {
+        let mut alphabet: Vec<char> = ('a'..='z').collect();
+        let mut uppercase_alphabet: Vec<char> = ('A'..='Z').collect();
+
+        alphabet.append(&mut uppercase_alphabet);
+
+        alphabet.iter().position(|c| c == letter).unwrap() as u32 + 1
+    }
+}
 
 #[aoc_generator(day3, part1)]
 pub fn input_generator_part_1(input: &str) -> Input {
@@ -92,34 +109,14 @@ pub fn input_generator_part_2(input: &str) -> InputPartTwo {
 #[aoc(day3, part1)]
 pub fn solve_part_01(input: &Input) -> u32 {
     let mut sum = 0;
-    let mut priorities: HashMap<char, u32> = HashMap::new();
-
-    let lowercase = (10..36)
-        .map(|i| char::from_digit(i, 36).unwrap())
-        .collect::<Vec<_>>();
-    let alphabet = lowercase
-        .iter()
-        .map(|c| c.to_uppercase().next().unwrap())
-        .collect::<Vec<_>>();
-
-    let mut i = 1;
-
-    for letter in lowercase {
-        priorities.insert(letter, i);
-        i += 1;
-    }
-
-    for letter in alphabet {
-        priorities.insert(letter, i);
-        i += 1;
-    }
+    let alphabet = Alphabet::new();
 
     for (first, second) in input {
         let compartment: HashSet<char> = first.chars().collect();
 
         second.chars().any(|c| {
             if compartment.contains(&c) {
-                sum += priorities.get(&c).unwrap();
+                sum += alphabet.find_character_value(&c);
                 true
             } else {
                 false
@@ -184,27 +181,7 @@ pub fn solve_part_01(input: &Input) -> u32 {
 #[aoc(day3, part2)]
 pub fn solve_part_02(input: &InputPartTwo) -> u32 {
     let mut sum = 0;
-    let mut priorities: HashMap<char, u32> = HashMap::new();
-
-    let lowercase = (10..36)
-        .map(|i| char::from_digit(i, 36).unwrap())
-        .collect::<Vec<_>>();
-    let alphabet = lowercase
-        .iter()
-        .map(|c| c.to_uppercase().next().unwrap())
-        .collect::<Vec<_>>();
-
-    let mut i = 1;
-
-    for letter in lowercase {
-        priorities.insert(letter, i);
-        i += 1;
-    }
-
-    for letter in alphabet {
-        priorities.insert(letter, i);
-        i += 1;
-    }
+    let alphabet = Alphabet::new();
 
     for group in input.chunks(3) {
         let mut candidates: HashSet<char> = group.first().unwrap().chars().collect();
@@ -215,7 +192,7 @@ pub fn solve_part_02(input: &InputPartTwo) -> u32 {
 
         sum += candidates
             .iter()
-            .map(|c| priorities.get(c).unwrap())
+            .map(|c| alphabet.find_character_value(c))
             .sum::<u32>();
     }
 
