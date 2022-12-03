@@ -5,20 +5,22 @@ use std::collections::HashSet;
 type Input = Vec<(String, String)>;
 type InputPartTwo = Vec<String>;
 
-struct Alphabet;
+struct Alphabet {
+    letters: Vec<char>,
+}
 
 impl Alphabet {
     fn new() -> Alphabet {
-        Alphabet
-    }
-
-    fn find_character_value(&self, letter: &char) -> u32 {
         let mut alphabet: Vec<char> = ('a'..='z').collect();
         let mut uppercase_alphabet: Vec<char> = ('A'..='Z').collect();
 
         alphabet.append(&mut uppercase_alphabet);
 
-        alphabet.iter().position(|c| c == letter).unwrap() as u32 + 1
+        Alphabet { letters: alphabet }
+    }
+
+    fn find_character_value(&self, letter: &char) -> u32 {
+        self.letters.iter().position(|l| l == letter).unwrap() as u32 + 1
     }
 }
 
