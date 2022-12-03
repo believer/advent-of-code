@@ -186,17 +186,12 @@ pub fn solve_part_02(rucksack: &Rucksack) -> u32 {
             let second_elf = group[1].chars().collect::<HashSet<char>>();
             let third_elf = group[2].chars().collect::<HashSet<char>>();
 
-            println!("{:?}", first_elf.len());
-            println!("{:?}", second_elf.len());
-            println!("{:?}", third_elf.len());
-
             // The bitand method returns a new hashset with the
             // intersection of the two sets. We just need to chain it
             // one more time to get the intersection of all three sets.
             let intersection = first_elf.bitand(&second_elf).bitand(&third_elf);
 
-            items.find_priority(intersection.iter().next().unwrap());
-            0
+            items.find_priority(intersection.iter().next().unwrap())
         })
         .sum()
 }
