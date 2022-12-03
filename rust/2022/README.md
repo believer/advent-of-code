@@ -26,7 +26,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | --- | --------: | --------: | --------------------- |
 | 1   |   1.56 ns |   2.18 ns | `-99.82%` / `-99.96%` |
 | 2   |   8.08 µs |   7.71 µs |                       |
-| 3   | 189.11 µs | 325.65 µs |                       |
+| 3   | 321.94 µs | 325.65 µs | `+70.24%` / `0%`      |
 
 \* compared to first solution
 
@@ -36,3 +36,4 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | --: | --------: | ------: | ---------------: | ------------------------------------------------------------------------------------------------------------------------ |
 |   1 | 865.43 ns | 5.51 µs |         Baseline | [Link](https://github.com/believer/advent-of-code/blob/5e1dbfdf07be5916d8d323360cf1f86767009ca2/rust/2022/src/day_01.rs) |
 |   1 |       --- | 3.47 µs | `0%` / `-37.84%` | [Link](https://github.com/believer/advent-of-code/blob/1cf6a750e0e899c25e9cffbc433cc46087d5a3e8/rust/2022/src/day_01.rs) |
+|   2 | 189.11 µs |     --- |                  | [Link](https://github.com/believer/advent-of-code/blob/240d950499b11b8b3d077cc6b1c4b00b9c442235/rust/2022/src/day_03.rs) |

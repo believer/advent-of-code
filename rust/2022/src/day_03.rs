@@ -1,45 +1,38 @@
-use std::collections::HashSet;
+use std::{collections::HashSet, ops::BitAnd};
 
 // Day 3 - Rucksack Reorganization
+//
+// After more googling I found easier ways of creating an
+// alphabet, more methods for handling intersections between
+// hashsets, and other useful things to make the code easier to understand.
+//
+// This solution is slower than the previous one, but it's more
+// readable and in this case I think it's worth it.
 
-type Input = Vec<(String, String)>;
-type InputPartTwo = Vec<String>;
+type Rucksack = Vec<String>;
 
-struct Alphabet {
-    letters: Vec<char>,
+struct Items {
+    items: Vec<char>,
 }
 
-impl Alphabet {
-    fn new() -> Alphabet {
+impl Items {
+    fn new() -> Items {
         let mut alphabet: Vec<char> = ('a'..='z').collect();
         let mut uppercase_alphabet: Vec<char> = ('A'..='Z').collect();
 
         alphabet.append(&mut uppercase_alphabet);
 
-        Alphabet { letters: alphabet }
+        Items { items: alphabet }
     }
 
-    fn find_character_value(&self, letter: &char) -> u32 {
-        self.letters.iter().position(|l| l == letter).unwrap() as u32 + 1
+    fn find_priority(&self, letter: &char) -> u32 {
+        self.items.iter().position(|l| l == letter).unwrap() as u32 + 1
     }
 }
 
-#[aoc_generator(day3, part1)]
-pub fn input_generator_part_1(input: &str) -> Input {
-    input
-        .lines()
-        .map(|l| {
-            let line_length = l.len();
-
-            let (first, second) = l.split_at(line_length / 2);
-            (first.to_string(), second.to_string())
-        })
-        .collect()
-}
-
-#[aoc_generator(day3, part2)]
-pub fn input_generator_part_2(input: &str) -> InputPartTwo {
-    input.lines().map(|l| l.to_string()).collect()
+#[aoc_generator(day3)]
+pub fn input_generator(input: &str) -> Rucksack {
+    input.lines().map(|l| l.trim().to_string()).collect()
 }
 
 /* Part One
@@ -106,27 +99,29 @@ pub fn input_generator_part_2(input: &str) -> InputPartTwo {
 /// ```
 /// use advent_of_code_2022::day_03::*;
 /// let data = include_str!("../input/2022/day3.txt");
-/// assert_eq!(solve_part_01(&input_generator_part_1(data)), 7831);
+/// assert_eq!(solve_part_01(&input_generator(data)), 7831);
 /// ```
 #[aoc(day3, part1)]
-pub fn solve_part_01(input: &Input) -> u32 {
-    let mut sum = 0;
-    let alphabet = Alphabet::new();
+pub fn solve_part_01(rucksack: &Rucksack) -> u32 {
+    let items = Items::new();
 
-    for (first, second) in input {
-        let compartment: HashSet<char> = first.chars().collect();
+    rucksack
+        .iter()
+        .map(|l| {
+            // Split rucksack items in two
+            let (first, second) = l.split_at(l.len() / 2);
 
-        second.chars().any(|c| {
-            if compartment.contains(&c) {
-                sum += alphabet.find_character_value(&c);
-                true
-            } else {
-                false
-            }
-        });
-    }
+            // Find the items that are in both compartments
+            let candidates = first.chars().collect::<HashSet<char>>();
+            let second_candidates = second.chars().collect::<HashSet<char>>();
 
-    sum
+            // Get the intersection and find the priority of the item
+            candidates
+                .intersection(&second_candidates)
+                .map(|c| items.find_priority(c))
+                .sum::<u32>()
+        })
+        .sum()
 }
 
 /* Part Two
@@ -178,27 +173,32 @@ pub fn solve_part_01(input: &Input) -> u32 {
 /// ```
 /// use advent_of_code_2022::day_03::*;
 /// let data = include_str!("../input/2022/day3.txt");
-/// assert_eq!(solve_part_02(&input_generator_part_2(data)), 2683);
+/// assert_eq!(solve_part_02(&input_generator(data)), 2683);
 /// ```
 #[aoc(day3, part2)]
-pub fn solve_part_02(input: &InputPartTwo) -> u32 {
-    let mut sum = 0;
-    let alphabet = Alphabet::new();
+pub fn solve_part_02(rucksack: &Rucksack) -> u32 {
+    let items = Items::new();
 
-    for group in input.chunks(3) {
-        let mut candidates: HashSet<char> = group.first().unwrap().chars().collect();
-        let second: HashSet<char> = group.get(1).unwrap().chars().collect();
-        let third: HashSet<char> = group.get(2).unwrap().chars().collect();
+    rucksack
+        .chunks(3)
+        .map(|group| {
+            let first_elf = group[0].chars().collect::<HashSet<char>>();
+            let second_elf = group[1].chars().collect::<HashSet<char>>();
+            let third_elf = group[2].chars().collect::<HashSet<char>>();
 
-        candidates.retain(|c| second.contains(c) && third.contains(c));
+            println!("{:?}", first_elf.len());
+            println!("{:?}", second_elf.len());
+            println!("{:?}", third_elf.len());
 
-        sum += candidates
-            .iter()
-            .map(|c| alphabet.find_character_value(c))
-            .sum::<u32>();
-    }
+            // The bitand method returns a new hashset with the
+            // intersection of the two sets. We just need to chain it
+            // one more time to get the intersection of all three sets.
+            let intersection = first_elf.bitand(&second_elf).bitand(&third_elf);
 
-    sum
+            items.find_priority(intersection.iter().next().unwrap());
+            0
+        })
+        .sum()
 }
 
 #[cfg(test)]
@@ -214,18 +214,18 @@ wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
 ttgJtRGJQctTZtZT
 CrZsJsPPZsGzwwsLwLmpwMDw";
 
-        assert_eq!(solve_part_01(&input_generator_part_1(data)), 157)
+        assert_eq!(solve_part_01(&input_generator(data)), 157)
     }
 
     #[test]
     fn sample_02() {
         let data = "vJrwpWtwJgWrhcsFMMfFFhFp
-jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-PmmdzqPrVvPwwTWBwg
-wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-ttgJtRGJQctTZtZT
-CrZsJsPPZsGzwwsLwLmpwMDw";
+    jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+    PmmdzqPrVvPwwTWBwg
+    wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+    ttgJtRGJQctTZtZT
+    CrZsJsPPZsGzwwsLwLmpwMDw";
 
-        assert_eq!(solve_part_02(&input_generator_part_2(data)), 70)
+        assert_eq!(solve_part_02(&input_generator(data)), 70)
     }
 }
