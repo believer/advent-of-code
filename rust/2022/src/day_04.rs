@@ -25,7 +25,7 @@ pub fn parse_pair(pair: &str) -> Vec<u32> {
 pub fn input_generator(input: &str) -> Input {
     input
         .lines()
-        .map(|l| parse_pair(l))
+        .map(parse_pair)
         .map(|v| vec![v[0]..=v[1], v[2]..=v[3]])
         .collect()
 }
