@@ -3,9 +3,7 @@ use std::{
     ops::RangeInclusive,
 };
 
-use crate::common;
-
-// Day 4 -
+// Day 4 - Camp Cleanup
 
 type Input = Vec<Vec<RangeInclusive<u32>>>;
 
