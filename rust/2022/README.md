@@ -17,6 +17,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 1: Calorie Counting](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_01.rs)        | 🌟  | **69528** | 🌟  | **206152** |
 | [Day 2: Rock Paper Scissors](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_02.rs)     | 🌟  | **13809** | 🌟  |  **12316** |
 | [Day 3: Rucksack Reorganization](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_03.rs) | 🌟  |  **7831** | 🌟  |   **2683** |
+| [Day 4: Camp Cleanup](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_04.rs)            | 🌟  |   **550** | 🌟  |    **931** |
 
 ## Performance
 
@@ -27,6 +28,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 1   |   1.56 ns |   2.18 ns | `-99.82%` / `-99.96%` |
 | 2   |   8.08 µs |   7.71 µs |                       |
 | 3   | 321.94 µs | 325.65 µs | `+70.24%` / `0%`      |
+| 4   |   1.63 µs |   1.00 µs |                       |
 
 \* compared to first solution
 
