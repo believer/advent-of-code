@@ -56,7 +56,7 @@ pub fn solve_part_01(input: &Input) -> u32 {
 /// ```
 /// use advent_of_code_2022::day_04::*;
 /// let data = include_str!("../input/2022/day4.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 0);
+/// assert_eq!(solve_part_02(&input_generator(data)), 931);
 /// ```
 #[aoc(day4, part2)]
 pub fn solve_part_02(input: &Input) -> u32 {
