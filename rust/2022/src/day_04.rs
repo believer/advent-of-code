@@ -5,8 +5,8 @@ use std::{
 
 // Day 4 - Camp Cleanup
 //
-// Today we got a list of with elves on cleaning duty. They are assigned
-// in pairs with a range of sections they are responsible for.
+// Today we got a list of elves on cleaning duty. They are assigned
+// in pairs, each with a range of sections they are responsible for.
 
 type Input = Vec<Vec<RangeInclusive<u32>>>;
 
@@ -32,8 +32,9 @@ pub fn input_generator(input: &str) -> Input {
 
 /* Part One
  *
- * In this part, the elves are assigned to clean up the camp in pairs.
- * For example, consider the following list of section assignment pairs:
+ * The elves are assigned to clean up the camp in pairs.
+ * For example, consider the following list of section assignment
+ * pairs (the puzzle input):
  *
  * 2-4,6-8
  * 2-3,4-5
@@ -90,7 +91,7 @@ pub fn solve_part_01(input: &Input) -> u32 {
 
 /* Part Two
  *
- * In this part, we need to find the pairs that overlap partially.
+ * In this part, we need to find the pairs that partially overlap.
 */
 /// Your puzzle answer was
 /// ```
