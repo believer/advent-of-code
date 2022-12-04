@@ -8,12 +8,13 @@ use std::{
 // Today we got a list of elves on cleaning duty. They are assigned
 // in pairs, each with a range of sections they are responsible for.
 
-type Input = Vec<Vec<RangeInclusive<u32>>>;
+type Groups = Vec<Vec<RangeInclusive<u32>>>;
 
-// Split the pair into two ranges
 pub fn parse_pair(pair: &str) -> Vec<u32> {
+    // Split the pairs
     pair.split(',')
         .flat_map(|n| {
+            // Find the sections for each elf
             n.split('-')
                 .map(|n| n.parse().unwrap())
                 .collect::<Vec<u32>>()
@@ -22,7 +23,7 @@ pub fn parse_pair(pair: &str) -> Vec<u32> {
 }
 
 #[aoc_generator(day4)]
-pub fn input_generator(input: &str) -> Input {
+pub fn input_generator(input: &str) -> Groups {
     input
         .lines()
         .map(parse_pair)
@@ -72,10 +73,10 @@ pub fn input_generator(input: &str) -> Input {
 /// assert_eq!(solve_part_01(&input_generator(data)), 550);
 /// ```
 #[aoc(day4, part1)]
-pub fn solve_part_01(input: &Input) -> u32 {
+pub fn solve_part_01(groups: &Groups) -> u32 {
     let mut overlap = 0;
 
-    for group in input {
+    for group in groups {
         let first = group.first().unwrap();
         let second = group.get(1).unwrap();
 
@@ -100,10 +101,10 @@ pub fn solve_part_01(input: &Input) -> u32 {
 /// assert_eq!(solve_part_02(&input_generator(data)), 931);
 /// ```
 #[aoc(day4, part2)]
-pub fn solve_part_02(input: &Input) -> u32 {
+pub fn solve_part_02(groups: &Groups) -> u32 {
     let mut overlap = 0;
 
-    for group in input {
+    for group in groups {
         let first = group.first().unwrap();
         let second = group.get(1).unwrap();
 
