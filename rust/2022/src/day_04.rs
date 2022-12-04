@@ -18,7 +18,7 @@ pub fn parse_pair(pair: &str) -> Vec<u32> {
                 .map(|n| n.parse().unwrap())
                 .collect::<Vec<u32>>()
         })
-        .collect::<Vec<u32>>()
+        .collect()
 }
 
 #[aoc_generator(day4)]
