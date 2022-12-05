@@ -8,7 +8,7 @@ use std::collections::{btree_map::Entry, BTreeMap, VecDeque};
 // Refactored using a BTreeMap to store the stacks. It doesn't make a difference
 // in performance, but it's simple to use.
 //
-// To inspiration from @ankjevel to use VecDeque instead of Vec for the stacks.
+// Took inspiration from @ankjevel and used a VecDeque instead of a Vec for the stacks.
 // The solution became both simpler and faster. Really beautiful.
 
 pub struct Instruction {
