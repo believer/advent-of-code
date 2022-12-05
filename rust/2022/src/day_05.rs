@@ -4,17 +4,23 @@ use std::collections::{btree_map::Entry, BTreeMap};
 //
 // Couldn't get a good grip on parsing the stacks that early in the morning. It was
 // easier to do it manually since it wasn't that many. Came back and created a parser for it.
+//
+// Refactored using a BTreeMap to store the stacks. It doesn't make a difference
+// in performance, but it's simple to use.
 
-#[derive(Debug)]
 pub struct Instruction {
     to: usize,
     from: usize,
     moves: usize,
 }
 
+// Instructions look like this:
+// move 5 from 1 to 2
+//
+// Split it by spaces and pick out the numbers.
 impl Instruction {
     fn new(input: &str) -> Instruction {
-        let parts: Vec<&str> = input.split(' ').collect();
+        let parts: Vec<&str> = input.split_whitespace().collect();
 
         Instruction {
             to: parts[5].parse::<usize>().unwrap() - 1,
@@ -24,44 +30,66 @@ impl Instruction {
     }
 }
 
-type Input = (BTreeMap<usize, Vec<String>>, Vec<Instruction>);
+type Stacks = BTreeMap<usize, Vec<String>>;
+type Instructions = Vec<Instruction>;
+type Input = (Stacks, Instructions);
+
+fn first_in_stacks(stacks: Stacks) -> String {
+    stacks
+        .values()
+        .map(|v| v.first().unwrap().to_string())
+        .collect::<Vec<String>>()
+        .join("")
+}
 
 #[aoc_generator(day5)]
 pub fn input_generator(input: &str) -> Input {
-    let t: Vec<&str> = input.split("\n\n").collect();
     let mut stacks: BTreeMap<usize, Vec<String>> = BTreeMap::new();
 
-    for s in t[0].split("\n").collect::<Vec<_>>().split_last().unwrap().1 {
-        for (i, c) in s.chars().collect::<Vec<_>>().chunks(4).enumerate() {
-            let v: String = c
+    let stacks_and_instructions: Vec<&str> = input.split("\n\n").collect();
+
+    // Parse the stacks. Remove the last line of column numbers.
+    // The example data is:
+    //
+    //     [D]
+    // [N] [C]
+    // [Z] [M] [P]
+    //  1   2   3
+    for row in stacks_and_instructions[0]
+        .lines()
+        .collect::<Vec<_>>()
+        .split_last()
+        .unwrap()
+        .1
+    {
+        for (i, column) in row.chars().collect::<Vec<_>>().chunks(4).enumerate() {
+            // Find the name of the crate
+            let value: String = column
                 .iter()
-                .map(|s| {
-                    s.to_string()
-                        .trim()
-                        .replace("[", "")
-                        .replace("]", "")
-                        .to_string()
-                })
+                .map(|s| s.to_string().trim().replace(&['[', ']'], ""))
                 .collect::<Vec<String>>()
                 .join("");
 
-            if v.is_empty() {
+            // Skip empty columns
+            if value.is_empty() {
                 continue;
             }
 
+            // Add to or create the stack
             match stacks.entry(i) {
                 Entry::Vacant(e) => {
-                    e.insert(vec![v]);
+                    e.insert(vec![value]);
                 }
                 Entry::Occupied(mut e) => {
-                    e.get_mut().push(v);
+                    e.get_mut().push(value);
                 }
             }
         }
     }
 
-    let instructions: Vec<Instruction> = t[1]
-        .split("\n")
+    // Parse the instructions
+    let instructions: Vec<Instruction> = stacks_and_instructions[1]
+        .lines()
         .filter(|s| !s.is_empty())
         .map(Instruction::new)
         .collect();
@@ -70,6 +98,8 @@ pub fn input_generator(input: &str) -> Input {
 }
 
 /* Part One
+ *
+ * Move each crate to the correct stack. One at a time.
 */
 /// Your puzzle answer was
 /// ```
@@ -87,26 +117,26 @@ pub fn solve_part_01((stacks, instructions): &Input) -> String {
         to,
     } in instructions
     {
+        // Move the crates, one at a time
         while moves > 0 {
-            let card = stacks.get_mut(&from).unwrap().first().unwrap().clone();
+            let card = stacks.get_mut(from).unwrap().first().unwrap().clone();
 
-            stacks.get_mut(&from).unwrap().remove(0);
+            stacks.get_mut(from).unwrap().remove(0);
             stacks
-                .get_mut(&to)
+                .get_mut(to)
                 .unwrap()
                 .splice(0..0, vec![card].iter().cloned());
             moves -= 1;
         }
     }
 
-    stacks
-        .values()
-        .map(|v| v.first().unwrap().to_string())
-        .collect::<Vec<String>>()
-        .join("")
+    // Find the first crate in each stack
+    first_in_stacks(stacks)
 }
 
 /* Part Two
+ *
+ * Move each crate to the correct stack. All at once.
 */
 /// Your puzzle answer was
 /// ```
@@ -124,27 +154,27 @@ pub fn solve_part_02((stacks, instructions): &Input) -> String {
         to,
     } in instructions
     {
-        let move_stack = stacks.get_mut(&from).unwrap()[..moves]
+        // Find all the crates that should be moved
+        let move_stack = stacks.get_mut(from).unwrap()[..moves]
             .iter()
             .map(|s| s.to_string())
             .collect::<Vec<String>>();
 
+        // Remove crates from the old stack
         while moves > 0 {
-            stacks.get_mut(&from).unwrap().remove(0);
+            stacks.get_mut(from).unwrap().remove(0);
             moves -= 1;
         }
 
+        // Add crates to the new stack
         stacks
-            .get_mut(&to)
+            .get_mut(to)
             .unwrap()
             .splice(0..0, move_stack.iter().cloned());
     }
 
-    stacks
-        .values()
-        .map(|v| v.first().unwrap().to_string())
-        .collect::<Vec<String>>()
-        .join("")
+    // Find the first crate in each stack
+    first_in_stacks(stacks)
 }
 
 #[cfg(test)]
