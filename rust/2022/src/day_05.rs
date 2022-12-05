@@ -1,6 +1,9 @@
+use std::collections::{btree_map::Entry, BTreeMap};
+
 // Day 5 - Supply Stacks
 //
-// Too lazy to parse the stacks. Will clean up solution later.
+// Couldn't get a good grip on parsing the stacks that early in the morning. It was
+// easier to do it manually since it wasn't that many. Came back and created a parser for it.
 
 #[derive(Debug)]
 pub struct Instruction {
@@ -21,42 +24,49 @@ impl Instruction {
     }
 }
 
-type Input = (Vec<Vec<String>>, Vec<Instruction>);
+type Input = (BTreeMap<usize, Vec<String>>, Vec<Instruction>);
 
 #[aoc_generator(day5)]
 pub fn input_generator(input: &str) -> Input {
     let t: Vec<&str> = input.split("\n\n").collect();
-    // [B]                     [N]     [H]
-    // [V]         [P] [T]     [V]     [P]
-    // [W]     [C] [T] [S]     [H]     [N]
-    // [T]     [J] [Z] [M] [N] [F]     [L]
-    // [Q]     [W] [N] [J] [T] [Q] [R] [B]
-    // [N] [B] [Q] [R] [V] [F] [D] [F] [M]
-    // [H] [W] [S] [J] [P] [W] [L] [P] [S]
-    // [D] [D] [T] [F] [G] [B] [B] [H] [Z]
-    let stacks = vec![
-        "B V W T Q N H D",
-        "B W D",
-        "C J W Q S T",
-        "P T Z N R J F",
-        "T S M J V P G",
-        "N T F W B",
-        "N V H F Q D L B",
-        "R F P H",
-        "H P N L B M S Z",
-    ];
-    //     [D]
-    // [N] [C]
-    // [Z] [M] [P]
-    // let stacks = vec!["N Z", "D C M", "P"];
+    let mut stacks: BTreeMap<usize, Vec<String>> = BTreeMap::new();
 
-    let parsed_stacks: Vec<Vec<String>> = stacks
-        .iter()
-        .map(|s| s.split_whitespace().map(|s| s.to_string()).collect())
+    for s in t[0].split("\n").collect::<Vec<_>>().split_last().unwrap().1 {
+        for (i, c) in s.chars().collect::<Vec<_>>().chunks(4).enumerate() {
+            let v: String = c
+                .iter()
+                .map(|s| {
+                    s.to_string()
+                        .trim()
+                        .replace("[", "")
+                        .replace("]", "")
+                        .to_string()
+                })
+                .collect::<Vec<String>>()
+                .join("");
+
+            if v.is_empty() {
+                continue;
+            }
+
+            match stacks.entry(i) {
+                Entry::Vacant(e) => {
+                    e.insert(vec![v]);
+                }
+                Entry::Occupied(mut e) => {
+                    e.get_mut().push(v);
+                }
+            }
+        }
+    }
+
+    let instructions: Vec<Instruction> = t[1]
+        .split("\n")
+        .filter(|s| !s.is_empty())
+        .map(Instruction::new)
         .collect();
-    let instructions: Vec<Instruction> = t[1].split("\n").map(Instruction::new).collect();
 
-    (parsed_stacks, instructions)
+    (stacks, instructions)
 }
 
 /* Part One
@@ -68,26 +78,32 @@ pub fn input_generator(input: &str) -> Input {
 /// assert_eq!(solve_part_01(&input_generator(data)), "PSNRGBTFT");
 /// ```
 #[aoc(day5, part1)]
-pub fn solve_part_01(input: &Input) -> String {
-    let mut stacks = input.0.clone();
+pub fn solve_part_01((stacks, instructions): &Input) -> String {
+    let mut stacks = stacks.clone();
 
-    for instruction in input.1.iter() {
-        let mut moves = instruction.moves;
-        let from = instruction.from;
-        let to = instruction.to;
-
+    for Instruction {
+        mut moves,
+        from,
+        to,
+    } in instructions
+    {
         while moves > 0 {
-            let card = stacks[from].first().unwrap().clone();
-            stacks[from].remove(0);
-            stacks[to].splice(0..0, vec![card].iter().cloned());
+            let card = stacks.get_mut(&from).unwrap().first().unwrap().clone();
+
+            stacks.get_mut(&from).unwrap().remove(0);
+            stacks
+                .get_mut(&to)
+                .unwrap()
+                .splice(0..0, vec![card].iter().cloned());
             moves -= 1;
         }
     }
 
     stacks
-        .iter()
-        .map(|stack| stack.first().unwrap().to_string())
-        .fold(String::new(), |acc, s| acc + &s)
+        .values()
+        .map(|v| v.first().unwrap().to_string())
+        .collect::<Vec<String>>()
+        .join("")
 }
 
 /* Part Two
@@ -96,34 +112,39 @@ pub fn solve_part_01(input: &Input) -> String {
 /// ```
 /// use advent_of_code_2022::day_05::*;
 /// let data = include_str!("../input/2022/day5.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 0);
+/// assert_eq!(solve_part_02(&input_generator(data)), "BNTZFPMMW");
 /// ```
 #[aoc(day5, part2)]
-pub fn solve_part_02(input: &Input) -> String {
-    let mut stacks = input.0.clone();
+pub fn solve_part_02((stacks, instructions): &Input) -> String {
+    let mut stacks = stacks.clone();
 
-    for instruction in input.1.iter() {
-        let mut moves = instruction.moves;
-        let from = instruction.from;
-        let to = instruction.to;
-
-        let move_stack = stacks[from][..moves]
+    for Instruction {
+        mut moves,
+        from,
+        to,
+    } in instructions
+    {
+        let move_stack = stacks.get_mut(&from).unwrap()[..moves]
             .iter()
             .map(|s| s.to_string())
             .collect::<Vec<String>>();
 
         while moves > 0 {
-            stacks[from].remove(0);
+            stacks.get_mut(&from).unwrap().remove(0);
             moves -= 1;
         }
 
-        stacks[to].splice(0..0, move_stack.iter().cloned());
+        stacks
+            .get_mut(&to)
+            .unwrap()
+            .splice(0..0, move_stack.iter().cloned());
     }
 
     stacks
-        .iter()
-        .map(|stack| stack.first().unwrap().to_string())
-        .fold(String::new(), |acc, s| acc + &s)
+        .values()
+        .map(|v| v.first().unwrap().to_string())
+        .collect::<Vec<String>>()
+        .join("")
 }
 
 #[cfg(test)]
