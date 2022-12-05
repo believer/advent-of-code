@@ -30,14 +30,15 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 2   |   8.08 µs |   7.71 µs |                       |
 | 3   | 321.94 µs | 325.65 µs | `+70.24%` / `0%`      |
 | 4   |   1.63 µs |   1.00 µs |                       |
-| 5   | 248.21 µs | 132.88 µs |                       |
+| 5   |  20.21 µs |  34.96 µs | `-91.86%` / `-73.69%` |
 
 \* compared to first solution
 
 ### Previous solutions
 
-| Day |        #1 |      #2 |      Improvement | Link                                                                                                                     |
-| --: | --------: | ------: | ---------------: | ------------------------------------------------------------------------------------------------------------------------ |
-|   1 | 865.43 ns | 5.51 µs |         Baseline | [Link](https://github.com/believer/advent-of-code/blob/5e1dbfdf07be5916d8d323360cf1f86767009ca2/rust/2022/src/day_01.rs) |
-|   1 |       --- | 3.47 µs | `0%` / `-37.84%` | [Link](https://github.com/believer/advent-of-code/blob/1cf6a750e0e899c25e9cffbc433cc46087d5a3e8/rust/2022/src/day_01.rs) |
-|   2 | 189.11 µs |     --- |                  | [Link](https://github.com/believer/advent-of-code/blob/240d950499b11b8b3d077cc6b1c4b00b9c442235/rust/2022/src/day_03.rs) |
+| Day |        #1 |        #2 |      Improvement | Link                                                                                                                     |
+| --: | --------: | --------: | ---------------: | ------------------------------------------------------------------------------------------------------------------------ |
+|   1 | 865.43 ns |   5.51 µs |         Baseline | [Link](https://github.com/believer/advent-of-code/blob/5e1dbfdf07be5916d8d323360cf1f86767009ca2/rust/2022/src/day_01.rs) |
+|   1 |       --- |   3.47 µs | `0%` / `-37.84%` | [Link](https://github.com/believer/advent-of-code/blob/1cf6a750e0e899c25e9cffbc433cc46087d5a3e8/rust/2022/src/day_01.rs) |
+|   2 | 189.11 µs |       --- |                  | [Link](https://github.com/believer/advent-of-code/blob/240d950499b11b8b3d077cc6b1c4b00b9c442235/rust/2022/src/day_03.rs) |
+|   5 | 248.21 µs | 132.88 µs |                  | [Link](https://github.com/believer/advent-of-code/blob/3ad0e790e383a7f558acae64faa5cb5ef73eef0f/rust/2022/src/day_05.rs) |
