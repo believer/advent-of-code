@@ -66,7 +66,7 @@ pub fn input_generator(input: &str) -> Input {
             // Find the name of the crate
             let value: String = column
                 .iter()
-                .map(|s| s.to_string().trim().replace(&['[', ']'], ""))
+                .map(|s| s.to_string().trim().replace(['[', ']'], ""))
                 .collect::<Vec<String>>()
                 .join("");
 
