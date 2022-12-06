@@ -32,6 +32,13 @@ fn find_start_of_message_marker(input: &Input, window_size: usize) -> usize {
 /* Part One
  *
  * We're looking for the first four-character window that has all unique characters.
+ *
+ * The example data looks like:
+ * mjqjpqmgbljsphdztnvjfqwrcgsmlb
+ *
+ * The first time a marker could occur is after the fourth character, but j is repeated
+ * so this isn't it. The first window that's unique is 'jpqm' and the end of that marker
+ * is found on position 7.
 */
 /// Your puzzle answer was
 /// ```
