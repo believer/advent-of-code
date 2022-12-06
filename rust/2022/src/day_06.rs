@@ -14,12 +14,15 @@ pub fn input_generator(input: &str) -> Input {
 }
 
 fn find_start_of_message_marker(input: &Input, window_size: usize) -> usize {
-    // Find the first window that has all unique characters
+    // Iterate over the input, taking windows of the given size.
     let start_of_marker = input
         .windows(window_size)
         .enumerate()
+        // Find the first window that has all unique characters
         .find(|(_, window)| window.iter().collect::<HashSet<_>>().len() == window.len())
         .unwrap()
+        // Return the iteration index, i.e., how many characters
+        // we've seen before our marker starts
         .0;
 
     // Add the window size to get the position where the first marker is completed
