@@ -1,6 +1,10 @@
 use std::collections::HashSet;
 
 // Day 6 - Tuning Trouble
+//
+// I quickly remembered the solution from day 1 last year, which I blogged about at
+// https://willcodefor.beer/posts/aoc221, that used windows. Turns out it was a perfect
+// match for the problem.
 
 type Input = Vec<char>;
 
@@ -23,6 +27,8 @@ fn find_start_of_message_marker(input: &Input, window_size: usize) -> usize {
 }
 
 /* Part One
+ *
+ * We're looking for the first four-character window that has all unique characters.
 */
 /// Your puzzle answer was
 /// ```
@@ -36,6 +42,8 @@ pub fn solve_part_01(input: &Input) -> usize {
 }
 
 /* Part Two
+ *
+ * The window size is now 14, but everything else is the same.
 */
 /// Your puzzle answer was
 /// ```
