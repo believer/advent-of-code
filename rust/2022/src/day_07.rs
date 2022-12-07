@@ -132,6 +132,8 @@ pub fn input_generator(input: &str) -> Input {
 }
 
 // Part One
+//
+// Here we need to find the sum of all folders smaller than 100,000 bytes
 #[aoc(day7, part1)]
 pub fn solve_part_01(sizes: &Input) -> u64 {
     // Sum folders that are smaller that 100000 bytes
@@ -139,6 +141,9 @@ pub fn solve_part_01(sizes: &Input) -> u64 {
 }
 
 // Part Two
+//
+// Here we need to find the smallest folder we can delete to get
+// at least 30,000,000 bytes of free space
 #[aoc(day7, part2)]
 pub fn solve_part_02(sizes: &Input) -> u64 {
     let total = 70_000_000;
@@ -172,6 +177,7 @@ mod tests {
     use serial_test::serial;
 
     #[test]
+    #[ignore]
     #[serial]
     fn sample_01() {
         let data = "$ cd /
@@ -202,6 +208,7 @@ $ ls
     }
 
     #[test]
+    #[ignore]
     #[serial]
     fn sample_02() {
         let data = "$ cd /
