@@ -62,7 +62,8 @@ fn find_folder_sizes(root: &Path, current_root: &Path, sizes: &mut HashMap<Strin
                                     .clone(),
                             )
                             .or_insert(0);
-                        *size += metadata.len() as u64;
+
+                        *size += metadata.len();
                         parent = Path::new(&parent)
                             .parent()
                             .unwrap()
@@ -72,7 +73,7 @@ fn find_folder_sizes(root: &Path, current_root: &Path, sizes: &mut HashMap<Strin
                     }
                 }
             }
-            Err(err) => println!("{:?}", err),
+            Err(err) => panic!("{err:?}"),
         }
     }
 }
@@ -121,7 +122,7 @@ pub fn input_generator(input: &str) -> Input {
 
             env::set_current_dir("aoc").unwrap();
         }
-        Err(err) => println!("{:?}", err),
+        Err(err) => panic!("{err:?}"),
     }
 
     find_folder_sizes(&env::temp_dir(), &env::current_dir().unwrap(), &mut sizes);
