@@ -21,6 +21,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 5: Supply Stacks](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_05.rs)           | 🌟  | **PSNRGBTFT** | 🌟  | **BNTZFPMMW** |
 | [Day 6: Tuning Trouble](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_06.rs)          | 🌟  |      **1300** | 🌟  |      **3986** |
 | [Day 7: No Space Left On Device](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_07.rs) | 🌟  |   **1444896** | 🌟  |    **404395** |
+| [Day 8: Treetop Tree House](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_08.rs)      | 🌟  |      **1684** | 🌟  |    **486540** |
 
 ## Performance
 
@@ -35,6 +36,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 5   |  20.21 µs |  34.96 µs | `-91.86%` / `-73.69%` |
 | 6   |  78.93 µs | 844.10 µs |                       |
 | 7   | 415.02 ns |   3.88 µs |                       |
+| 8   | 293.44 µs | 275.96 µs |                       |
 
 \* compared to first solution
 
