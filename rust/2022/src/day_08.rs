@@ -7,7 +7,7 @@ type Input = Vec<Vec<u32>>;
 #[aoc_generator(day8)]
 pub fn input_generator(input: &str) -> Input {
     input
-        .split("\n")
+        .lines()
         .filter(|line| !line.is_empty())
         .map(|line| {
             line.chars()
@@ -42,51 +42,21 @@ pub fn solve_part_01(input: &Input) -> u32 {
         for (j, col) in row.iter().enumerate().map(|(j, col)| (j + 1, col)) {
             let value = **col;
 
-            let all_top = (1..=i).all(|v| {
-                let top = input[v - 1][j];
-                if value > top {
-                    true
-                } else {
-                    false
-                }
-            });
-
             let all_bottom = (i..=input.len()).all(|v| {
                 if (v + 1) >= input.len() {
                     return true;
                 }
+
                 let bottom = input[v + 1][j];
-                if value > bottom {
-                    true
-                } else {
-                    false
-                }
+
+                value > bottom
             });
 
-            let all_left = (1..=j).all(|v| {
-                let left = input[i][v - 1];
-                if value > left {
-                    true
-                } else {
-                    false
-                }
-            });
-
-            let all_right = (j..=row.len()).all(|v| {
-                let right = input[i][v + 1];
-                if value > right {
-                    true
-                } else {
-                    false
-                }
-            });
+            let all_top = (1..=i).all(|v| value > input[v - 1][j]);
+            let all_left = (1..=j).all(|v| value > input[i][v - 1]);
+            let all_right = (j..=row.len()).all(|v| value > input[i][v + 1]);
 
             let tree_is_visible = all_top || all_bottom || all_left || all_right;
-
-            // println!(
-            //     "{} ({},{}) is visible {} from t/r/b/l ({},{},{},{})",
-            //     col, i, j, tree_is_visible, all_top, all_right, all_bottom, all_left
-            // );
 
             if tree_is_visible {
                 visible += 1;
@@ -170,7 +140,7 @@ pub fn solve_part_02(input: &Input) -> u32 {
         }
     }
 
-    scenic_scores.iter().max().unwrap().clone()
+    *scenic_scores.iter().max().unwrap()
 }
 
 #[cfg(test)]
