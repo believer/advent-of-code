@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-// Day 9 -
+// Day 9 - Rope Bridge
 //
 // I had a solution that worked for the example input and also part of the real
 // input, but I couldn't figure out why it was failing for the total input. I even created a
