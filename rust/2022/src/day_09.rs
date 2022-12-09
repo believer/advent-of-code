@@ -122,7 +122,7 @@ pub fn solve_part_01(instructions: &Instructions) -> usize {
 /// ```
 /// use advent_of_code_2022::day_09::*;
 /// let data = include_str!("../input/2022/day9.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 0);
+/// assert_eq!(solve_part_02(&input_generator(data)), 2478);
 /// ```
 #[aoc(day9, part2)]
 pub fn solve_part_02(instructions: &Instructions) -> usize {
@@ -156,7 +156,7 @@ R 2";
     }
 
     #[test]
-    fn test_part_of_full_input() {
+    fn sample_02() {
         let data = "R 4
 U 4
 L 3
@@ -166,6 +166,6 @@ D 1
 L 5
 R 2";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 36)
+        assert_eq!(solve_part_02(&input_generator(data)), 1)
     }
 }
