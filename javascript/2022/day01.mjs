@@ -1,16 +1,20 @@
-import { sum, readInput, sortDESC } from './utils.mjs'
+import {
+  sum,
+  readInput,
+  sortDESC,
+  splitLines,
+  removeEmpty,
+  map,
+  reduce,
+  add,
+  pipe,
+} from './utils.mjs'
 
 const input = await readInput('01')
 
 const parsedInput = input
   .split('\n\n')
-  .flatMap(group =>
-    group
-      .split('\n')
-      .filter(l => l)
-      .map(Number)
-      .reduce(sum, 0)
-  )
+  .flatMap(pipe(splitLines, removeEmpty, map(Number), reduce(add, 0)))
   .slice()
   .sort(sortDESC)
 
