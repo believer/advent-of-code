@@ -29,7 +29,12 @@ impl Rope {
         }
     }
 
-    // Use the Chebyshev distance to determine the position of the tail
+    // Use the Chebyshev distance to determine the position of the tail.
+    // The distance is the greatest difference between two vectors.
+    //
+    // max(|x1 - x2|, |y1 - y2|)
+    //
+    // When this is larger that 1, the tail needs to move.
     fn calculate_tail_position(&mut self, head: usize, tail: usize) -> Knot {
         let (head_x, head_y) = self.knots[head];
         let (tail_x, tail_y) = self.knots[tail];
