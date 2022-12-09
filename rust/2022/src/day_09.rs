@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::{cmp, collections::HashSet};
 
 // Day 9 - Rope Bridge
 //
@@ -36,28 +36,16 @@ impl Rope {
         let dx = head_x - tail_x;
         let dy = head_y - tail_y;
 
-        // If the head has moved more than one step away in either direction,
-        // then the tail should follow it.
-        if dx.abs() > 1 {
-            if dy != 0 {
-                // The signum method returns -1, 0, or 1 depending on the sign of the number.
-                // This is used to make the tail follow in the correct direction.
-                return (tail_x + dx.signum(), tail_y + dy.signum());
-            } else {
-                return (tail_x + dx.signum(), tail_y);
-            }
-        }
+        match cmp::max(dx.abs(), dy.abs()) {
+            // Return the current tail position if it is within one step of the head
+            1 => self.knots[tail],
 
-        if dy.abs() > 1 {
-            if dx != 0 {
-                return (tail_x + dx.signum(), tail_y + dy.signum());
-            } else {
-                return (tail_x, tail_y + dy.signum());
-            }
+            // If the head has moved more than one step away in either direction,
+            // then the tail should follow it. The signum method is used to determine
+            // the direction of the movement. It returns -1, 0, or 1 depending on the
+            // sign of the value.
+            _ => (tail_x + dx.signum(), tail_y + dy.signum()),
         }
-
-        // Return the tail position if it is within one step of the head
-        self.knots[tail]
     }
 
     fn move_head(&mut self, instruction: &str) {
@@ -157,15 +145,15 @@ R 2";
 
     #[test]
     fn sample_02() {
-        let data = "R 4
-U 4
-L 3
-D 1
-R 4
-D 1
-L 5
-R 2";
+        let data = "R 5
+U 8
+L 8
+D 3
+R 17
+D 10
+L 25
+U 20";
 
-        assert_eq!(solve_part_02(&input_generator(data)), 1)
+        assert_eq!(solve_part_02(&input_generator(data)), 36)
     }
 }
