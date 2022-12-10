@@ -3,15 +3,26 @@
 // I understood the first part quickly. The second part was a bit more
 // challenging. I had to go through the example sample in parts to be able
 // to understand it. I got stuck on how to "change lines" the longest.
+//
+// I refactored the solution using an enum and simplified the solvers. It
+// made the code both more readable and faster. Win-win!
 
-type Input = Vec<String>;
+type Operations = Vec<Operation>;
+
+pub enum Operation {
+    Noop,
+    Add(i32),
+}
 
 #[aoc_generator(day10)]
-pub fn input_generator(input: &str) -> Input {
+pub fn input_generator(input: &str) -> Operations {
     input
         .lines()
         .filter(|l| !l.is_empty())
-        .map(|l| l.trim().to_string())
+        .map(|l| match l {
+            "noop" => Operation::Noop,
+            _ => Operation::Add(l.split_once(' ').unwrap().1.parse().unwrap()),
+        })
         .collect()
 }
 
@@ -31,40 +42,41 @@ pub fn input_generator(input: &str) -> Input {
 /// ```
 /// use advent_of_code_2022::day_10::*;
 /// let data = include_str!("../input/2022/day10.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), );
+/// assert_eq!(solve_part_01(&input_generator(data)), 16880);
 /// ```
 #[aoc(day10, part1)]
-pub fn solve_part_01(input: &Input) -> i32 {
+pub fn solve_part_01(operations: &Operations) -> i32 {
     let mut x = 1;
     let mut cycle = 0;
-    let mut solution = 0;
+    let mut signal_strength = 0;
 
     let cycles = vec![20, 60, 100, 140, 180, 220];
 
-    for line in input {
-        if line == "noop" {
-            for _ in 0..1 {
-                cycle += 1;
-                if cycles.contains(&cycle) {
-                    solution += x * cycle;
-                }
-            }
-            continue;
-        }
+    for operation in operations {
+        // Find cycles to wait
+        let wait = match operation {
+            Operation::Noop => 1,
+            Operation::Add(_) => 2,
+        };
 
-        let (_, v) = line.split_once(' ').unwrap();
-
-        for _ in 0..2 {
+        // Wait for the operation to complete
+        // If the cycle is one of the ones we care about, add the
+        // cycle value * x to the solution
+        for _ in 0..wait {
             cycle += 1;
+
             if cycles.contains(&cycle) {
-                solution += x * cycle;
+                signal_strength += x * cycle;
             }
         }
 
-        x += v.parse::<i32>().unwrap();
+        // Update the x value
+        if let Operation::Add(v) = operation {
+            x += v;
+        }
     }
 
-    solution
+    signal_strength
 }
 
 /* Part Two
@@ -83,44 +95,39 @@ pub fn solve_part_01(input: &Input) -> i32 {
 /// assert_eq!(solve_part_02(&input_generator(data)), "###..#..#..##..####..##....##.###..###..#..#.#.#..#..#....#.#..#....#.#..#.#..#.#..#.##...#..#...#..#..#....#.###..#..#.#.#..#.#..####..#...####....#.#..#.###..#.#..#.#..#..#.#....#..#.#..#.#..#.#.#..#..#.#..#.#..#.####.#..#..##..###..#..#.");
 /// ```
 #[aoc(day10, part2)]
-pub fn solve_part_02(input: &Input) -> String {
+pub fn solve_part_02(operations: &Operations) -> String {
     let mut x: isize = 1;
     let mut cycle = 0;
     let mut crt = vec!["."; 240];
     let mut sprite = 0..=2;
 
-    for line in input {
-        if line == "noop" {
-            for _ in 0..1 {
-                if sprite.contains(&(cycle % 40)) {
-                    crt[cycle] = "#";
-                }
-                cycle += 1;
-            }
-            continue;
-        }
+    for operation in operations {
+        // Find cycles to wait
+        let wait = match operation {
+            Operation::Noop => 1,
+            Operation::Add(_) => 2,
+        };
 
-        let (_, v) = line.split_once(' ').unwrap();
-
-        for _ in 0..2 {
+        // If the sprite is on the pixel, light it up
+        for _ in 0..wait {
             if sprite.contains(&(cycle % 40)) {
                 crt[cycle] = "#";
             }
+
             cycle += 1;
         }
 
-        x += v.parse::<isize>().unwrap();
+        // Move the sprite
+        if let Operation::Add(v) = operation {
+            x += *v as isize;
 
-        if x < 1 {
-            sprite = 0..=0;
-        } else {
-            sprite = (x as usize - 1)..=(x as usize + 1);
+            sprite = if x < 1 {
+                0..=0
+            } else {
+                (x as usize - 1)..=(x as usize + 1)
+            };
         }
     }
-
-    crt.chunks(40).for_each(|c| println!("{}", c.join("")));
-
-    println!();
 
     crt.join("")
 }
