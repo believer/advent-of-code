@@ -6,6 +6,29 @@ on:
       - master
 
 jobs:
+  javascript:
+    name: Test JavaScript solutions
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        year: ['2022']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Run tests
+        run: |
+          cd javascript/$YEAR
+          npm ci
+          npm test
+        env:
+          YEAR: ${{ matrix.year }}
+          CI: true
+
   rescript:
     name: Test ReScript solutions
     runs-on: ubuntu-latest

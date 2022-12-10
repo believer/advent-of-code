@@ -40,7 +40,7 @@ const outcome = {
   Z: 'win',
 }
 
-const part1 = pipe(
+export const part1 = pipe(
   map(([p1, p2]) => [player1[p1], player2[p2]]),
   map(([p1, p2]) => {
     if (p1 === p2) return scores.draw + scores[p2]
@@ -54,7 +54,7 @@ const part1 = pipe(
   reduce(add, 0)
 )(parsedInput)
 
-const part2 = pipe(
+export const part2 = pipe(
   map(([p1, p2]) => [player1[p1], outcome[p2]]),
   map(([p1, p2]) => {
     if (p1 === 'rock' && p2 === 'loss') return scores.loss + scores.scissors
@@ -69,6 +69,3 @@ const part2 = pipe(
   }),
   reduce(add, 0)
 )(parsedInput)
-
-console.log('Part 1:', part1)
-console.log('Part 2:', part2)

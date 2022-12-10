@@ -18,8 +18,5 @@ const parsedInput = input
   .slice()
   .sort(sortDESC)
 
-const part1 = parsedInput.at(0)
-const part2 = parsedInput.slice(0, 3).reduce(sum, 0)
-
-console.log('Part 1:', part1)
-console.log('Part 2:', part2)
+export const part1 = parsedInput.at(0)
+export const part2 = parsedInput.slice(0, 3).reduce(sum, 0)
