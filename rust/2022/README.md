@@ -23,6 +23,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 7: No Space Left On Device](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_07.rs) | 🌟  |   **1444896** | 🌟  |    **404395** |
 | [Day 8: Treetop Tree House](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_08.rs)      | 🌟  |      **1684** | 🌟  |    **486540** |
 | [Day 9: Rope Bridge](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_09.rs)             | 🌟  |      **5735** | 🌟  |      **2478** |
+| [Day 10: Cathode-Ray Tube](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_10.rs)       | 🌟  |     **16880** | 🌟  |  **RKAZAJBR** |
 
 ## Performance
 
@@ -39,6 +40,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 7   | 415.02 ns |   3.88 µs |                       |
 | 8   | 293.44 µs | 275.96 µs |                       |
 | 9   | 451.31 µs | 667.39 µs | `-2.51%` / `-23.81%`  |
+| 10  | 861.13 ns |   1.47 µs |                       |
 
 \* compared to first solution
 
