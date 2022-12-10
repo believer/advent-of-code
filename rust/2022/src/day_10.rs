@@ -19,7 +19,7 @@ pub fn input_generator(input: &str) -> Input {
 // /// ```
 #[aoc(day10, part1)]
 pub fn solve_part_01(input: &Input) -> u32 {
-    println!("{:?}", input);
+    println!("{input:?}");
     0
 }
 
