@@ -12,18 +12,19 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                              | #1  |     #1 Answer | #2  |     #2 Answer |
-| ---------------------------------------------------------------------------------------------------------------- | --- | ------------: | --- | ------------: |
-| [Day 1: Calorie Counting](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_01.rs)        | 🌟  |     **69528** | 🌟  |    **206152** |
-| [Day 2: Rock Paper Scissors](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_02.rs)     | 🌟  |     **13809** | 🌟  |     **12316** |
-| [Day 3: Rucksack Reorganization](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_03.rs) | 🌟  |      **7831** | 🌟  |      **2683** |
-| [Day 4: Camp Cleanup](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_04.rs)            | 🌟  |       **550** | 🌟  |       **931** |
-| [Day 5: Supply Stacks](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_05.rs)           | 🌟  | **PSNRGBTFT** | 🌟  | **BNTZFPMMW** |
-| [Day 6: Tuning Trouble](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_06.rs)          | 🌟  |      **1300** | 🌟  |      **3986** |
-| [Day 7: No Space Left On Device](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_07.rs) | 🌟  |   **1444896** | 🌟  |    **404395** |
-| [Day 8: Treetop Tree House](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_08.rs)      | 🌟  |      **1684** | 🌟  |    **486540** |
-| [Day 9: Rope Bridge](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_09.rs)             | 🌟  |      **5735** | 🌟  |      **2478** |
-| [Day 10: Cathode-Ray Tube](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_10.rs)       | 🌟  |     **16880** | 🌟  |  **RKAZAJBR** |
+| Day                                                                                                              | #1  |     #1 Answer | #2  |       #2 Answer |
+| ---------------------------------------------------------------------------------------------------------------- | --- | ------------: | --- | --------------: |
+| [Day 1: Calorie Counting](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_01.rs)        | 🌟  |     **69528** | 🌟  |      **206152** |
+| [Day 2: Rock Paper Scissors](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_02.rs)     | 🌟  |     **13809** | 🌟  |       **12316** |
+| [Day 3: Rucksack Reorganization](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_03.rs) | 🌟  |      **7831** | 🌟  |        **2683** |
+| [Day 4: Camp Cleanup](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_04.rs)            | 🌟  |       **550** | 🌟  |         **931** |
+| [Day 5: Supply Stacks](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_05.rs)           | 🌟  | **PSNRGBTFT** | 🌟  |   **BNTZFPMMW** |
+| [Day 6: Tuning Trouble](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_06.rs)          | 🌟  |      **1300** | 🌟  |        **3986** |
+| [Day 7: No Space Left On Device](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_07.rs) | 🌟  |   **1444896** | 🌟  |      **404395** |
+| [Day 8: Treetop Tree House](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_08.rs)      | 🌟  |      **1684** | 🌟  |      **486540** |
+| [Day 9: Rope Bridge](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_09.rs)             | 🌟  |      **5735** | 🌟  |        **2478** |
+| [Day 10: Cathode-Ray Tube](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_10.rs)       | 🌟  |     **16880** | 🌟  |    **RKAZAJBR** |
+| [Day 11: Monkey in the Middle](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_11.rs)   | 🌟  |     **66124** | 🌟  | **19309892877** |
 
 ## Performance
 
@@ -41,6 +42,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 8   | 293.44 µs | 275.96 µs |                       | 192.56 µs |
 | 9   | 451.31 µs | 667.39 µs | `-2.51%` / `-23.81%`  |  57.74 µs |
 | 10  | 230.74 ns | 806.73 ns | `-73.19%` / `-45.25%` |   2.28 µs |
+| 11  |  50.04 µs |  26.88 ms |                       |  59.21 ns |
 
 \* compared to first solution
 
