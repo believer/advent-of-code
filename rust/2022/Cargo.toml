@@ -10,3 +10,4 @@ bench = false
 aoc-runner = "0.3.0"
 aoc-runner-derive = "0.3.0"
 serial_test = "0.9.0"
+itertools = "0.10.5"
