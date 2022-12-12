@@ -1,5 +1,4 @@
-use itertools::Itertools;
-use std::collections::BTreeMap;
+use std::collections::VecDeque;
 
 // Day 11 - Monkey in the Middle
 //
@@ -12,6 +11,11 @@ use std::collections::BTreeMap;
 //
 // Otherwise the two parts were similar. I might come back and refactor, but
 // at this point I'm just tired :D.
+//
+// Update 2022-12-12: I watched Chris Biscardi's video on this problem and found
+// that I needed to move the inspecting, testing, and item handling to the Monkey.
+// Of course, it's obvious now that I think about it. Using this I could
+// refactor a lot and made the solutions > 80% faster.
 
 #[derive(Debug)]
 pub enum Operation {
@@ -22,28 +26,30 @@ pub enum Operation {
 #[derive(Debug)]
 pub struct Monkey {
     id: usize,
-    items: Vec<u64>,
+    items: VecDeque<u64>,
     operation: Operation,
     test: u64,
     if_true: usize,
     if_false: usize,
+    handled_items: u64,
 }
 
 impl Monkey {
     fn new() -> Monkey {
         Monkey {
             id: 0,
-            items: vec![],
+            items: VecDeque::new(),
             operation: Operation::Add(None),
             test: 0,
             if_true: 0,
             if_false: 0,
+            handled_items: 0,
         }
     }
 
     fn set_items(&mut self, line: &str) {
         let (_, data) = line.split_once(':').unwrap();
-        let items: Vec<u64> = data.split(',').map(|i| i.trim().parse().unwrap()).collect();
+        let items: VecDeque<u64> = data.split(',').map(|i| i.trim().parse().unwrap()).collect();
 
         self.items = items;
     }
@@ -86,12 +92,30 @@ impl Monkey {
         self.id = id.replace(':', "").parse().unwrap();
     }
 
-    fn add_items(&mut self, items: Vec<u64>) {
-        self.items.extend(items);
+    fn inspect_item(&mut self, divisor: Option<u64>) -> u64 {
+        self.handled_items += 1;
+
+        let item = self.items.pop_front().unwrap();
+
+        let worry_level = match self.operation {
+            Operation::Add(None) => item + item,
+            Operation::Multiply(None) => item * item,
+            Operation::Add(Some(n)) => n + item,
+            Operation::Multiply(Some(n)) => n * item,
+        };
+
+        match divisor {
+            Some(n) => worry_level % n,
+            None => worry_level / 3,
+        }
     }
 
-    fn remove_item(&mut self, item: u64) {
-        self.items.retain(|&i| i != item);
+    fn test_item(&mut self, item: u64) -> usize {
+        if item % self.test == 0 {
+            self.if_true
+        } else {
+            self.if_false
+        }
     }
 }
 
@@ -100,18 +124,8 @@ pub fn input_generator(input: &str) -> String {
     input.to_string()
 }
 
-/* Part One
-*/
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_11::*;
-/// let data = include_str!("../input/2022/day11.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 66124);
-/// ```
-#[aoc(day11, part1)]
-pub fn solve_part_01(input: &str) -> usize {
+fn create_monkeys(input: &str) -> Vec<Monkey> {
     let mut monkeys = vec![];
-    let mut handled_items: BTreeMap<usize, Vec<u64>> = BTreeMap::new();
 
     for m in input.split("\n\n") {
         let mut monkey = Monkey::new();
@@ -131,51 +145,49 @@ pub fn solve_part_01(input: &str) -> usize {
         monkeys.push(monkey);
     }
 
-    for _ in 0..20 {
+    monkeys
+}
+
+fn monkey_in_the_middle(monkeys: &mut [Monkey], rounds: u32, divisor: Option<u64>) -> u64 {
+    for _ in 0..rounds {
         for i in 0..monkeys.len() {
-            let monkey = monkeys.get_mut(i).unwrap();
-            let mut next_items = BTreeMap::new();
+            for _ in 0..monkeys[i].items.len() {
+                let monkey = monkeys.get_mut(i).unwrap();
 
-            for item in monkey.items.clone() {
-                let worry_level = match &monkey.operation {
-                    Operation::Add(None) => item + item,
-                    Operation::Multiply(None) => item * item,
-                    Operation::Add(Some(n)) => n + item,
-                    Operation::Multiply(Some(n)) => n * item,
-                };
+                let item = monkey.inspect_item(divisor);
+                let pass_to_monkey = monkey.test_item(item);
 
-                let worry_level_after_inspection = worry_level / 3;
-
-                handled_items
-                    .entry(monkey.id)
-                    .or_insert(vec![])
-                    .push(worry_level_after_inspection);
-
-                let next_monkey = if worry_level_after_inspection % monkey.test == 0 {
-                    monkey.if_true
-                } else {
-                    monkey.if_false
-                };
-
-                monkey.remove_item(item);
-                next_items
-                    .entry(next_monkey)
-                    .or_insert(vec![])
-                    .push(worry_level_after_inspection);
-            }
-
-            for (id, items) in next_items {
-                monkeys.get_mut(id).unwrap().add_items(items);
+                monkeys
+                    .get_mut(pass_to_monkey)
+                    .unwrap()
+                    .items
+                    .push_back(item);
             }
         }
     }
 
-    handled_items
-        .values()
-        .map(|items| items.len())
-        .sorted_by(|a, b| b.cmp(a))
+    monkeys.sort_by_key(|m| m.handled_items);
+    monkeys
+        .iter()
+        .rev()
         .take(2)
+        .map(|monkey| monkey.handled_items)
         .product()
+}
+
+/* Part One
+*/
+/// Your puzzle answer was
+/// ```
+/// use advent_of_code_2022::day_11::*;
+/// let data = include_str!("../input/2022/day11.txt");
+/// assert_eq!(solve_part_01(&input_generator(data)), 66124);
+/// ```
+#[aoc(day11, part1)]
+pub fn solve_part_01(input: &str) -> u64 {
+    let mut monkeys = create_monkeys(input);
+
+    monkey_in_the_middle(&mut monkeys, 20, None)
 }
 
 /* Part Two
@@ -188,74 +200,10 @@ pub fn solve_part_01(input: &str) -> usize {
 /// ```
 #[aoc(day11, part2)]
 pub fn solve_part_02(input: &str) -> u64 {
-    let mut monkeys = vec![];
-    let mut handled_items: BTreeMap<usize, Vec<u64>> = BTreeMap::new();
-
-    for m in input.split("\n\n") {
-        let mut monkey = Monkey::new();
-
-        for (i, line) in m.lines().enumerate() {
-            match i {
-                0 => monkey.set_id(line),        // ID
-                1 => monkey.set_items(line),     // Items
-                2 => monkey.set_operation(line), // Operation
-                3 => monkey.set_test(line),      // Test
-                4 => monkey.set_if_true(line),   // Test result true
-                5 => monkey.set_if_false(line),  // Test result false
-                _ => break,
-            }
-        }
-
-        monkeys.push(monkey);
-    }
-
+    let mut monkeys = create_monkeys(input);
     let divisor: u64 = monkeys.iter().map(|m| m.test).product();
 
-    for _ in 0..10000 {
-        for i in 0..monkeys.len() {
-            let monkey = monkeys.get_mut(i).unwrap();
-            let mut next_items = BTreeMap::new();
-
-            for item in monkey.items.clone() {
-                let worry_level = match &monkey.operation {
-                    Operation::Add(None) => item + item,
-                    Operation::Multiply(None) => item * item,
-                    Operation::Add(Some(n)) => n + item,
-                    Operation::Multiply(Some(n)) => n * item,
-                };
-
-                let worry_level_after_inspection = worry_level % divisor;
-
-                handled_items
-                    .entry(monkey.id)
-                    .or_insert(vec![])
-                    .push(worry_level_after_inspection);
-
-                let next_monkey = if worry_level_after_inspection % monkey.test == 0 {
-                    monkey.if_true
-                } else {
-                    monkey.if_false
-                };
-
-                monkey.remove_item(item);
-                next_items
-                    .entry(next_monkey)
-                    .or_insert(vec![])
-                    .push(worry_level_after_inspection);
-            }
-
-            for (id, items) in next_items {
-                monkeys.get_mut(id).unwrap().add_items(items);
-            }
-        }
-    }
-
-    handled_items
-        .values()
-        .map(|items| items.len() as u64)
-        .sorted_by(|a, b| b.cmp(a))
-        .take(2)
-        .product()
+    monkey_in_the_middle(&mut monkeys, 10000, Some(divisor))
 }
 
 #[cfg(test)]
