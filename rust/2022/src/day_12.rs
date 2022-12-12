@@ -19,7 +19,7 @@ impl Position {
     fn successors(&self, network: Matrix<usize>) -> Vec<(Position, usize)> {
         // Current position and cost
         let &Position(r, c) = self;
-        let current = network.get((r, c)).unwrap();
+        let cost = network.get((r, c)).unwrap();
 
         // Find all neighbors and filter out any neighbours that are not valid
         // successors. A valid successor is a neighbour that is not
@@ -27,12 +27,12 @@ impl Position {
         // and costs that the algorithm can use.
         network
             .neighbours((r, c), false)
-            .filter(|(rn, cn)| {
-                let neighbour = network[(*rn, *cn)];
-                neighbour as isize - *current as isize <= 1
+            .filter(|(r, c)| {
+                let neighbour_cost = network[(*r, *c)];
+                neighbour_cost as isize - *cost as isize <= 1
             })
-            .map(|(rn, cn)| (Position(rn, cn), network[(rn, cn)]))
-            .collect::<Vec<_>>()
+            .map(|(r, c)| (Position(r, c), network[(r, c)]))
+            .collect()
     }
 }
 
