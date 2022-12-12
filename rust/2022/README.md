@@ -43,6 +43,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 9   | 451.31 µs | 667.39 µs | `-2.51%` / `-23.81%`  |  57.74 µs |
 | 10  | 230.74 ns | 806.73 ns | `-73.19%` / `-45.25%` |   2.28 µs |
 | 11  |  50.04 µs |  26.88 ms |                       |  59.21 ns |
+| 12  |   1.94 ms | 457.26 ms |                       |  18.22 µs |
 
 \* compared to first solution
 
