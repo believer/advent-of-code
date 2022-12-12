@@ -1,4 +1,5 @@
 extern crate aoc_runner;
+extern crate pathfinding;
 
 #[macro_use]
 extern crate aoc_runner_derive;
@@ -17,5 +18,6 @@ pub mod day_08;
 pub mod day_09;
 pub mod day_10;
 pub mod day_11;
+pub mod day_12;
 
 aoc_lib! { year = 2022 }
