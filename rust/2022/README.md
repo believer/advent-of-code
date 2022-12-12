@@ -25,7 +25,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 9: Rope Bridge](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_09.rs)              | 🌟  |      **5735** | 🌟  |        **2478** |
 | [Day 10: Cathode-Ray Tube](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_10.rs)        | 🌟  |     **16880** | 🌟  |    **RKAZAJBR** |
 | [Day 11: Monkey in the Middle](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_11.rs)    | 🌟  |     **66124** | 🌟  | **19309892877** |
-| [Day 12: Hill Climbing Algorithm](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_1r.rs) | 🌟  |       **420** | 🌟  |         **414** |
+| [Day 12: Hill Climbing Algorithm](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_12.rs) | 🌟  |       **420** | 🌟  |         **414** |
 
 ## Performance
 
