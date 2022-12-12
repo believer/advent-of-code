@@ -84,7 +84,7 @@ pub fn input_generator(input: &str) -> Input {
 /// ```
 /// use advent_of_code_2022::day_12::*;
 /// let data = include_str!("../input/2022/day12.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 0);
+/// assert_eq!(solve_part_01(&input_generator(data)), 420);
 /// ```
 #[aoc(day12, part1)]
 pub fn solve_part_01((matrix, start, end): &Input) -> usize {
@@ -107,7 +107,7 @@ pub fn solve_part_01((matrix, start, end): &Input) -> usize {
 /// ```
 /// use advent_of_code_2022::day_12::*;
 /// let data = include_str!("../input/2022/day12.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 0);
+/// assert_eq!(solve_part_02(&input_generator(data)), 414);
 /// ```
 #[aoc(day12, part2)]
 pub fn solve_part_02((matrix, _start, end): &Input) -> usize {
