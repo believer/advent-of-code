@@ -262,9 +262,7 @@ pub fn solve_part_02(input: &str) -> u64 {
 mod tests {
     use super::*;
 
-    #[test]
-    fn sample_01() {
-        let data = "Monkey 0:
+    const SAMPLE: &str = "Monkey 0:
   Starting items: 79, 98
   Operation: new = old * 19
   Test: divisible by 23
@@ -292,39 +290,13 @@ Monkey 3:
     If true: throw to monkey 0
     If false: throw to monkey 1";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 10605)
+    #[test]
+    fn sample_01() {
+        assert_eq!(solve_part_01(&input_generator(SAMPLE)), 10605)
     }
 
     #[test]
     fn sample_02() {
-        let data = "Monkey 0:
-  Starting items: 79, 98
-  Operation: new = old * 19
-  Test: divisible by 23
-    If true: throw to monkey 2
-    If false: throw to monkey 3
-
-Monkey 1:
-  Starting items: 54, 65, 75, 74
-  Operation: new = old + 6
-  Test: divisible by 19
-    If true: throw to monkey 2
-    If false: throw to monkey 0
-
-Monkey 2:
-  Starting items: 79, 60, 97
-  Operation: new = old * old
-  Test: divisible by 13
-    If true: throw to monkey 1
-    If false: throw to monkey 3
-
-Monkey 3:
-  Starting items: 74
-  Operation: new = old + 3
-  Test: divisible by 17
-    If true: throw to monkey 0
-    If false: throw to monkey 1";
-
-        assert_eq!(solve_part_02(&input_generator(data)), 2713310158)
+        assert_eq!(solve_part_02(&input_generator(SAMPLE)), 2713310158)
     }
 }

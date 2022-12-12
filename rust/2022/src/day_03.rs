@@ -200,27 +200,20 @@ pub fn solve_part_02(rucksack: &Rucksack) -> u32 {
 mod tests {
     use super::*;
 
-    #[test]
-    fn sample_01() {
-        let data = "vJrwpWtwJgWrhcsFMMfFFhFp
+    const SAMPLE: &str = "vJrwpWtwJgWrhcsFMMfFFhFp
 jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
 PmmdzqPrVvPwwTWBwg
 wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
 ttgJtRGJQctTZtZT
 CrZsJsPPZsGzwwsLwLmpwMDw";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 157)
+    #[test]
+    fn sample_01() {
+        assert_eq!(solve_part_01(&input_generator(SAMPLE)), 157)
     }
 
     #[test]
     fn sample_02() {
-        let data = "vJrwpWtwJgWrhcsFMMfFFhFp
-    jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-    PmmdzqPrVvPwwTWBwg
-    wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-    ttgJtRGJQctTZtZT
-    CrZsJsPPZsGzwwsLwLmpwMDw";
-
-        assert_eq!(solve_part_02(&input_generator(data)), 70)
+        assert_eq!(solve_part_02(&input_generator(SAMPLE)), 70)
     }
 }

@@ -134,9 +134,7 @@ pub fn solve_part_02(instructions: &Instructions) -> usize {
 mod tests {
     use super::*;
 
-    #[test]
-    fn sample_01() {
-        let data = "R 4
+    const SAMPLE: &str = "R 4
 U 4
 L 3
 D 1
@@ -145,7 +143,9 @@ D 1
 L 5
 R 2";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 13)
+    #[test]
+    fn sample_01() {
+        assert_eq!(solve_part_01(&input_generator(SAMPLE)), 13)
     }
 
     #[test]

@@ -175,21 +175,17 @@ pub fn solve_part_02(game: &Game) -> u32 {
 mod tests {
     use super::*;
 
-    #[test]
-    fn sample_01() {
-        let data = "A Y
+    const SAMPLE: &str = "A Y
 B X
 C Z";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 15)
+    #[test]
+    fn sample_01() {
+        assert_eq!(solve_part_01(&input_generator(SAMPLE)), 15)
     }
 
     #[test]
     fn sample_02() {
-        let data = "A Y
-B X
-C Z";
-
-        assert_eq!(solve_part_02(&input_generator(data)), 12)
+        assert_eq!(solve_part_02(&input_generator(SAMPLE)), 12)
     }
 }

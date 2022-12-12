@@ -176,11 +176,7 @@ mod tests {
     use super::*;
     use serial_test::serial;
 
-    #[test]
-    #[ignore]
-    #[serial]
-    fn sample_01() {
-        let data = "$ cd /
+    const SAMPLE: &str = "$ cd /
 $ ls
 dir a
 14848514 b.txt
@@ -204,37 +200,17 @@ $ ls
 5626152 d.ext
 7214296 k";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 95437);
+    #[test]
+    #[ignore]
+    #[serial]
+    fn sample_01() {
+        assert_eq!(solve_part_01(&input_generator(SAMPLE)), 95437);
     }
 
     #[test]
     #[ignore]
     #[serial]
     fn sample_02() {
-        let data = "$ cd /
-$ ls
-dir a
-14848514 b.txt
-8504156 c.dat
-dir d
-$ cd a
-$ ls
-dir e
-29116 f
-2557 g
-62596 h.lst
-$ cd e
-$ ls
-584 i
-$ cd ..
-$ cd ..
-$ cd d
-$ ls
-4060174 j
-8033020 d.log
-5626152 d.ext
-7214296 k";
-
-        assert_eq!(solve_part_02(&input_generator(data)), 24933642);
+        assert_eq!(solve_part_02(&input_generator(SAMPLE)), 24933642);
     }
 }

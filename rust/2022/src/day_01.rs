@@ -1,5 +1,5 @@
 // Day 1 - Calorie Counting
-//
+
 // Clippy suggested changing all.sort() to all.sort_unstable().
 // It performs faster when sorting a primitive type without any
 // difference in the result. It made the solution > 37% faster.
@@ -128,9 +128,7 @@ pub fn solve_part_02(elves: &CaloriesPerElf) -> u32 {
 mod tests {
     use super::*;
 
-    #[test]
-    fn sample_01() {
-        let data = "1000
+    const SAMPLE: &str = "1000
 2000
 3000
 
@@ -145,26 +143,13 @@ mod tests {
 
 10000";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 24000)
+    #[test]
+    fn sample_01() {
+        assert_eq!(solve_part_01(&input_generator(SAMPLE)), 24000)
     }
 
     #[test]
     fn sample_02() {
-        let data = "1000
-2000
-3000
-
-4000
-
-5000
-6000
-
-7000
-8000
-9000
-
-10000";
-
-        assert_eq!(solve_part_02(&input_generator(data)), 45000)
+        assert_eq!(solve_part_02(&input_generator(SAMPLE)), 45000)
     }
 }

@@ -120,27 +120,20 @@ pub fn solve_part_02(groups: &Groups) -> u32 {
 mod tests {
     use super::*;
 
-    #[test]
-    fn sample_01() {
-        let data = "2-4,6-8
+    const SAMPLE: &str = "2-4,6-8
 2-3,4-5
 5-7,7-9
 2-8,3-7
 6-6,4-6
 2-6,4-8";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 2)
+    #[test]
+    fn sample_01() {
+        assert_eq!(solve_part_01(&input_generator(SAMPLE)), 2)
     }
 
     #[test]
     fn sample_02() {
-        let data = "2-4,6-8
-2-3,4-5
-5-7,7-9
-2-8,3-7
-6-6,4-6
-2-6,4-8";
-
-        assert_eq!(solve_part_02(&input_generator(data)), 4)
+        assert_eq!(solve_part_02(&input_generator(SAMPLE)), 4)
     }
 }

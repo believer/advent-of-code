@@ -162,9 +162,7 @@ pub fn solve_part_02((stacks, instructions): &Input) -> String {
 mod tests {
     use super::*;
 
-    #[test]
-    fn sample_01() {
-        let data = "    [D]    
+    const SAMPLE: &str = "    [D]    
 [N] [C]    
 [Z] [M] [P]
  1   2   3 
@@ -174,21 +172,13 @@ move 3 from 1 to 3
 move 2 from 2 to 1
 move 1 from 1 to 2";
 
-        assert_eq!(solve_part_01(&input_generator(data)), "CMZ")
+    #[test]
+    fn sample_01() {
+        assert_eq!(solve_part_01(&input_generator(SAMPLE)), "CMZ")
     }
 
     #[test]
     fn sample_02() {
-        let data = "    [D]    
-[N] [C]    
-[Z] [M] [P]
- 1   2   3 
-
-move 1 from 2 to 1
-move 3 from 1 to 3
-move 2 from 2 to 1
-move 1 from 1 to 2";
-
-        assert_eq!(solve_part_02(&input_generator(data)), "MCD")
+        assert_eq!(solve_part_02(&input_generator(SAMPLE)), "MCD")
     }
 }

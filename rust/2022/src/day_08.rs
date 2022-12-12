@@ -170,25 +170,19 @@ pub fn solve_part_02(input: &Input) -> u32 {
 mod tests {
     use super::*;
 
-    #[test]
-    fn sample_01() {
-        let data = "30373
+    const SAMPLE: &str = "30373
 25512
 65332
 33549
 35390";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 21)
+    #[test]
+    fn sample_01() {
+        assert_eq!(solve_part_01(&input_generator(SAMPLE)), 21)
     }
 
     #[test]
     fn sample_02() {
-        let data = "30373
-25512
-65332
-33549
-35390";
-
-        assert_eq!(solve_part_02(&input_generator(data)), 8)
+        assert_eq!(solve_part_02(&input_generator(SAMPLE)), 8)
     }
 }
