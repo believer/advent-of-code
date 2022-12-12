@@ -3,7 +3,7 @@ use std::collections::HashSet;
 use pathfinding::prelude::{dijkstra, Matrix};
 
 // Day 12 - Hill Climbing Algorithm
-//
+
 // I knew I had to use some sort of pathfinding algorithm. I really didn't
 // want to invent the wheel again so I used the 'pathfinding' crate.
 // I first thought of A*, but I thought the Dijkstra algorithm looked
@@ -76,10 +76,9 @@ pub fn input_generator(input: &str) -> Input {
     (matrix, start, end)
 }
 
-/* Part One
- *
- * Find the shortest path from a provided start position to an end position.
-*/
+// Part One
+//
+// Find the shortest path from a provided start position to an end position.
 /// Your puzzle answer was
 /// ```
 /// use advent_of_code_2022::day_12::*;
@@ -96,13 +95,12 @@ pub fn solve_part_01((matrix, start, end): &Input) -> usize {
     path.len() - 1
 }
 
-/* Part Twot
- *
- * Here we need to consider all paths that start from the lowest cost.
- * First, let's find all position with the lowest cost. Then, we can
- * run Dijkstra's algorithm from each of these positions and save the
- * amount of steps needed. Then we pick the shortest path.
-*/
+// Part Two
+//
+// We need to consider all paths that start from the lowest cost.
+// First, let's find all position with the lowest cost. Then, we can
+// run Dijkstra's algorithm from each of these positions and save the
+// amount of steps needed. Then we pick the shortest path.
 /// Your puzzle answer was
 /// ```
 /// use advent_of_code_2022::day_12::*;

@@ -4,7 +4,7 @@ use std::process::Command;
 use std::{env, fs};
 
 // Day 7 - No Space Left On Device
-//
+
 // I didn't have a good idea of how to build a tree structure, but the input is
 // basically shell commands. To get the answers, I modified the input manually
 // to create the file tree.
