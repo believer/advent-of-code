@@ -1,6 +1,11 @@
 use std::{cmp::Ordering, iter::Peekable, str::Bytes};
 
-// Day 13 -
+// Day 13 - Distress Signal
+//
+// I had no idea how to parse the input, but found some help that suggested
+// using a peekable iterator and it worked perfectly. They also suggested looking
+// into implementing Ord for the data to make sorting easier. Made for a clean
+// solution.
 
 type Packets = Vec<Packet>;
 

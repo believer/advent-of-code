@@ -26,6 +26,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 10: Cathode-Ray Tube](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_10.rs)        | 🌟  |     **16880** | 🌟  |    **RKAZAJBR** |
 | [Day 11: Monkey in the Middle](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_11.rs)    | 🌟  |     **66124** | 🌟  | **19309892877** |
 | [Day 12: Hill Climbing Algorithm](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_12.rs) | 🌟  |       **420** | 🌟  |         **414** |
+| [Day 13: Distress Signal](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_13.rs)         | 🌟  |      **5390** | 🌟  |       **19261** |
 
 ## Performance
 
@@ -45,6 +46,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 10  | 230.74 ns | 806.73 ns | `-73.19%` / `-45.25%` |   2.28 µs |
 | 11  |   8.18 µs |   2.79 ms | `-83.77%` / `-89.64%` |  59.21 ns |
 | 12  |   1.94 ms | 457.26 ms |                       |  18.22 µs |
+| 13  |   2.38 µs | 254.72 µs |                       | 371.28 µs |
 
 \* compared to first solution
 
