@@ -1,4 +1,13 @@
-use std::{cmp::Ordering, iter::Peekable, str::Bytes};
+use std::cmp::Ordering;
+
+use nom::{
+    branch::alt,
+    bytes::complete::tag,
+    character::complete::newline,
+    multi::{separated_list0, separated_list1},
+    sequence::{delimited, separated_pair},
+    IResult, Parser,
+};
 
 // Day 13 - Distress Signal
 //
@@ -9,8 +18,19 @@ use std::{cmp::Ordering, iter::Peekable, str::Bytes};
 //
 // I think I've seen something similar to the lists before? I should remember this
 // solution for the future.
+//
+// I've been wanting to try nom to parse inputs, but it's quite hard to get started.
+// After I've completed today I decided to try it out as a refactor. Turned out quite nicely.
+// Powerful, but not easy. I decided to keep it as it also gave a faster solution for part 2
+// AND a faster generator.
 
-type Packets = Vec<Packet>;
+type Packets = Vec<Pair>;
+
+#[derive(Debug)]
+pub struct Pair {
+    left: Packet,
+    right: Packet,
+}
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Packet {
@@ -20,7 +40,7 @@ pub enum Packet {
 
 impl Packet {
     fn parse(input: &str) -> Self {
-        parse_packet_parts(&mut input[1..].bytes().peekable())
+        packet(input).unwrap().1
     }
 }
 
@@ -49,47 +69,32 @@ impl Ord for Packet {
     }
 }
 
-// Parse the string to a Packet. Use a peekable iterator to look ahead
-// to the next character. This is used to determine if the current
-// character is the start of a list or an integer.
-fn parse_packet_parts(parts: &mut Peekable<Bytes>) -> Packet {
-    let mut packets: Vec<Packet> = Vec::new();
+fn packet(input: &str) -> IResult<&str, Packet> {
+    // Parse a packet, which is either an integer or a list
+    alt((
+        // Lists can be recursive, so we need to call packet again to find
+        // out what we need to do with it
+        delimited(tag("["), separated_list0(tag(","), packet), tag("]")).map(Packet::List),
+        // Parse integers
+        nom::character::complete::u8.map(Packet::Integer),
+    ))(input)
+}
 
-    while let Some(p) = parts.next() {
-        match p {
-            // Found a number
-            b'0'..=b'9' => {
-                let mut number = String::new();
-                number.push(p as char);
-
-                // Include numbers that are more than one digit
-                while let Some(b'0'..=b'9') = parts.peek() {
-                    number.push(parts.next().unwrap() as char);
-                }
-
-                packets.push(Packet::Integer(number.parse().unwrap()));
-            }
-
-            // Found a nested list, recurse
-            b'[' => packets.push(parse_packet_parts(parts)),
-
-            // Found the end of the list, return our list packet
-            b']' => return Packet::List(packets),
-
-            // Comma is the list separator, so we can just ignore it
-            b',' => continue,
-
-            // Something was missed, panic!
-            b => panic!("Unknown byte: {b}"),
-        }
-    }
-
-    unreachable!("Unfinished packet");
+fn parse_pairs(input: &str) -> IResult<&str, Vec<Pair>> {
+    // Split the list by double newlines, i.e., each pair.
+    // Use separated_pair to parse both packets which are separated by a newline.
+    // Map the left and right packet to our Pair.
+    separated_list1(
+        tag("\n\n"),
+        separated_pair(packet, newline, packet).map(|(left, right)| Pair { left, right }),
+    )(input)
 }
 
 #[aoc_generator(day13)]
 pub fn input_generator(input: &str) -> Packets {
-    input.split_whitespace().map(Packet::parse).collect()
+    let (_, pairs) = parse_pairs(input).unwrap();
+
+    pairs
 }
 
 /* Part One
@@ -104,12 +109,10 @@ pub fn input_generator(input: &str) -> Packets {
 pub fn solve_part_01(packets: &Packets) -> usize {
     packets
         .iter()
-        // Split the packets into pairs
-        .array_chunks::<2>()
         .enumerate()
         // Compare the pairs using our Ord implementation
         // Return the index + 1 when packets are in the correct order
-        .filter_map(|(i, [left, right])| match left.cmp(right) {
+        .filter_map(|(i, Pair { left, right })| match left.cmp(right) {
             Ordering::Less => Some(i + 1),
             _ => None,
         })
@@ -127,7 +130,10 @@ pub fn solve_part_01(packets: &Packets) -> usize {
 #[aoc(day13, part2)]
 pub fn solve_part_02(packets: &Packets) -> usize {
     // Clone to solve mutability issues
-    let mut packets = packets.clone();
+    let mut packets: Vec<&Packet> = packets
+        .iter()
+        .flat_map(|Pair { left, right }| [left, right])
+        .collect();
 
     packets.sort_unstable();
 
@@ -135,8 +141,8 @@ pub fn solve_part_02(packets: &Packets) -> usize {
     // The new packets won't be found, but using unwrap_err we get the index
     // where the packets would be inserted. Add 1 for the first divider and
     // 2 for the second divider
-    let i = packets.binary_search(&Packet::parse("[[2]]")).unwrap_err() + 1;
-    let j = packets.binary_search(&Packet::parse("[[6]]")).unwrap_err() + 2;
+    let i = packets.binary_search(&&Packet::parse("[[2]]")).unwrap_err() + 1;
+    let j = packets.binary_search(&&Packet::parse("[[6]]")).unwrap_err() + 2;
 
     i * j
 }
