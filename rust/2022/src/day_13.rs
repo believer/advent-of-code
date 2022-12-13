@@ -6,6 +6,9 @@ use std::{cmp::Ordering, iter::Peekable, str::Bytes};
 // using a peekable iterator and it worked perfectly. They also suggested looking
 // into implementing Ord for the data to make sorting easier. Made for a clean
 // solution.
+//
+// I think I've seen something similar to the lists before? I should remember this
+// solution for the future.
 
 type Packets = Vec<Packet>;
 
