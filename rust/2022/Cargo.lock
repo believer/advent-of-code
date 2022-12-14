@@ -8,6 +8,7 @@ version = "0.1.0"
 dependencies = [
  "aoc-runner",
  "aoc-runner-derive",
+ "itertools",
  "nom",
  "pathfinding",
  "serial_test",
