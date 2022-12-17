@@ -24,6 +24,7 @@ pub mod day_12;
 pub mod day_13;
 pub mod day_14;
 pub mod day_15;
+pub mod day_17;
 
 // Testing the nom parser against the example inputs
 #[cfg(test)]

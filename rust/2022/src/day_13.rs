@@ -129,7 +129,6 @@ pub fn solve_part_01(packets: &Packets) -> usize {
 /// ```
 #[aoc(day13, part2)]
 pub fn solve_part_02(packets: &Packets) -> usize {
-    // Clone to solve mutability issues
     let mut packets: Vec<&Packet> = packets
         .iter()
         .flat_map(|Pair { left, right }| [left, right])
