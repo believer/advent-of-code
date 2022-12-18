@@ -1,5 +1,4 @@
-use pathfinding::prelude::Grid;
-use std::collections::VecDeque;
+use std::collections::{HashSet, VecDeque};
 
 // Day 17 - Pyroclastic Flow
 //
@@ -11,6 +10,13 @@ use std::collections::VecDeque;
 // The second part is a huge number, so we're probably looking for some kind
 // of cycle in the rocks. I might come back and find it later. I will at least
 // try to clean up my solution for part one.
+//
+// Updates:
+//
+// I cleaned up the code a bunch, but it's still a messy. The main difference
+// in performance came from changing the Grid from the pathfinding crate to a
+// HashSet. It was great to have Grid for debugging purposes as I could easily see
+// the current state. But, using a HashSet is > 40% faster.
 
 type Input = VecDeque<Jet>;
 
@@ -37,23 +43,6 @@ pub enum PieceType {
 
 impl Piece {
     fn new(piece_type: PieceType) -> Self {
-        // ####
-
-        // .#.
-        // ###
-        // .#.
-
-        // ..#
-        // ..#
-        // ###
-
-        // #
-        // #
-        // #
-        // #
-
-        // ##
-        // ##
         let initial_parts = match piece_type {
             PieceType::Line => vec![(2, 0), (3, 0), (4, 0), (5, 0)],
             PieceType::Plus => vec![(3, 0), (2, 1), (3, 1), (4, 1), (3, 2)],
@@ -68,19 +57,16 @@ impl Piece {
         }
     }
 
-    fn move_horizontal(&mut self, direction: Jet, grid: &Grid) {
+    fn move_horizontal(&mut self, direction: Jet, grid: &HashSet<(usize, usize)>) {
         let mut new_parts = Vec::new();
         let max_x = self.parts.iter().map(|(x, _)| x).max().unwrap();
         let min_x = self.parts.iter().map(|(x, _)| x).min().unwrap();
         let has_left = self.parts.iter().any(|(x, y)| {
             let next_x = if *x == 0 { 0 } else { x - 1 };
 
-            grid.has_vertex((next_x, *y))
+            grid.contains(&(next_x, *y))
         });
-        let has_right = self
-            .parts
-            .iter()
-            .any(|(x, y)| grid.has_vertex((*x + 1, *y)));
+        let has_right = self.parts.iter().any(|(x, y)| grid.contains(&(*x + 1, *y)));
 
         for (x, y) in &self.parts {
             let next_place = match direction {
@@ -106,37 +92,25 @@ impl Piece {
         self.parts = new_parts;
     }
 
-    fn move_down(&mut self, current_stack: &Grid) -> Option<()> {
+    fn move_down(&mut self, current_stack: &HashSet<(usize, usize)>) -> Option<()> {
         let mut new_parts = Vec::new();
 
         for (x, y) in &self.parts {
             new_parts.push((*x, *y - 1));
         }
 
-        // Check if piece is on the ground
-        if current_stack.is_empty() {
-            let lowest_y = new_parts.iter().map(|(_, y)| y).min().unwrap();
+        let hit_rock = self
+            .parts
+            .iter()
+            .any(|(x, y)| current_stack.contains(&(*x, *y - 1)));
+        let lowest_y = new_parts.iter().map(|(_, y)| y).min().unwrap();
 
-            match lowest_y {
-                0 => None,
-
-                _ => {
-                    self.parts = new_parts;
-                    Some(())
-                }
-            }
+        // Check if piece is on the ground or if it hit a rock
+        if hit_rock || *lowest_y == 0 {
+            None
         } else {
-            let hit_rock = self
-                .parts
-                .iter()
-                .any(|(x, y)| current_stack.has_vertex((*x, *y - 1)));
-
-            if hit_rock {
-                None
-            } else {
-                self.parts = new_parts;
-                Some(())
-            }
+            self.parts = new_parts;
+            Some(())
         }
     }
 
@@ -183,7 +157,8 @@ pub fn solve_part_01(input: &Input) -> usize {
     let mut pieces = VecDeque::new();
     let mut stack_height = 0;
     let mut rocks: usize = 0;
-    let mut grid = Grid::new(7, 8);
+    // let mut grid = Grid::new(7, 8);
+    let mut grid = HashSet::new();
 
     pieces.push_back(Piece::new(PieceType::Line));
     pieces.push_back(Piece::new(PieceType::Plus));
@@ -192,68 +167,43 @@ pub fn solve_part_01(input: &Input) -> usize {
     pieces.push_back(Piece::new(PieceType::Square));
 
     let mut current_piece = pieces.pop_front().unwrap();
-    // let mut cycles = HashMap::new();
     current_piece.adjust_for_stack(4);
 
-    // println!("Start {:?}", current_piece.parts);
-    // let wanted_rocks: usize = 1000000000000;
-
-    for i in 0.. {
+    for round in 0.. {
         if rocks == 2022 {
             break;
         }
 
         // Jet pushes
-        if i % 2 == 0 {
+        if round % 2 == 0 {
             let jet = jets.pop_front().unwrap();
 
             current_piece.move_horizontal(jet, &grid);
 
-            // println!("{jet:?} {:?}", current_piece.parts);
-
+            // Move jet back to the end of the queue
             jets.push_back(jet);
+
         // Piece moves down
-        } else {
-            // println!("Move down");
+        } else if current_piece.move_down(&grid).is_none() {
+            current_piece.parts.iter().for_each(|(x, y)| {
+                grid.insert((*x, *y));
+            });
 
-            match current_piece.move_down(&grid) {
-                Some(_) => {
-                    // println!("Down {:?}", current_piece.parts);
-                }
-                None => {
-                    // println!("Piece on the ground");
+            // Update stack height
+            stack_height = grid.iter().map(|(_, y)| *y).max().unwrap();
 
-                    current_piece.parts.iter().for_each(|(x, y)| {
-                        grid.add_vertex((*x, *y));
-                    });
+            let recreate_piece = current_piece.reset();
 
-                    // Update stack height
-                    stack_height = grid.iter().map(|(_, y)| y).max().unwrap();
+            // Put the current piece at the back of the queue
+            pieces.push_back(recreate_piece);
 
-                    // println!("{stack_height:?}");
+            // Get a new piece
+            current_piece = pieces.pop_front().unwrap();
+            current_piece.adjust_for_stack(stack_height + 4);
 
-                    let recreate_piece = current_piece.reset();
-
-                    // Put the current piece at the back of the queue
-                    pieces.push_back(recreate_piece);
-
-                    // Get a new piece
-                    current_piece = pieces.pop_front().unwrap();
-                    current_piece.adjust_for_stack(stack_height + 4);
-
-                    // Increment number of rocks that have fallen
-                    rocks += 1;
-
-                    grid.resize(7, stack_height + 8);
-
-                    // println!("{grid:?}");
-                    // println!();
-                    // println!("Next {:?}", current_piece.parts);
-                }
-            }
+            // Increment number of rocks that have fallen
+            rocks += 1;
         }
-
-        // println!();
     }
 
     stack_height
