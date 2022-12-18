@@ -13,6 +13,12 @@ use std::collections::{HashSet, VecDeque};
 // the points and then filling it with "water". Like the fill tool in Photoshop.
 // Then we can count the number of cubes that are neighboring the
 // water to get the external surface.
+//
+// Updates:
+//
+// Changing the input to a HashSet made the solutions 97% and 95% faster, respectively.
+// I had to change a type and collect to a HashSet instead of a Vec. The APIs are so
+// similar that I didn't have to make any other change. Pretty insane to get those speed gains.
 
 #[derive(Debug, Hash, Clone, Copy, Eq, PartialEq)]
 pub struct Cube {
@@ -41,7 +47,7 @@ impl Cube {
     }
 }
 
-type Input = Vec<Cube>;
+type Input = HashSet<Cube>;
 
 fn parse_coordinate(input: &str) -> IResult<&str, Cube> {
     let (input, x) = character::complete::i32(input)?;
@@ -54,7 +60,9 @@ fn parse_coordinate(input: &str) -> IResult<&str, Cube> {
 }
 
 fn parse_input(input: &str) -> IResult<&str, Input> {
-    separated_list1(character::complete::newline, parse_coordinate)(input)
+    let (input, output) = separated_list1(character::complete::newline, parse_coordinate)(input)?;
+
+    Ok((input, output.into_iter().collect()))
 }
 
 #[aoc_generator(day18)]
