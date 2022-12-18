@@ -99,8 +99,8 @@ pub fn solve_part_02(input: &Input) -> usize {
     let y_range = min_y - 1..=max_y + 1;
     let z_range = min_z - 1..=max_z + 1;
 
-    // Use flood fill to surround the area with water
-    // in each direction. Then flood-fill the area with water.
+    // Create a box around the input in each direction.
+    // Then flood-fill the area with water.
     let mut water = HashSet::new();
     let mut queue = VecDeque::new();
 
