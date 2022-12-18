@@ -51,9 +51,9 @@ pub fn input_generator(input: &str) -> Input {
 */
 /// Your puzzle answer was
 /// ```
-/// use advent_of_code_2022::day_03::*;
+/// use advent_of_code_2015::day_03::*;
 /// let data = include_str!("../input/2015/day3.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 0);
+/// assert_eq!(solve_part_01(&input_generator(data)), 2572);
 /// ```
 #[aoc(day3, part1)]
 pub fn solve_part_01(input: &Input) -> usize {
@@ -75,9 +75,9 @@ pub fn solve_part_01(input: &Input) -> usize {
 */
 /// Your puzzle answer was
 /// ```
-/// use advent_of_code_2022::day_03::*;
+/// use advent_of_code_2015::day_03::*;
 /// let data = include_str!("../input/2015/day3.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 0);
+/// assert_eq!(solve_part_02(&input_generator(data)), 2631);
 /// ```
 #[aoc(day3, part2)]
 pub fn solve_part_02(input: &Input) -> usize {
