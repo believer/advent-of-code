@@ -29,7 +29,9 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 13: Distress Signal](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_13.rs)         | 🌟  |      **5390** | 🌟  |          **19261** |
 | [Day 14: Regolith Reservoir](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_14.rs)      | 🌟  |       **737** | 🌟  |          **28145** |
 | [Day 15: Beacon Exclusion Zone](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_15.rs)   | 🌟  |   **5083287** | 🌟  | **13134039205729** |
+| Day 16: Proboscidea Volcanium                                                                                     |     |               |     |                    |
 | [Day 17: Pyroclastic Flow](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_17.rs)        | 🌟  |      **3109** |     |                    |
+| [Day 18: Boiling Boulders](https://github.com/believer/advent-of-code/blob/master/rust/2022/src/day_18.rs)        | 🌟  |      **4244** | 🌟  |           **2460** |
 
 ## Performance
 
@@ -53,6 +55,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 14  |   6.94 ms | 384.08 ms |                       | 336.12 µs |
 | 15  |  91.81 ms | 137.01 ms |                       |   2.58 µs |
 | 17  |  29.37 ms |           |                       |  85.04 µs |
+| 18  |  14.25 ms |  66.66 ms |                       |  82.62 µs |
 
 \* compared to first solution
 
