@@ -9,7 +9,3 @@ bench = false
 [dependencies]
 aoc-runner = "0.3.0"
 aoc-runner-derive = "0.3.0"
-itertools = "0.9.0"
-lazy_static = "1"
-regex = "1"
-rand = "0.7.3"

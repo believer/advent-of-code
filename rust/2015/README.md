@@ -8,14 +8,16 @@ Collect stars by helping Santa solve puzzles. Two puzzles will be made available
 
 ## Days
 
-| Day                                                                                                                        | #1  |   #1 Answer | #2  |   #2 Answer |
-| -------------------------------------------------------------------------------------------------------------------------- | --- | ----------: | --- | ----------: |
-| [Day 2: I Was Told There Would Be No Math](https://github.com/believer/advent-of-code/blob/master/rust/2015/src/day_02.rs) | 🌟  | **1586300** | 🌟  | **3737498** |
+| Day                                                                                                                             | #1  |   #1 Answer | #2  |   #2 Answer |
+| ------------------------------------------------------------------------------------------------------------------------------- | --- | ----------: | --- | ----------: |
+| [Day 2: I Was Told There Would Be No Math](https://github.com/believer/advent-of-code/blob/master/rust/2015/src/day_02.rs)      | 🌟  | **1586300** | 🌟  | **3737498** |
+| [Day 3: Perfectly Spherical Houses in a Vacuum](https://github.com/believer/advent-of-code/blob/master/rust/2015/src/day_02.rs) | 🌟  |    **2572** | 🌟  |    **2631** |
 
 ## Performance
 
-With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro 2,6 GHz 6-Core i7, 32 GB RAM, Radeon 5300M 4 GB.
+With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro M1 Pro, 32 GB RAM.
 
-| Day |      #1 |      #2 | Improvement\* |
-| --- | ------: | ------: | ------------- |
-| 1   | 9.67 µs | 7.56 µs |               |
+| Day |        #1 |        #2 | Improvement\* | Generator |
+| --- | --------: | --------: | ------------- | --------: |
+| 2   |   3.89 µs |   6.91 µs |               |  84.07 µs |
+| 3   | 355.96 µs | 383.12 µs |               |  86.21 µs |
