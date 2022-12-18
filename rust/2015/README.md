@@ -10,6 +10,7 @@ Collect stars by helping Santa solve puzzles. Two puzzles will be made available
 
 | Day                                                                                                                             | #1  |   #1 Answer | #2  |   #2 Answer |
 | ------------------------------------------------------------------------------------------------------------------------------- | --- | ----------: | --- | ----------: |
+| [Day 1: Not Quite Lisp](https://github.com/believer/advent-of-code/blob/master/rust/2015/src/day_01.rs)                         | 🌟  |     **232** | 🌟  |    **1783** |
 | [Day 2: I Was Told There Would Be No Math](https://github.com/believer/advent-of-code/blob/master/rust/2015/src/day_02.rs)      | 🌟  | **1586300** | 🌟  | **3737498** |
 | [Day 3: Perfectly Spherical Houses in a Vacuum](https://github.com/believer/advent-of-code/blob/master/rust/2015/src/day_02.rs) | 🌟  |    **2572** | 🌟  |    **2631** |
 
@@ -19,5 +20,6 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 
 | Day |        #1 |        #2 | Improvement\* | Generator |
 | --- | --------: | --------: | ------------- | --------: |
+| 1   |   1.39 µs |   1.13 µs |               |  58.67 µs |
 | 2   |   3.89 µs |   6.91 µs |               |  84.07 µs |
 | 3   | 355.96 µs | 383.12 µs |               |  86.21 µs |
