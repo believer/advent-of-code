@@ -18,8 +18,16 @@ Collect stars by helping Santa solve puzzles. Two puzzles will be made available
 
 With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro M1 Pro, 32 GB RAM.
 
-| Day |        #1 |        #2 | Improvement\* | Generator |
-| --- | --------: | --------: | ------------- | --------: |
-| 1   |   1.39 µs |   1.13 µs |               |  58.67 µs |
-| 2   |   3.89 µs |   6.91 µs |               |  84.07 µs |
-| 3   | 355.96 µs | 383.12 µs |               |  86.21 µs |
+| Day |        #1 |        #2 | Improvement\*         | Generator |
+| --- | --------: | --------: | --------------------- | --------: |
+| 1   |   1.39 µs |   1.13 µs |                       |  58.67 µs |
+| 2   |   3.89 µs |   6.91 µs |                       |  84.07 µs |
+| 3   | 168.90 µs | 191.48 µs | `-52.55%` / `-50.02%` |  80.94 µs |
+
+\* compared to first solution
+
+### Previous solutions
+
+| Day |        #1 |        #2 | Improvement | Link                                                                                                                     |
+| --: | --------: | --------: | ----------: | ------------------------------------------------------------------------------------------------------------------------ |
+|   3 | 355.96 µs | 383.12 µs |             | [Link](https://github.com/believer/advent-of-code/blob/1ba041a793750d9db089e224c16c800f2525e60b/rust/2015/src/day_03.rs) |

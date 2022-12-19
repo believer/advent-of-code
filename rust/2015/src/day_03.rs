@@ -1,6 +1,17 @@
-// Day 3 -
+// Day 3 - Perfectly Spherical Houses in a Vacuum
+//
+// Pretty simple movements in a grid. Then just count the number of
+// coordinates visited.
+//
+// Updates:
+//
+// I was using a HashMap to store coordinates AND presents. Turns out
+// that I don't need the presents. So I changed it to a HashSet.
+// I also used with_capacity() to pre-allocate the HashSet as the
+// maximum possible houses visited should be the length of the input.
+// These changes made the solution run 50% faster.
 
-use std::collections::HashMap;
+use std::collections::HashSet;
 
 type Input = Vec<Direction>;
 
@@ -57,18 +68,17 @@ pub fn input_generator(input: &str) -> Input {
 /// ```
 #[aoc(day3, part1)]
 pub fn solve_part_01(input: &Input) -> usize {
-    let mut packages: HashMap<(isize, isize), u32> = HashMap::new();
+    let mut houses: HashSet<(isize, isize)> = HashSet::with_capacity(input.len());
     let mut santa = Santa::new();
 
-    packages.insert((santa.x, santa.y), 1);
+    houses.insert((santa.x, santa.y));
 
     for direction in input {
         santa.move_to(direction);
-
-        *packages.entry((santa.x, santa.y)).or_insert(0) += 1;
+        houses.insert((santa.x, santa.y));
     }
 
-    packages.len()
+    houses.len()
 }
 
 /* Part Two
@@ -81,12 +91,12 @@ pub fn solve_part_01(input: &Input) -> usize {
 /// ```
 #[aoc(day3, part2)]
 pub fn solve_part_02(input: &Input) -> usize {
-    let mut packages: HashMap<(isize, isize), u32> = HashMap::new();
+    let mut houses: HashSet<(isize, isize)> = HashSet::with_capacity(input.len());
     let mut santa = Santa::new();
     let mut robosanta = Santa::new();
 
-    *packages.entry((santa.x, santa.y)).or_insert(0) += 1;
-    *packages.entry((robosanta.x, robosanta.y)).or_insert(0) += 1;
+    houses.insert((santa.x, santa.y));
+    houses.insert((robosanta.x, robosanta.y));
 
     for directions in input.chunks(2) {
         match directions {
@@ -94,14 +104,14 @@ pub fn solve_part_02(input: &Input) -> usize {
                 santa.move_to(santa_move);
                 robosanta.move_to(robosanta_move);
 
-                *packages.entry((santa.x, santa.y)).or_insert(0) += 1;
-                *packages.entry((robosanta.x, robosanta.y)).or_insert(0) += 1;
+                houses.insert((santa.x, santa.y));
+                houses.insert((robosanta.x, robosanta.y));
             }
             _ => panic!("Invalid input"),
         }
     }
 
-    packages.len()
+    houses.len()
 }
 
 #[cfg(test)]
