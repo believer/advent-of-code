@@ -30,10 +30,13 @@ pub fn input_generator(input: &str) -> Input {
 /// ```
 #[aoc(day1, part1)]
 pub fn solve_part_01(directions: &Input) -> isize {
-    directions.iter().fold(0, |acc, direction| match direction {
-        Direction::Up => acc + 1,
-        Direction::Down => acc - 1,
-    })
+    directions
+        .iter()
+        .map(|direction| match direction {
+            Direction::Up => 1,
+            Direction::Down => -1,
+        })
+        .sum()
 }
 
 /* Part Two
