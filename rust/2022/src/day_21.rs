@@ -109,7 +109,7 @@ pub fn solve_part_01(monkeys: &Input) -> isize {
 /// ```
 /// use advent_of_code_2022::day_21::*;
 /// let data = include_str!("../input/2022/day21.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 170237589447588);
+/// assert_eq!(solve_part_02(&input_generator(data)), 3712643961892);
 /// ```
 #[aoc(day21, part2)]
 pub fn solve_part_02(monkeys: &Input) -> isize {
