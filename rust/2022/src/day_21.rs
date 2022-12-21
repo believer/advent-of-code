@@ -1,82 +1,89 @@
-use nom::{
-    bytes::complete::tag, character::complete, multi::separated_list1, sequence::separated_pair, *,
-};
 use std::collections::HashMap;
 
 // Day 21 - Monkey Math
+//
+// The first part was pretty simple. Parse the input and run through
+// the equations until we find the result of "root".
+//
+// The second part was trickier. I was able to get the correct answer for the
+// test, but it didn't work every time. Something was off somewhere. I decided
+// to rethink and simplify the solutions from the ground up. Went with the approach
+// of going backwards from "root" until we find "humn". The real result was actually
+// off by a few digits. Don't know if there was a rounding error somewhere...
+//
+// The first part even got ~93% faster with the updated solution.
 
-type Input = Vec<Monkey>;
-
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Operation {
-    Add((String, String)),
-    Multiply((String, String)),
-    Divide((String, String)),
-    Subtract((String, String)),
+    Add,
+    Multiply,
+    Divide,
+    Subtract,
+    Equals,
 }
 
-#[derive(Debug)]
-pub enum MonkeyYell {
-    Number(u64),
-    Operation(Operation),
-}
-
-#[derive(Debug)]
-pub struct Monkey {
-    name: String,
-    yell: MonkeyYell,
-}
-
-impl Monkey {
-    fn new(name: String, yell: MonkeyYell) -> Self {
-        Monkey { name, yell }
-    }
-}
-
-fn parse_operation(input: &str) -> IResult<&str, Monkey> {
-    let (input, name) = complete::alpha1(input)?;
-    let (input, _) = tag(": ")(input)?;
-    let (input, left) = complete::alpha1(input)?;
-    let (input, _) = complete::space0(input)?;
-    let (input, op) = complete::one_of("+-*/")(input)?;
-    let (input, _) = complete::space0(input)?;
-    let (input, right) = complete::alpha1(input)?;
-
-    let operation = match op {
-        '+' => Operation::Add((left.to_string(), right.to_string())),
-        '-' => Operation::Subtract((left.to_string(), right.to_string())),
-        '*' => Operation::Multiply((left.to_string(), right.to_string())),
-        '/' => Operation::Divide((left.to_string(), right.to_string())),
-        _ => unreachable!(),
-    };
-
-    Ok((
-        input,
-        Monkey::new(name.to_string(), MonkeyYell::Operation(operation)),
-    ))
-}
-
-// abcd: 1234
-fn parse_number(input: &str) -> IResult<&str, Monkey> {
-    let (input, output) = separated_pair(complete::alpha1, tag(": "), complete::u64)(input)?;
-
-    Ok((
-        input,
-        Monkey::new(output.0.to_string(), MonkeyYell::Number(output.1)),
-    ))
-}
-
-fn parse_monkey(input: &str) -> IResult<&str, Monkey> {
-    branch::alt((parse_number, parse_operation))(input)
-}
-
-fn parse_monkeys(input: &str) -> IResult<&str, Input> {
-    separated_list1(complete::newline, parse_monkey)(input)
-}
+type Monkey = String;
+type Equation = (Operation, Monkey, Monkey);
+type AllNumbers = HashMap<Monkey, isize>;
+type AllEquations = HashMap<Monkey, Equation>;
+type Input = (AllNumbers, AllEquations);
 
 #[aoc_generator(day21)]
 pub fn input_generator(input: &str) -> Input {
-    parse_monkeys(input).unwrap().1
+    let mut numbers = HashMap::new();
+    let mut equations = HashMap::new();
+
+    input.lines().for_each(|line| {
+        let monkey = line.split([':', ' ']).collect::<Vec<_>>();
+
+        // Numbers are length 3 - Monkey name, empty space, number
+        if monkey.len() == 3 {
+            numbers.insert(monkey[0].to_string(), monkey[2].parse().unwrap());
+        // All that's left are equations
+        } else {
+            let operation = match monkey[3] {
+                "+" => Operation::Add,
+                "-" => Operation::Subtract,
+                "*" => Operation::Multiply,
+                "/" => Operation::Divide,
+                "=" => Operation::Equals,
+                _ => panic!("Unknown operation"),
+            };
+
+            equations.insert(
+                monkey[0].to_string(),
+                (operation, monkey[2].to_string(), monkey[4].to_string()),
+            );
+        }
+    });
+
+    (numbers, equations)
+}
+
+fn evaluate_monkeys(numbers: &mut AllNumbers, equations: &mut AllEquations) {
+    loop {
+        let number_of_equations = equations.len();
+
+        equations.retain(|monkey, (operation, lhs, rhs)| {
+            let result = match (operation, numbers.get(lhs), numbers.get(rhs)) {
+                (Operation::Add, Some(lhs), Some(rhs)) => lhs + rhs,
+                (Operation::Subtract, Some(lhs), Some(rhs)) => lhs - rhs,
+                (Operation::Multiply, Some(lhs), Some(rhs)) => lhs * rhs,
+                (Operation::Divide, Some(lhs), Some(rhs)) => lhs / rhs,
+                // Save it for later
+                _ => return true,
+            };
+
+            numbers.insert(monkey.to_string(), result);
+
+            false
+        });
+
+        // Nothing further to evaluate
+        if number_of_equations == equations.len() {
+            break;
+        }
+    }
 }
 
 /* Part One
@@ -88,50 +95,58 @@ pub fn input_generator(input: &str) -> Input {
 /// assert_eq!(solve_part_01(&input_generator(data)), 170237589447588);
 /// ```
 #[aoc(day21, part1)]
-pub fn solve_part_01(monkeys: &Input) -> u64 {
-    let mut monkey_math: HashMap<String, u64> = HashMap::new();
+pub fn solve_part_01(monkeys: &Input) -> isize {
+    let (mut numbers, mut equations) = monkeys.clone();
 
-    loop {
-        if let Some(result) = monkey_math.get(&"root".to_string()) {
-            return *result;
-        }
+    evaluate_monkeys(&mut numbers, &mut equations);
 
-        for monkey in monkeys {
-            match &monkey.yell {
-                MonkeyYell::Number(number) => {
-                    monkey_math.insert(monkey.name.clone(), *number);
-                }
+    numbers["root"]
+}
 
-                MonkeyYell::Operation(operation) => {
-                    let (left, right) = match operation {
-                        Operation::Add((left, right)) => (left, right),
-                        Operation::Subtract((left, right)) => (left, right),
-                        Operation::Multiply((left, right)) => (left, right),
-                        Operation::Divide((left, right)) => (left, right),
-                    };
+/* Part Two
+*/
+/// Your puzzle answer was
+/// ```
+/// use advent_of_code_2022::day_21::*;
+/// let data = include_str!("../input/2022/day21.txt");
+/// assert_eq!(solve_part_02(&input_generator(data)), 170237589447588);
+/// ```
+#[aoc(day21, part2)]
+pub fn solve_part_02(monkeys: &Input) -> isize {
+    let (mut numbers, mut equations) = monkeys.clone();
 
-                    let left = monkey_math.get(left);
-                    let right = monkey_math.get(right);
+    // Update root to equals operation
+    equations.get_mut("root").unwrap().0 = Operation::Equals;
 
-                    if left.is_none() || right.is_none() {
-                        continue;
-                    }
+    // Remove human from numbers as that is what we're looking for
+    numbers.remove("humn");
 
-                    let left = *left.unwrap();
-                    let right = *right.unwrap();
+    // Evaluate all possible equations
+    evaluate_monkeys(&mut numbers, &mut equations);
 
-                    let result = match operation {
-                        Operation::Add(_) => left + right,
-                        Operation::Subtract(_) => left - right,
-                        Operation::Multiply(_) => left * right,
-                        Operation::Divide(_) => left / right,
-                    };
+    let mut search = "root";
+    let mut result = 0;
 
-                    monkey_math.insert(monkey.name.clone(), result);
-                }
-            }
-        }
+    // Work backwards from "root" to "humn" to find the result
+    while search != "humn" {
+        let (op, lhs, rhs) = &equations[search];
+
+        (search, result) = match (op, numbers.get(lhs), numbers.get(rhs)) {
+            (Operation::Equals, None, Some(x)) => (lhs, *x),
+            (Operation::Equals, Some(x), None) => (rhs, *x),
+            (Operation::Add, None, Some(x)) => (lhs, result - x),
+            (Operation::Add, Some(x), None) => (rhs, result - x),
+            (Operation::Subtract, None, Some(x)) => (lhs, result + x),
+            (Operation::Subtract, Some(x), None) => (rhs, x - result),
+            (Operation::Multiply, None, Some(x)) => (lhs, result / x),
+            (Operation::Multiply, Some(x), None) => (rhs, result / x),
+            (Operation::Divide, None, Some(x)) => (lhs, result * x),
+            (Operation::Divide, Some(x), None) => (rhs, x / result),
+            _ => panic!(),
+        };
     }
+
+    result
 }
 
 #[cfg(test)]
@@ -157,5 +172,10 @@ hmdt: 32";
     #[test]
     fn sample_01() {
         assert_eq!(solve_part_01(&input_generator(SAMPLE)), 152)
+    }
+
+    #[test]
+    fn sample_02() {
+        assert_eq!(solve_part_02(&input_generator(SAMPLE)), 301)
     }
 }
