@@ -92,8 +92,8 @@ pub fn solve_part_01(monkeys: &Input) -> u64 {
     let mut monkey_math: HashMap<String, u64> = HashMap::new();
 
     loop {
-        if monkey_math.get(&"root".to_string()).is_some() {
-            break;
+        if let Some(result) = monkey_math.get(&"root".to_string()) {
+            return *result;
         }
 
         for monkey in monkeys {
@@ -101,6 +101,7 @@ pub fn solve_part_01(monkeys: &Input) -> u64 {
                 MonkeyYell::Number(number) => {
                     monkey_math.insert(monkey.name.clone(), *number);
                 }
+
                 MonkeyYell::Operation(operation) => {
                     let (left, right) = match operation {
                         Operation::Add((left, right)) => (left, right),
@@ -131,21 +132,6 @@ pub fn solve_part_01(monkeys: &Input) -> u64 {
             }
         }
     }
-
-    *monkey_math.get(&"root".to_string()).unwrap()
-}
-
-/* Part Two
-*/
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_21::*;
-/// let data = include_str!("../input/2022/day21.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 0);
-/// ```
-#[aoc(day21, part2)]
-pub fn solve_part_02(_input: &Input) -> u64 {
-    0
 }
 
 #[cfg(test)]
