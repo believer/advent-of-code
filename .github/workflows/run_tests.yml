@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        year: ['2015', '2016', '2019', '2020', '2021', '2022']
+        year: ['2015', '2016', '2019', '2020', '2021', '2022', '2023']
 
     steps:
       - name: Checkout code
