@@ -44,7 +44,7 @@ pub fn solve_part_01(input: &Input) -> u32 {
     // That's the length of the first and last row plus
     // the length of the first and last column (without the first
     // and the last row).
-    let outer_rows = input.get(0).unwrap().len() * 2;
+    let outer_rows = input.first().unwrap().len() * 2;
     let outer_cols = (input.len() - 2) * 2;
 
     let mut visible = (outer_rows + outer_cols) as u32;

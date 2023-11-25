@@ -126,7 +126,7 @@ fn find_differences(input: &BTreeSet<u64>) -> impl Iterator<Item = u64> + '_ {
 /// ```
 #[aoc(day10, part1)]
 pub fn solve_part_01(input: &BTreeSet<u64>) -> u64 {
-    let mut results = vec![0, 0, 1];
+    let mut results = [0, 0, 1];
 
     find_differences(input).for_each(|d| results[d as usize - 1] += 1);
 

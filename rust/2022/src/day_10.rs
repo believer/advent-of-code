@@ -50,7 +50,7 @@ pub fn solve_part_01(operations: &Operations) -> i32 {
     let mut cycle = 0;
     let mut signal_strength = 0;
 
-    let cycles = vec![20, 60, 100, 140, 180, 220];
+    let cycles = [20, 60, 100, 140, 180, 220];
 
     for operation in operations {
         // Find cycles to wait
