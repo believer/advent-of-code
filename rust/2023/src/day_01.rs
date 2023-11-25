@@ -18,7 +18,7 @@ pub fn input_generator(input: &str) -> Vec<u32> {
 /// ```
 */
 #[aoc(day1, part1)]
-pub fn solve_part_01(_input: &Vec<u32>) -> u32 {
+pub fn solve_part_01(_input: &[u32]) -> u32 {
     0
 }
 
@@ -33,7 +33,7 @@ pub fn solve_part_01(_input: &Vec<u32>) -> u32 {
 /// ```
 */
 #[aoc(day1, part2)]
-pub fn solve_part_02(_input: &Vec<u32>) -> u32 {
+pub fn solve_part_02(_input: &[u32]) -> u32 {
     0
 }
 
