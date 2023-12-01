@@ -4,6 +4,11 @@
 // The first part was pretty straightforward, but the second part
 // was a bit more tricky. I couldn't find a way to do it in code,
 // so I massaged the data in vim.
+//
+// Edit: I've created solutions that work for both parts. It made the solutions look
+// "slower" than the first example, because more work is done in the solution functions.
+// But, it's actually faster when you compare the total time, so I'll make this "initial solution"
+// for performance.
 
 #[aoc_generator(day1)]
 pub fn input_generator(input: &str) -> String {

@@ -22,9 +22,9 @@ You try to ask why they can't just use a weather machine ("not powerful enough")
 
 With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro M1 Pro, 32 GB RAM.
 
-| Day |        #1 |        #2 | Improvement\* |             Generator |
-| --- | --------: | --------: | ------------- | --------------------: |
-| 1   | 33.787 ns | 33.891 ns | -             | 155.36 µs / 52.892 ms |
+| Day |       #1 |      #2 | Improvement\* |             Generator |
+| --- | -------: | ------: | ------------- | --------------------: |
+| 1   | 43.18 ns | 1.19 ms | -             | 441.01 ns / 447.43 ns |
 
 \* compared to first solution
 
