@@ -13,7 +13,7 @@ pub fn input_generator_part1(input: &str) -> Vec<u32> {
         .lines()
         .map(|l| {
             l.chars()
-                .filter(|c| c.is_digit(10))
+                .filter(|c| c.is_ascii_digit())
                 .collect::<String>()
                 .parse::<u32>()
                 .unwrap()
@@ -24,9 +24,7 @@ pub fn input_generator_part1(input: &str) -> Vec<u32> {
             let i = t.chars().next().unwrap();
             let i2 = t.chars().next_back().unwrap();
 
-            let string = i.to_string() + &i2.to_string();
-
-            return string;
+            i.to_string() + &i2.to_string()
         })
         .map(|n| n.parse::<u32>().unwrap())
         .collect()
@@ -55,7 +53,7 @@ pub fn input_generator_part2(input: &str) -> Vec<u32> {
             .split_whitespace()
             .map(|l| {
                 l.chars()
-                    .filter(|c| c.is_digit(10))
+                    .filter(|c| c.is_ascii_digit())
                     .collect::<String>()
                     .parse::<u32>()
                     .unwrap()
@@ -65,9 +63,7 @@ pub fn input_generator_part2(input: &str) -> Vec<u32> {
                 let t = n.to_string();
                 let i = t.chars().next().unwrap();
                 let i2 = t.chars().next_back().unwrap();
-                let string = i.to_string() + &i2.to_string();
-
-                return string;
+                i.to_string() + &i2.to_string()
             })
             .map(|n| n.parse::<u32>().unwrap())
             .collect::<Vec<_>>()[0];
@@ -75,7 +71,7 @@ pub fn input_generator_part2(input: &str) -> Vec<u32> {
         data.push(filtered_data);
     }
 
-    return data;
+    data
 }
 
 /* Part One
