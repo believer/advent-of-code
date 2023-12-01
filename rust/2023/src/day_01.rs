@@ -1,6 +1,11 @@
 use regex::Regex;
 
 // Day 1: Trebuchet?!
+//
+// The first day of the Advent of Code 2023 is here!
+// The first part was pretty straightforward, but the second part
+// was a bit more tricky. I couldn't find a way to do it in code,
+// so I massaged the data in vim.
 
 #[aoc_generator(day1, part1)]
 pub fn input_generator_part1(input: &str) -> Vec<u32> {
@@ -119,8 +124,6 @@ pub fn solve_part_01(input: &[u32]) -> u32 {
 *
 * Some of the numbers overlap, like eightwothree should be 823 when cleaned.
 *
-* I couldn't find an easy way of doing this off the top of my head, so I
-* massaged the data manually in vim by replacing the words with the numbers.
 */
 // Your puzzle answer was
 /* DOCTEST DISABLED
