@@ -9,6 +9,19 @@ enum Color {
     Blue,
 }
 
+impl std::str::FromStr for Color {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "red" => Ok(Color::Red),
+            "green" => Ok(Color::Green),
+            "blue" => Ok(Color::Blue),
+            _ => Err(()),
+        }
+    }
+}
+
 #[derive(Debug)]
 pub struct Cube {
     color: Color,
@@ -38,14 +51,7 @@ pub fn input_generator(input: &str) -> Games {
                 for cube in x {
                     let cube = cube.trim();
                     let (count, color) = cube.split_once(' ').unwrap();
-
-                    let color = match color {
-                        "red" => Color::Red,
-                        "green" => Color::Green,
-                        "blue" => Color::Blue,
-                        _ => panic!("Unknown color"),
-                    };
-
+                    let color = color.parse::<Color>().unwrap();
                     let count = count.parse::<u32>().unwrap();
 
                     cubes.push(Cube { color, count });
