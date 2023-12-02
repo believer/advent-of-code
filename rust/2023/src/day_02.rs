@@ -45,7 +45,6 @@ pub fn input_generator(input: &str) -> Games {
             .iter()
             .map(|x| {
                 let x = x.split(", ").collect::<Vec<&str>>();
-
                 let mut cubes = vec![];
 
                 for cube in x {
@@ -136,25 +135,11 @@ pub fn solve_part_02(input: &Games) -> u32 {
         let mut min_green = 0;
         let mut min_blue = 0;
 
-        for round in game {
-            for cube in round {
-                match cube.color {
-                    Color::Red => {
-                        if cube.count > min_red {
-                            min_red = cube.count
-                        }
-                    }
-                    Color::Green => {
-                        if cube.count > min_green {
-                            min_green = cube.count
-                        }
-                    }
-                    Color::Blue => {
-                        if cube.count > min_blue {
-                            min_blue = cube.count
-                        }
-                    }
-                }
+        for cube in game.iter().flatten() {
+            match cube.color {
+                Color::Red => min_red = cube.count.max(min_red),
+                Color::Green => min_green = cube.count.max(min_green),
+                Color::Blue => min_blue = cube.count.max(min_blue),
             }
         }
 
