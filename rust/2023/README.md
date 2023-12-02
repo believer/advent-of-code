@@ -26,7 +26,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | Day |        #1 |      #2 | Improvement\* | Generator |
 | --- | --------: | ------: | ------------- | --------: |
 | 1   |  43.18 ns | 1.19 ms | -             | 441.01 ns |
-| 2   | 764.68 ns | 1.75 µs | -             |  72.23 µs |
+| 2   | 764.68 ns | 1.75 µs | -             |  47.81 µs |
 
 \* compared to first solution
 

@@ -1,6 +1,16 @@
+use nom::{
+    bytes::complete::tag,
+    character::complete,
+    multi::separated_list1,
+    sequence::{preceded, separated_pair},
+};
 use std::collections::HashMap;
 
 // Day 2: Cube Conundrum
+//
+// Today was fairly straightforward. I went with a simple parser at
+// first, but refactored it to use nom. This made the parser about 34%
+// faster.
 
 #[derive(Debug, Copy, Clone)]
 enum Color {
@@ -28,42 +38,45 @@ pub struct Cube {
     count: u32,
 }
 
-type Game = Vec<Vec<Cube>>;
+type Round = Vec<Cube>;
+type Game = Vec<Round>;
 type Games = HashMap<u32, Game>;
+
+fn parse_id(input: &str) -> nom::IResult<&str, u32> {
+    preceded(tag("Game "), complete::u32)(input)
+}
+
+fn parse_cube(input: &str) -> nom::IResult<&str, Cube> {
+    let input = input.trim();
+    let (input, (count, color)) =
+        separated_pair(complete::u32, complete::space1, complete::alpha1)(input)?;
+
+    let color = color.parse::<Color>().unwrap();
+
+    Ok((input, Cube { color, count }))
+}
+
+fn parse_round(input: &str) -> nom::IResult<&str, Round> {
+    separated_list1(tag(", "), parse_cube)(input)
+}
+
+fn parse_game(input: &str) -> nom::IResult<&str, Game> {
+    separated_list1(tag("; "), parse_round)(input)
+}
+
+fn parse_line(input: &str) -> nom::IResult<&str, (u32, Game)> {
+    separated_pair(parse_id, tag(": "), parse_game)(input)
+}
+
+fn parse_input(input: &str) -> nom::IResult<&str, Vec<(u32, Game)>> {
+    separated_list1(complete::line_ending, parse_line)(input)
+}
 
 #[aoc_generator(day2)]
 pub fn input_generator(input: &str) -> Games {
-    let mut games = HashMap::new();
+    let (_, games) = parse_input(input).unwrap();
 
-    for line in input.lines() {
-        let (id, game) = line.split_once(':').unwrap();
-
-        let id = id.replace("Game ", "").parse::<u32>().unwrap();
-        let game = game.split(';').collect::<Vec<&str>>();
-
-        let d = game
-            .iter()
-            .map(|x| {
-                let x = x.split(", ").collect::<Vec<&str>>();
-                let mut cubes = vec![];
-
-                for cube in x {
-                    let cube = cube.trim();
-                    let (count, color) = cube.split_once(' ').unwrap();
-                    let color = color.parse::<Color>().unwrap();
-                    let count = count.parse::<u32>().unwrap();
-
-                    cubes.push(Cube { color, count });
-                }
-
-                cubes
-            })
-            .collect::<Vec<Vec<Cube>>>();
-
-        games.insert(id, d);
-    }
-
-    games
+    games.into_iter().collect()
 }
 
 /* Part One
