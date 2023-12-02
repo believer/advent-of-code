@@ -14,17 +14,19 @@ You try to ask why they can't just use a weather machine ("not powerful enough")
 
 ## Days
 
-| Day                                                                                                  | #1  | #1 Answer | #2  | #2 Answer |
-| ---------------------------------------------------------------------------------------------------- | --- | --------: | --- | --------: |
-| [Day 1: Trebuchet?!](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_01.rs) | 🌟  |     54304 | 🌟  |     54418 |
+| Day                                                                                                     | #1  | #1 Answer | #2  | #2 Answer |
+| ------------------------------------------------------------------------------------------------------- | --- | --------: | --- | --------: |
+| [Day 1: Trebuchet?!](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_01.rs)    | 🌟  |     54304 | 🌟  |     54418 |
+| [Day 2: Cube Conundrum](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_02.rs) | 🌟  |      2162 | 🌟  |     72513 |
 
 ## Performance
 
 With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro M1 Pro, 32 GB RAM.
 
-| Day |       #1 |      #2 | Improvement\* |             Generator |
-| --- | -------: | ------: | ------------- | --------------------: |
-| 1   | 43.18 ns | 1.19 ms | -             | 441.01 ns / 447.43 ns |
+| Day |        #1 |      #2 | Improvement\* | Generator |
+| --- | --------: | ------: | ------------- | --------: |
+| 1   |  43.18 ns | 1.19 ms | -             | 441.01 ns |
+| 2   | 764.68 ns | 1.75 µs | -             |  72.23 µs |
 
 \* compared to first solution
 
