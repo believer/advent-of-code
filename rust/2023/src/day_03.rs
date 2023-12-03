@@ -75,6 +75,23 @@ pub fn input_generator(input: &str) -> Input {
 
 /* Part One
 *
+* Find all the numbers that have a symbol in one of the 8 directions around them.
+* Add all the numbers together.
+*
+* 467..114..
+* ...*......
+* ..35..633.
+* ......#...
+* 617*......
+* .....+.58.
+* ..592.....
+* ......755.
+* ...$.*....
+* .664.598..
+*
+* All numbers, except 114 and 58, have an adjacent symbol.
+* The sum of these numbers is 467 + 633 + 617 + 592 + 755 + 664 + 598 = 4361
+*
 */
 // Your puzzle answer was
 /// ```
@@ -107,6 +124,11 @@ pub fn solve_part_01(input: &Input) -> u32 {
 }
 
 /* Part Two
+*
+* The symbol * indicates a gear. Find the two numbers connected to each gear and
+* multiply them together. Add all the results together.
+*
+* If a gear only has one number connected to it, ignore it.
 *
 */
 // Your puzzle answer was
