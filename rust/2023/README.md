@@ -18,6 +18,7 @@ You try to ask why they can't just use a weather machine ("not powerful enough")
 | ------------------------------------------------------------------------------------------------------- | --- | --------: | --- | --------: |
 | [Day 1: Trebuchet?!](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_01.rs)    | 🌟  |     54304 | 🌟  |     54418 |
 | [Day 2: Cube Conundrum](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_02.rs) | 🌟  |      2162 | 🌟  |     72513 |
+| [Day 3: Gear Ratios](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_03.rs)    | 🌟  |    535235 | 🌟  |  79844424 |
 
 ## Performance
 
@@ -27,6 +28,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | --- | --------: | ------: | ------------- | --------: |
 | 1   |  43.18 ns | 1.19 ms | -             | 441.01 ns |
 | 2   | 764.68 ns | 1.75 µs | -             |  47.81 µs |
+| 3   | 172.23 µs | 7.72 ms | -             |  86.83 µs |
 
 \* compared to first solution
 
