@@ -104,14 +104,14 @@ pub fn solve_part_01(input: &Input) -> u32 {
     let Input {
         symbols, numbers, ..
     } = input;
-    let mut part_numbers = vec![];
+    let mut part_numbers = 0;
 
     for (number, points) in numbers {
         'points: for (x, y) in points {
             for check_point in DIAGONALS.iter().map(|(dx, dy)| (dx + x, dy + y)) {
                 // If the point is in the list of symbols, it's a "part number"
                 if symbols.contains(&check_point) {
-                    part_numbers.push(*number);
+                    part_numbers += number;
 
                     // We don't need to check any more points for this number
                     break 'points;
@@ -120,7 +120,7 @@ pub fn solve_part_01(input: &Input) -> u32 {
         }
     }
 
-    part_numbers.iter().sum()
+    part_numbers
 }
 
 /* Part Two

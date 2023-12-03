@@ -28,12 +28,12 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | --- | --------: | ------: | ------------- | --------: |
 | 1   |  43.18 ns | 1.19 ms | -             | 441.01 ns |
 | 2   | 764.68 ns | 1.75 µs | -             |  47.81 µs |
-| 3   | 172.23 µs | 7.72 ms | -             |  86.83 µs |
+| 3   | 159.61 µs | 7.72 ms | `-8.44%`      |  86.83 µs |
 
 \* compared to first solution
 
 ### Previous solutions
 
-| Day |  #1 |  #2 | Improvement | Link |
-| --: | --: | --: | ----------: | ---- |
-|   1 |   - |   - |             |      |
+| Day |        #1 |  #2 | Improvement | Link |
+| --: | --------: | --: | ----------: | ---- |
+|   3 | 172.23 µs |   - |             |      |
