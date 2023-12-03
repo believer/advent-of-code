@@ -1,10 +1,5 @@
 use std::f32::consts::PI;
 
-/// The sum of the absolute values of two points
-pub fn manhattan_distance((ax, ay): (isize, isize), (bx, by): (isize, isize)) -> usize {
-    ax.abs_diff(bx) + ay.abs_diff(by)
-}
-
 /// 2D rotation of a point
 pub fn rotation_2d(x: i32, y: i32, angle: i32) -> (i32, i32) {
     let radians = angle as f32 * PI / 180_f32;

@@ -1,3 +1,4 @@
+use crate::point::*;
 use std::collections::HashSet;
 
 // Day 3: Gear Ratios
@@ -7,14 +8,6 @@ use std::collections::HashSet;
 // I realized that I could maybe look at it another way. Find all the points where we
 // have a symbol, find all the numbers and which points they occupy. Then, for each number,
 // check if any of the points around it are symbols.
-
-type Point = (i32, i32);
-
-const UP: Point = (0, -1);
-const DOWN: Point = (0, 1);
-const LEFT: Point = (-1, 0);
-const RIGHT: Point = (1, 0);
-const DIAGONALS: [Point; 8] = [UP, (1, -1), RIGHT, (1, 1), DOWN, (-1, 1), LEFT, (-1, -1)];
 
 pub struct Input {
     gears: HashSet<Point>,
@@ -32,13 +25,12 @@ pub fn input_generator(input: &str) -> Input {
 
     for (y, line) in input.lines().enumerate() {
         for (x, value) in line.chars().enumerate() {
-            let x = x as i32;
-            let y = y as i32;
+            let point = Point::new(x as i32, y as i32);
 
             // If the value is a number, build it up until we hit a non-number
             if value.is_ascii_digit() {
                 current_number = current_number * 10 + (value as u32 - b'0' as u32);
-                current_points.push((x, y));
+                current_points.push(point);
 
                 continue;
             }
@@ -48,12 +40,12 @@ pub fn input_generator(input: &str) -> Input {
                 '.' => (),
                 // * indicates a symbol in part 1 and a potential gear in part 2
                 '*' => {
-                    symbols.insert((x, y));
-                    gears.insert((x, y));
+                    symbols.insert(point);
+                    gears.insert(point);
                 }
                 // Every other character is a symbol
                 _ => {
-                    symbols.insert((x, y));
+                    symbols.insert(point);
                 }
             };
 
@@ -107,8 +99,8 @@ pub fn solve_part_01(input: &Input) -> u32 {
     let mut part_numbers = 0;
 
     for (number, points) in numbers {
-        'points: for (x, y) in points {
-            for check_point in DIAGONALS.iter().map(|(dx, dy)| (dx + x, dy + y)) {
+        'points: for point in points {
+            for check_point in DIAGONALS.iter().map(|diagonal| *point + *diagonal) {
                 // If the point is in the list of symbols, it's a "part number"
                 if symbols.contains(&check_point) {
                     part_numbers += number;
@@ -142,23 +134,27 @@ pub fn solve_part_02(input: &Input) -> u32 {
     let Input { gears, numbers, .. } = input;
     let mut gear_ratios = 0;
 
-    for (x, y) in gears {
+    for point in gears {
         let mut last_found_points = vec![];
         let mut adjacents = vec![];
 
-        for check_point in DIAGONALS.iter().map(|(dx, dy)| (x + dx, y + dy)) {
+        for check_point in DIAGONALS.iter().map(|diagonal| *point + *diagonal) {
             for (number, points) in numbers {
-                // If the point is in the list of points and we haven't already found
-                // this number, add it to the list of adjacents
-                if points.contains(&check_point) && !last_found_points.contains(&check_point) {
+                // If the point is in the list of points we've already found, skip it
+                if last_found_points.contains(&check_point) {
+                    continue;
+                }
+
+                // If the point is in the list of points, add it to the list of adjacents
+                if points.contains(&check_point) {
                     adjacents.push(*number);
                     last_found_points = points.clone();
                 }
             }
         }
 
-        if adjacents.len() > 1 {
-            gear_ratios += adjacents[0] * adjacents[1];
+        if adjacents.len() == 2 {
+            gear_ratios += adjacents.iter().product::<u32>();
         }
     }
 

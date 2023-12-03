@@ -7,6 +7,7 @@ extern crate aoc_runner_derive;
 
 pub mod common;
 pub mod math;
+pub mod point;
 
 pub mod day_01;
 pub mod day_02;
