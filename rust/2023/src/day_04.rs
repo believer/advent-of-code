@@ -1,12 +1,16 @@
+use std::collections::HashSet;
+
 // Day 4: Scratchcards
 //
 // Part one went fast, but part two took a while. I also took a 20 minutes break
 // to watch the latest episode of the Swedish TV advent calendar with the kids :D
 //
-// I think there are some improvements to be made in the code, which I'll look
-// at later today.
+// Refactored to a HashSet which also allows us to use intersections
+// to find how many winning numbers we have. The input parser got a bit
+// slower, but the solvers got a lot faster.
 
-type Input = Vec<(Vec<u32>, Vec<u32>)>;
+type Cards = HashSet<u32>;
+type Input = Vec<(Cards, Cards)>;
 
 #[aoc_generator(day4)]
 pub fn input_generator(input: &str) -> Input {
@@ -15,20 +19,19 @@ pub fn input_generator(input: &str) -> Input {
     for line in input.lines() {
         let line = &line[5..];
         let (_, line) = line.split_once(": ").unwrap();
-        let line = line.trim();
-        let (winning, losing) = line.split_once(" | ").unwrap();
+        let (winning, my_numbers) = line.split_once(" | ").unwrap();
 
-        let winning: Vec<u32> = winning
+        let winning = winning
             .split_whitespace()
             .map(|x| x.trim().parse().unwrap())
             .collect();
 
-        let my_cards: Vec<u32> = losing
+        let my_numbers = my_numbers
             .split_whitespace()
             .map(|x| x.trim().parse().unwrap())
             .collect();
 
-        numbers.push((winning, my_cards));
+        numbers.push((winning, my_numbers));
     }
 
     numbers
@@ -58,25 +61,19 @@ pub fn input_generator(input: &str) -> Input {
 /// ```
 #[aoc(day4, part1)]
 pub fn solve_part_01(input: &Input) -> u32 {
-    let mut sum = 0;
-
-    for (winning, my_cards) in input {
-        let mut card_sum = 0;
-
-        for card in my_cards {
-            if winning.contains(card) {
-                if card_sum == 0 {
-                    card_sum = 1;
-                } else {
-                    card_sum *= 2;
-                }
-            }
-        }
-
-        sum += card_sum;
-    }
-
-    sum
+    input
+        .iter()
+        .map(
+            |(winning, my_numbers)| match winning.intersection(my_numbers).count() {
+                0 => 0,
+                1 => 1,
+                // With help from ChatGPT I got the following formula: 2^(n-1)
+                // This works perfectly for any number other than the special
+                // cases for 0 and 1.
+                n => 2u32.pow((n - 1) as u32),
+            },
+        )
+        .sum()
 }
 
 /* Part Two
@@ -98,17 +95,13 @@ pub fn solve_part_01(input: &Input) -> u32 {
 /// ```
 #[aoc(day4, part2)]
 pub fn solve_part_02(input: &Input) -> u32 {
+    // Create a list of starting cards, one of each
     let mut cards = vec![1; input.len()];
 
-    for (i, (winning, my_cards)) in input.iter().enumerate() {
-        let mut winning_cards = 0;
+    for (i, (winning, my_numbers)) in input.iter().enumerate() {
+        let winning_cards = winning.intersection(my_numbers).count();
 
-        for card in my_cards {
-            if winning.contains(card) {
-                winning_cards += 1;
-            }
-        }
-
+        // Add the number of winning cards to the next cards
         for x in (i + 1)..=(winning_cards + i) {
             cards[x] += cards[i];
         }
