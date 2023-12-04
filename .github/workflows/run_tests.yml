@@ -5,6 +5,11 @@ on:
     branches: 
       - master
 
+# Cancel previously running workflows
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   javascript:
     name: Test JavaScript solutions
