@@ -13,6 +13,6 @@ solutions](https://github.com/believer/advent-of-code/tree/master/rust/2023). Th
 
 Simple performance using `console.time`. Times vary quite a bit between runs, but at least it's some indication. Computer is a MacBook Pro M1 Pro, 32 GB RAM.
 
-| Day |      #1 |      #2 | Improvement\* | Generator |
-| --- | ------: | ------: | ------------- | --------: |
-| 4   | 3.86 ms | 2.74 ms | -             | 230.06 µs |
+| Day |      #1 |      #2 | Improvement |
+| --- | ------: | ------: | ----------- |
+| 4   | 3.86 ms | 2.74 ms | -           |
