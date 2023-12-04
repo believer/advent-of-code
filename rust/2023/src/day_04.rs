@@ -110,7 +110,7 @@ pub fn solve_part_02(input: &Input) -> u32 {
         }
 
         for x in (i + 1)..=(winning_cards + i) {
-            cards[x] += 1 * cards[i];
+            cards[x] += cards[i];
         }
     }
 
