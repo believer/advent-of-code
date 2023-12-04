@@ -33,7 +33,7 @@ function parseNumber(number: string) {
 }
 
 function findNumber(line: string, lookFrom: 'start' | 'end') {
-	return (
+	const [, output] =
 		numbers
 			.map((number) => {
 				let index = line.indexOf(number)
@@ -51,13 +51,14 @@ function findNumber(line: string, lookFrom: 'start' | 'end') {
 			.filter(Boolean)
 			.sort(([a, _x], [b, _y]) => a - b)
 			.at(lookFrom === 'start' ? 0 : -1) ?? []
-	)
+
+	return output
 }
 
 export function parseInputPart2(input: string) {
 	return input.split('\n').map((line) => {
-		const [, first] = findNumber(line, 'start')
-		const [, last] = findNumber(line, 'end')
+		const first = findNumber(line, 'start')
+		const last = findNumber(line, 'end')
 
 		if (!first || !last) {
 			return []
