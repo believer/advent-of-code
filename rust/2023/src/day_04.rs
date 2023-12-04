@@ -63,16 +63,15 @@ pub fn input_generator(input: &str) -> Input {
 pub fn solve_part_01(input: &Input) -> u32 {
     input
         .iter()
-        .map(
-            |(winning, my_numbers)| match winning.intersection(my_numbers).count() {
-                0 => 0,
-                1 => 1,
-                // With help from ChatGPT I got the following formula: 2^(n-1)
-                // This works perfectly for any number other than the special
-                // cases for 0 and 1.
-                n => 2u32.pow((n - 1) as u32),
-            },
-        )
+        .map(|(winning, my_numbers)| winning.intersection(my_numbers).count())
+        .map(|n| match n {
+            0 => 0,
+            1 => 1,
+            // With help from ChatGPT I got the following formula: 2^(n-1)
+            // This works perfectly for any number other than the special
+            // cases for 0 and 1.
+            n => 2u32.pow((n - 1) as u32),
+        })
         .sum()
 }
 
