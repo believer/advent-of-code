@@ -98,10 +98,11 @@ pub fn solve_part_02(input: &Input) -> u32 {
     let mut cards = vec![1; input.len()];
 
     for (i, (winning, my_numbers)) in input.iter().enumerate() {
-        let winning_cards = winning.intersection(my_numbers).count();
+        let winning_numbers = winning.intersection(my_numbers).count();
 
-        // Add the number of winning cards to the next cards
-        for x in (i + 1)..=(winning_cards + i) {
+        // If the winning numbers is 4, and we are on card 2
+        // add one to card 3, 4, 5, 6
+        for x in (i + 1)..=(winning_numbers + i) {
             cards[x] += cards[i];
         }
     }
