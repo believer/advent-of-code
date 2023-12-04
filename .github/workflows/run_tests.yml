@@ -11,6 +11,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  typescript:
+    name: Test TypeScript solutions
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        year: ['2023']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+      - name: Run tests
+        run: |
+          cd typescript/$YEAR
+          bun install
+          bun test
+        env:
+          YEAR: ${{ matrix.year }}
+          CI: true
+
   javascript:
     name: Test JavaScript solutions
     runs-on: ubuntu-latest

@@ -83,7 +83,7 @@ export function part1(input: Input) {
 export async function day1() {
 	const input = await readInput(1)
 	const data = parseInput(input)
-	const data2 = parseInput(input)
+	const data2 = parseInputPart2(input)
 
 	console.time('part1')
 	console.log(`Day 1 / Part 1: ${part1(data)}`)

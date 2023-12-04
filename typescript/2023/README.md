@@ -7,6 +7,7 @@ solutions](https://github.com/believer/advent-of-code/tree/master/rust/2023). Th
 
 | Day                                                                                                            | #1  | #1 Answer | #2  | #2 Answer |
 | -------------------------------------------------------------------------------------------------------------- | --- | --------: | --- | --------: |
+| [Day 1: Trebuchet?!](https://github.com/believer/advent-of-code/blob/master/typescript/2023/src/day1/day1.ts)  | 🌟  |     54304 | 🌟  |     54418 |
 | [Day 4: Scratchcards](https://github.com/believer/advent-of-code/blob/master/typescript/2023/src/day4/day4.ts) | 🌟  |     27454 | 🌟  |   6857330 |
 
 ## Performance
@@ -15,4 +16,5 @@ Simple performance using `console.time`. Times vary quite a bit between runs, bu
 
 | Day |      #1 |      #2 | Improvement |
 | --- | ------: | ------: | ----------- |
-| 4   | 3.86 ms | 2.74 ms | -           |
+| 1   | 0.36 ms | 0.29 ms | -           |
+| 4   | 1.02 ms | 0.86 ms | -           |
