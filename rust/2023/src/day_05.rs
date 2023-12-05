@@ -21,14 +21,14 @@ pub struct Input {
 pub struct Conversion {
     destination: u64,
     source: u64,
-    range_left: u64,
+    range_length: u64,
 }
 
 impl Conversion {
     fn convert(&self, location: u64) -> Option<u64> {
         // Check if location is within range
         let lower_bound = self.source;
-        let upper_bound = self.source + self.range_left;
+        let upper_bound = self.source + self.range_length;
 
         match location {
             x if x < lower_bound => None,
@@ -47,12 +47,12 @@ impl From<&str> for Conversion {
 
         let destination = parts.next().unwrap().parse::<u64>().unwrap();
         let source = parts.next().unwrap().parse::<u64>().unwrap();
-        let range_left = parts.next().unwrap().parse::<u64>().unwrap();
+        let range_length = parts.next().unwrap().parse::<u64>().unwrap();
 
         Self {
             destination,
             source,
-            range_left,
+            range_length,
         }
     }
 }
@@ -156,6 +156,7 @@ pub fn solve_part_02(input: &Input) -> u64 {
     seed_ranges
         // Search takes about 120 seconds on my machine
         // Using rayon to parallelize the search takes about 21 seconds
+        // Thanks to ChatGPT for the suggestion
         .par_iter()
         .map(|s| find_location(maps, *s))
         .min()
