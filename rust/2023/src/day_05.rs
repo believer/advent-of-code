@@ -3,7 +3,7 @@ use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 // Day 5: If You Give A Seed A Fertilizer
 //
 // I first created a brute force solution that just went through each line
-// creating a hashmap of all the locations. Then go from map to map. This worked fine
+// creating a hashmap of all the locations. Then step from map to map. This worked fine
 // for the example data. But, the real data had huge numbers, and it broke down completely.
 // Another lesson in never completely trusting the example data (see day 15 2022).
 //
@@ -82,6 +82,17 @@ impl From<&str> for Map {
     }
 }
 
+// Step through the maps and until we find the location
+fn find_location(maps: &[Map], location: u64) -> u64 {
+    let mut location = location;
+
+    for map in maps.iter() {
+        location = map.transform(location);
+    }
+
+    location
+}
+
 #[aoc_generator(day5)]
 pub fn input_generator(input: &str) -> Input {
     // Split input into parts, seeds and maps
@@ -117,19 +128,7 @@ pub fn input_generator(input: &str) -> Input {
 pub fn solve_part_01(input: &Input) -> u64 {
     let Input { seeds, maps } = input;
 
-    seeds
-        .iter()
-        .map(|s| {
-            let mut location = *s;
-
-            for map in maps.iter() {
-                location = map.transform(location);
-            }
-
-            location
-        })
-        .min()
-        .unwrap()
+    seeds.iter().map(|s| find_location(maps, *s)).min().unwrap()
 }
 
 /* Part Two
@@ -165,15 +164,7 @@ pub fn solve_part_02(input: &Input) -> u64 {
         // Search takes about 120 seconds on my machine
         // Using rayon to parallelize the search takes about 21 seconds
         .par_iter()
-        .map(|s| {
-            let mut location = *s;
-
-            for map in maps.iter() {
-                location = map.transform(location);
-            }
-
-            location
-        })
+        .map(|s| find_location(maps, *s))
         .min()
         .unwrap()
 }
