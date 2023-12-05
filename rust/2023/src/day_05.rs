@@ -74,9 +74,8 @@ impl Map {
 
 impl From<&str> for Map {
     fn from(s: &str) -> Self {
-        // Skip header
-        let conversions_lines = s.lines().skip(1);
-        let conversions = conversions_lines.map(|line| line.into()).collect();
+        // Skip 1 to remove the header
+        let conversions = s.lines().skip(1).map(|line| line.into()).collect();
 
         Self { conversions }
     }
@@ -84,13 +83,7 @@ impl From<&str> for Map {
 
 // Step through the maps and until we find the location
 fn find_location(maps: &[Map], location: u64) -> u64 {
-    let mut location = location;
-
-    for map in maps.iter() {
-        location = map.transform(location);
-    }
-
-    location
+    maps.iter().fold(location, |loc, map| map.transform(loc))
 }
 
 #[aoc_generator(day5)]
