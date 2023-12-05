@@ -1,6 +1,6 @@
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 
-// Day 5
+// Day 5: If You Give A Seed A Fertilizer
 //
 // I first created a brute force solution that just went through each line
 // creating a hashmap of all the locations. Then go from map to map. This worked fine
