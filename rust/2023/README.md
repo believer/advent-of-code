@@ -32,14 +32,15 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 2   | 764.68 ns |     1.75 µs |                       |  47.81 µs |
 | 3   | 159.61 µs |     7.72 ms | `-8.44%`              |  86.83 µs |
 | 4   |  12.85 µs |    13.09 µs | `-48.41%` / `-46.64%` | 230.06 µs |
-| 5   |   1.50 µs | 21.78 s\*\* |                       |  16.85 µs |
+| 5   |   1.27 µs | 21.22 s\*\* | `-16.72%`             |  16.85 µs |
 
 \* compared to first solution
 \*\* slow, didn't run through criterion
 
 ### Previous solutions
 
-| Day |        #1 |       #2 | Improvement | Link      |
-| --: | --------: | -------: | ----------: | --------- |
-|   3 | 172.23 µs |        - |             |           |
-|   4 |  24.33 µs | 24.32 µs |             | 128.62 µs |
+| Day |        #1 |       #2 | Improvement | Link                                                                                                                     |
+| --: | --------: | -------: | ----------: | ------------------------------------------------------------------------------------------------------------------------ |
+|   3 | 172.23 µs |        - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/75a83e31024bbac99a0664f81fce4e13ec1e94af/rust/2023/src/day_03.rs) |
+|   4 |  24.33 µs | 24.32 µs |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/c970c6322d3904048bcf3f30b1052e2916476d73/rust/2023/src/day_04.rs) |
+|   5 |   1.50 µs |          |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/39b0904c4921f4ae79963a6df49bb3502ef6b3be/rust/2023/src/day_05.rs) |
