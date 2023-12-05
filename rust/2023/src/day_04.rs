@@ -66,10 +66,9 @@ pub fn solve_part_01(input: &Input) -> u32 {
         .map(|(winning, my_numbers)| winning.intersection(my_numbers).count())
         .map(|n| match n {
             0 => 0,
-            1 => 1,
             // With help from ChatGPT I got the following formula: 2^(n-1)
             // This works perfectly for any number other than the special
-            // cases for 0 and 1.
+            // case 0 which would overflow.
             n => 2u32.pow((n - 1) as u32),
         })
         .sum()
