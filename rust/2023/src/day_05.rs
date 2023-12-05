@@ -1,4 +1,16 @@
+use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
+
 // Day 5
+//
+// I first created a brute force solution that just went through each line
+// creating a hashmap of all the locations. Then go from map to map. This worked fine
+// for the example data. But, the real data had huge numbers, and it broke down completely.
+// Another lesson in never completely trusting the example data (see day 15 2022).
+//
+// The first part is fast because the list of seeds is small, but when we get to the second part
+// the list of seeds is huge. The solution becomes very slow, so it's still pretty brute force.
+// Using rayon to parallelize the search makes it faster, but it's still slow. Rayon decreases
+// the time from 120 seconds to 21 seconds on my machine.
 
 pub struct Input {
     seeds: Vec<u64>,
@@ -20,7 +32,10 @@ impl Conversion {
 
         match location {
             x if x < lower_bound => None,
-            x if x > upper_bound => None,
+            // Above our equal to upper bound is not within range
+            // Not including equal to upper bound lead to a off by one error
+            // that took me a while to find.
+            x if x >= upper_bound => None,
             _ => Some(self.destination + location - self.source),
         }
     }
@@ -60,8 +75,8 @@ impl Map {
 impl From<&str> for Map {
     fn from(s: &str) -> Self {
         // Skip header
-        let conversions_lines = s.trim().lines().skip(1);
-        let conversions = conversions_lines.map(|line| line.trim().into()).collect();
+        let conversions_lines = s.lines().skip(1);
+        let conversions = conversions_lines.map(|line| line.into()).collect();
 
         Self { conversions }
     }
@@ -88,15 +103,16 @@ pub fn input_generator(input: &str) -> Input {
 
 /* Part One
 *
+* Given a list of seeds, and a list of maps, walk through the maps
+* to find the location of the seeds. Return the lowest location.
+*
 */
 // Your puzzle answer was
-/*
 /// ```
 /// use advent_of_code_2023::day_05::*;
 /// let data = include_str!("../input/2023/day5.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 54304);
+/// assert_eq!(solve_part_01(&input_generator(data)), 993500720);
 /// ```
-*/
 #[aoc(day5, part1)]
 pub fn solve_part_01(input: &Input) -> u64 {
     let Input { seeds, maps } = input;
@@ -118,27 +134,55 @@ pub fn solve_part_01(input: &Input) -> u64 {
 
 /* Part Two
 *
-*/
-// Your puzzle answer was
-/*
-/// ```
-/// use advent_of_code_2023::day_05::*;
-/// let data = include_str!("../input/2023/day5.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 54418);
-/// ```
+* The seeds list is now a list of ranges in pairs of two.
+* The first number is the start of the range, and the second
+* number is the length of the range.
+*
+* Otherwise, the calculation is the same as part one. Just A LOT more seeds.
+*
+* No doctest for this one, it takes too long.
+* Your puzzle answer was: 4917124
 */
 #[aoc(day5, part2)]
-pub fn solve_part_02(_input: &Input) -> u32 {
-    0
+pub fn solve_part_02(input: &Input) -> u64 {
+    let Input { seeds, maps } = input;
+
+    // Seeds are ranges in chunks of 2, start and length.
+    // Convert them to a list. The input data has huge numbers,
+    // so this list will also be huge.
+    let seed_ranges =
+        seeds
+            .chunks(2)
+            .flat_map(|chunk| {
+                let start = chunk[0];
+                let end = start + chunk[1];
+
+                start..end
+            })
+            .collect::<Vec<_>>();
+
+    seed_ranges
+        // Search takes about 120 seconds on my machine
+        // Using rayon to parallelize the search takes about 21 seconds
+        .par_iter()
+        .map(|s| {
+            let mut location = *s;
+
+            for map in maps.iter() {
+                location = map.transform(location);
+            }
+
+            location
+        })
+        .min()
+        .unwrap()
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    #[test]
-    fn sample_01() {
-        let data = "seeds: 79 14 55 13
+    const DATA: &str = "seeds: 79 14 55 13
 
 seed-to-soil map:
 50 98 2
@@ -172,6 +216,13 @@ humidity-to-location map:
 60 56 37
 56 93 4";
 
-        assert_eq!(solve_part_01(&input_generator(data)), 35)
+    #[test]
+    fn sample_01() {
+        assert_eq!(solve_part_01(&input_generator(DATA)), 35)
+    }
+
+    #[test]
+    fn sample_02() {
+        assert_eq!(solve_part_02(&input_generator(DATA)), 46)
     }
 }
