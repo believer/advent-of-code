@@ -1,5 +1,3 @@
-use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
-
 // Day 5: If You Give A Seed A Fertilizer
 //
 // I first created a brute force solution that just went through each line
@@ -11,6 +9,16 @@ use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 // the list of seeds is huge. The solution becomes very slow, so it's still pretty brute force.
 // Using rayon to parallelize the search makes it faster, but it's still slow. Rayon decreases
 // the time from 120 seconds to 21 seconds on my machine.
+//
+// I watched Chris Biscardi's solution to this problem and he had something similar to my solution.
+// BUT, he said something like "I'm gonna flip destination and source, because the order is
+// confusing to me". This got me thinking, maybe we can go backwards? Start from a location of
+// 1 and reverse the map list. Increment location until we hit a valid seed number.
+// We can immediately stop here because that location will be the lowest.
+//
+// After some fiddling, I got it to work. It's so much faster since we don't have to allocate
+// a huge list of seeds. From 21 seconds (parallelized) to 238 milliseconds (!).
+// That's more than 98% faster.
 
 pub struct Input {
     seeds: Vec<u64>,
@@ -25,6 +33,7 @@ pub struct Conversion {
 }
 
 impl Conversion {
+    // Convert from destination to source
     fn convert(&self, location: u64) -> Option<u64> {
         // Check if location is within range
         let lower_bound = self.source;
@@ -39,6 +48,19 @@ impl Conversion {
         }
 
         Some(self.destination + location - self.source)
+    }
+
+    // Convert backwards, from source to destination
+    fn convert_backwards(&self, location: u64) -> Option<u64> {
+        let lower_bound = self.destination;
+        let upper_bound = self.destination + self.range_length;
+        let bounds = lower_bound..upper_bound;
+
+        if !bounds.contains(&location) {
+            return None;
+        }
+
+        Some(self.source + location - self.destination)
     }
 }
 
@@ -68,6 +90,14 @@ impl Map {
         self.conversions
             .iter()
             .find_map(|c| c.convert(location))
+            // If no conversion is found, return the original location
+            .unwrap_or(location)
+    }
+
+    fn transform_backwards(&self, location: u64) -> u64 {
+        self.conversions
+            .iter()
+            .find_map(|c| c.convert_backwards(location))
             // If no conversion is found, return the original location
             .unwrap_or(location)
     }
@@ -146,7 +176,7 @@ pub fn solve_part_02(input: &Input) -> u64 {
     let seed_ranges =
         seeds
             .chunks(2)
-            .flat_map(|chunk| {
+            .map(|chunk| {
                 let start = chunk[0];
                 let end = start + chunk[1];
 
@@ -154,14 +184,22 @@ pub fn solve_part_02(input: &Input) -> u64 {
             })
             .collect::<Vec<_>>();
 
-    seed_ranges
-        // Search takes about 120 seconds on my machine
-        // Using rayon to parallelize the search takes about 21 seconds
-        // Thanks to ChatGPT for the suggestion
-        .par_iter()
-        .map(|s| find_location(maps, *s))
-        .min()
-        .unwrap()
+    let mut s = 0;
+
+    for end_location in 0..=u64::MAX {
+        let mut location = end_location;
+
+        for map in maps.iter().rev() {
+            location = map.transform_backwards(location);
+        }
+
+        if seed_ranges.iter().any(|r| r.contains(&location)) {
+            s = end_location;
+            break;
+        }
+    }
+
+    s
 }
 
 #[cfg(test)]
