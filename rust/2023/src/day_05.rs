@@ -33,12 +33,13 @@ pub struct Conversion {
 }
 
 impl Conversion {
-    // Convert from destination to source
-    fn convert(&self, location: u64) -> Option<u64> {
-        // Check if location is within range
-        let lower_bound = self.source;
-        let upper_bound = self.source + self.range_length;
-        let bounds = lower_bound..=upper_bound;
+    fn perform_conversion(&self, location: u64, forward: bool) -> Option<u64> {
+        // Setup the source and target based on the direction
+        let (src, target) = match forward {
+            true => (self.source, self.destination),
+            false => (self.destination, self.source),
+        };
+        let bounds = src..=src + self.range_length;
 
         // Checking if the range contains the location makes it less
         // error prone, since my last attempt had an off by one error.
@@ -47,20 +48,15 @@ impl Conversion {
             return None;
         }
 
-        Some(self.destination + location - self.source)
+        Some(target + location - src)
     }
 
-    // Convert backwards, from source to destination
+    fn convert(&self, location: u64) -> Option<u64> {
+        self.perform_conversion(location, true)
+    }
+
     fn convert_backwards(&self, location: u64) -> Option<u64> {
-        let lower_bound = self.destination;
-        let upper_bound = self.destination + self.range_length;
-        let bounds = lower_bound..upper_bound;
-
-        if !bounds.contains(&location) {
-            return None;
-        }
-
-        Some(self.source + location - self.destination)
+        self.perform_conversion(location, false)
     }
 }
 
@@ -86,20 +82,24 @@ pub struct Map {
 }
 
 impl Map {
-    fn transform(&self, location: u64) -> u64 {
+    // ChatGPT helped with creating a generic transform function
+    // instead of duplicating the code for forwards and backwards.
+    fn transform<F>(&self, location: u64, conversion_func: F) -> u64
+    where
+        F: Fn(&Conversion, u64) -> Option<u64>,
+    {
         self.conversions
             .iter()
-            .find_map(|c| c.convert(location))
-            // If no conversion is found, return the original location
+            .find_map(|c| conversion_func(c, location))
             .unwrap_or(location)
     }
 
+    fn transform_forwards(&self, location: u64) -> u64 {
+        self.transform(location, |c, loc| c.convert(loc))
+    }
+
     fn transform_backwards(&self, location: u64) -> u64 {
-        self.conversions
-            .iter()
-            .find_map(|c| c.convert_backwards(location))
-            // If no conversion is found, return the original location
-            .unwrap_or(location)
+        self.transform(location, |c, loc| c.convert_backwards(loc))
     }
 }
 
@@ -114,7 +114,8 @@ impl From<&str> for Map {
 
 // Step through the maps and until we find the location
 fn find_location(maps: &[Map], location: u64) -> u64 {
-    maps.iter().fold(location, |loc, map| map.transform(loc))
+    maps.iter()
+        .fold(location, |loc, map| map.transform_forwards(loc))
 }
 
 #[aoc_generator(day5)]
@@ -169,10 +170,11 @@ pub fn solve_part_01(input: &Input) -> u64 {
 #[aoc(day5, part2)]
 pub fn solve_part_02(input: &Input) -> u64 {
     let Input { seeds, maps } = input;
+    let mut lowest_end_location = 0;
 
     // Seeds are ranges in chunks of 2, start and length.
-    // Convert them to a list. The input data has huge numbers,
-    // so this list will also be huge.
+    // This creates a vector of ranges. Not like the first implementation
+    // where I created a flat_mapped ALL of the ranges.
     let seed_ranges =
         seeds
             .chunks(2)
@@ -184,22 +186,23 @@ pub fn solve_part_02(input: &Input) -> u64 {
             })
             .collect::<Vec<_>>();
 
-    let mut s = 0;
-
-    for end_location in 0..=u64::MAX {
-        let mut location = end_location;
+    // Start at location 1 and traverse the maps backwards until we find a
+    // valid seed value. This is the lowest end location.
+    for loc in 0..=u64::MAX {
+        let mut location = loc;
 
         for map in maps.iter().rev() {
             location = map.transform_backwards(location);
         }
 
+        // Check if the location is in any of the seed ranges
         if seed_ranges.iter().any(|r| r.contains(&location)) {
-            s = end_location;
+            lowest_end_location = loc;
             break;
         }
     }
 
-    s
+    lowest_end_location
 }
 
 #[cfg(test)]
