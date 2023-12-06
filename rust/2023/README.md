@@ -34,7 +34,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 3   | 159.61 µs |     7.72 ms | `-8.44%`              |              86.83 µs |
 | 4   |  12.85 µs |    13.09 µs | `-48.41%` / `-46.64%` |             230.06 µs |
 | 5   |   1.27 µs | 21.22 s\*\* | `-16.72%`             |              16.85 µs |
-| 6   | 101.59 ns |    15.04 ms |                       | 257.95 ns / 426.06 ns |
+| 6   | 101.59 ns |    15.04 ms |                       | 257.13 ns / 204.78 ns |
 
 \* compared to first solution<br/>
 \*\* slow, didn't benchmark

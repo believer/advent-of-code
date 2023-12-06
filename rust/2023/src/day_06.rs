@@ -8,25 +8,29 @@ pub struct Input {
     races: Vec<(u64, u64)>,
 }
 
+fn parse_numbers(s: &str) -> Vec<u64> {
+    s.split(':')
+        .nth(1)
+        .unwrap()
+        .split_whitespace()
+        .map(|s| s.trim().parse::<u64>().unwrap())
+        .collect::<Vec<_>>()
+}
+
+fn parse_merged_numbers(s: &str) -> u64 {
+    s.chars()
+        .filter(char::is_ascii_digit)
+        .collect::<String>()
+        .parse::<u64>()
+        .unwrap()
+}
+
 #[aoc_generator(day6, part1)]
 pub fn input_generator(input: &str) -> Input {
     let (times, distances) = input.split_once('\n').unwrap();
 
-    let times = times
-        .split(':')
-        .nth(1)
-        .unwrap()
-        .split_whitespace()
-        .map(|s| s.trim().parse::<u64>().unwrap())
-        .collect::<Vec<_>>();
-
-    let distances = distances
-        .split(':')
-        .nth(1)
-        .unwrap()
-        .split_whitespace()
-        .map(|s| s.trim().parse::<u64>().unwrap())
-        .collect::<Vec<_>>();
+    let times = parse_numbers(times);
+    let distances = parse_numbers(distances);
 
     let races = times
         .iter()
@@ -39,30 +43,41 @@ pub fn input_generator(input: &str) -> Input {
 
 #[aoc_generator(day6, part2)]
 pub fn input_generator_part2(input: &str) -> Input {
-    let (times, distances) = input.split_once('\n').unwrap();
+    let lines = input.lines().collect::<Vec<_>>();
 
-    let time = times
-        .split(':')
-        .nth(1)
-        .unwrap()
-        .replace(' ', "")
-        .parse::<u64>()
-        .unwrap();
-
-    let distance = distances
-        .split(':')
-        .nth(1)
-        .unwrap()
-        .replace([' ', '\n'], "")
-        .parse::<u64>()
-        .unwrap();
+    let time = parse_merged_numbers(lines[0]);
+    let distance = parse_merged_numbers(lines[1]);
 
     let races = vec![(time, distance)];
 
     Input { races }
 }
 
+fn race(races: &[(u64, u64)]) -> u64 {
+    races
+        .iter()
+        .map(|(time, record)| {
+            (1..*time).fold(0, |acc, t| {
+                let speed = time - t;
+                let remaining_time = time - speed;
+                let distance_covered = speed * remaining_time;
+
+                if distance_covered > *record {
+                    acc + 1
+                } else {
+                    acc
+                }
+            })
+        })
+        .product::<u64>()
+}
+
 /* Part One
+*
+* We get a table of race times and the record distance. We need to find how many
+* ways there are to beat the record. The race starts by holding a button to build
+* up speed for a certain amount of time, and then releasing it. The distance
+* covered is the speed times the remaining time.
 *
 */
 // Your puzzle answer was
@@ -75,29 +90,14 @@ pub fn input_generator_part2(input: &str) -> Input {
 */
 #[aoc(day6, part1)]
 pub fn solve_part_01(input: &Input) -> u64 {
-    let Input { races } = input;
-    let mut product = 1;
-
-    for (time, record) in races {
-        let mut ways_to_beat_record = 0;
-
-        for t in 1..*time {
-            let speed = time - t;
-            let remaining_time = time - speed;
-            let distance_covered = speed * remaining_time;
-
-            if distance_covered > *record {
-                ways_to_beat_record += 1;
-            }
-        }
-
-        product *= ways_to_beat_record;
-    }
-
-    product
+    race(&input.races)
 }
 
 /* Part Two
+*
+* Here we combine all the race times and distance from the previous data into
+* two large numbers. This means we only have one race, but since the time
+* is longer, we have a lot more ways to beat the record.
 *
 */
 /*
@@ -109,26 +109,7 @@ pub fn solve_part_01(input: &Input) -> u64 {
 */
 #[aoc(day6, part2)]
 pub fn solve_part_02(input: &Input) -> u64 {
-    let Input { races } = input;
-    let mut product = 1;
-
-    for (time, record) in races {
-        let mut ways_to_beat_record = 0;
-
-        for t in 1..*time {
-            let speed = time - t;
-            let remaining_time = time - speed;
-            let distance_covered = speed * remaining_time;
-
-            if distance_covered > *record {
-                ways_to_beat_record += 1;
-            }
-        }
-
-        product *= ways_to_beat_record;
-    }
-
-    product
+    race(&input.races)
 }
 
 #[cfg(test)]

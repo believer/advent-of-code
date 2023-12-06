@@ -12,6 +12,13 @@ use std::collections::HashSet;
 type Cards = HashSet<u32>;
 type Input = Vec<(Cards, Cards)>;
 
+fn parse_card(input: &str) -> Cards {
+    input
+        .split_whitespace()
+        .map(|x| x.trim().parse().unwrap())
+        .collect()
+}
+
 #[aoc_generator(day4)]
 pub fn input_generator(input: &str) -> Input {
     let mut numbers = vec![];
@@ -21,15 +28,8 @@ pub fn input_generator(input: &str) -> Input {
         let (_, line) = line.split_once(": ").unwrap();
         let (winning, my_numbers) = line.split_once(" | ").unwrap();
 
-        let winning = winning
-            .split_whitespace()
-            .map(|x| x.trim().parse().unwrap())
-            .collect();
-
-        let my_numbers = my_numbers
-            .split_whitespace()
-            .map(|x| x.trim().parse().unwrap())
-            .collect();
+        let winning = parse_card(winning);
+        let my_numbers = parse_card(my_numbers);
 
         numbers.push((winning, my_numbers));
     }
