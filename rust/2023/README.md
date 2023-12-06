@@ -21,18 +21,20 @@ You try to ask why they can't just use a weather machine ("not powerful enough")
 | [Day 3: Gear Ratios](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_03.rs)                     | 🌟  |    535235 | 🌟  |  79844424 |
 | [Day 4: Scratchcards](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_04.rs)                    | 🌟  |     27454 | 🌟  |   6857330 |
 | [Day 5: If You Give A Seed A Fertilizer](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_05.rs) | 🌟  | 993500720 | 🌟  |   4917124 |
+| [Day 6: Wait For It](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_06.rs)                     | 🌟  |    861300 | 🌟  |  28101347 |
 
 ## Performance
 
 With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro M1 Pro, 32 GB RAM.
 
-| Day |        #1 |          #2 | Improvement\*         | Generator |
-| --- | --------: | ----------: | --------------------- | --------: |
-| 1   |  43.18 ns |     1.19 ms |                       | 441.01 ns |
-| 2   | 764.68 ns |     1.75 µs |                       |  47.81 µs |
-| 3   | 159.61 µs |     7.72 ms | `-8.44%`              |  86.83 µs |
-| 4   |  12.85 µs |    13.09 µs | `-48.41%` / `-46.64%` | 230.06 µs |
-| 5   |   1.27 µs | 21.22 s\*\* | `-16.72%`             |  16.85 µs |
+| Day |        #1 |          #2 | Improvement\*         |             Generator |
+| --- | --------: | ----------: | --------------------- | --------------------: |
+| 1   |  43.18 ns |     1.19 ms |                       |             441.01 ns |
+| 2   | 764.68 ns |     1.75 µs |                       |              47.81 µs |
+| 3   | 159.61 µs |     7.72 ms | `-8.44%`              |              86.83 µs |
+| 4   |  12.85 µs |    13.09 µs | `-48.41%` / `-46.64%` |             230.06 µs |
+| 5   |   1.27 µs | 21.22 s\*\* | `-16.72%`             |              16.85 µs |
+| 6   | 101.59 ns |    15.04 ms |                       | 257.95 ns / 426.06 ns |
 
 \* compared to first solution<br/>
 \*\* slow, didn't benchmark

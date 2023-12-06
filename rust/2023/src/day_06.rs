@@ -1,4 +1,7 @@
-// Day 6:
+// Day 6: Wait For It
+//
+// Today was simple, a nice break from yesterday. I can see multiple ways of improving
+// the solution, but I'm happy with it for now.
 
 #[derive(Debug)]
 pub struct Input {
