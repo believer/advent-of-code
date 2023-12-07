@@ -2,6 +2,10 @@ use std::collections::BTreeMap;
 
 // Day 7: Camel Cards
 //
+// The first parts was pretty straight forward, not too many cases to handle.
+// The second part was a bit more tricky, mostly due to convert the jokers to
+// the best possible hand.
+//
 // There's probably something better we can do here, but I'll save that for later.
 
 #[derive(Debug)]
@@ -236,6 +240,36 @@ fn play(input: &Input) -> u64 {
 
 /* Part One
 *
+* We have a list of cards, and we need to sort them by rank.
+* Then we need to multiply the rank by the bid (the second column)
+* and sum the total.
+*
+* 32T3K 765
+* T55J5 684
+* KK677 28
+* KTJJT 220
+* QQQJA 483
+*
+* ## Sort by rank
+*
+* 1. 32T3K 765 -> One pair
+* 2. KTJJT 220 -> Two pairs
+* 3. KK677 28 -> Two pairs (K is higher than T)
+* 4. T55J5 684 -> Three of a kind
+* 5. QQQJA 483 -> Three of a kind (Q is higher than T)
+*
+* ## Multiply by bid
+*
+* 1. 765 * 1 = 765
+* 2. 220 * 2 = 440
+* 3. 28 * 3 = 84
+* 4. 684 * 4 = 2736
+* 5. 483 * 5 = 2415
+*
+* ## Sum
+*
+* 765 + 440 + 84 + 2736 + 2415 = 6440
+*
 */
 // Your puzzle answer was
 /*
@@ -252,9 +286,9 @@ pub fn solve_part_01(input: &Input) -> u64 {
 
 /* Part Two
 *
-* Here we combine all the race times and distance from the previous data into
-* two large numbers. This means we only have one race, but since the time
-* is longer, we have a lot more ways to beat the record.
+* Now the cards that were previously jacks are jokers. These are wild cards
+* and should be used to create the best possible hand. Otherwise the rules
+* are the same.
 *
 */
 /*
