@@ -165,9 +165,13 @@ fn parse_card2(s: &str) -> Hand {
 
             // Misc found while running real data
             ([3, 1, 1], 3) => HandType::FourOfAKind,
+            ([1, 3, 1], 3) => HandType::FourOfAKind,
             ([2, 3], 2) => HandType::FiveOfAKind,
+            ([3, 2], 2) => HandType::FiveOfAKind,
             ([3, 2], 3) => HandType::FiveOfAKind,
+            ([2, 3], 3) => HandType::FiveOfAKind,
             ([4, 1], 4) => HandType::FiveOfAKind,
+            ([1, 4], 4) => HandType::FiveOfAKind,
 
             h => todo!("{:?}", h),
         };
