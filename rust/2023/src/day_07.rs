@@ -1,4 +1,7 @@
-use std::collections::BTreeMap;
+use std::{
+    collections::{BTreeMap, HashMap},
+    ops::Add,
+};
 
 // Day 7: Camel Cards
 //
@@ -6,14 +9,17 @@ use std::collections::BTreeMap;
 // The second part was a bit more tricky, mostly due to convert the jokers to
 // the best possible hand.
 //
-// There's probably something better we can do here, but I'll save that for later.
+// I had bunch of match statements, but I refactored them using Add and From
+// traits (gotta love traits). This made the code a lot more readable and
+// easier to handle.
 
 #[derive(Debug)]
 pub struct Input {
     hands: Vec<Hand>,
 }
 
-#[derive(Debug, Eq, PartialEq, Clone, Copy, Ord, PartialOrd)]
+// The order here is important, since we want to sort the hands by rank
+#[derive(Debug, Eq, PartialEq, Clone, Hash, Copy, Ord, PartialOrd)]
 enum Card {
     Joker,
     Number(u8),
@@ -46,6 +52,54 @@ enum HandType {
     FiveOfAKind,
 }
 
+// Used to convert a vector of card counts to a hand type
+// It's important that the vector is sorted, otherwise we
+// have to handle more cases.
+impl From<Vec<&u8>> for HandType {
+    fn from(value: Vec<&u8>) -> Self {
+        match &value[..] {
+            [1, 1, 1, 1, 1] => Self::HighCard,
+            [1, 1, 1, 2] => Self::OnePair,
+            [1, 2, 2] => Self::TwoPairs,
+            [1, 1, 3] => Self::ThreeOfAKind,
+            [2, 3] => Self::FullHouse,
+            [1, 4] => Self::FourOfAKind,
+            [5] => Self::FiveOfAKind,
+            _ => panic!("Unknown hand type"),
+        }
+    }
+}
+
+// Used to convert a hand with jokers to the best possible hand
+// If jokers is 0, return the initial hand type
+impl Add<&u8> for HandType {
+    type Output = Self;
+
+    fn add(self, number: &u8) -> Self::Output {
+        match (self, number) {
+            (initial, 0) => initial,
+            (Self::FiveOfAKind, _) => Self::FiveOfAKind,
+
+            (Self::HighCard, 1) => Self::OnePair,
+            (Self::OnePair, 1) => Self::ThreeOfAKind,
+            (Self::TwoPairs, 1) => Self::FullHouse,
+            (Self::ThreeOfAKind, 1) => Self::FourOfAKind,
+            (Self::FourOfAKind, 1) => Self::FiveOfAKind,
+
+            (Self::OnePair, 2) => Self::ThreeOfAKind,
+            (Self::TwoPairs, 2) => Self::FourOfAKind,
+            (Self::ThreeOfAKind, 2) => Self::FiveOfAKind,
+            (Self::FullHouse, 2) => Self::FiveOfAKind,
+
+            (Self::ThreeOfAKind, 3) => Self::FourOfAKind,
+            (Self::FullHouse, 3) => Self::FiveOfAKind,
+            (Self::FourOfAKind, 4) => Self::FiveOfAKind,
+
+            (c, j) => panic!("Unhandled card addition {:?} + {:?}", c, j),
+        }
+    }
+}
+
 #[derive(Debug, Eq, PartialEq, Clone)]
 pub struct Hand {
     hand_type: HandType,
@@ -53,114 +107,34 @@ pub struct Hand {
     bid: u64,
 }
 
-fn parse_card_data(s: &str, j_variant: Card) -> (BTreeMap<Card, u8>, (Vec<Card>, u64)) {
+fn parse_hand(s: &str, j_variant: Card) -> Hand {
+    // Split the string into the hand and the bid
     let mut parts = s.split_whitespace();
     let hand = parts.next().unwrap().to_string();
     let bid = parts.next().unwrap().parse::<u64>().unwrap();
+
+    // Parse hand into a vector of cards
     let cards = hand
         .chars()
         .map(|c| parse_card(c, j_variant))
         .collect::<Vec<Card>>();
-    let mut cards_by_type: BTreeMap<Card, u8> = BTreeMap::new();
+
+    // Count the number of each card
+    let mut cards_by_type: HashMap<Card, u8> = HashMap::new();
 
     for card in cards.clone() {
-        let c = cards_by_type.entry(card).or_insert(0);
-        *c += 1;
+        *cards_by_type.entry(card).or_insert(0) += 1;
     }
 
-    (cards_by_type, (cards, bid))
-}
-
-fn parse_hand(s: &str) -> Hand {
-    let (cards_by_type, (cards, bid)) = parse_card_data(s, Card::Jack);
+    // Get the values, i.e. how many of each card we have, and sort them
     let mut card_values = cards_by_type.values().collect::<Vec<_>>();
-
     card_values.sort();
 
-    let hand_type = match &card_values[..] {
-        [1, 1, 1, 1, 1] => HandType::HighCard,
-        [1, 1, 1, 2] => HandType::OnePair,
-        [1, 2, 2] => HandType::TwoPairs,
-        [1, 1, 3] => HandType::ThreeOfAKind,
-        [2, 3] => HandType::FullHouse,
-        [1, 4] => HandType::FourOfAKind,
-        [5] => HandType::FiveOfAKind,
-        _ => panic!("Unknown hand type"),
-    };
-
-    Hand {
-        cards,
-        bid,
-        hand_type,
-    }
-}
-
-fn parse_hand2(s: &str) -> Hand {
-    let (cards_by_type, (cards, bid)) = parse_card_data(s, Card::Joker);
-    let mut card_values = cards_by_type.values().collect::<Vec<_>>();
+    // Get the number of jokers
     let jokers = cards_by_type.get(&Card::Joker).unwrap_or(&0);
 
-    card_values.sort();
-
-    // Convert cards and number of jokers to hand type
-    // Upgrade to the strongest possible hand
-    let hand_type =
-        match (&card_values[..], jokers) {
-            // This handles all cases of 5 equal cards
-            // So any cases below are unreachable
-            ([5], _) => HandType::FiveOfAKind,
-
-            // Handle no jokers
-            (cards, 0) => match cards {
-                [1, 1, 1, 1, 1] => HandType::HighCard,
-                [1, 1, 1, 2] => HandType::OnePair,
-                [1, 2, 2] => HandType::TwoPairs,
-                [1, 1, 3] => HandType::ThreeOfAKind,
-                [2, 3] => HandType::FullHouse,
-                [1, 4] => HandType::FourOfAKind,
-                _ => unreachable!(),
-            },
-
-            // One joker
-            (cards, 1) => match cards {
-                [1, 1, 1, 1, 1] => HandType::OnePair,   // 1234J -> 12344
-                [1, 1, 1, 2] => HandType::ThreeOfAKind, // KKJ12 -> KKK99
-                [1, 2, 2] => HandType::FullHouse,       // KKJQQ -> KKKQQ
-                [1, 1, 3] => HandType::FourOfAKind,     // 333J1 -> 33331
-                [1, 4] => HandType::FiveOfAKind,        // 3333J -> 33333
-                _ => unreachable!(),
-            },
-
-            // Two jokers
-            (cards, 2) => {
-                match cards {
-                    [1, 1, 1, 2] => HandType::ThreeOfAKind, // 123JJ -> 12333
-                    [1, 2, 2] => HandType::FourOfAKind,     // KKJJQ -> KKKKQ
-                    [1, 1, 3] => HandType::FiveOfAKind,     // 333JJ -> 33333
-                    [2, 3] => HandType::FiveOfAKind,        // 333JJ -> 33333
-                    _ => unreachable!(),
-                }
-            }
-
-            // Three jokers
-            (cards, 3) => {
-                match cards {
-                    [1, 1, 3] => HandType::FourOfAKind, // JJJ13 -> 33313
-                    [2, 3] => HandType::FiveOfAKind,    // JJJ22 -> 22222
-                    _ => unreachable!(),
-                }
-            }
-
-            // Four jokers
-            (cards, 4) => {
-                match cards {
-                    [1, 4] => HandType::FiveOfAKind, // JJJJ1 -> 11111
-                    _ => unreachable!(),
-                }
-            }
-
-            hand => todo!("Unhandled hand {:?}", hand),
-        };
+    // Add the jokers to the hand type
+    let hand_type = HandType::from(card_values) + jokers;
 
     Hand {
         cards,
@@ -171,30 +145,41 @@ fn parse_hand2(s: &str) -> Hand {
 
 #[aoc_generator(day7, part1)]
 pub fn input_generator(input: &str) -> Input {
-    let hands = input.lines().map(parse_hand).collect();
+    let hands = input
+        .lines()
+        .map(|line| parse_hand(line, Card::Jack))
+        .collect();
 
     Input { hands }
 }
 
 #[aoc_generator(day7, part2)]
 pub fn input_generator_part2(input: &str) -> Input {
-    let hands = input.lines().map(parse_hand2).collect();
+    let hands = input
+        .lines()
+        .map(|line| parse_hand(line, Card::Joker))
+        .collect();
 
     Input { hands }
 }
 
 fn play(input: &Input) -> u64 {
+    // Create a vector for sorting the hands by rank
     let mut ranked: Vec<Hand> = Vec::with_capacity(input.hands.len());
+
+    // Create a map for grouping hands by rank
     let mut by_rank: BTreeMap<HandType, Vec<Hand>> = BTreeMap::new();
 
     // Group hands by rank
     for hand in &input.hands {
-        let c = by_rank.entry(hand.hand_type.clone()).or_default();
-        c.push(hand.clone());
+        by_rank
+            .entry(hand.hand_type.clone())
+            .or_default()
+            .push(hand.clone());
     }
 
     // Sort hands by rank and then by cards
-    for (_, hands) in by_rank.iter() {
+    for hands in by_rank.values() {
         let mut hands = hands.clone();
 
         hands.sort_by(|a, b| match (a.cards.clone(), b.cards.clone()) {
@@ -247,13 +232,11 @@ fn play(input: &Input) -> u64 {
 *
 */
 // Your puzzle answer was
-/*
 /// ```
 /// use advent_of_code_2023::day_07::*;
 /// let data = include_str!("../input/2023/day7.txt");
 /// assert_eq!(solve_part_01(&input_generator(data)), 250474325);
 /// ```
-*/
 #[aoc(day7, part1)]
 pub fn solve_part_01(input: &Input) -> u64 {
     play(input)
@@ -266,13 +249,11 @@ pub fn solve_part_01(input: &Input) -> u64 {
 * are the same.
 *
 */
-/*
 /// ```
 /// use advent_of_code_2023::day_07::*;
 /// let data = include_str!("../input/2023/day7.txt");
-/// assert_eq!(solve_part_02(&input_generator_part2(data)), 28101347);
+/// assert_eq!(solve_part_02(&input_generator_part2(data)), 248909434);
 /// ```
-*/
 #[aoc(day7, part2)]
 pub fn solve_part_02(input: &Input) -> u64 {
     play(input)
