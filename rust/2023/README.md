@@ -22,6 +22,7 @@ You try to ask why they can't just use a weather machine ("not powerful enough")
 | [Day 4: Scratchcards](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_04.rs)                    | 🌟  |     27454 | 🌟  |   6857330 |
 | [Day 5: If You Give A Seed A Fertilizer](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_05.rs) | 🌟  | 993500720 | 🌟  |   4917124 |
 | [Day 6: Wait For It](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_06.rs)                     | 🌟  |    861300 | 🌟  |  28101347 |
+| [Day 7: Camel Cards](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_07.rs)                     | 🌟  | 250474325 | 🌟  | 248909434 |
 
 ## Performance
 
@@ -35,6 +36,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 4   |  12.85 µs |      13.09 µs | `-48.41%` / `-46.64%` |             230.06 µs |
 | 5   |   1.27 µs | 238.45 ms\*\* | `-16.72%` / `-98.87%` |              16.85 µs |
 | 6   | 101.59 ns |      15.04 ms |                       | 257.13 ns / 204.78 ns |
+| 6   | 399.39 µs |     391.64 µs |                       | 270.69 µs / 284.71 µs |
 
 \* compared to first solution<br/>
 \*\* slow, didn't benchmark. Value comes from running the solver.
