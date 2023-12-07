@@ -13,7 +13,7 @@ pub struct Input {
     hands: Vec<Hand>,
 }
 
-#[derive(Debug, Eq, PartialEq, Clone, Hash, Ord, PartialOrd)]
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Ord, PartialOrd)]
 enum Card {
     Joker,
     Number(u8),
@@ -53,13 +53,13 @@ pub struct Hand {
     bid: u64,
 }
 
-fn parse_hand(s: &str) -> Hand {
+fn parse_card_data(s: &str, j_variant: Card) -> (BTreeMap<Card, u8>, (Vec<Card>, u64)) {
     let mut parts = s.split_whitespace();
     let hand = parts.next().unwrap().to_string();
     let bid = parts.next().unwrap().parse::<u64>().unwrap();
     let cards = hand
         .chars()
-        .map(|c| parse_card(c, Card::Jack))
+        .map(|c| parse_card(c, j_variant))
         .collect::<Vec<Card>>();
     let mut cards_by_type: BTreeMap<Card, u8> = BTreeMap::new();
 
@@ -68,15 +68,22 @@ fn parse_hand(s: &str) -> Hand {
         *c += 1;
     }
 
-    let cc = cards_by_type.values().cloned().collect::<Vec<_>>();
+    (cards_by_type, (cards, bid))
+}
 
-    let hand_type = match &cc[..] {
+fn parse_hand(s: &str) -> Hand {
+    let (cards_by_type, (cards, bid)) = parse_card_data(s, Card::Jack);
+    let mut card_values = cards_by_type.values().collect::<Vec<_>>();
+
+    card_values.sort();
+
+    let hand_type = match &card_values[..] {
         [1, 1, 1, 1, 1] => HandType::HighCard,
-        [1, 1, 1, 2] | [1, 1, 2, 1] | [1, 2, 1, 1] | [2, 1, 1, 1] => HandType::OnePair,
-        [1, 2, 2] | [2, 1, 2] | [2, 2, 1] => HandType::TwoPairs,
-        [1, 1, 3] | [1, 3, 1] | [3, 1, 1] => HandType::ThreeOfAKind,
-        [2, 3] | [3, 2] => HandType::FullHouse,
-        [1, 4] | [4, 1] => HandType::FourOfAKind,
+        [1, 1, 1, 2] => HandType::OnePair,
+        [1, 2, 2] => HandType::TwoPairs,
+        [1, 1, 3] => HandType::ThreeOfAKind,
+        [2, 3] => HandType::FullHouse,
+        [1, 4] => HandType::FourOfAKind,
         [5] => HandType::FiveOfAKind,
         _ => panic!("Unknown hand type"),
     };
@@ -89,103 +96,71 @@ fn parse_hand(s: &str) -> Hand {
 }
 
 fn parse_hand2(s: &str) -> Hand {
-    let mut parts = s.split_whitespace();
-    let hand = parts.next().unwrap().to_string();
-    let bid = parts.next().unwrap().parse::<u64>().unwrap();
-    let cards = hand
-        .chars()
-        .map(|c| parse_card(c, Card::Joker))
-        .collect::<Vec<Card>>();
-    let mut cards_by_type: BTreeMap<Card, u8> = BTreeMap::new();
-
-    for card in cards.clone() {
-        let c = cards_by_type.entry(card).or_insert(0);
-        *c += 1;
-    }
-
+    let (cards_by_type, (cards, bid)) = parse_card_data(s, Card::Joker);
+    let mut card_values = cards_by_type.values().collect::<Vec<_>>();
     let jokers = cards_by_type.get(&Card::Joker).unwrap_or(&0);
-    let cc = cards_by_type.values().cloned().collect::<Vec<_>>();
+
+    card_values.sort();
 
     // Convert cards and number of jokers to hand type
     // Upgrade to the strongest possible hand
-    let hand_type = match (&cc[..], jokers) {
-        ([5], _) => HandType::FiveOfAKind,
+    let hand_type =
+        match (&card_values[..], jokers) {
+            // This handles all cases of 5 equal cards
+            // So any cases below are unreachable
+            ([5], _) => HandType::FiveOfAKind,
 
-        // Handle no jokers
-        (cards, 0) => match cards {
-            [1, 1, 1, 1, 1] => HandType::HighCard,
-            [2, 1, 1, 1] | [1, 2, 1, 1] | [1, 1, 2, 1] | [1, 1, 1, 2] => HandType::OnePair,
-            [2, 1, 2] | [1, 2, 2] | [2, 2, 1] => HandType::TwoPairs,
-            [3, 1, 1] | [1, 3, 1] | [1, 1, 3] => HandType::ThreeOfAKind,
-            [3, 2] | [2, 3] => HandType::FullHouse,
-            [4, 1] | [1, 4] => HandType::FourOfAKind,
-            _ => unreachable!("Five of a kind should have been caught above"),
-        },
+            // Handle no jokers
+            (cards, 0) => match cards {
+                [1, 1, 1, 1, 1] => HandType::HighCard,
+                [1, 1, 1, 2] => HandType::OnePair,
+                [1, 2, 2] => HandType::TwoPairs,
+                [1, 1, 3] => HandType::ThreeOfAKind,
+                [2, 3] => HandType::FullHouse,
+                [1, 4] => HandType::FourOfAKind,
+                _ => unreachable!(),
+            },
 
-        (cards, 1) => match cards {
-            // 1234J -> 12344
-            [1, 1, 1, 1, 1] => HandType::OnePair,
+            // One joker
+            (cards, 1) => match cards {
+                [1, 1, 1, 1, 1] => HandType::OnePair,   // 1234J -> 12344
+                [1, 1, 1, 2] => HandType::ThreeOfAKind, // KKJ12 -> KKK99
+                [1, 2, 2] => HandType::FullHouse,       // KKJQQ -> KKKQQ
+                [1, 1, 3] => HandType::FourOfAKind,     // 333J1 -> 33331
+                [1, 4] => HandType::FiveOfAKind,        // 3333J -> 33333
+                _ => unreachable!(),
+            },
 
-            // KKJ12 -> KKK99
-            [2, 1, 1, 1] => HandType::ThreeOfAKind,
-            [1, 2, 1, 1] => HandType::ThreeOfAKind,
-            [1, 1, 2, 1] => HandType::ThreeOfAKind,
-            [1, 1, 1, 2] => HandType::ThreeOfAKind,
+            // Two jokers
+            (cards, 2) => {
+                match cards {
+                    [1, 1, 1, 2] => HandType::ThreeOfAKind, // 123JJ -> 12333
+                    [1, 2, 2] => HandType::FourOfAKind,     // KKJJQ -> KKKKQ
+                    [1, 1, 3] => HandType::FiveOfAKind,     // 333JJ -> 33333
+                    [2, 3] => HandType::FiveOfAKind,        // 333JJ -> 33333
+                    _ => unreachable!(),
+                }
+            }
 
-            // KKJQQ -> KKKQQ
-            [2, 1, 2] => HandType::FullHouse,
-            [1, 2, 2] => HandType::FullHouse,
-            [2, 2, 1] => HandType::FullHouse,
+            // Three jokers
+            (cards, 3) => {
+                match cards {
+                    [1, 1, 3] => HandType::FourOfAKind, // JJJ13 -> 33313
+                    [2, 3] => HandType::FiveOfAKind,    // JJJ22 -> 22222
+                    _ => unreachable!(),
+                }
+            }
 
-            // 333J1 -> 33331
-            [3, 1, 1] => HandType::FourOfAKind,
-            [1, 3, 1] => HandType::FourOfAKind,
-            [1, 1, 3] => HandType::FourOfAKind,
+            // Four jokers
+            (cards, 4) => {
+                match cards {
+                    [1, 4] => HandType::FiveOfAKind, // JJJJ1 -> 11111
+                    _ => unreachable!(),
+                }
+            }
 
-            // 3333J -> 33333
-            [4, 1] => HandType::FiveOfAKind,
-            [1, 4] => HandType::FiveOfAKind,
-
-            _ => unreachable!("Five of a kind should have been caught above"),
-        },
-
-        (cards, 2) => match cards {
-            // 123JJ -> 12333
-            [2, 1, 1, 1] => HandType::ThreeOfAKind,
-            [1, 2, 1, 1] => HandType::ThreeOfAKind,
-            [1, 1, 2, 1] => HandType::ThreeOfAKind,
-            [1, 1, 1, 2] => HandType::ThreeOfAKind,
-
-            // KKJJQ -> KKKKQ
-            [2, 1, 2] => HandType::FourOfAKind,
-            [1, 2, 2] => HandType::FourOfAKind,
-            [2, 2, 1] => HandType::FourOfAKind,
-
-            // 333JJ -> 33333
-            [3, 1, 1] => HandType::FiveOfAKind,
-            [1, 3, 1] => HandType::FiveOfAKind,
-            [1, 1, 3] => HandType::FiveOfAKind,
-
-            [2, 3] | [3, 2] => HandType::FiveOfAKind,
-
-            _ => unreachable!("Five of a kind should have been caught above"),
-        },
-
-        (cards, 3) => match cards {
-            [3, 1, 1] | [1, 3, 1] | [1, 1, 3] => HandType::FourOfAKind,
-            [2, 3] | [3, 2] => HandType::FiveOfAKind,
-
-            _ => unreachable!("Five of a kind should have been caught above"),
-        },
-
-        (cards, 4) => match cards {
-            [4, 1] | [1, 4] => HandType::FiveOfAKind,
-
-            _ => unreachable!("Five of a kind should have been caught above"),
-        },
-
-        h => todo!("{:?}", h),
-    };
+            hand => todo!("Unhandled hand {:?}", hand),
+        };
 
     Hand {
         cards,
