@@ -174,7 +174,7 @@ pub fn solve_part_02(input: &Input) -> u64 {
 
     // Seeds are ranges in chunks of 2, start and length.
     // This creates a vector of ranges. Not like the first implementation
-    // where I created a flat_mapped ALL of the ranges.
+    // where I created a flat_map with ALL of the range values.
     let seed_ranges =
         seeds
             .chunks(2)
