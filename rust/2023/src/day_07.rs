@@ -1,7 +1,6 @@
-use std::{
-    collections::{BTreeMap, HashMap},
-    ops::Add,
-};
+use std::{collections::BTreeMap, ops::Add, str::Chars};
+
+use itertools::Itertools;
 
 // Day 7: Camel Cards
 //
@@ -55,16 +54,19 @@ enum HandType {
 // Used to convert a vector of card counts to a hand type
 // It's important that the vector is sorted, otherwise we
 // have to handle more cases.
-impl From<Vec<&u8>> for HandType {
-    fn from(value: Vec<&u8>) -> Self {
-        match &value[..] {
-            [1, 1, 1, 1, 1] => Self::HighCard,
-            [1, 1, 1, 2] => Self::OnePair,
-            [1, 2, 2] => Self::TwoPairs,
-            [1, 1, 3] => Self::ThreeOfAKind,
-            [2, 3] => Self::FullHouse,
-            [1, 4] => Self::FourOfAKind,
-            [5] => Self::FiveOfAKind,
+impl From<&Chars<'_>> for HandType {
+    fn from(value: &Chars<'_>) -> Self {
+        // Simplify counting and sorting using Itertools
+        let hand_type = value.clone().counts().values().sorted().join("");
+
+        match &hand_type[..] {
+            "11111" => Self::HighCard,
+            "1112" => Self::OnePair,
+            "122" => Self::TwoPairs,
+            "113" => Self::ThreeOfAKind,
+            "23" => Self::FullHouse,
+            "14" => Self::FourOfAKind,
+            "5" => Self::FiveOfAKind,
             _ => panic!("Unknown hand type"),
         }
     }
@@ -72,10 +74,10 @@ impl From<Vec<&u8>> for HandType {
 
 // Used to convert a hand with jokers to the best possible hand
 // If jokers is 0, return the initial hand type
-impl Add<&u8> for HandType {
+impl Add<u8> for HandType {
     type Output = Self;
 
-    fn add(self, number: &u8) -> Self::Output {
+    fn add(self, number: u8) -> Self::Output {
         match (self, number) {
             (initial, 0) => initial,
             (Self::FiveOfAKind, _) => Self::FiveOfAKind,
@@ -107,39 +109,29 @@ pub struct Hand {
     bid: u64,
 }
 
-fn parse_hand(s: &str, j_variant: Card) -> Hand {
-    // Split the string into the hand and the bid
-    let mut parts = s.split_whitespace();
-    let hand = parts.next().unwrap().to_string();
-    let bid = parts.next().unwrap().parse::<u64>().unwrap();
+impl Hand {
+    fn new(s: &str, j_variant: Card) -> Self {
+        // Split the line into hand and bid
+        let mut parts = s.split_whitespace();
+        let hand = parts.next().unwrap().chars();
+        let bid = parts.next().unwrap().parse::<u64>().unwrap();
 
-    // Parse hand into a vector of cards
-    let cards = hand
-        .chars()
-        .map(|c| parse_card(c, j_variant))
-        .collect::<Vec<Card>>();
+        // Find what type of hand we have and its cards
+        // j_variant is used to convert either jacks for part 1 or jokers for part 2
+        let mut hand_type = HandType::from(&hand);
+        let cards = hand.map(|c| parse_card(c, j_variant)).collect::<Vec<_>>();
 
-    // Count the number of each card
-    let mut cards_by_type: HashMap<Card, u8> = HashMap::new();
+        // If we have jokers, convert the hand type to the best possible hand
+        if cards.contains(&Card::Joker) {
+            let jokers = cards.iter().filter(|c| **c == Card::Joker).count() as u8;
+            hand_type = hand_type + jokers;
+        }
 
-    for card in cards.clone() {
-        *cards_by_type.entry(card).or_insert(0) += 1;
-    }
-
-    // Get the values, i.e. how many of each card we have, and sort them
-    let mut card_values = cards_by_type.values().collect::<Vec<_>>();
-    card_values.sort();
-
-    // Get the number of jokers
-    let jokers = cards_by_type.get(&Card::Joker).unwrap_or(&0);
-
-    // Add the jokers to the hand type
-    let hand_type = HandType::from(card_values) + jokers;
-
-    Hand {
-        cards,
-        bid,
-        hand_type,
+        Self {
+            cards,
+            bid,
+            hand_type,
+        }
     }
 }
 
@@ -147,7 +139,7 @@ fn parse_hand(s: &str, j_variant: Card) -> Hand {
 pub fn input_generator(input: &str) -> Input {
     let hands = input
         .lines()
-        .map(|line| parse_hand(line, Card::Jack))
+        .map(|line| Hand::new(line, Card::Jack))
         .collect();
 
     Input { hands }
@@ -157,7 +149,7 @@ pub fn input_generator(input: &str) -> Input {
 pub fn input_generator_part2(input: &str) -> Input {
     let hands = input
         .lines()
-        .map(|line| parse_hand(line, Card::Joker))
+        .map(|line| Hand::new(line, Card::Joker))
         .collect();
 
     Input { hands }
