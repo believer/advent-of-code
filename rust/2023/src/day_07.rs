@@ -96,7 +96,7 @@ pub fn input_generator(input: &str) -> Input {
 /// ```
 /// use advent_of_code_2023::day_07::*;
 /// let data = include_str!("../input/2023/day7.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 861300);
+/// assert_eq!(solve_part_01(&input_generator(data)), 250474325);
 /// ```
 */
 #[aoc(day7, part1)]
