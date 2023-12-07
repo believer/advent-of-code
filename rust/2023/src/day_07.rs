@@ -1,6 +1,5 @@
-use std::{collections::BTreeMap, ops::Add, str::Chars};
-
 use itertools::Itertools;
+use std::{ops::Add, str::Chars};
 
 // Day 7: Camel Cards
 //
@@ -11,6 +10,9 @@ use itertools::Itertools;
 // I had bunch of match statements, but I refactored them using Add and From
 // traits (gotta love traits). This made the code a lot more readable and
 // easier to handle.
+//
+// I also used Itertools to simplify counting and sorting. It's actually
+// a pretty powerful crate, and I should probably use it more often.
 
 #[derive(Debug)]
 pub struct Input {
@@ -40,7 +42,7 @@ fn parse_card<T: Into<Card>>(c: char, j_variant: T) -> Card {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Clone, Ord, PartialOrd)]
+#[derive(Debug, Eq, PartialEq, Copy, Clone, Ord, PartialOrd)]
 enum HandType {
     HighCard,
     OnePair,
@@ -156,38 +158,15 @@ pub fn input_generator_part2(input: &str) -> Input {
 }
 
 fn play(input: &Input) -> u64 {
-    // Create a vector for sorting the hands by rank
-    let mut ranked: Vec<Hand> = Vec::with_capacity(input.hands.len());
-
-    // Create a map for grouping hands by rank
-    let mut by_rank: BTreeMap<HandType, Vec<Hand>> = BTreeMap::new();
-
-    // Group hands by rank
-    for hand in &input.hands {
-        by_rank
-            .entry(hand.hand_type.clone())
-            .or_default()
-            .push(hand.clone());
-    }
-
-    // Sort hands by rank and then by cards
-    for hands in by_rank.values() {
-        let mut hands = hands.clone();
-
-        hands.sort_by(|a, b| match (a.cards.clone(), b.cards.clone()) {
-            (a, b) if a == b => a.cmp(&b),
-            (a, b) => a.cmp(&b),
-        });
-
-        ranked.append(&mut hands);
-    }
-
-    // Sum the bid * rank
-    ranked
+    input
+        .hands
         .iter()
+        // Sort hands by rank and then by cards
+        .sorted_by_key(|h| (h.hand_type, h.cards.clone()))
         .enumerate()
+        // Multiply the bid by the rank
         .map(|(i, hand)| hand.bid * (i + 1) as u64)
-        .sum()
+        .sum::<u64>()
 }
 
 /* Part One
