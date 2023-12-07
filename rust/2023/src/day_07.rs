@@ -1,5 +1,8 @@
 use itertools::Itertools;
-use std::{ops::Add, str::Chars};
+use std::{
+    ops::{Add, Deref},
+    str::Chars,
+};
 
 // Day 7: Camel Cards
 //
@@ -61,7 +64,7 @@ impl From<&Chars<'_>> for HandType {
         // Simplify counting and sorting using Itertools
         let hand_type = value.clone().counts().values().sorted().join("");
 
-        match &hand_type[..] {
+        match hand_type.deref() {
             "11111" => Self::HighCard,
             "1112" => Self::OnePair,
             "122" => Self::TwoPairs,
