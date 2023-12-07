@@ -1,15 +1,35 @@
 use std::collections::BTreeMap;
 
-// Day 7:
+// Day 7: Camel Cards
+//
+// There's probably something better we can do here, but I'll save that for later.
+
+#[derive(Debug)]
+pub struct Input {
+    hands: Vec<Hand>,
+}
 
 #[derive(Debug, Eq, PartialEq, Clone, Hash, Ord, PartialOrd)]
 enum Card {
     Number(u8),
     Ten,
-    Jack,
+    JackJoker,
     Queen,
     King,
     Ace,
+}
+
+impl From<char> for Card {
+    fn from(c: char) -> Self {
+        match c {
+            'T' => Self::Ten,
+            'J' => Self::JackJoker,
+            'Q' => Self::Queen,
+            'K' => Self::King,
+            'A' => Self::Ace,
+            _ => Self::Number(c.to_digit(10).unwrap() as u8),
+        }
+    }
 }
 
 #[derive(Debug, Eq, PartialEq, Clone, Ord, PartialOrd)]
@@ -30,77 +50,150 @@ pub struct Hand {
     bid: u64,
 }
 
-impl From<&str> for Hand {
-    fn from(s: &str) -> Self {
-        let mut parts = s.split_whitespace();
-        let hand = parts.next().unwrap().to_string();
-        let bid = parts.next().unwrap().parse::<u64>().unwrap();
+fn parse_card(s: &str) -> Hand {
+    let mut parts = s.split_whitespace();
+    let hand = parts.next().unwrap().to_string();
+    let bid = parts.next().unwrap().parse::<u64>().unwrap();
+    let cards = hand.chars().map(|c| c.into()).collect::<Vec<Card>>();
+    let mut cards_by_type: BTreeMap<Card, u8> = BTreeMap::new();
 
-        let cards = hand
-            .chars()
-            .map(|c| match c {
-                'T' => Card::Ten,
-                'J' => Card::Jack,
-                'Q' => Card::Queen,
-                'K' => Card::King,
-                'A' => Card::Ace,
-                _ => Card::Number(c.to_digit(10).unwrap() as u8),
-            })
-            .collect::<Vec<_>>();
+    for card in cards.clone() {
+        let c = cards_by_type.entry(card).or_insert(0);
+        *c += 1;
+    }
 
-        let mut cards_by_type: BTreeMap<Card, u8> = BTreeMap::new();
+    let cc = cards_by_type.values().cloned().collect::<Vec<_>>();
 
-        for card in cards.clone() {
-            let c = cards_by_type.entry(card).or_insert(0);
-            *c += 1;
-        }
+    let hand_type = match &cc[..] {
+        [1, 1, 1, 1, 1] => HandType::HighCard,
+        [1, 1, 1, 2] | [1, 1, 2, 1] | [1, 2, 1, 1] | [2, 1, 1, 1] => HandType::OnePair,
+        [1, 2, 2] | [2, 1, 2] | [2, 2, 1] => HandType::TwoPairs,
+        [1, 1, 3] | [1, 3, 1] | [3, 1, 1] => HandType::ThreeOfAKind,
+        [2, 3] | [3, 2] => HandType::FullHouse,
+        [1, 4] | [4, 1] => HandType::FourOfAKind,
+        [5] => HandType::FiveOfAKind,
+        _ => panic!("Unknown hand type"),
+    };
 
-        let cc = cards_by_type.values().collect::<Vec<_>>();
-
-        let hand_type = match &cc[..] {
-            [1, 1, 1, 1, 1] => HandType::HighCard,
-            [1, 1, 1, 2] | [1, 1, 2, 1] | [1, 2, 1, 1] | [2, 1, 1, 1] => HandType::OnePair,
-            [1, 2, 2] | [2, 1, 2] | [2, 2, 1] => HandType::TwoPairs,
-            [1, 1, 3] | [1, 3, 1] | [3, 1, 1] => HandType::ThreeOfAKind,
-            [2, 3] | [3, 2] => HandType::FullHouse,
-            [1, 4] | [4, 1] => HandType::FourOfAKind,
-            [5] => HandType::FiveOfAKind,
-            _ => panic!("Unknown hand type"),
-        };
-
-        Self {
-            cards,
-            bid,
-            hand_type,
-        }
+    Hand {
+        cards,
+        bid,
+        hand_type,
     }
 }
 
-#[derive(Debug)]
-pub struct Input {
-    hands: Vec<Hand>,
+fn parse_card2(s: &str) -> Hand {
+    let mut parts = s.split_whitespace();
+    let hand = parts.next().unwrap().to_string();
+    let bid = parts.next().unwrap().parse::<u64>().unwrap();
+    let cards = hand.chars().map(|c| c.into()).collect::<Vec<Card>>();
+    let mut cards_by_type: BTreeMap<Card, u8> = BTreeMap::new();
+
+    for card in cards.clone() {
+        let c = cards_by_type.entry(card).or_insert(0);
+        *c += 1;
+    }
+
+    let jokers = cards_by_type.get(&Card::JackJoker).unwrap_or(&0);
+    let cc = cards_by_type.values().cloned().collect::<Vec<_>>();
+
+    // Convert cards and number of jokers to hand type
+    // Upgrade to the strongest possible hand
+    let hand_type =
+        match (&cc[..], jokers) {
+            ([5], _) => HandType::FiveOfAKind,
+
+            ([1, 1, 1, 1, 1], 0) => HandType::HighCard,
+
+            ([2, 1, 1, 1], 0) => HandType::OnePair,
+            ([1, 2, 1, 1], 0) => HandType::OnePair,
+            ([1, 1, 2, 1], 0) => HandType::OnePair,
+            ([1, 1, 1, 2], 0) => HandType::OnePair,
+
+            ([2, 1, 2], 0) => HandType::TwoPairs,
+            ([1, 2, 2], 0) => HandType::TwoPairs,
+            ([2, 2, 1], 0) => HandType::TwoPairs,
+
+            ([3, 1, 1], 0) => HandType::ThreeOfAKind,
+            ([1, 3, 1], 0) => HandType::ThreeOfAKind,
+            ([1, 1, 3], 0) => HandType::ThreeOfAKind,
+
+            ([3, 2], 0) => HandType::FullHouse,
+            ([2, 3], 0) => HandType::FullHouse,
+
+            ([4, 1], 0) => HandType::FourOfAKind,
+            ([1, 4], 0) => HandType::FourOfAKind,
+
+            // 1234J -> 12344
+            ([1, 1, 1, 1, 1], 1) => HandType::OnePair,
+
+            // KKJ12 -> KKK99
+            ([2, 1, 1, 1], 1) => HandType::ThreeOfAKind,
+            ([1, 2, 1, 1], 1) => HandType::ThreeOfAKind,
+            ([1, 1, 2, 1], 1) => HandType::ThreeOfAKind,
+            ([1, 1, 1, 2], 1) => HandType::ThreeOfAKind,
+
+            // KKJQQ -> KKKQQ
+            ([2, 1, 2], 1) => HandType::FullHouse,
+            ([1, 2, 2], 1) => HandType::FullHouse,
+            ([2, 2, 1], 1) => HandType::FullHouse,
+
+            // 333J1 -> 33331
+            ([3, 1, 1], 1) => HandType::FourOfAKind,
+            ([1, 3, 1], 1) => HandType::FourOfAKind,
+            ([1, 1, 3], 1) => HandType::FourOfAKind,
+
+            // 3333J -> 33333
+            ([4, 1], 1) => HandType::FiveOfAKind,
+            ([1, 4], 1) => HandType::FiveOfAKind,
+
+            // 123JJ -> 12333
+            ([2, 1, 1, 1], 2) => HandType::ThreeOfAKind,
+            ([1, 2, 1, 1], 2) => HandType::ThreeOfAKind,
+            ([1, 1, 2, 1], 2) => HandType::ThreeOfAKind,
+            ([1, 1, 1, 2], 2) => HandType::ThreeOfAKind,
+
+            // KKJJQ -> KKKKQ
+            ([2, 1, 2], 2) => HandType::FourOfAKind,
+            ([1, 2, 2], 2) => HandType::FourOfAKind,
+            ([2, 2, 1], 2) => HandType::FourOfAKind,
+
+            // 333JJ -> 33333
+            ([3, 1, 1], 2) => HandType::FiveOfAKind,
+            ([1, 3, 1], 2) => HandType::FiveOfAKind,
+            ([1, 1, 3], 2) => HandType::FiveOfAKind,
+
+            // Misc found while running real data
+            ([3, 1, 1], 3) => HandType::FourOfAKind,
+            ([2, 3], 2) => HandType::FiveOfAKind,
+            ([3, 2], 3) => HandType::FiveOfAKind,
+            ([4, 1], 4) => HandType::FiveOfAKind,
+
+            h => todo!("{:?}", h),
+        };
+
+    Hand {
+        cards,
+        bid,
+        hand_type,
+    }
 }
 
-#[aoc_generator(day7)]
+#[aoc_generator(day7, part1)]
 pub fn input_generator(input: &str) -> Input {
-    let hands = input.lines().map(|line| line.into()).collect();
+    let hands = input.lines().map(parse_card).collect();
 
     Input { hands }
 }
 
-/* Part One
-*
-*/
-// Your puzzle answer was
-/*
-/// ```
-/// use advent_of_code_2023::day_07::*;
-/// let data = include_str!("../input/2023/day7.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 250474325);
-/// ```
-*/
-#[aoc(day7, part1)]
-pub fn solve_part_01(input: &Input) -> u64 {
+#[aoc_generator(day7, part2)]
+pub fn input_generator_part2(input: &str) -> Input {
+    let hands = input.lines().map(parse_card2).collect();
+
+    Input { hands }
+}
+
+fn play(input: &Input) -> u64 {
     let mut ranked: Vec<Hand> = Vec::with_capacity(input.hands.len());
     let mut by_rank: BTreeMap<HandType, Vec<Hand>> = BTreeMap::new();
     let mut sum = 0;
@@ -128,6 +221,22 @@ pub fn solve_part_01(input: &Input) -> u64 {
     sum
 }
 
+/* Part One
+*
+*/
+// Your puzzle answer was
+/*
+/// ```
+/// use advent_of_code_2023::day_07::*;
+/// let data = include_str!("../input/2023/day7.txt");
+/// assert_eq!(solve_part_01(&input_generator(data)), 250474325);
+/// ```
+*/
+#[aoc(day7, part1)]
+pub fn solve_part_01(input: &Input) -> u64 {
+    play(input)
+}
+
 /* Part Two
 *
 * Here we combine all the race times and distance from the previous data into
@@ -143,8 +252,8 @@ pub fn solve_part_01(input: &Input) -> u64 {
 /// ```
 */
 #[aoc(day7, part2)]
-pub fn solve_part_02(_input: &Input) -> u64 {
-    0
+pub fn solve_part_02(input: &Input) -> u64 {
+    play(input)
 }
 
 #[cfg(test)]
@@ -160,5 +269,10 @@ QQQJA 483";
     #[test]
     fn sample_01() {
         assert_eq!(solve_part_01(&input_generator(DATA)), 6440)
+    }
+
+    #[test]
+    fn sample_02() {
+        assert_eq!(solve_part_02(&input_generator_part2(DATA)), 5905)
     }
 }
