@@ -56,11 +56,11 @@ pub fn input_generator(input: &str) -> Input {
 *
 */
 // Your puzzle answer was
-/// ```
-/// use advent_of_code_2023::day_08::*;
-/// let data = include_str!("../input/2023/day8.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 22411);
-/// ```
+#[doc = r#"```
+use advent_of_code_2023::day_08::*;
+let data = include_str!("../input/2023/day8.txt");
+assert_eq!(solve_part_01(&input_generator(data)), 22411);
+```"#]
 #[aoc(day8, part1)]
 pub fn solve_part_01(input: &Input) -> u64 {
     let mut steps = 0;
@@ -94,11 +94,11 @@ pub fn solve_part_01(input: &Input) -> u64 {
 * that ends with a Z.
 *
 */
-/// ```
-/// use advent_of_code_2023::day_08::*;
-/// let data = include_str!("../input/2023/day8.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 11188774513823);
-/// ```
+#[doc = r#"```
+use advent_of_code_2023::day_08::*;
+let data = include_str!("../input/2023/day8.txt");
+assert_eq!(solve_part_02(&input_generator(data)), 11188774513823);
+```"#]
 #[aoc(day8, part2)]
 pub fn solve_part_02(input: &Input) -> i64 {
     let mut all_steps = Vec::new();
@@ -113,7 +113,7 @@ pub fn solve_part_02(input: &Input) -> i64 {
         let mut current = start.clone();
         let mut index = 0;
         let mut current_direction = input.directions.chars().nth(index).unwrap();
-        let mut steps = 0;
+        let mut steps: i64 = 0;
 
         while !current.ends_with('Z') {
             current = match current_direction {
@@ -130,7 +130,7 @@ pub fn solve_part_02(input: &Input) -> i64 {
         all_steps.push(steps);
     }
 
-    all_steps.iter().fold(1, |acc, s| math::lcm(acc, *s as i64))
+    all_steps.iter().fold(1, |acc, s| math::lcm(acc, *s))
 }
 
 #[cfg(test)]
