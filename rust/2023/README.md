@@ -38,7 +38,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 5   |   1.27 µs | 238.45 ms\*\* | `-16.72%` / `-98.87%` |              16.85 µs |
 | 6   | 101.59 ns |      15.04 ms |                       | 257.13 ns / 204.78 ns |
 | 7   | 364.18 µs |     359.22 µs |                       | 318.23 µs / 324.96 µs |
-| 8   | 935.78 µs |      15.25 ms |                       |             130.34 µs |
+| 8   | 926.09 µs |       4.47 ms | - / `-70.69%`         |             137.33 µs |
 
 \* compared to first solution<br/>
 \*\* slow, didn't benchmark. Value comes from running the solver.
@@ -50,3 +50,4 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 |   3 | 172.23 µs |        - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/75a83e31024bbac99a0664f81fce4e13ec1e94af/rust/2023/src/day_03.rs) |
 |   4 |  24.33 µs | 24.32 µs |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/c970c6322d3904048bcf3f30b1052e2916476d73/rust/2023/src/day_04.rs) |
 |   5 |   1.50 µs |  21.22 s |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/39b0904c4921f4ae79963a6df49bb3502ef6b3be/rust/2023/src/day_05.rs) |
+|   8 |         - | 15.25 ms |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/4b96f6e935734f657469b091072282f1c430bcd3/rust/2023/src/day_08.rs) |

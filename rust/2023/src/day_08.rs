@@ -111,28 +111,34 @@ assert_eq!(solve_part_02(&input_generator(data)), 11188774513823);
 ```"#]
 #[aoc(day8, part2)]
 pub fn solve_part_02(input: &Input) -> i64 {
+    let Input {
+        directions,
+        instructions,
+    } = input;
     let mut all_steps = Vec::new();
-    let start_locations = input
-        .instructions
-        .keys()
-        .filter(|i| i.ends_with('A'))
-        .cloned()
-        .collect::<Vec<String>>();
+    let start_locations =
+        instructions
+            .keys()
+            .filter(|i| i.ends_with('A'))
+            .cloned()
+            .collect::<Vec<String>>();
 
     for start in start_locations {
-        let mut current = start.clone();
+        let mut location = start.clone();
         let mut index = 0;
-        let mut current_direction = input.directions.get(index).unwrap();
+        let mut current_direction = directions.get(index).unwrap();
         let mut steps: i64 = 0;
 
-        while !current.ends_with('Z') {
-            current = match current_direction {
-                Direction::Right => input.instructions.get(&current).unwrap().1.to_string(),
-                Direction::Left => input.instructions.get(&current).unwrap().0.to_string(),
+        while !location.ends_with('Z') {
+            let (left, right) = instructions.get(&location).unwrap();
+
+            location = match current_direction {
+                Direction::Right => right.to_string(),
+                Direction::Left => left.to_string(),
             };
 
-            index = (index + 1) % input.directions.len();
-            current_direction = input.directions.get(index).unwrap();
+            index = (index + 1) % directions.len();
+            current_direction = directions.get(index).unwrap();
             steps += 1;
         }
 
