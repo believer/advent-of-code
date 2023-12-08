@@ -12,6 +12,12 @@ use std::collections::HashMap;
 // it would just loop. This meant that we can calculate the steps for each
 // start location, and then find the least common multiple of all the steps.
 // The answer turned out to be _huge_, so no real way of brute forcing it.
+//
+// It turns out the when I refactored to using the Direction enum, I also gained
+// a huge performance boost. About 70% faster. I think it's because I could
+// change getting directions using chars().nth(index) to just directions.get(index)
+// in two places inside the loop. I didn't run the benchmarks after that change.
+// I had no idea that it would make that much of a difference.
 
 #[derive(Debug)]
 enum Direction {
