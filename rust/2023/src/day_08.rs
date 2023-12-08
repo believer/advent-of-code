@@ -45,14 +45,10 @@ pub fn input_generator(input: &str) -> Input {
         .map(|line| {
             let mut line = line.split(" = ");
             let start = line.next().unwrap().to_string();
-            let map = line
-                .next()
-                .unwrap()
-                .split_once(", ")
-                .map(|(x, y)| (x.replace(['(', ')'], ""), y.replace([')', ')'], "")))
-                .unwrap();
+            let clean_instructions = line.next().unwrap().replace(['(', ')'], "");
+            let (left, right) = clean_instructions.split_once(", ").unwrap();
 
-            (start, map)
+            (start, (left.to_string(), right.to_string()))
         })
         .collect::<HashMap<String, (String, String)>>();
 
