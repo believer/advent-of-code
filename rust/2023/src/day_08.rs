@@ -1,10 +1,11 @@
+use crate::math;
 use std::collections::HashMap;
 
 // Day 8:
 
 #[derive(Debug)]
 pub struct Input {
-    right_left: String,
+    directions: String,
     instructions: HashMap<String, (String, String)>,
 }
 
@@ -12,7 +13,7 @@ pub struct Input {
 pub fn input_generator(input: &str) -> Input {
     let mut input = input.split("\n\n");
 
-    let right_left = input.next().unwrap();
+    let directions = input.next().unwrap();
     let instructions = input
         .next()
         .unwrap()
@@ -32,7 +33,7 @@ pub fn input_generator(input: &str) -> Input {
         .collect::<HashMap<String, (String, String)>>();
 
     Input {
-        right_left: right_left.to_string(),
+        directions: directions.to_string(),
         instructions,
     }
 }
@@ -42,20 +43,18 @@ pub fn input_generator(input: &str) -> Input {
 *
 */
 // Your puzzle answer was
-/*
 /// ```
 /// use advent_of_code_2023::day_08::*;
 /// let data = include_str!("../input/2023/day8.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 250474325);
+/// assert_eq!(solve_part_01(&input_generator(data)), 22411);
 /// ```
-*/
 #[aoc(day8, part1)]
 pub fn solve_part_01(input: &Input) -> u64 {
     let mut steps = 0;
     let mut location = "AAA".to_string();
 
     while location != "ZZZ" {
-        for char in input.right_left.chars() {
+        for char in input.directions.chars() {
             match char {
                 'R' => {
                     let (_, right) = input.instructions.get(&location).unwrap();
@@ -86,8 +85,37 @@ pub fn solve_part_01(input: &Input) -> u64 {
 /// ```
 */
 #[aoc(day8, part2)]
-pub fn solve_part_02(_input: &Input) -> u64 {
-    0
+pub fn solve_part_02(input: &Input) -> i64 {
+    let mut all_steps = Vec::new();
+    let start_locations = input
+        .instructions
+        .keys()
+        .filter(|i| i.ends_with('A'))
+        .cloned()
+        .collect::<Vec<String>>();
+
+    for start in start_locations {
+        let mut current = start.clone();
+        let mut index = 0;
+        let mut current_direction = input.directions.chars().nth(index).unwrap();
+        let mut steps = 0;
+
+        while !current.ends_with('Z') {
+            current = match current_direction {
+                'R' => input.instructions.get(&current).unwrap().1.to_string(),
+                'L' => input.instructions.get(&current).unwrap().0.to_string(),
+                _ => unreachable!(),
+            };
+
+            index = (index + 1) % input.directions.len();
+            current_direction = input.directions.chars().nth(index).unwrap();
+            steps += 1;
+        }
+
+        all_steps.push(steps);
+    }
+
+    all_steps.iter().fold(1, |acc, s| math::lcm(acc, *s as i64))
 }
 
 #[cfg(test)]
@@ -109,12 +137,29 @@ ZZZ = (ZZZ, ZZZ)";
         assert_eq!(solve_part_01(&input_generator(DATA)), 2);
     }
 
+    #[test]
     fn sample_02() {
         let data = "LLR
 
 AAA = (BBB, BBB)
 BBB = (AAA, ZZZ)
 ZZZ = (ZZZ, ZZZ)";
+
+        assert_eq!(solve_part_01(&input_generator(data)), 6);
+    }
+
+    #[test]
+    fn sample_part_02() {
+        let data = "LR
+
+11A = (11B, XXX)
+11B = (XXX, 11Z)
+11Z = (11B, XXX)
+22A = (22B, XXX)
+22B = (22C, 22C)
+22C = (22Z, 22Z)
+22Z = (22B, 22B)
+XXX = (XXX, XXX)";
 
         assert_eq!(solve_part_02(&input_generator(data)), 6);
     }

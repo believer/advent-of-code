@@ -15,6 +15,30 @@ pub fn degrees_to_radians(angle: i32) -> f32 {
     angle as f32 * PI / 180_f32
 }
 
+/// The Euclidean algorithm is an efficient method for computing the
+/// greatest common divisor (GCD) of two integers (numbers), the largest
+/// number that divides them both without a remainder.
+/// https://en.wikipedia.org/wiki/Euclidean_algorithm
+fn gcd(a: i64, b: i64) -> i64 {
+    let mut high = a.max(b);
+    let mut low = a.min(b);
+
+    while low != 0 {
+        let temp = low;
+        low = high % low;
+        high = temp;
+    }
+
+    high
+}
+
+/// Least common multiple (LCM)
+/// Using the GCD to find the LCM
+/// https://en.wikipedia.org/wiki/Least_common_multiple
+pub fn lcm(a: i64, b: i64) -> i64 {
+    a * b / gcd(a, b)
+}
+
 /// Extended Euclidean algorithm
 /// Find the the greatest common denominator of two integers a,b
 /// https://en.wikipedia.org/wiki/Modular_multiplicative_inverse
