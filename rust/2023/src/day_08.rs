@@ -14,19 +14,33 @@ use std::collections::HashMap;
 // The answer turned out to be _huge_, so no real way of brute forcing it.
 
 #[derive(Debug)]
+enum Direction {
+    Left,
+    Right,
+}
+
+impl From<char> for Direction {
+    fn from(value: char) -> Self {
+        match value {
+            'L' => Direction::Left,
+            'R' => Direction::Right,
+            _ => unreachable!(),
+        }
+    }
+}
+
+#[derive(Debug)]
 pub struct Input {
-    directions: String,
+    directions: Vec<Direction>,
     instructions: HashMap<String, (String, String)>,
 }
 
 #[aoc_generator(day8)]
 pub fn input_generator(input: &str) -> Input {
-    let mut input = input.split("\n\n");
+    let input = input.split("\n\n").collect::<Vec<_>>();
 
-    let directions = input.next().unwrap();
-    let instructions = input
-        .next()
-        .unwrap()
+    let directions = input[0].chars().map(Direction::from).collect::<Vec<_>>();
+    let instructions = input[1]
         .lines()
         .map(|line| {
             let mut line = line.split(" = ");
@@ -43,7 +57,7 @@ pub fn input_generator(input: &str) -> Input {
         .collect::<HashMap<String, (String, String)>>();
 
     Input {
-        directions: directions.to_string(),
+        directions,
         instructions,
     }
 }
@@ -67,18 +81,12 @@ pub fn solve_part_01(input: &Input) -> u64 {
     let mut location = "AAA".to_string();
 
     while location != "ZZZ" {
-        for char in input.directions.chars() {
-            match char {
-                'R' => {
-                    let (_, right) = input.instructions.get(&location).unwrap();
-                    location = right.to_string();
-                }
-                'L' => {
-                    let (left, _) = input.instructions.get(&location).unwrap();
-                    location = left.to_string();
-                }
-                _ => unreachable!(),
-            }
+        for char in &input.directions {
+            location = match char {
+                Direction::Right => input.instructions.get(&location).unwrap().1.to_string(),
+                Direction::Left => input.instructions.get(&location).unwrap().0.to_string(),
+            };
+
             steps += 1;
         }
     }
@@ -112,18 +120,17 @@ pub fn solve_part_02(input: &Input) -> i64 {
     for start in start_locations {
         let mut current = start.clone();
         let mut index = 0;
-        let mut current_direction = input.directions.chars().nth(index).unwrap();
+        let mut current_direction = input.directions.get(index).unwrap();
         let mut steps: i64 = 0;
 
         while !current.ends_with('Z') {
             current = match current_direction {
-                'R' => input.instructions.get(&current).unwrap().1.to_string(),
-                'L' => input.instructions.get(&current).unwrap().0.to_string(),
-                _ => unreachable!(),
+                Direction::Right => input.instructions.get(&current).unwrap().1.to_string(),
+                Direction::Left => input.instructions.get(&current).unwrap().0.to_string(),
             };
 
             index = (index + 1) % input.directions.len();
-            current_direction = input.directions.chars().nth(index).unwrap();
+            current_direction = input.directions.get(index).unwrap();
             steps += 1;
         }
 
