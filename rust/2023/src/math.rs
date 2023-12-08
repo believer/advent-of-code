@@ -20,16 +20,11 @@ pub fn degrees_to_radians(angle: i32) -> f32 {
 /// number that divides them both without a remainder.
 /// https://en.wikipedia.org/wiki/Euclidean_algorithm
 fn gcd(a: i64, b: i64) -> i64 {
-    let mut high = a.max(b);
-    let mut low = a.min(b);
-
-    while low != 0 {
-        let temp = low;
-        low = high % low;
-        high = temp;
+    match b {
+        0 => a,
+        // Rerun the function with b and the remainder of a / b
+        _ => gcd(b, a % b),
     }
-
-    high
 }
 
 /// Least common multiple (LCM)
