@@ -73,14 +73,20 @@ assert_eq!(solve_part_01(&input_generator(data)), 22411);
 ```"#]
 #[aoc(day8, part1)]
 pub fn solve_part_01(input: &Input) -> u64 {
+    let Input {
+        directions,
+        instructions,
+    } = input;
     let mut steps = 0;
     let mut location = "AAA".to_string();
 
     while location != "ZZZ" {
-        for char in &input.directions {
-            location = match char {
-                Direction::Right => input.instructions.get(&location).unwrap().1.to_string(),
-                Direction::Left => input.instructions.get(&location).unwrap().0.to_string(),
+        for direction in directions {
+            let (left, right) = instructions.get(&location).unwrap();
+
+            location = match direction {
+                Direction::Right => right.to_string(),
+                Direction::Left => left.to_string(),
             };
 
             steps += 1;
