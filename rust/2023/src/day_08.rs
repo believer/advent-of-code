@@ -1,7 +1,17 @@
 use crate::math;
 use std::collections::HashMap;
 
-// Day 8:
+// Day 8: Haunted Wasteland
+//
+// The first part was pretty straight forward, but I tried doing the calculations
+// the same way for the second part, and it wouldn't finish. I wanted to inspect
+// the values, but it crashed my terminal (one more than one occasion...).
+//
+// I knew that there had to be some trick to it. After looking at the step by step
+// description of the second part, I realized that once we had reached a XXZ location,
+// it would just loop. This meant that we can calculate the steps for each
+// start location, and then find the least common multiple of all the steps.
+// The answer turned out to be _huge_, so no real way of brute forcing it.
 
 #[derive(Debug)]
 pub struct Input {
@@ -40,6 +50,9 @@ pub fn input_generator(input: &str) -> Input {
 
 /* Part One
 *
+* We get a list of directions, and a list of instructions.
+* Steps through the directions, and select the correct instruction (left or right).
+* Keep track of the steps, and return the number of steps when we reach the ZZZ location.
 *
 */
 // Your puzzle answer was
@@ -75,15 +88,17 @@ pub fn solve_part_01(input: &Input) -> u64 {
 
 /* Part Two
 *
+* The input is the same, but we treat every location that ends
+* with an A as a start location. We then need to calculate the
+* number of steps it takes for _all of them_ to reach a location
+* that ends with a Z.
 *
 */
-/*
 /// ```
 /// use advent_of_code_2023::day_08::*;
 /// let data = include_str!("../input/2023/day8.txt");
-/// assert_eq!(solve_part_02(&input_generator_part2(data)), 248909434);
+/// assert_eq!(solve_part_02(&input_generator(data)), 11188774513823);
 /// ```
-*/
 #[aoc(day8, part2)]
 pub fn solve_part_02(input: &Input) -> i64 {
     let mut all_steps = Vec::new();
