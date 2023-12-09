@@ -85,7 +85,7 @@ pub fn solve_part_01(input: &Input) -> i64 {
             // Split the series into windows of two, from
             // last to first, and compute the last value
             //
-            // Right it the last value in the previous sequence
+            // Right it the last value in the previous sequence (always starts with 0)
             // Left is the last value in the current sequence
             series.windows(2).rev().fold(0, |right, w| {
                 let left = w[0].last().unwrap();
@@ -124,7 +124,7 @@ pub fn solve_part_02(input: &Input) -> i64 {
             // Split the series into windows of two, from
             // last to first, and compute the first value
             //
-            // Right it the first value in the previous sequence
+            // Right it the first value in the previous sequence (always starts with 0)
             // Left is the first value in the current sequence
             series.windows(2).rev().fold(0, |right, w| {
                 let left = w[0].first().unwrap();
