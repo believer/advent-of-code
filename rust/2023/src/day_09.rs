@@ -15,8 +15,8 @@ pub struct Input {
 
 fn parse_line(line: &str) -> Vec<i64> {
     line.split_whitespace()
-        .map(|d| d.parse::<i64>().unwrap())
-        .collect::<Vec<_>>()
+        .map(|d| d.parse().unwrap())
+        .collect()
 }
 
 #[aoc_generator(day9)]
@@ -24,13 +24,13 @@ pub fn input_generator(input: &str) -> Input {
     let parsed_input = input.lines().map(parse_line).collect::<Vec<_>>();
     let mut all_series = Vec::with_capacity(parsed_input.len());
 
-    for d in parsed_input.iter() {
-        let mut series = vec![d.clone()];
-        let mut new_series = d.clone();
+    for history in parsed_input.iter() {
+        let mut series = vec![history.clone()];
+        let mut new_series = history.clone();
 
         loop {
             // Calculate the differences between the numbers
-            let mut differences = Vec::new();
+            let mut differences = vec![];
 
             for i in 1..new_series.len() {
                 differences.push(new_series[i] - new_series[i - 1]);
@@ -40,11 +40,11 @@ pub fn input_generator(input: &str) -> Input {
             series.append(&mut vec![differences.clone()]);
 
             // When all the differences are 0, we have found the last row
-            if differences.iter().all(|&x| x == 0) {
+            if differences.iter().sum::<i64>() == 0 {
                 break;
             }
 
-            // Start a new series with the differences
+            // Start a new series with for differences
             new_series = differences.clone();
         }
 
