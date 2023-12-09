@@ -1,48 +1,54 @@
-// Day 9: Mirage Maintenance
-//
-// I found it hard to create the data structure for this one. I knew what I wanted
-// to do, but struggled with the borrow checker. After some trial and error, I
-// got it working. Then it was just a matter of implementing the rules.
+//! Day 9: Mirage Maintenance
+//!
+//! I found it hard to create the data structure for this one. I knew what I wanted
+//! to do, but struggled with the borrow checker. After some trial and error, I
+//! got it working. Then it was just a matter of implementing the rules.
+//!
+//! Refactoring the solvers using iterators cleaned up the code a lot. I also noticed
+//! that I had an unnecessary variable for the current last value, and a unnecessary
+//! clone in the parser. Removing those made the code a tiny bit faster.
 
 #[derive(Debug)]
 pub struct Input {
     all_series: Vec<Vec<Vec<i64>>>,
 }
 
+fn parse_line(line: &str) -> Vec<i64> {
+    line.split_whitespace()
+        .map(|d| d.parse::<i64>().unwrap())
+        .collect::<Vec<_>>()
+}
+
 #[aoc_generator(day9)]
 pub fn input_generator(input: &str) -> Input {
-    let parsed_input = input
-        .lines()
-        .map(|line| {
-            line.split_whitespace()
-                .map(|d| d.parse::<i64>().unwrap())
-                .collect()
-        })
-        .collect::<Vec<Vec<_>>>();
-
+    let parsed_input = input.lines().map(parse_line).collect::<Vec<_>>();
     let mut all_series = Vec::with_capacity(parsed_input.len());
 
     for d in parsed_input.iter() {
         let mut series = vec![d.clone()];
-        let sequence = d.clone();
-        let mut new_series = sequence.clone();
+        let mut new_series = d.clone();
 
         loop {
+            // Calculate the differences between the numbers
             let mut differences = Vec::new();
 
             for i in 1..new_series.len() {
                 differences.push(new_series[i] - new_series[i - 1]);
             }
 
+            // Append the differences to the series
             series.append(&mut vec![differences.clone()]);
 
+            // When all the differences are 0, we have found the last row
             if differences.iter().all(|&x| x == 0) {
                 break;
             }
 
+            // Start a new series with the differences
             new_series = differences.clone();
         }
 
+        // Collect all the series
         all_series.append(&mut vec![series]);
     }
 
@@ -72,23 +78,21 @@ assert_eq!(solve_part_01(&input_generator(data)), 1853145119);
 ```"#]
 #[aoc(day9, part1)]
 pub fn solve_part_01(input: &Input) -> i64 {
-    let mut next_values = 0;
-
-    for series in input.all_series.iter() {
-        let mut current_last = 0;
-        let mut last_in_series = 0;
-
-        for r in series.windows(2).rev() {
-            let left_last = r[0].last().unwrap();
-
-            current_last += left_last;
-            last_in_series = current_last;
-        }
-
-        next_values += last_in_series;
-    }
-
-    next_values
+    input
+        .all_series
+        .iter()
+        .map(|series| {
+            // Split the series into windows of two, from
+            // last to first, and compute the last value
+            //
+            // Right it the last value in the previous sequence
+            // Left is the last value in the current sequence
+            series.windows(2).rev().fold(0, |right, w| {
+                let left = w[0].last().unwrap();
+                right + left
+            })
+        })
+        .sum()
 }
 
 /* Part Two
@@ -113,23 +117,21 @@ assert_eq!(solve_part_02(&input_generator(data)), 923);
 ```"#]
 #[aoc(day9, part2)]
 pub fn solve_part_02(input: &Input) -> i64 {
-    let mut next_values = 0;
-
-    for series in input.all_series.iter() {
-        let mut current_last = 0;
-        let mut last_in_series = 0;
-
-        for r in series.windows(2).rev() {
-            let left_first = r[0].first().unwrap();
-
-            current_last = left_first - current_last;
-            last_in_series = current_last;
-        }
-
-        next_values += last_in_series;
-    }
-
-    next_values
+    input
+        .all_series
+        .iter()
+        .map(|series| {
+            // Split the series into windows of two, from
+            // last to first, and compute the first value
+            //
+            // Right it the first value in the previous sequence
+            // Left is the first value in the current sequence
+            series.windows(2).rev().fold(0, |right, w| {
+                let left = w[0].first().unwrap();
+                left - right
+            })
+        })
+        .sum()
 }
 
 #[cfg(test)]

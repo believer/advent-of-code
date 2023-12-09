@@ -40,7 +40,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 6   | 101.59 ns |      15.04 ms |                       | 257.13 ns / 204.78 ns |
 | 7   | 364.18 µs |     359.22 µs |                       | 318.23 µs / 324.96 µs |
 | 8   | 926.09 µs |       4.47 ms | - / `-70.69%`         |             137.33 µs |
-| 9   |   2.50 µs |       2.54 µs |                       |             442.09 µs |
+| 9   |   2.44 µs |       2.55 µs |                       |             434.07 µs |
 
 \* compared to first solution<br/>
 \*\* slow, didn't benchmark. Value comes from running the solver.
