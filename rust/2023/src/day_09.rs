@@ -40,7 +40,7 @@ pub fn input_generator(input: &str) -> Input {
             series.append(&mut vec![differences.clone()]);
 
             // When all the differences are 0, we have found the last row
-            if differences.iter().sum::<i64>() == 0 {
+            if differences.iter().all(|&x| x == 0) {
                 break;
             }
 
