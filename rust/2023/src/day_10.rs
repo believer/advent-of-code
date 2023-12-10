@@ -175,7 +175,7 @@ assert_eq!(solve_part_02(&input_generator(data)), 0);
 ```"#]
 */
 #[aoc(day10, part2)]
-pub fn solve_part_02(input: &Input) -> u64 {
+pub fn solve_part_02(_input: &Input) -> u64 {
     0
 }
 
