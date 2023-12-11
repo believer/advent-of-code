@@ -1,4 +1,7 @@
-use std::ops::Index;
+use std::{
+    fmt::{Display, Formatter},
+    ops::{Index, IndexMut},
+};
 
 use crate::point::Point;
 
@@ -41,5 +44,25 @@ impl<T> Index<Point> for Grid<T> {
     #[inline]
     fn index(&self, point: Point) -> &Self::Output {
         &self.data[(self.width * point.y + point.x) as usize]
+    }
+}
+
+impl<T> IndexMut<Point> for Grid<T> {
+    fn index_mut(&mut self, point: Point) -> &mut Self::Output {
+        &mut self.data[(self.width * point.y + point.x) as usize]
+    }
+}
+
+/// Used for debugging a grid visually.
+impl<T: Display> Display for Grid<T> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        for y in 0..self.height {
+            for x in 0..self.width {
+                write!(f, "{}", self[Point::new(x, y)])?;
+            }
+            writeln!(f)?;
+        }
+
+        Ok(())
     }
 }
