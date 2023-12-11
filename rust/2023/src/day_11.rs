@@ -18,18 +18,7 @@ pub struct Input {
 #[aoc_generator(day11)]
 pub fn input_generator(input: &str) -> Input {
     let grid: Grid<u8> = Grid::from(input);
-    let galaxies =
-        grid.data
-            .iter()
-            .enumerate()
-            .filter_map(|(i, tile)| {
-                if *tile == b'#' {
-                    Some(Point::new((i as i32) % grid.width, (i as i32) / grid.width))
-                } else {
-                    None
-                }
-            })
-            .collect::<Vec<_>>();
+    let galaxies = grid.find_all(b'#');
 
     // Get outer most galaxy position
     let max_x = galaxies.iter().map(|gp| gp.x).max().unwrap();
@@ -51,11 +40,16 @@ pub fn input_generator(input: &str) -> Input {
     }
 }
 
-fn should_expand(value: &i32, first: i32, second: i32) -> bool {
-    let max = first.max(second);
-    let min = first.min(second);
+fn count_empty(input: &[i32], galaxy: i32, other_galaxy: i32) -> usize {
+    input
+        .iter()
+        .filter(|x| {
+            let min = galaxy.min(other_galaxy);
+            let max = galaxy.max(other_galaxy);
 
-    (min..max).contains(value)
+            (min..max).contains(x)
+        })
+        .count()
 }
 
 fn galaxy_distance(input: &Input, expansion_rate: usize) -> usize {
@@ -63,16 +57,8 @@ fn galaxy_distance(input: &Input, expansion_rate: usize) -> usize {
 
     for (i, galaxy) in input.galaxies.iter().enumerate() {
         for other_galaxy in input.galaxies.iter().skip(i + 1) {
-            let empty_cols_count = input
-                .empty_columns
-                .iter()
-                .filter(|c| should_expand(c, other_galaxy.x, galaxy.x))
-                .count();
-            let empty_rows_count = input
-                .empty_rows
-                .iter()
-                .filter(|c| should_expand(c, other_galaxy.y, galaxy.y))
-                .count();
+            let empty_cols_count = count_empty(&input.empty_columns, galaxy.x, other_galaxy.x);
+            let empty_rows_count = count_empty(&input.empty_rows, galaxy.y, other_galaxy.y);
 
             // Calculate how much the galaxies have moved away from each other
             // Expansion rate is decreased because one rows/columns is already
@@ -119,6 +105,7 @@ pub fn solve_part_02(input: &Input) -> usize {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use rstest::rstest;
 
     const DATA: &str = "...#......
 .......#..
@@ -136,12 +123,13 @@ mod tests {
         assert_eq!(solve_part_01(&input_generator(DATA)), 374);
     }
 
-    #[test]
-    fn text_galaxy_distance() {
+    #[rstest]
+    #[case(2, 374)]
+    #[case(10, 1030)]
+    #[case(100, 8410)]
+    fn text_galaxy_distance(#[case] expansion_rate: usize, #[case] expected: usize) {
         let map = input_generator(DATA);
 
-        assert_eq!(galaxy_distance(&map, 2), 374);
-        assert_eq!(galaxy_distance(&map, 10), 1030);
-        assert_eq!(galaxy_distance(&map, 100), 8410);
+        assert_eq!(galaxy_distance(&map, expansion_rate), expected);
     }
 }
