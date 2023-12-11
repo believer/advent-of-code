@@ -25,7 +25,7 @@ You try to ask why they can't just use a weather machine ("not powerful enough")
 | [Day 7: Camel Cards](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_07.rs)                     | 🌟  |  250474325 | 🌟  |      248909434 |
 | [Day 8: Haunted Wasteland](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_08.rs)               | 🌟  |      22411 | 🌟  | 11188774513823 |
 | [Day 9: Mirage Maintenance](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_09.rs)              | 🌟  | 1853145119 | 🌟  |            923 |
-| [Day 10: Pipe Maze](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_10.rs)                      | 🌟  |       6882 |     |                |
+| [Day 10: Pipe Maze](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_10.rs)                      | 🌟  |       6882 | 🌟  |            491 |
 | [Day 11: Cosmic Expansion](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_11.rs)               | 🌟  |    9795148 | 🌟  |   650672493820 |
 
 ## Performance
@@ -43,7 +43,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 7   | 364.18 µs |     359.22 µs |                       | 318.23 µs / 324.96 µs |
 | 8   | 926.09 µs |       4.47 ms | - / `-70.69%`         |             137.33 µs |
 | 9   |   2.44 µs |       2.55 µs |                       |             434.07 µs |
-| 10  |   1.70 ms |               |                       |             158.20 µs |
+| 10  |   1.70 ms |      48.37 µs |                       |             158.20 µs |
 | 11  | 846.06 µs |     844.65 µs |                       |             75.211 µs |
 
 \* compared to first solution<br/>
