@@ -27,119 +27,133 @@
 //! considered a vertex and added to the running total for the area using the Shoelace
 //! formula. Additionally we keep track of the perimeter length.
 //!
-//! The answer for part two is the number of interior points. Rearranging Pick's theorem:
-//!
-//! `A = i + b / 2 - 1`
-//! => `i = A - b / 2 + 1`
-//!
 //! This solution can be used for both parts and is much faster.
-//! But, I like the BFS solution for part 1, so I'm keeping it.
+//! But, I like the BFS solution for part 1, so I'm keeping it around.
 
 use crate::{grid::Grid, point::*};
 use std::collections::{HashSet, VecDeque};
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-enum Tile {
-    Vertical,
-    Horizontal,
-    NorthEast,
-    NorthWest,
-    SouthEast,
-    SouthWest,
-    Start,
-    Ground,
-}
-
-impl Tile {
-    fn is_valid_start(&self, next_tile: &Tile, direction: &Point) -> bool {
-        use Tile::*;
-
-        if !matches!(self, Tile::Start) {
-            return true;
-        };
-
-        // Directions from input
-        //   -
-        // L S -
-        //   F
-
-        matches!(
-            (next_tile, direction),
-            (Horizontal, &RIGHT)
-                | (Horizontal, &LEFT)
-                | (Vertical, &UP)
-                | (Vertical, &DOWN)
-                | (NorthEast, &LEFT)
-                | (NorthEast, &DOWN)
-                | (NorthWest, &DOWN)
-                | (NorthWest, &RIGHT)
-                | (SouthEast, &LEFT)
-                | (SouthEast, &UP)
-                | (SouthWest, &RIGHT)
-                | (SouthWest, &UP)
-        )
-    }
-}
-
-//
-impl std::fmt::Display for Tile {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        use Tile::*;
-
-        match self {
-            Vertical => write!(f, "|"),
-            Horizontal => write!(f, "-"),
-            NorthEast => write!(f, "L"),
-            NorthWest => write!(f, "J"),
-            SouthEast => write!(f, "F"),
-            SouthWest => write!(f, "7"),
-            Start => write!(f, "S"),
-            Ground => write!(f, "."),
-        }
-    }
-}
-
-impl From<u8> for Tile {
-    fn from(value: u8) -> Self {
-        match value {
-            b'|' => Tile::Vertical,
-            b'-' => Tile::Horizontal,
-            b'L' => Tile::NorthEast,
-            b'J' => Tile::NorthWest,
-            b'F' => Tile::SouthEast,
-            b'7' => Tile::SouthWest,
-            b'S' => Tile::Start,
-            b'.' => Tile::Ground,
-            _ => panic!("Invalid pipe: {}", value),
-        }
-    }
-}
-
-fn directions(pipe: &Tile) -> Vec<Point> {
+fn directions(pipe: &u8) -> Vec<Point> {
     match pipe {
-        Tile::Vertical => vec![UP, DOWN],
-        Tile::Horizontal => vec![LEFT, RIGHT],
-        Tile::NorthEast => vec![UP, RIGHT],
-        Tile::NorthWest => vec![UP, LEFT],
-        Tile::SouthEast => vec![DOWN, RIGHT],
-        Tile::SouthWest => vec![DOWN, LEFT],
-        Tile::Start => vec![UP, RIGHT, DOWN, LEFT],
-        Tile::Ground => vec![],
+        b'|' => vec![UP, DOWN],
+        b'-' => vec![LEFT, RIGHT],
+        b'L' => vec![UP, RIGHT],
+        b'J' => vec![UP, LEFT],
+        b'F' => vec![DOWN, RIGHT],
+        b'7' => vec![DOWN, LEFT],
+        b'S' => vec![UP, RIGHT, DOWN, LEFT],
+        b'.' => vec![],
+        _ => panic!("Invalid pipe: {}", pipe),
     }
+}
+
+// Directions from input
+//   -
+// L S -
+//   F
+
+fn is_valid_start(next_tile: &u8, direction: &Point) -> bool {
+    matches!(
+        (next_tile, direction),
+        (b'-', &RIGHT)
+            | (b'-', &LEFT)
+            | (b'|', &UP)
+            | (b'|', &DOWN)
+            | (b'L', &LEFT)
+            | (b'L', &DOWN)
+            | (b'J', &DOWN)
+            | (b'J', &RIGHT)
+            | (b'F', &LEFT)
+            | (b'F', &UP)
+            | (b'7', &RIGHT)
+            | (b'7', &UP)
+    )
 }
 
 #[derive(Debug)]
 pub struct Input {
-    grid: Grid<Tile>,
+    grid: Grid<u8>,
     start: Point,
 }
 
 #[aoc_generator(day10)]
 pub fn input_generator(input: &str) -> Input {
-    let grid: Grid<Tile> = Grid::from(input);
-    let start = grid.find(Tile::Start).unwrap();
+    let grid: Grid<u8> = Grid::from(input);
+    let start = grid.find(b'S').unwrap();
 
     Input { grid, start }
+}
+
+/// Find how many points are enclosed by the loop. The loop is a polygon, so we can use
+/// the Shoelace formula to calculate the area. Then we use Pick's theorem to find the
+/// number of interior points.
+/// https://en.wikipedia.org/wiki/Shoelace_formula
+/// https://en.wikipedia.org/wiki/Pick%27s_theorem
+pub fn solver(input: &Input) -> (i32, i32) {
+    let Input { grid, start } = input;
+    let determinant = |a: Point, b: Point| a.x * b.y - a.y * b.x;
+
+    // Find start point and direction
+    let mut corner = *start;
+
+    // Directions are
+    let mut direction = match grid[corner + RIGHT] {
+        b'-' | b'J' | b'7' => RIGHT,
+        _ => LEFT,
+    };
+    let mut position = corner + direction;
+    let mut steps = 1;
+    let mut area = 0;
+
+    loop {
+        // Following vertical/horizontal paths
+        while grid[position] == b'|' || grid[position] == b'-' {
+            position += direction;
+            steps += 1;
+        }
+
+        // Change direction if we hit a corner
+        direction = match grid[position] {
+            b'7' if direction == UP => LEFT,
+            b'F' if direction == UP => RIGHT,
+            b'J' if direction == DOWN => LEFT,
+            b'L' if direction == DOWN => RIGHT,
+            b'J' | b'L' => UP,
+            b'7' | b'F' => DOWN,
+            _ => {
+                // We're back at the start
+                area += determinant(corner, position);
+                break;
+            }
+        };
+
+        area += determinant(corner, position);
+        corner = position;
+        position += direction;
+        steps += 1;
+    }
+
+    // Perimeter is the number of steps taken
+    // From the perimeter we can calculate the area of the polygon
+    // using the Shoelace formula (S).
+    //
+    // We multiply the X coordinate of each point by the Y coordinate of the next point.
+    // Subtract the Y coordinate of each point by the X coordinate of the next point.
+    // The last multiplication is the X coordinate of the last point by
+    // the Y coordinate of the first point.
+    //
+    // A = (1/2) * |(x1y2 + x2y3 + ... + xny1) - (y1x2 + y2x3 + ... + yny1)|
+    let part_one = steps / 2;
+
+    // Pick's theorem is used to calculate the area of a polygon with points.
+    // It's based on the number of interior points (i), our area (A) from the
+    // Shoelace formula, and the number of boundary points (b).
+    //
+    // A = i + b / 2 - 1
+    // i = A - b / 2 + 1
+    let part_two = area.abs() / 2 - steps / 2 + 1;
+
+    (part_one, part_two)
 }
 
 /* Part One
@@ -147,14 +161,43 @@ pub fn input_generator(input: &str) -> Input {
 * Follow pipes along a grid and find the furthest point from the start.
 *
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_10::*;
-let data = include_str!("../input/2023/day10.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 6882);
-```"#]
+/// Your puzzle answer was
+///
+/// ```
+/// use advent_of_code_2023::day_10::*;
+/// let data = include_str!("../input/2023/day10.txt");
+/// assert_eq!(solve_part_01(&input_generator(data)), 6882);
+/// ```
 #[aoc(day10, part1)]
-pub fn solve_part_01(input: &Input) -> u64 {
+pub fn solve_part_01(input: &Input) -> i32 {
+    solver(input).0
+}
+
+/* Part Two
+*
+* Find how many points are enclosed by the loop.
+*
+*/
+/// ```
+/// use advent_of_code_2023::day_10::*;
+/// let data = include_str!("../input/2023/day10.txt");
+/// assert_eq!(solve_part_02(&input_generator(data)), 491);
+/// ```
+#[aoc(day10, part2)]
+pub fn solve_part_02(input: &Input) -> i32 {
+    solver(input).1
+}
+
+/// First solution using BFS
+///
+/// Your puzzle answer was
+///
+/// ```
+/// use advent_of_code_2023::day_10::*;
+/// let data = include_str!("../input/2023/day10.txt");
+/// assert_eq!(solve_part_01_bfs(&input_generator(data)), 6882);
+/// ```
+pub fn solve_part_01_bfs(input: &Input) -> u64 {
     let Input { grid, start } = input;
     let mut visited: HashSet<Point> = HashSet::new();
     let mut queue = VecDeque::new();
@@ -175,7 +218,7 @@ pub fn solve_part_01(input: &Input) -> u64 {
             let new_point = current_point + direction;
 
             // Check if the next tile is a valid start direction
-            if !current_tile.is_valid_start(&grid[new_point], &direction) {
+            if !is_valid_start(&grid[new_point], &direction) {
                 continue;
             }
 
@@ -197,89 +240,31 @@ pub fn solve_part_01(input: &Input) -> u64 {
     furthest
 }
 
-/* Part Two
-*
-* Find how many points are enclosed by the loop.
-*
-*/
-#[aoc(day10, part2)]
-pub fn solve_part_02(input: &Input) -> i32 {
-    let Input { grid, start } = input;
-    let determinant = |a: Point, b: Point| a.x * b.y - a.y * b.x;
-
-    // Find start point and direction
-    let mut corner = *start;
-    let mut direction = if start.y > 0 {
-        match grid[corner + UP] {
-            Tile::Vertical | Tile::SouthWest | Tile::SouthEast => UP,
-            _ => DOWN,
-        }
-    } else {
-        match grid[corner + DOWN] {
-            Tile::Vertical | Tile::NorthWest | Tile::NorthEast => DOWN,
-            _ => UP,
-        }
-    };
-    let mut position = corner + direction;
-    let mut steps = 1;
-    let mut area = 0;
-
-    loop {
-        // Following vertical/horizontal paths
-        while grid[position] == Tile::Vertical || grid[position] == Tile::Horizontal {
-            position += direction;
-            steps += 1;
-        }
-
-        // Change direction if we hit a corner
-        direction = match grid[position] {
-            Tile::SouthWest if direction == UP => LEFT,
-            Tile::SouthEast if direction == UP => RIGHT,
-            Tile::NorthWest if direction == DOWN => LEFT,
-            Tile::NorthEast if direction == DOWN => RIGHT,
-            Tile::NorthWest | Tile::NorthEast => UP,
-            Tile::SouthWest | Tile::SouthEast => DOWN,
-            _ => {
-                // We're back at the start
-                area += determinant(corner, position);
-                break;
-            }
-        };
-
-        area += determinant(corner, position);
-        corner = position;
-        position += direction;
-        steps += 1;
-    }
-
-    area.abs() / 2 - steps / 2 + 1
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
     use rstest::rstest;
 
-    const DATA: &str = ".....
+    #[rstest]
+    #[case(
+        ".....
 .S-7.
 .|.|.
 .L-J.
-.....";
-
-    #[test]
-    fn sample_01() {
-        assert_eq!(solve_part_01(&input_generator(DATA)), 4);
-    }
-
-    #[test]
-    fn sample_01_complex() {
-        let data = "..F7.
+.....",
+        4
+    )]
+    #[case(
+        "..F7.
 .FJ|.
 SJ.L7
 |F--J
-LJ...";
-
-        assert_eq!(solve_part_01(&input_generator(data)), 8);
+LJ...",
+        8
+    )]
+    fn sample_01(#[case] input: &str, #[case] expected: i32) {
+        assert_eq!(solve_part_01(&input_generator(input)), expected);
+        assert_eq!(solve_part_01_bfs(&input_generator(input)), expected as u64);
     }
 
     #[rstest]
