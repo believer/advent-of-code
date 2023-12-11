@@ -36,14 +36,14 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | --- | --------: | ------------: | --------------------- | --------------------: |
 | 1   |  43.18 ns |       1.19 ms |                       |             441.01 ns |
 | 2   | 764.68 ns |       1.75 µs |                       |              47.81 µs |
-| 3   | 159.61 µs |       7.72 ms | `-8.44%`              |              86.83 µs |
+| 3   | 159.61 µs |       7.72 ms | `-8.44%` / -          |              86.83 µs |
 | 4   |  12.85 µs |      13.09 µs | `-48.41%` / `-46.64%` |             230.06 µs |
 | 5   |   1.27 µs | 238.45 ms\*\* | `-16.72%` / `-98.87%` |              16.85 µs |
 | 6   | 101.59 ns |      15.04 ms |                       | 257.13 ns / 204.78 ns |
 | 7   | 364.18 µs |     359.22 µs |                       | 318.23 µs / 324.96 µs |
 | 8   | 926.09 µs |       4.47 ms | - / `-70.69%`         |             137.33 µs |
 | 9   |   2.44 µs |       2.55 µs |                       |             434.07 µs |
-| 10  |  65.17 µs |      65.01 µs | `-96.02%`             |              50.84 µs |
+| 10  |  65.17 µs |      65.01 µs | `-96.02%` / -         |              50.84 µs |
 | 11  | 846.06 µs |     844.65 µs |                       |              75.21 µs |
 
 \* compared to first solution<br/>
@@ -57,6 +57,6 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 |   4 |   24.33 µs | 24.32 µs |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/c970c6322d3904048bcf3f30b1052e2916476d73/rust/2023/src/day_04.rs) |
 |   5 |    1.50 µs |  21.22 s |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/39b0904c4921f4ae79963a6df49bb3502ef6b3be/rust/2023/src/day_05.rs) |
 |   8 |          - | 15.25 ms |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/912d70c6e04ffd97f766c79b90764c105fe2f6ce/rust/2023/src/day_08.rs) |
-|  10 | 1.70 ms \* |          |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/ebbbbb8cb26e0fa4858cc48cf1a00304b4eee3a7/rust/2023/src/day_10.rs) |
+|  10 | 1.70 ms \* |        - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/ebbbbb8cb26e0fa4858cc48cf1a00304b4eee3a7/rust/2023/src/day_10.rs) |
 
 \* BFS solution. I liked it, so it's still in the file.
