@@ -1,84 +1,29 @@
-//! Day 11:
-
-use std::collections::HashMap;
+//! Day 11: Cosmic Expansion
+//!
+//! I was creating a new expanded grid and transposing the galaxies to the new grid.
+//! This worked fine for part 1, where the expansion rate was 2, but for part 2, it
+//! broke down. The grid size became something like 7_000_000 * 9_000_000, which
+//! was too big to handle. Of course, I just needed the galaxies, not the whole grid.
+//! So I changed the code to just calculate the distance between the galaxies and
+//! multiply it by the expansion rate.
 
 use crate::{grid::Grid, point::Point};
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-enum Tile {
-    Galaxy,
-    Empty,
-}
-
-impl From<u8> for Tile {
-    fn from(value: u8) -> Self {
-        match value {
-            b'.' => Tile::Empty,
-            b'#' => Tile::Galaxy,
-            _ => unreachable!(),
-        }
-    }
-}
-
-impl std::fmt::Display for Tile {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        use Tile::*;
-
-        match self {
-            Galaxy => write!(f, "#"),
-            Empty => write!(f, "."),
-        }
-    }
-}
-
 pub struct Input {
-    grid: Grid<Tile>,
+    galaxies: Vec<Point>,
+    empty_rows: Vec<i32>,
+    empty_columns: Vec<i32>,
 }
 
 #[aoc_generator(day11)]
 pub fn input_generator(input: &str) -> Input {
-    let grid: Grid<Tile> = Grid::from(input);
-    let empty_rows = grid
-        .data
-        .chunks(grid.width as usize)
-        .enumerate()
-        .filter_map(|(i, row)| {
-            if row.iter().all(|&x| x == Tile::Empty) {
-                Some(i)
-            } else {
-                None
-            }
-        })
-        .collect::<Vec<_>>();
-
-    let mut cols = vec![];
-
-    for x in 0..grid.width {
-        for y in 0..grid.height {
-            let tile = grid[Point::new(x, y)];
-
-            cols.push(tile);
-        }
-    }
-
-    let empty_cols = cols
-        .chunks(grid.height as usize)
-        .enumerate()
-        .filter_map(|(i, col)| {
-            if col.iter().all(|&x| x == Tile::Empty) {
-                Some(i)
-            } else {
-                None
-            }
-        })
-        .collect::<Vec<_>>();
-
-    let galaxy_positions =
+    let grid: Grid<u8> = Grid::from(input);
+    let galaxies =
         grid.data
             .iter()
             .enumerate()
             .filter_map(|(i, tile)| {
-                if *tile == Tile::Galaxy {
+                if *tile == b'#' {
                     Some(Point::new((i as i32) % grid.width, (i as i32) / grid.width))
                 } else {
                     None
@@ -86,38 +31,64 @@ pub fn input_generator(input: &str) -> Input {
             })
             .collect::<Vec<_>>();
 
-    let mut expanded_grid: Grid<Tile> = Grid {
-        width: grid.width + empty_cols.len() as i32,
-        height: grid.height + empty_rows.len() as i32,
-        data: vec![],
-    };
+    // Get outer most galaxy position
+    let max_x = galaxies.iter().map(|gp| gp.x).max().unwrap();
+    let max_y = galaxies.iter().map(|gp| gp.y).max().unwrap();
 
-    for _ in 0..expanded_grid.width {
-        for _ in 0..expanded_grid.height {
-            expanded_grid.data.push(Tile::Empty);
+    // Find empty columns and rows
+    let empty_columns = (0..max_x)
+        .filter(|&x| galaxies.iter().all(|gp| gp.x != x))
+        .collect::<Vec<_>>();
+
+    let empty_rows = (0..max_y)
+        .filter(|&y| galaxies.iter().all(|gp| gp.y != y))
+        .collect::<Vec<_>>();
+
+    Input {
+        galaxies,
+        empty_rows,
+        empty_columns,
+    }
+}
+
+fn should_expand(value: &i32, first: i32, second: i32) -> bool {
+    let max = first.max(second);
+    let min = first.min(second);
+
+    (min..max).contains(value)
+}
+
+fn galaxy_distance(input: &Input, expansion_rate: usize) -> usize {
+    let mut path_sum = 0;
+
+    for (i, galaxy) in input.galaxies.iter().enumerate() {
+        for other_galaxy in input.galaxies.iter().skip(i + 1) {
+            let empty_cols_count = input
+                .empty_columns
+                .iter()
+                .filter(|c| should_expand(c, other_galaxy.x, galaxy.x))
+                .count();
+            let empty_rows_count = input
+                .empty_rows
+                .iter()
+                .filter(|c| should_expand(c, other_galaxy.y, galaxy.y))
+                .count();
+
+            // Calculate how much the galaxies have moved away from each other
+            // Expansion rate is decreased because one rows/columns is already
+            // empty, i.e., 1 empty row with double expansion rate = 2 empty rows
+            let expansion = (empty_cols_count + empty_rows_count) * (expansion_rate - 1);
+            let distance = galaxy.manhattan_distance(other_galaxy) as usize + expansion;
+
+            path_sum += distance;
         }
     }
 
-    // Translate galaxy positions to new grid
-
-    for point in galaxy_positions {
-        let empty_cols_below = empty_cols.iter().filter(|&&x| x < point.x as usize).count() as i32;
-        let empty_rows_below = empty_rows.iter().filter(|&&y| y < point.y as usize).count() as i32;
-
-        let y = point.y + empty_rows_below;
-        let x = point.x + empty_cols_below;
-
-        expanded_grid[Point::new(x, y)] = Tile::Galaxy;
-    }
-
-    Input {
-        grid: expanded_grid,
-    }
+    path_sum
 }
 
 /* Part One
 *
-* Follow pipes along a grid and find the furthest point from the start.
 *
 */
 // Your puzzle answer was
@@ -127,44 +98,8 @@ let data = include_str!("../input/2023/day11.txt");
 assert_eq!(solve_part_01(&input_generator(data)), 6882);
 ```"#]
 #[aoc(day11, part1)]
-pub fn solve_part_01(input: &Input) -> u32 {
-    let mut paths: HashMap<(usize, usize), Vec<u32>> = HashMap::new();
-    let galaxies = input
-        .grid
-        .data
-        .iter()
-        .enumerate()
-        .filter_map(|(i, tile)| {
-            if *tile == Tile::Galaxy {
-                Some(Point::new(
-                    (i as i32) % input.grid.width,
-                    (i as i32) / input.grid.width,
-                ))
-            } else {
-                None
-            }
-        })
-        .collect::<Vec<_>>();
-
-    for (g, galaxy) in galaxies.iter().enumerate() {
-        for (og, other_galaxy) in galaxies.iter().enumerate() {
-            if galaxy == other_galaxy {
-                continue;
-            }
-
-            let pair = (g.min(og) + 1, g.max(og) + 1);
-
-            if paths.contains_key(&pair) {
-                continue;
-            }
-
-            let distance = galaxy.manhattan_distance(other_galaxy);
-
-            paths.entry(pair).or_default().push(distance);
-        }
-    }
-
-    paths.values().map(|x| x.last().unwrap()).sum()
+pub fn solve_part_01(input: &Input) -> usize {
+    galaxy_distance(input, 2)
 }
 
 /* Part Two
@@ -179,8 +114,8 @@ assert_eq!(solve_part_02(&input_generator(data)), 0);
 ```"#]
 */
 #[aoc(day11, part2)]
-pub fn solve_part_02(input: &Input) -> u64 {
-    0
+pub fn solve_part_02(input: &Input) -> usize {
+    galaxy_distance(input, 1_000_000)
 }
 
 #[cfg(test)]
@@ -201,5 +136,14 @@ mod tests {
     #[test]
     fn sample_01() {
         assert_eq!(solve_part_01(&input_generator(DATA)), 374);
+    }
+
+    #[test]
+    fn text_galaxy_distance() {
+        let map = input_generator(DATA);
+
+        assert_eq!(galaxy_distance(&map, 2), 374);
+        assert_eq!(galaxy_distance(&map, 10), 1030);
+        assert_eq!(galaxy_distance(&map, 100), 8410);
     }
 }
