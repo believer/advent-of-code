@@ -11,9 +11,12 @@
 //!
 //! ```
 
-use std::ops::Add;
+use std::{
+    fmt::Display,
+    ops::{Add, AddAssign},
+};
 
-#[derive(PartialEq, Eq, Hash, Clone, Copy, Debug)]
+#[derive(PartialEq, Eq, Hash, Clone, Copy, Debug, Ord, PartialOrd)]
 pub struct Point {
     pub x: i32,
     pub y: i32,
@@ -30,6 +33,7 @@ impl Point {
     }
 }
 
+/// Make it possible to sum two points
 impl Add for Point {
     type Output = Point;
 
@@ -38,8 +42,24 @@ impl Add for Point {
     }
 }
 
+/// Make it possible to += two points
+impl AddAssign for Point {
+    fn add_assign(&mut self, rhs: Self) {
+        self.x += rhs.x;
+        self.y += rhs.y;
+    }
+}
+
+impl Display for Point {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let Point { x, y } = self;
+        write!(f, "({}, {})", x, y)
+    }
+}
+
 // Common points and directions. Useful for looking
 // around a point or moving in a direction
+pub const ORIGIN: Point = Point::new(0, 0);
 pub const UP: Point = Point::new(0, -1);
 pub const DOWN: Point = Point::new(0, 1);
 pub const LEFT: Point = Point::new(-1, 0);
@@ -49,7 +69,7 @@ pub const TOP_RIGHT: Point = Point::new(1, -1);
 pub const BOTTOM_LEFT: Point = Point::new(-1, 1);
 pub const BOTTOM_RIGHT: Point = Point::new(1, 1);
 
-pub const DIAGONALS: [Point; 8] =
+pub const ALL_DIRECTIONS: [Point; 8] =
     [
         TOP_LEFT,
         UP,

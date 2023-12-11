@@ -100,7 +100,7 @@ pub fn solve_part_01(input: &Input) -> u32 {
 
     for (number, points) in numbers {
         'points: for point in points {
-            for check_point in DIAGONALS.iter().map(|diagonal| *point + *diagonal) {
+            for check_point in ALL_DIRECTIONS.iter().map(|diagonal| *point + *diagonal) {
                 // If the point is in the list of symbols, it's a "part number"
                 if symbols.contains(&check_point) {
                     part_numbers += number;
@@ -138,7 +138,7 @@ pub fn solve_part_02(input: &Input) -> u32 {
         let mut last_found_points = vec![];
         let mut adjacents = vec![];
 
-        for check_point in DIAGONALS.iter().map(|diagonal| *point + *diagonal) {
+        for check_point in ALL_DIRECTIONS.iter().map(|diagonal| *point + *diagonal) {
             for (number, points) in numbers {
                 // If the point is in the list of points we've already found, skip it
                 if last_found_points.contains(&check_point) {
