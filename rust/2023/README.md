@@ -14,19 +14,20 @@ You try to ask why they can't just use a weather machine ("not powerful enough")
 
 ## Days
 
-| Day                                                                                                                      | #1  |  #1 Answer | #2  |      #2 Answer |
-| ------------------------------------------------------------------------------------------------------------------------ | --- | ---------: | --- | -------------: |
-| [Day 1: Trebuchet?!](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_01.rs)                     | 🌟  |      54304 | 🌟  |          54418 |
-| [Day 2: Cube Conundrum](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_02.rs)                  | 🌟  |       2162 | 🌟  |          72513 |
-| [Day 3: Gear Ratios](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_03.rs)                     | 🌟  |     535235 | 🌟  |       79844424 |
-| [Day 4: Scratchcards](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_04.rs)                    | 🌟  |      27454 | 🌟  |        6857330 |
-| [Day 5: If You Give A Seed A Fertilizer](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_05.rs) | 🌟  |  993500720 | 🌟  |        4917124 |
-| [Day 6: Wait For It](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_06.rs)                     | 🌟  |     861300 | 🌟  |       28101347 |
-| [Day 7: Camel Cards](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_07.rs)                     | 🌟  |  250474325 | 🌟  |      248909434 |
-| [Day 8: Haunted Wasteland](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_08.rs)               | 🌟  |      22411 | 🌟  | 11188774513823 |
-| [Day 9: Mirage Maintenance](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_09.rs)              | 🌟  | 1853145119 | 🌟  |            923 |
-| [Day 10: Pipe Maze](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_10.rs)                      | 🌟  |       6882 | 🌟  |            491 |
-| [Day 11: Cosmic Expansion](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_11.rs)               | 🌟  |    9795148 | 🌟  |   650672493820 |
+| Day                                                                                                                      | #1  |  #1 Answer | #2  |       #2 Answer |
+| ------------------------------------------------------------------------------------------------------------------------ | --- | ---------: | --- | --------------: |
+| [Day 1: Trebuchet?!](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_01.rs)                     | 🌟  |      54304 | 🌟  |           54418 |
+| [Day 2: Cube Conundrum](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_02.rs)                  | 🌟  |       2162 | 🌟  |           72513 |
+| [Day 3: Gear Ratios](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_03.rs)                     | 🌟  |     535235 | 🌟  |        79844424 |
+| [Day 4: Scratchcards](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_04.rs)                    | 🌟  |      27454 | 🌟  |         6857330 |
+| [Day 5: If You Give A Seed A Fertilizer](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_05.rs) | 🌟  |  993500720 | 🌟  |         4917124 |
+| [Day 6: Wait For It](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_06.rs)                     | 🌟  |     861300 | 🌟  |        28101347 |
+| [Day 7: Camel Cards](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_07.rs)                     | 🌟  |  250474325 | 🌟  |       248909434 |
+| [Day 8: Haunted Wasteland](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_08.rs)               | 🌟  |      22411 | 🌟  |  11188774513823 |
+| [Day 9: Mirage Maintenance](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_09.rs)              | 🌟  | 1853145119 | 🌟  |             923 |
+| [Day 10: Pipe Maze](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_10.rs)                      | 🌟  |       6882 | 🌟  |             491 |
+| [Day 11: Cosmic Expansion](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_11.rs)               | 🌟  |    9795148 | 🌟  |    650672493820 |
+| [Day 12: Hot Springs](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_12.rs)                    | 🌟  |       8270 | 🌟  | 204640299929836 |
 
 ## Performance
 
@@ -45,6 +46,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 9   |   2.44 µs |       2.55 µs |                       |             434.07 µs |
 | 10  |  65.17 µs |      65.01 µs | `-96.02%` / -         |              50.84 µs |
 | 11  | 846.06 µs |     844.65 µs |                       |              75.21 µs |
+| 12  |   2.65 ms |     149.26 ms |                       |             113.10 µs |
 
 \* compared to first solution<br/>
 \*\* slow, didn't benchmark. Value comes from running the solver.
