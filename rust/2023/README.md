@@ -28,6 +28,7 @@ You try to ask why they can't just use a weather machine ("not powerful enough")
 | [Day 10: Pipe Maze](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_10.rs)                      | 🌟  |       6882 | 🌟  |             491 |
 | [Day 11: Cosmic Expansion](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_11.rs)               | 🌟  |    9795148 | 🌟  |    650672493820 |
 | [Day 12: Hot Springs](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_12.rs)                    | 🌟  |       8270 | 🌟  | 204640299929836 |
+| [Day 13: Point of Incidence](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_13.rs)             | 🌟  |      27300 | 🌟  |           29276 |
 
 ## Performance
 
@@ -47,6 +48,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 10  |  65.17 µs |      65.01 µs | `-96.02%` / -         |              50.84 µs |
 | 11  | 846.06 µs |     844.65 µs |                       |              75.21 µs |
 | 12  |   2.65 ms |     149.26 ms |                       |             113.10 µs |
+| 13  |  24.87 µs |      17.61 µs |                       |             169.28 µs |
 
 \* compared to first solution<br/>
 \*\* slow, didn't benchmark. Value comes from running the solver.

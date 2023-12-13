@@ -7,6 +7,9 @@
 //!
 //! So, this solution was an iterative process of trying to understand and implementing
 //! the algorithm.
+//!
+//! I later tested a solutions using recursion and memoization. It was a bit easier to
+//! understand, but it was also slower.
 
 use itertools::Itertools;
 

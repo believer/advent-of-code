@@ -78,6 +78,10 @@ impl<T: Copy + PartialEq> Grid<T> {
             .map(|i| Point::new((i as i32) % self.width, (i as i32) / self.width))
             .collect()
     }
+
+    pub fn contains(&self, point: Point) -> bool {
+        point.x >= 0 && point.x < self.width && point.y >= 0 && point.y < self.height
+    }
 }
 
 /// Used to get a value using a Point as index from the grid
