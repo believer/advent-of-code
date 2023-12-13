@@ -3,11 +3,15 @@
 //! I had a super hard time understanding the problem description. I first thought that there
 //! was just line (vertical or horizontal) in each pattern. Had to read and re-read it
 //! multiple times before I understood.
-//!
-//! Haven't cleaned up part 2 yet, but it works. I'll get back to it later.
 
 use crate::grid::Grid;
 use crate::point::Point;
+
+#[derive(Eq, PartialEq)]
+enum Line {
+    Vertical(i32),
+    Horizontal(i32),
+}
 
 #[derive(Debug)]
 pub struct Input {
@@ -29,26 +33,53 @@ pub fn input_generator(input: &str) -> Input {
     Input { patterns }
 }
 
-fn vertical_line(grid: &Grid<u8>, rocks: &[Point]) -> i32 {
-    let result = (1..grid.width).find(|&x| {
-        rocks.iter().all(|rock| {
-            let reflected = Point::new(2 * x - rock.x - 1, rock.y);
-            !grid.contains(reflected) || grid[reflected] != b'.'
-        })
+fn find_line(grid: &Grid<u8>, rocks: &[Point], direction: Line) -> i32 {
+    // Get the range of the line and the number of smudges
+    let (mut range, target) =
+        match direction {
+            Line::Vertical(t) => (1..grid.width, t),
+            Line::Horizontal(t) => (1..grid.height, t),
+        };
+
+    // Find the first line that matches the criteria
+    let line = range.find(|&x| {
+        let mut smudges = 0;
+
+        rocks.iter().any(|rock| {
+            let reflected = match direction {
+                Line::Vertical(_) => Point::new(2 * x - rock.x - 1, rock.y),
+                Line::Horizontal(_) => Point::new(rock.x, 2 * x - rock.y - 1),
+            };
+
+            if grid.contains(reflected) && grid[reflected] == b'.' {
+                smudges += 1;
+                smudges > target
+            } else {
+                false
+            }
+        });
+
+        smudges == target
     });
 
-    result.unwrap_or(0)
+    // Vertical lines yield the number of columns before the line
+    // Horizontal lines yield the number of rows before the line * 100
+    line.map(|x| match direction {
+        Line::Vertical(_) => x,
+        Line::Horizontal(_) => x * 100,
+    })
+    .unwrap_or(0)
 }
 
-fn horizontal_line(grid: &Grid<u8>, rocks: &[Point]) -> i32 {
-    let result = (1..grid.height).find(|&x| {
-        rocks.iter().all(|rock| {
-            let reflected = Point::new(rock.x, 2 * x - rock.y - 1);
-            !grid.contains(reflected) || grid[reflected] != b'.'
+fn summarize(input: &Input, smudges: i32) -> i32 {
+    input
+        .patterns
+        .iter()
+        .map(|(grid, rocks)| {
+            find_line(grid, rocks, Line::Vertical(smudges))
+                + find_line(grid, rocks, Line::Horizontal(smudges))
         })
-    });
-
-    result.map(|x| x * 100).unwrap_or(0)
+        .sum()
 }
 
 /* Part One
@@ -63,11 +94,7 @@ assert_eq!(solve_part_01(&input_generator(data)), 27300);
 ```"#]
 #[aoc(day13, part1)]
 pub fn solve_part_01(input: &Input) -> i32 {
-    input
-        .patterns
-        .iter()
-        .map(|(grid, rocks)| vertical_line(grid, rocks) + horizontal_line(grid, rocks))
-        .sum()
+    summarize(input, 0)
 }
 
 /* Part Two
@@ -81,53 +108,7 @@ assert_eq!(solve_part_02(&input_generator(data)), 29276);
 ```"#]
 #[aoc(day13, part2)]
 pub fn solve_part_02(input: &Input) -> i32 {
-    input
-        .patterns
-        .iter()
-        .map(|(grid, rocks)| {
-            'vertical: for x in 1..grid.width {
-                let mut smudges = 0;
-                for rock in rocks {
-                    let reflected = Point::new(2 * x - rock.x - 1, rock.y);
-
-                    if grid.contains(reflected) && grid[reflected] == b'.' {
-                        smudges += 1;
-
-                        if smudges > 1 {
-                            continue 'vertical;
-                        }
-                    }
-                }
-
-                if smudges == 1 {
-                    return x;
-                }
-            }
-
-            // Skip the first row
-            'horizontal: for y in 1..grid.height {
-                let mut smudges = 0;
-
-                for rock in rocks {
-                    let reflected = Point::new(rock.x, 2 * y - rock.y - 1);
-
-                    if grid.contains(reflected) && grid[reflected] == b'.' {
-                        smudges += 1;
-
-                        if smudges > 1 {
-                            continue 'horizontal;
-                        }
-                    }
-                }
-
-                if smudges == 1 {
-                    return y * 100;
-                }
-            }
-
-            unreachable!("This should never happen. Something blew up.")
-        })
-        .sum()
+    summarize(input, 1)
 }
 
 #[cfg(test)]
