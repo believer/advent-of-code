@@ -1,5 +1,3 @@
-#![feature(iter_array_chunks)]
-
 extern crate aoc_runner;
 
 #[macro_use]
@@ -22,5 +20,6 @@ pub mod day_10;
 pub mod day_11;
 pub mod day_12;
 pub mod day_13;
+pub mod day_14;
 
 aoc_lib! { year = 2023 }

@@ -5,7 +5,7 @@ use std::{
 
 use crate::point::Point;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq)]
 pub struct Grid<T> {
     pub width: i32,
     pub height: i32,
@@ -82,6 +82,13 @@ impl<T: Copy + PartialEq> Grid<T> {
     pub fn contains(&self, point: Point) -> bool {
         point.x >= 0 && point.x < self.width && point.y >= 0 && point.y < self.height
     }
+
+    pub fn swap(&mut self, a: Point, b: Point) {
+        let a = (self.width * a.y + a.x) as usize;
+        let b = (self.width * b.y + b.x) as usize;
+
+        self.data.swap(a, b);
+    }
 }
 
 /// Used to get a value using a Point as index from the grid
@@ -122,11 +129,11 @@ impl<T> IndexMut<Point> for Grid<T> {
 }
 
 /// Used for debugging a grid visually.
-impl<T: Display> Display for Grid<T> {
+impl Display for Grid<u8> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         for y in 0..self.height {
             for x in 0..self.width {
-                write!(f, "{}", self[Point::new(x, y)])?;
+                write!(f, "{}", self[Point::new(x, y)] as char)?;
             }
             writeln!(f)?;
         }
