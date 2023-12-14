@@ -79,10 +79,55 @@ impl<T: Copy + PartialEq> Grid<T> {
             .collect()
     }
 
+    /// Find if the grid contains a point
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use advent_of_code_2023::grid::Grid;
+    /// use advent_of_code_2023::point::Point;
+    ///
+    /// let data = "...#
+    /// .#..
+    /// ..#.";
+    ///
+    /// let grid: Grid<u8> = Grid::from(data);
+    ///
+    /// let existing_point = Point::new(2, 1);
+    /// let non_existing_point = Point::new(3, 3);
+    ///
+    /// assert!(grid.contains(existing_point));
+    /// assert!(!grid.contains(non_existing_point));
+    /// ```
     pub fn contains(&self, point: Point) -> bool {
         point.x >= 0 && point.x < self.width && point.y >= 0 && point.y < self.height
     }
 
+    /// Swap the values of two points in the grid
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use advent_of_code_2023::grid::Grid;
+    /// use advent_of_code_2023::point::Point;
+    ///
+    /// let data = "...#
+    /// .#..
+    /// ..#.";
+    ///
+    /// let mut grid: Grid<u8> = Grid::from(data);
+    ///
+    /// let point_a = Point::new(3, 0);
+    /// let point_b = Point::new(2, 0);
+    ///
+    /// assert_eq!(grid[point_a], b'#');
+    /// assert_eq!(grid[point_b], b'.');
+    ///
+    /// grid.swap(point_a, point_b);
+    ///
+    /// assert_eq!(grid[point_a], b'.');
+    /// assert_eq!(grid[point_b], b'#');
+    /// ```
     pub fn swap(&mut self, a: Point, b: Point) {
         let a = (self.width * a.y + a.x) as usize;
         let b = (self.width * b.y + b.x) as usize;
