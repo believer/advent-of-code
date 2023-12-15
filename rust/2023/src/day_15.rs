@@ -7,20 +7,28 @@
 use std::collections::HashMap;
 
 pub struct Input {
-    init_sequence: Vec<Vec<u8>>,
+    steps: Vec<String>,
+}
+
+enum Operation {
+    Add,
+    Remove,
 }
 
 #[aoc_generator(day15)]
 pub fn input_generator(input: &str) -> Input {
     Input {
-        init_sequence: input.split(',').map(|x| x.as_bytes().to_vec()).collect(),
+        steps: input
+            .split(',')
+            .map(|x| x.to_string().replace('\n', ""))
+            .collect(),
     }
 }
 
-fn hash(sequence: &[u8]) -> u32 {
-    let mut current_value: u32 = 0;
+fn hash(steps: &str) -> u32 {
+    let mut current_value = 0;
 
-    for c in sequence.iter() {
+    for c in steps.as_bytes().iter() {
         current_value += *c as u32;
         current_value *= 17;
         current_value %= 256;
@@ -36,19 +44,14 @@ fn hash(sequence: &[u8]) -> u32 {
 *
 */
 // Your puzzle answer was
-/* Doesn't work right now?
 #[doc = r#"```
 use advent_of_code_2023::day_15::*;
 let data = include_str!("../input/2023/day15.txt");
 assert_eq!(solve_part_01(&input_generator(data)), 516070);
 ```"#]
-*/
 #[aoc(day15, part1)]
 pub fn solve_part_01(input: &Input) -> u32 {
-    input
-        .init_sequence
-        .iter()
-        .fold(0, |acc, sequence| acc + hash(sequence))
+    input.steps.iter().map(|step| hash(step)).sum()
 }
 
 /* Part Two
@@ -69,30 +72,28 @@ assert_eq!(solve_part_02(&input_generator(data)), 244981);
 pub fn solve_part_02(input: &Input) -> u32 {
     let mut boxes: HashMap<u32, Vec<String>> = HashMap::with_capacity(256);
 
-    for sequence in input.init_sequence.iter() {
-        let sequence = String::from_utf8(sequence.to_vec()).unwrap();
+    for step in input.steps.iter() {
+        let operation = if step.contains('=') {
+            Operation::Add
+        } else {
+            Operation::Remove
+        };
+        let (label, _) = step.split_once(|c| c == '=' || c == '-').unwrap();
+        let key = hash(label);
+        let current_box = boxes.entry(key).or_default();
 
-        // Add operations
-        if sequence.contains('=') {
-            let (label, _) = sequence.split_once('=').unwrap();
-            let hash = hash(label.as_bytes());
-            let b = boxes.entry(hash).or_default();
-
-            if let Some(index) = b.iter().position(|x| x.contains(label)) {
-                b[index] = sequence.clone();
-            } else {
-                b.push(sequence.clone());
+        match operation {
+            Operation::Add => {
+                // Replace the lens if it already exists, otherwise add it
+                if let Some(index) = current_box.iter().position(|x| x.contains(label)) {
+                    current_box[index] = step.to_string();
+                } else {
+                    current_box.push(step.to_string());
+                }
             }
-        }
-
-        // Remove operations
-        if sequence.contains('-') {
-            let (label, _) = sequence.split_once('-').unwrap();
-            let hash = hash(label.as_bytes());
-
-            if let Some(b) = boxes.get_mut(&hash) {
-                if let Some(index) = b.iter().position(|x| x.contains(label)) {
-                    b.remove(index);
+            Operation::Remove => {
+                if let Some(index) = current_box.iter().position(|x| x.contains(label)) {
+                    current_box.remove(index);
                 }
             }
         }
@@ -102,8 +103,8 @@ pub fn solve_part_02(input: &Input) -> u32 {
         .iter()
         .flat_map(|(box_number, sequences)| {
             sequences.iter().enumerate().map(move |(index, sequence)| {
-                let (_, operation) = sequence.split_once('=').unwrap();
-                (box_number + 1) * (index as u32 + 1) * operation.parse::<u32>().unwrap()
+                let (_, focal_length) = sequence.split_once('=').unwrap();
+                (box_number + 1) * (index as u32 + 1) * focal_length.parse::<u32>().unwrap()
             })
         })
         .sum()
@@ -118,7 +119,7 @@ mod tests {
     #[case("HASH", 52)]
     #[case("rn=1", 30)]
     fn hasher(#[case] input: &str, #[case] expected: u32) {
-        assert_eq!(hash(input.as_bytes()), expected);
+        assert_eq!(hash(input), expected);
     }
 
     #[rstest]
