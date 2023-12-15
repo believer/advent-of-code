@@ -52,19 +52,20 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 12  |   2.65 ms |     149.26 ms |                       |             113.10 µs |
 | 13  |  24.87 µs |      17.61 µs |                       |             169.28 µs |
 | 14  |  19.30 µs |      20.22 µs |                       |              23.69 µs |
-| 15  |  19.99 µs |     292.04 µs |                       |             241.12 µs |
+| 15  |  19.99 µs |     210.88 µs | - / `-28.20%`         |             241.12 µs |
 
 \* compared to first solution<br/>
 \*\* slow, didn't benchmark. Value comes from running the solver.
 
 ### Previous solutions
 
-| Day |         #1 |       #2 | Improvement | Link                                                                                                                     |
-| --: | ---------: | -------: | ----------: | ------------------------------------------------------------------------------------------------------------------------ |
-|   3 |  172.23 µs |        - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/75a83e31024bbac99a0664f81fce4e13ec1e94af/rust/2023/src/day_03.rs) |
-|   4 |   24.33 µs | 24.32 µs |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/c970c6322d3904048bcf3f30b1052e2916476d73/rust/2023/src/day_04.rs) |
-|   5 |    1.50 µs |  21.22 s |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/39b0904c4921f4ae79963a6df49bb3502ef6b3be/rust/2023/src/day_05.rs) |
-|   8 |          - | 15.25 ms |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/912d70c6e04ffd97f766c79b90764c105fe2f6ce/rust/2023/src/day_08.rs) |
-|  10 | 1.70 ms \* |        - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/ebbbbb8cb26e0fa4858cc48cf1a00304b4eee3a7/rust/2023/src/day_10.rs) |
+| Day |         #1 |        #2 | Improvement | Link                                                                                                                     |
+| --: | ---------: | --------: | ----------: | ------------------------------------------------------------------------------------------------------------------------ |
+|   3 |  172.23 µs |         - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/75a83e31024bbac99a0664f81fce4e13ec1e94af/rust/2023/src/day_03.rs) |
+|   4 |   24.33 µs |  24.32 µs |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/c970c6322d3904048bcf3f30b1052e2916476d73/rust/2023/src/day_04.rs) |
+|   5 |    1.50 µs |   21.22 s |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/39b0904c4921f4ae79963a6df49bb3502ef6b3be/rust/2023/src/day_05.rs) |
+|   8 |          - |  15.25 ms |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/912d70c6e04ffd97f766c79b90764c105fe2f6ce/rust/2023/src/day_08.rs) |
+|  10 | 1.70 ms \* |         - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/ebbbbb8cb26e0fa4858cc48cf1a00304b4eee3a7/rust/2023/src/day_10.rs) |
+|  15 |          - | 292.04 µs |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/5040f0fb6d9888b4a4d28f976e44ed077e0337b2/rust/2023/src/day_15.rs) |
 
 \* BFS solution. I liked it, so it's still in the file.

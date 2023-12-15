@@ -3,16 +3,15 @@
 //! The first part was a quick one using the as_bytes() method on strings.
 //! The second part was a bit trickier, but not too bad. The steps were
 //! simple, but mutating the HashMap and the inner vec was the tricky part.
+//!
+//! Refactored part 2 to use one list for the boxes and a HashMap for the
+//! current focal lengths. This made it easier, and faster, to mutate the boxes and
+//! calculate the focusing power.
 
 use std::collections::HashMap;
 
 pub struct Input {
     steps: Vec<String>,
-}
-
-enum Operation {
-    Add,
-    Remove,
 }
 
 #[aoc_generator(day15)]
@@ -25,11 +24,11 @@ pub fn input_generator(input: &str) -> Input {
     }
 }
 
-fn hash(steps: &str) -> u32 {
+fn hash(steps: &str) -> usize {
     let mut current_value = 0;
 
     for c in steps.as_bytes().iter() {
-        current_value += *c as u32;
+        current_value += *c as usize;
         current_value *= 17;
         current_value %= 256;
     }
@@ -50,7 +49,7 @@ let data = include_str!("../input/2023/day15.txt");
 assert_eq!(solve_part_01(&input_generator(data)), 516070);
 ```"#]
 #[aoc(day15, part1)]
-pub fn solve_part_01(input: &Input) -> u32 {
+pub fn solve_part_01(input: &Input) -> usize {
     input.steps.iter().map(|step| hash(step)).sum()
 }
 
@@ -69,45 +68,42 @@ let data = include_str!("../input/2023/day15.txt");
 assert_eq!(solve_part_02(&input_generator(data)), 244981);
 ```"#]
 #[aoc(day15, part2)]
-pub fn solve_part_02(input: &Input) -> u32 {
-    let mut boxes: HashMap<u32, Vec<String>> = HashMap::with_capacity(256);
+pub fn solve_part_02(input: &Input) -> usize {
+    let mut boxes = vec![Vec::new(); 256];
+    let mut focal_lengths: HashMap<&str, usize> = HashMap::new();
 
     for step in input.steps.iter() {
-        let operation = if step.contains('=') {
-            Operation::Add
-        } else {
-            Operation::Remove
-        };
-        let (label, _) = step.split_once(|c| c == '=' || c == '-').unwrap();
-        let key = hash(label);
-        let current_box = boxes.entry(key).or_default();
+        // Add operation
+        if step.contains('=') {
+            let (label, focal_length) = step.split_once('=').unwrap();
+            let focal_length = focal_length.parse::<usize>().unwrap();
+            let key = hash(label);
 
-        match operation {
-            Operation::Add => {
-                // Replace the lens if it already exists, otherwise add it
-                if let Some(index) = current_box.iter().position(|x| x.contains(label)) {
-                    current_box[index] = step.to_string();
-                } else {
-                    current_box.push(step.to_string());
-                }
+            focal_lengths.insert(label, focal_length);
+
+            if !boxes[key].contains(&label) {
+                boxes[key].push(label);
             }
-            Operation::Remove => {
-                if let Some(index) = current_box.iter().position(|x| x.contains(label)) {
-                    current_box.remove(index);
-                }
-            }
+        // Remove operation
+        } else {
+            let label = step[..step.len() - 1].to_string();
+            let key = hash(&label);
+
+            boxes[key].retain(|x| *x != label);
         }
     }
 
-    boxes
-        .iter()
-        .flat_map(|(box_number, sequences)| {
-            sequences.iter().enumerate().map(move |(index, sequence)| {
-                let (_, focal_length) = sequence.split_once('=').unwrap();
-                (box_number + 1) * (index as u32 + 1) * focal_length.parse::<u32>().unwrap()
-            })
-        })
-        .sum()
+    let mut sum = 0;
+
+    for (box_number, labels) in boxes.iter().enumerate() {
+        for (lens_slot, label) in labels.iter().enumerate() {
+            let focal_length = focal_lengths.get(label).unwrap();
+
+            sum += (box_number + 1) * (lens_slot + 1) * focal_length;
+        }
+    }
+
+    sum
 }
 
 #[cfg(test)]
@@ -118,19 +114,19 @@ mod tests {
     #[rstest]
     #[case("HASH", 52)]
     #[case("rn=1", 30)]
-    fn hasher(#[case] input: &str, #[case] expected: u32) {
+    fn hasher(#[case] input: &str, #[case] expected: usize) {
         assert_eq!(hash(input), expected);
     }
 
     #[rstest]
     #[case("rn=1,cm-,qp=3,cm=2,qp-,pc=4,ot=9,ab=5,pc-,pc=6,ot=7", 1320)]
-    fn sample_01(#[case] input: &str, #[case] expected: u32) {
+    fn sample_01(#[case] input: &str, #[case] expected: usize) {
         assert_eq!(solve_part_01(&input_generator(input)), expected);
     }
 
     #[rstest]
     #[case("rn=1,cm-,qp=3,cm=2,qp-,pc=4,ot=9,ab=5,pc-,pc=6,ot=7", 145)]
-    fn sample_02(#[case] input: &str, #[case] expected: u32) {
+    fn sample_02(#[case] input: &str, #[case] expected: usize) {
         assert_eq!(solve_part_02(&input_generator(input)), expected);
     }
 }
