@@ -1,10 +1,11 @@
 //! Day 15: Lens Library
 //!
 //! The first part was a quick one using the as_bytes() method on strings.
-//! The second part was a bit trickier, but not too bad. The steps were
+//! The second part was a bit trickier, not too bad. The description was an
+//! exercise in reading comprehension. Once I understood, the steps were
 //! simple, but mutating the HashMap and the inner vec was the tricky part.
 //!
-//! Refactored part 2 to use one list for the boxes and a HashMap for the
+//! Refactored part 2 to use one vec for the boxes and a HashMap for the
 //! current focal lengths. This made it easier, and faster, to mutate the boxes and
 //! calculate the focusing power.
 
