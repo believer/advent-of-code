@@ -1,5 +1,9 @@
-//! Day 16
-
+//! Day 16: The Floor Will Be Lava
+//!
+//! Another day, another grid. This time, we'll direct a beam of light
+//! through a grid of mirrors and splitters. The goal is to find the number of
+//! energized tiles, tiles where the beam has been. I enjoyed this one.
+//! Just the right amount of challenge. Not too easy, not too hard.
 
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use std::collections::{HashSet, VecDeque};
@@ -92,7 +96,8 @@ pub fn input_generator(input: &str) -> Input {
 
 /* Part One
 *
-*
+* Find the number of energized tiles after firing the beam from the top left
+* of the grid.
 */
 // Your puzzle answer was
 #[doc = r#"```
@@ -107,6 +112,8 @@ pub fn solve_part_01(input: &Input) -> usize {
 
 /* Part Two
 *
+* Find the maximum number of energized tiles after firing the beam
+* inwards from all edges of the grid.
 *
 */
 #[doc = r#"```
