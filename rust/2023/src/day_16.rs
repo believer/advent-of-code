@@ -1,5 +1,7 @@
 //! Day 16
 
+
+use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use std::collections::{HashSet, VecDeque};
 
 use crate::{
@@ -114,7 +116,6 @@ assert_eq!(solve_part_02(&input_generator(data)), 7793);
 ```"#]
 #[aoc(day16, part2)]
 pub fn solve_part_02(input: &Input) -> usize {
-    let mut most_energy = 0;
     let mut possible_starts = vec![];
 
     // Find all possible starting points from the edges of the grid
@@ -128,15 +129,13 @@ pub fn solve_part_02(input: &Input) -> usize {
         possible_starts.push(Beam::new(Point::new(input.tiles.width - 1, y), LEFT));
     }
 
-    // For each starting point, fire ze lasers
-    for start in possible_starts {
-        let energized_tiles = fire_ze_lasers(input, start);
-
-        // Keep track of the most energized tiles
-        most_energy = most_energy.max(energized_tiles);
-    }
-
-    most_energy
+    // For each starting point, fire ze lasers and find the max
+    // Use rayon to parallelize the search for a speed boost
+    possible_starts
+        .par_iter()
+        .map(|start| fire_ze_lasers(input, *start))
+        .max()
+        .unwrap()
 }
 
 #[cfg(test)]
