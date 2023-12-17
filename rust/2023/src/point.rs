@@ -27,6 +27,14 @@ impl Point {
         Point { x, y }
     }
 
+    pub fn clockwise(self) -> Self {
+        Point::new(self.y, -self.x)
+    }
+
+    pub fn counter_clockwise(self) -> Self {
+        Point::new(-self.y, self.x)
+    }
+
     /// The sum of the absolute values of two points
     pub fn manhattan_distance(&self, other: &Self) -> u32 {
         self.x.abs_diff(other.x) + self.y.abs_diff(other.y)
