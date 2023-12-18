@@ -92,8 +92,10 @@ fn dijkstra(grid: &Grid<u8>, min_steps: u32, max_steps: u32) -> u32 {
 
 /* Part One
 *
-* Find the number of energized tiles after firing the beam from the top left
-* of the grid.
+* Find the lowest cost path from the top left corner to the bottom
+* right corner. You can only move a maximum of 3 steps in a straight
+* line before needing to turn left or right.
+*
 */
 // Your puzzle answer was
 #[doc = r#"```
@@ -108,8 +110,11 @@ pub fn solve_part_01(input: &Input) -> u32 {
 
 /* Part Two
 *
-* Find the maximum number of energized tiles after firing the beam
-* inwards from all edges of the grid.
+* Find the lowest cost path from the top left corner to the bottom
+* right corner. You can only move a maximum of 10 steps in a straight
+* line before needing to turn left or right. You must take at least
+* 4 steps before turning left or right, this includes at least
+* 4 steps before reaching the end.
 *
 */
 #[doc = r#"```

@@ -115,6 +115,9 @@ fn dig(dig_plan: &Vec<Direction>) -> i64 {
 
 /* Part One
 *
+* We get a dig plan that tells us how many steps to move in a direction.
+* Follow the plan and then determine how many cubic meters the lagoon will hold.
+*
 */
 // Your puzzle answer was
 #[doc = r#"```
@@ -129,8 +132,7 @@ pub fn solve_part_01(input: &Input) -> i64 {
 
 /* Part Two
 *
-* Find the maximum number of energized tiles after firing the beam
-* inwards from all edges of the grid.
+* Nothing changes in the solver, we just need to parse the input differently.
 *
 */
 #[doc = r#"```
