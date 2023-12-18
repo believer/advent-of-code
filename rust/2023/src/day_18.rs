@@ -17,35 +17,33 @@ use crate::point::{Point, DOWN, LEFT, RIGHT, UP};
 
 #[derive(Debug)]
 pub struct Input {
-    dig_plan: Vec<Direction>,
+    dig_plan: Vec<(Point, i32)>,
 }
 
-#[derive(Debug)]
-enum Direction {
-    Up(i32),
-    Down(i32),
-    Left(i32),
-    Right(i32),
+impl From<&str> for Point {
+    fn from(s: &str) -> Self {
+        match s {
+            "U" | "3" => UP,
+            "D" | "1" => DOWN,
+            "L" | "2" => LEFT,
+            "R" | "0" => RIGHT,
+            _ => unreachable!("Invalid direction"),
+        }
+    }
 }
 
 #[aoc_generator(day18, part1)]
 pub fn input_generator(input: &str) -> Input {
-    let dig_plan =
-        input
-            .lines()
-            .map(|line| {
-                let data = line.split_whitespace().collect::<Vec<_>>();
-                let distance = data[1].parse::<i32>().unwrap();
+    let dig_plan = input
+        .lines()
+        .map(|line| {
+            let data = line.split_whitespace().collect::<Vec<_>>();
+            let distance = data[1].parse::<i32>().unwrap();
+            let direction = data[0].into();
 
-                match data[0] {
-                    "U" => Direction::Up(distance),
-                    "D" => Direction::Down(distance),
-                    "L" => Direction::Left(distance),
-                    "R" => Direction::Right(distance),
-                    _ => panic!("Invalid direction"),
-                }
-            })
-            .collect::<Vec<_>>();
+            (direction, distance)
+        })
+        .collect::<Vec<_>>();
 
     Input { dig_plan }
 }
@@ -59,14 +57,9 @@ pub fn input_generator_part2(input: &str) -> Input {
             let hex = data[2].replace(['(', ')', '#'], "");
             let value = &hex[..5];
             let distance = i32::from_str_radix(value, 16).unwrap();
+            let direction = hex[hex.len() - 1..].into();
 
-            match &hex[hex.len() - 1..] {
-                "3" => Direction::Up(distance),
-                "1" => Direction::Down(distance),
-                "2" => Direction::Left(distance),
-                "0" => Direction::Right(distance),
-                _ => panic!("Invalid direction"),
-            }
+            (direction, distance)
         })
         .collect::<Vec<_>>();
 
@@ -90,24 +83,17 @@ fn cubic_meters(boundary: i64, area: i64) -> i64 {
     boundary + interior_points
 }
 
-fn dig(dig_plan: &Vec<Direction>) -> i64 {
+fn dig(dig_plan: &Vec<(Point, i32)>) -> i64 {
     let mut position = Point::new(0, 0);
     let mut area = 0;
     let mut steps = 0;
 
-    for dig in dig_plan {
-        let (direction, distance) = match dig {
-            Direction::Right(distance) => (RIGHT, *distance),
-            Direction::Left(distance) => (LEFT, *distance),
-            Direction::Up(distance) => (UP, *distance),
-            Direction::Down(distance) => (DOWN, *distance),
-        };
-
-        let next_position = position + direction * distance;
+    for (direction, distance) in dig_plan {
+        let next_position = position + *direction * *distance;
 
         area += determinant(position, next_position);
         position = next_position;
-        steps += distance as i64;
+        steps += *distance as i64;
     }
 
     cubic_meters(steps, area)
