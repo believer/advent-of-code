@@ -13,7 +13,7 @@
 
 use std::{
     fmt::Display,
-    ops::{Add, AddAssign},
+    ops::{Add, AddAssign, Mul},
 };
 
 #[derive(PartialEq, Eq, Hash, Clone, Copy, Debug, Ord, PartialOrd)]
@@ -55,6 +55,14 @@ impl AddAssign for Point {
     fn add_assign(&mut self, rhs: Self) {
         self.x += rhs.x;
         self.y += rhs.y;
+    }
+}
+
+impl Mul<i32> for Point {
+    type Output = Point;
+
+    fn mul(self, rhs: i32) -> Self {
+        Point::new(self.x * rhs, self.y * rhs)
     }
 }
 

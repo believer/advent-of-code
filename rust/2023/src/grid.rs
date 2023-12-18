@@ -30,6 +30,14 @@ impl<T: From<u8> + Copy> From<&str> for Grid<T> {
 }
 
 impl<T: Copy + PartialEq> Grid<T> {
+    pub fn new(width: i32, height: i32, data: Vec<T>) -> Self {
+        Grid {
+            width,
+            height,
+            data,
+        }
+    }
+
     /// Find _one_ point that has the given value in the grid.
     ///
     /// # Example
