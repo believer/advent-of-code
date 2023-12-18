@@ -1,11 +1,19 @@
-//! Day 18
+//! Day 18: Lavaduct Lagoon
+//!
+//! I started by creating a Grid and drawing the path on it. It's usually easier
+//! for me to visualize the problem this way. Like we learned from day 10, we can
+//! use the Shoelace formula to calculate the area of the polygon. Then we can
+//! make use of Pick's theorem to find the number of interior points.
+//!
+//! Drawing the grid was not great since I didn't know how big the grid would be,
+//! and it's just a waste of memory. I converted it to a HashSet to keep track of
+//! the points instead. It ran in 23 seconds, which is not great. Of course, I then
+//! noticed that I was only using the set to see how many points were in it, so I
+//! changed it to a simple step counter. Now it runs in microseconds!
+//!
+//! The solver is the same for both parts, it's just the parsing that is different.
 
-use std::collections::HashSet;
-
-use crate::{
-    grid::Grid,
-    point::{Point, DOWN, LEFT, RIGHT, UP},
-};
+use crate::point::{Point, DOWN, LEFT, RIGHT, UP};
 
 #[derive(Debug)]
 pub struct Input {
@@ -65,6 +73,46 @@ pub fn input_generator_part2(input: &str) -> Input {
     Input { dig_plan }
 }
 
+fn determinant(a: Point, b: Point) -> i64 {
+    a.x as i64 * b.y as i64 - a.y as i64 * b.x as i64
+}
+
+/// Like day 10 we can use the Shoelace formula to calculate the area
+/// of the polygon. Then we can make use of Pick's theorem
+/// to find the number of interior points. We can then add the number of boundary
+/// points and interior points to find the number of cubic meters that
+/// the lava lagoon will hold.
+fn cubic_meters(boundary: i64, area: i64) -> i64 {
+    // Pick's theorem to find the number of interior points
+    let interior_points = area.abs() / 2 - boundary / 2 + 1;
+
+    // Boundary is the number of dug out tiles from following the dig plan
+    boundary + interior_points
+}
+
+fn dig(dig_plan: &Vec<Direction>) -> i64 {
+    let mut position = Point::new(0, 0);
+    let mut area = 0;
+    let mut steps = 0;
+
+    for dig in dig_plan {
+        let (direction, distance) = match dig {
+            Direction::Right(distance) => (RIGHT, *distance),
+            Direction::Left(distance) => (LEFT, *distance),
+            Direction::Up(distance) => (UP, *distance),
+            Direction::Down(distance) => (DOWN, *distance),
+        };
+
+        let next_position = position + direction * distance;
+
+        area += determinant(position, next_position);
+        position = next_position;
+        steps += distance as i64;
+    }
+
+    cubic_meters(steps, area)
+}
+
 /* Part One
 *
 */
@@ -75,61 +123,8 @@ let data = include_str!("../input/2023/day18.txt");
 assert_eq!(solve_part_01(&input_generator(data)), 48652);
 ```"#]
 #[aoc(day18, part1)]
-pub fn solve_part_01(input: &Input) -> i32 {
-    let mut grid = Grid::new(1000, 1000, vec![b'.'; 1000 * 1000]);
-    let mut position = Point::new(grid.width / 2, grid.height / 2);
-    let mut area = 0;
-    let determinant = |a: Point, b: Point| a.x * b.y - a.y * b.x;
-
-    for direction in &input.dig_plan {
-        match direction {
-            Direction::Right(distance) => {
-                for x in position.x + 1..=position.x + *distance {
-                    grid.data[(x + position.y * grid.width) as usize] = b'#';
-                }
-
-                let next_position = position + RIGHT * *distance;
-                area += determinant(position, next_position);
-                position = next_position;
-            }
-            Direction::Left(distance) => {
-                for x in (position.x - *distance..=position.x).rev() {
-                    grid.data[(x + position.y * grid.width) as usize] = b'#';
-                }
-
-                let next_position = position + LEFT * *distance;
-                area += determinant(position, next_position);
-                position = next_position;
-            }
-            Direction::Up(distance) => {
-                for y in (position.y - *distance..=position.y).rev() {
-                    grid.data[(position.x + y * grid.width) as usize] = b'#';
-                }
-
-                let next_position = position + UP * *distance;
-                area += determinant(position, next_position);
-                position = next_position;
-            }
-            Direction::Down(distance) => {
-                for y in position.y..=position.y + *distance {
-                    grid.data[(position.x + y * grid.width) as usize] = b'#';
-                }
-
-                let next_position = position + DOWN * *distance;
-                area += determinant(position, next_position);
-                position = next_position;
-            }
-        }
-    }
-
-    // Find the number of boundary points
-    let boundary = grid.find_all(b'#').len() as i32;
-    // Similar to day 10
-    // The Shoelace formula is used to calculate the area of a polygon with points.
-    // Make use of Pick's theorem to find the number of interior points
-    let interior_points = area.abs() / 2 - boundary / 2 + 1;
-
-    boundary + interior_points
+pub fn solve_part_01(input: &Input) -> i64 {
+    dig(&input.dig_plan)
 }
 
 /* Part Two
@@ -141,64 +136,11 @@ pub fn solve_part_01(input: &Input) -> i32 {
 #[doc = r#"```
 use advent_of_code_2023::day_18::*;
 let data = include_str!("../input/2023/day18.txt");
-assert_eq!(solve_part_02(&input_generator_part2(data)), 1215);
+assert_eq!(solve_part_02(&input_generator_part2(data)), 45757884535661);
 ```"#]
 #[aoc(day18, part2)]
 pub fn solve_part_02(input: &Input) -> i64 {
-    let mut points: HashSet<Point> = HashSet::new();
-    let mut position = Point::new(0, 0);
-    let mut area = 0;
-    let determinant = |a: Point, b: Point| a.x as i64 * b.y as i64 - a.y as i64 * b.x as i64;
-
-    for direction in &input.dig_plan {
-        match direction {
-            Direction::Right(distance) => {
-                for x in position.x + 1..=position.x + *distance {
-                    points.insert(Point::new(x, position.y));
-                }
-
-                let next_position = position + RIGHT * *distance;
-                area += determinant(position, next_position);
-                position = next_position;
-            }
-            Direction::Left(distance) => {
-                for x in (position.x - *distance..=position.x).rev() {
-                    points.insert(Point::new(x, position.y));
-                }
-
-                let next_position = position + LEFT * *distance;
-                area += determinant(position, next_position);
-                position = next_position;
-            }
-            Direction::Up(distance) => {
-                for y in (position.y - *distance..=position.y).rev() {
-                    points.insert(Point::new(position.x, y));
-                }
-
-                let next_position = position + UP * *distance;
-                area += determinant(position, next_position);
-                position = next_position;
-            }
-            Direction::Down(distance) => {
-                for y in position.y..=position.y + *distance {
-                    points.insert(Point::new(position.x, y));
-                }
-
-                let next_position = position + DOWN * *distance;
-                area += determinant(position, next_position);
-                position = next_position;
-            }
-        }
-    }
-
-    // Find the number of boundary points
-    let boundary = points.len() as i64;
-    // Similar to day 10
-    // The Shoelace formula is used to calculate the area of a polygon with points.
-    // Make use of Pick's theorem to find the number of interior points
-    let interior_points = area.abs() / 2 - boundary / 2 + 1;
-
-    boundary + interior_points
+    dig(&input.dig_plan)
 }
 
 #[cfg(test)]
@@ -224,7 +166,7 @@ L 2 (#015232)
 U 2 (#7a21e3)",
         62
     )]
-    fn sample_01(#[case] input: &str, #[case] expected: i32) {
+    fn sample_01(#[case] input: &str, #[case] expected: i64) {
         assert_eq!(solve_part_01(&input_generator(input)), expected);
     }
 
