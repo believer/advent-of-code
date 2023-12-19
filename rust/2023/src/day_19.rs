@@ -3,7 +3,13 @@
 //! The hard part about part 1 was getting the parsing done in a good and usable way.
 //! Otherwise, it's just a matter of following the rules until we get to A or R.
 //!
-//! Part 2 I don't really understand right now, might come back.
+//! Part 2 I didn't really understand at first. I even had a hard time understanding
+//! the solutions posted on Reddit. What made it click for me was HyperNeutrino's
+//! YouTube video on the problem. I highly recommend watching it if you're stuck.
+//! https://www.youtube.com/watch?v=3RwIpUegdU4
+//!
+//! It gave me explanations and code I could understand. I used his code as a help
+//! in debugging my code. What the states should look like after each rule and iteration.
 
 use std::collections::HashMap;
 
