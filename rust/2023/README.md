@@ -34,6 +34,7 @@ You try to ask why they can't just use a weather machine ("not powerful enough")
 | [Day 16: The Floor Will Be Lava](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_16.rs)         | 🌟  |       7562 | 🌟  |            7793 |
 | [Day 17: Clumsy Crucible](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_17.rs)                | 🌟  |       1013 | 🌟  |            1215 |
 | [Day 18: Lavaduct Lagoon](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_18.rs)                | 🌟  |      48652 | 🌟  |  45757884535661 |
+| [Day 19: Aplenty](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_19.rs)                        | 🌟  |     331208 |     |                 |
 
 ## Performance
 
@@ -59,6 +60,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 16  |   1.41 ms |      49.39 ms |                       |              30.33 µs |
 | 17  |  64.21 ms |     173.37 ms |                       |              47.36 µs |
 | 18  | 837.59 ns |     844.43 ns |                       |   41.30 µs / 73.29 µs |
+| 19  |  55.27 µs |             - |                       |             213.26 µs |
 
 \* compared to first solution<br/>
 \*\* slow, didn't benchmark. Value comes from running the solver.
