@@ -10,13 +10,13 @@ use std::collections::HashMap;
 #[derive(Debug)]
 pub struct Input {
     workflows: HashMap<String, Vec<Condition>>,
-    ratings: Vec<HashMap<char, u32>>,
+    ratings: Vec<HashMap<char, u64>>,
 }
 
 #[derive(Debug)]
 enum Condition {
-    LessThan(char, u32, String),
-    GreaterThan(char, u32, String),
+    LessThan(char, u64, String),
+    GreaterThan(char, u64, String),
     Target(String),
 }
 
@@ -40,13 +40,13 @@ pub fn input_generator(input: &str) -> Input {
                         if condition.contains('<') {
                             let (key, value) = condition.split_once('<').unwrap();
                             let key = key.chars().next().unwrap();
-                            let value = value.parse::<u32>().unwrap();
+                            let value = value.parse::<u64>().unwrap();
 
                             Condition::LessThan(key, value, result.to_string())
                         } else {
                             let (key, value) = condition.split_once('>').unwrap();
                             let key = key.chars().next().unwrap();
-                            let value = value.parse::<u32>().unwrap();
+                            let value = value.parse::<u64>().unwrap();
 
                             Condition::GreaterThan(key, value, result.to_string())
                         }
@@ -71,9 +71,9 @@ pub fn input_generator(input: &str) -> Input {
             clean
                 .map(|l| {
                     let (name, value) = l.split_once('=').unwrap();
-                    (name.chars().next().unwrap(), value.parse::<u32>().unwrap())
+                    (name.chars().next().unwrap(), value.parse::<u64>().unwrap())
                 })
-                .collect::<HashMap<char, u32>>()
+                .collect::<HashMap<char, u64>>()
         })
         .collect::<Vec<_>>();
 
@@ -90,7 +90,7 @@ let data = include_str!("../input/2023/day19.txt");
 assert_eq!(solve_part_01(&input_generator(data)), 331208);
 ```"#]
 #[aoc(day19, part1)]
-pub fn solve_part_01(input: &Input) -> u32 {
+pub fn solve_part_01(input: &Input) -> u64 {
     let mut accepted = 0;
 
     for rating in &input.ratings {
@@ -99,7 +99,7 @@ pub fn solve_part_01(input: &Input) -> u32 {
         loop {
             // An accepted rating, add the sum of the values
             if current_target == "A" {
-                accepted += rating.values().sum::<u32>();
+                accepted += rating.values().sum::<u64>();
                 break;
             }
 
@@ -139,6 +139,80 @@ pub fn solve_part_01(input: &Input) -> u32 {
     accepted
 }
 
+fn count_accepted(
+    ranges: HashMap<char, (u64, u64)>,
+    workflows: &HashMap<String, Vec<Condition>>,
+    name: String,
+) -> u64 {
+    // Rejected
+    if name == "R" {
+        return 0;
+    }
+
+    // Accepted
+    if name == "A" {
+        return ranges.values().map(|(lo, hi)| hi - lo + 1).product();
+    }
+
+    // Our final total
+    let mut total = 0;
+
+    // Clone the ranges so we can modify them
+    let mut ranges = ranges.clone();
+
+    // Get the rules for the current workflow
+    let rules = workflows.get(&name).unwrap();
+
+    // Iterate over the rules
+    // Split the ranges into two, one for the true condition and one for the false condition
+    // The true half gets processed while the false half is deferred to the next rule
+    for rule in rules {
+        let (t, f, key, target) = match rule {
+            Condition::LessThan(key, value, target) => {
+                let (lo, hi) = ranges.get(key).unwrap();
+
+                // True half is the range from the lower bound to the value - 1
+                let t = (*lo, (value - 1).min(*hi));
+                // False half is the range from the value to the upper bound
+                let f = (*value.max(lo), *hi);
+
+                (t, f, key, target)
+            }
+            Condition::GreaterThan(key, value, target) => {
+                let (lo, hi) = ranges.get(key).unwrap();
+
+                // True half is the range from the value + 1 to the upper bound
+                let t = ((value + 1).max(*lo), *hi);
+                // False half is the range from the lower bound to the value
+                let f = (*lo, *value.min(hi));
+
+                (t, f, key, target)
+            }
+            Condition::Target(target) => {
+                total += count_accepted(ranges.clone(), workflows, target.to_string());
+                continue;
+            }
+        };
+
+        // Optimization: If the true half is empty, we can skip it
+        // Otherwise, update the ranges and recurse
+        if t.0 <= t.1 {
+            ranges.insert(*key, t);
+
+            total += count_accepted(ranges.clone(), workflows, target.to_string());
+        }
+
+        // Optimization: If the false half is empty, we can skip it
+        // Just update the ranges and continue. This will be passed to
+        // Condition::Target and handled there
+        if f.0 <= f.1 {
+            ranges.insert(*key, f);
+        }
+    }
+
+    total
+}
+
 /* Part Two
 *
 *
@@ -151,8 +225,14 @@ assert_eq!(solve_part_02(&input_generator(data)), 0);
 ```"#]
 */
 #[aoc(day19, part2)]
-pub fn solve_part_02(_input: &Input) -> u64 {
-    167409079868000
+pub fn solve_part_02(input: &Input) -> u64 {
+    let mut ranges: HashMap<char, (u64, u64)> = HashMap::new();
+
+    for ch in "xmas".chars() {
+        ranges.insert(ch, (1, 4000));
+    }
+
+    count_accepted(ranges, &input.workflows, "in".to_string())
 }
 
 #[cfg(test)]
@@ -181,7 +261,7 @@ hdj{m>838:A,pv}
 {x=2127,m=1623,a=2188,s=1013}",
         19114
     )]
-    fn sample_01(#[case] input: &str, #[case] expected: u32) {
+    fn sample_01(#[case] input: &str, #[case] expected: u64) {
         assert_eq!(solve_part_01(&input_generator(input)), expected);
     }
 
