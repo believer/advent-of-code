@@ -33,34 +33,24 @@ pub fn input_generator(input: &str) -> Input {
     let workflows = workflows
         .lines()
         .map(|line| {
-            let mut parts = line.split('{');
-            let name = parts.next().unwrap();
-            let rules = parts
-                .next()
-                .unwrap()
-                .split(',')
-                .map(|rule| {
-                    let parts = rule.split_once(':');
+            let parts = line.split(['{', ',', ':', '}']).collect::<Vec<_>>();
+            let name = parts[0];
+            let rules = parts[1..]
+                .chunks(2)
+                .map(|condition| match condition {
+                    [target, ""] => Condition::Target(target.to_string()),
+                    [condition, target] => {
+                        let (key, value) = condition.split_once(['<', '>']).unwrap();
+                        let key = key.chars().next().unwrap();
+                        let value = value.parse::<u64>().unwrap();
 
-                    if let Some((condition, result)) = parts {
                         if condition.contains('<') {
-                            let (key, value) = condition.split_once('<').unwrap();
-                            let key = key.chars().next().unwrap();
-                            let value = value.parse::<u64>().unwrap();
-
-                            Condition::LessThan(key, value, result.to_string())
+                            Condition::LessThan(key, value, target.to_string())
                         } else {
-                            let (key, value) = condition.split_once('>').unwrap();
-                            let key = key.chars().next().unwrap();
-                            let value = value.parse::<u64>().unwrap();
-
-                            Condition::GreaterThan(key, value, result.to_string())
+                            Condition::GreaterThan(key, value, target.to_string())
                         }
-                    } else {
-                        let rule = rule.replace('}', "");
-
-                        Condition::Target(rule)
                     }
+                    _ => unreachable!(),
                 })
                 .collect::<Vec<_>>();
 
@@ -223,13 +213,11 @@ fn count_accepted(
 *
 *
 */
-/*
 #[doc = r#"```
 use advent_of_code_2023::day_19::*;
 let data = include_str!("../input/2023/day19.txt");
-assert_eq!(solve_part_02(&input_generator(data)), 0);
+assert_eq!(solve_part_02(&input_generator(data)), 121464316215623);
 ```"#]
-*/
 #[aoc(day19, part2)]
 pub fn solve_part_02(input: &Input) -> u64 {
     let mut ranges: HashMap<char, (u64, u64)> = HashMap::new();
