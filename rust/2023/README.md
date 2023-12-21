@@ -35,7 +35,8 @@ You try to ask why they can't just use a weather machine ("not powerful enough")
 | [Day 17: Clumsy Crucible](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_17.rs)                | 🌟  |       1013 | 🌟  |            1215 |
 | [Day 18: Lavaduct Lagoon](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_18.rs)                | 🌟  |      48652 | 🌟  |  45757884535661 |
 | [Day 19: Aplenty](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_19.rs)                        | 🌟  |     331208 | 🌟  | 121464316215623 |
-| [Day 20: Pulse Propagation](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_19.rs)              | 🌟  |  812609846 | 🌟  | 245114020323037 |
+| [Day 20: Pulse Propagation](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_20.rs)              | 🌟  |  812609846 | 🌟  | 245114020323037 |
+| [Day 21: Step Counter](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_21.rs)                   | 🌟  |       3788 | 🌟  | 631357596621921 |
 
 ## Performance
 
@@ -63,6 +64,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 18  | 837.59 ns |     844.43 ns |                       |   41.30 µs / 73.29 µs |
 | 19  |  55.27 µs |     160.90 µs |                       |             213.26 µs |
 | 20  |   5.22 ms |      24.31 ms |                       |              24.13 µs |
+| 21  |   1.48 ms |      24.29 ms |                       |              43.68 µs |
 
 \* compared to first solution<br/>
 \*\* slow, didn't benchmark. Value comes from running the solver.
