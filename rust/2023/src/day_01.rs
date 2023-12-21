@@ -9,10 +9,24 @@
 // "slower" than the first example, because more work is done in the solution functions.
 // But, it's actually faster when you compare the total time, so I'll make this "initial solution"
 // for performance.
+//
+// Edit 2023-12-21: I saw a really elegant solution to this problem yesterday.
+// Since the word numbers only overlay with at most one character, we can replace
+// them while remaining the first and last character. For example, "one" becomes "o1e"
+// or "two" becomes "t2o". Then we can sum like in the first part.
 
 #[aoc_generator(day1)]
 pub fn input_generator(input: &str) -> String {
     input.to_string()
+}
+
+fn sum_first_and_last_digit(line: &str) -> u32 {
+    let mut digits = line.chars().filter_map(|c| c.to_digit(10));
+
+    let first_digit = digits.next().unwrap();
+    let last_digit = digits.last().unwrap_or(first_digit);
+
+    first_digit * 10 + last_digit
 }
 
 /* Part One
@@ -40,40 +54,20 @@ pub fn input_generator(input: &str) -> String {
 /// ```
 #[aoc(day1, part1)]
 pub fn solve_part_01(input: &str) -> u32 {
-    let mut sum = 0;
-
-    for line in input.lines() {
-        let mut digits = line.chars().filter_map(|c| c.to_digit(10));
-
-        let first_digit = digits.next().unwrap();
-        let last_digit = digits.last().unwrap_or(first_digit);
-
-        sum += first_digit * 10 + last_digit;
-    }
-
-    sum
+    input.lines().map(sum_first_and_last_digit).sum()
 }
 
-#[rustfmt::skip]
-const DIGITS_AS_TEXT: [&str; 18] = [
-    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
-    "1", "2", "3", "4", "5", "6", "7", "8", "9",
+const TRANSLATIONS: [(&str, &str); 9] = [
+    ("one", "o1e"),
+    ("two", "t2o"),
+    ("three", "t3e"),
+    ("four", "f4r"),
+    ("five", "f5e"),
+    ("six", "s6x"),
+    ("seven", "s7n"),
+    ("eight", "e8t"),
+    ("nine", "n9e"),
 ];
-
-fn digit_to_number(digit: &str) -> u32 {
-    match digit {
-        "one" => 1,
-        "two" => 2,
-        "three" => 3,
-        "four" => 4,
-        "five" => 5,
-        "six" => 6,
-        "seven" => 7,
-        "eight" => 8,
-        "nine" => 9,
-        n => n.parse::<u32>().unwrap(),
-    }
-}
 
 /* Part Two
 *
@@ -102,41 +96,17 @@ fn digit_to_number(digit: &str) -> u32 {
 /// ```
 #[aoc(day1, part2)]
 pub fn solve_part_02(input: &str) -> u32 {
-    let mut sum = 0;
-
-    for line in input.lines() {
-        let mut first_position = None;
-        let mut first_digit = None;
-        let mut last_position = None;
-        let mut last_digit = None;
-
-        // We only need the first and the last digit
-        // so we can look from the front and the back to find them.
-        for digit in DIGITS_AS_TEXT {
-            // Find first digit
-            if let Some(position) = line.find(digit) {
-                if position <= first_position.unwrap_or(position) {
-                    first_position = Some(position);
-                    first_digit = Some(digit);
-                }
-            }
-
-            // Find last digit
-            if let Some(position) = line.rfind(digit) {
-                if position >= last_position.unwrap_or(position) {
-                    last_position = Some(position);
-                    last_digit = Some(digit);
-                }
-            }
-        }
-
-        let first = first_digit.map(digit_to_number).unwrap();
-        let last = last_digit.map(digit_to_number).unwrap();
-
-        sum += first * 10 + last;
-    }
-
-    sum
+    input
+        .lines()
+        .map(|line| {
+            // Replace the words with numbers, but keep the first and last character
+            // For example, "one" becomes "o1e" or "two" becomes "t2o"
+            TRANSLATIONS
+                .iter()
+                .fold(line.to_string(), |line, (from, to)| line.replace(from, to))
+        })
+        .map(|line| sum_first_and_last_digit(&line))
+        .sum()
 }
 
 #[cfg(test)]
