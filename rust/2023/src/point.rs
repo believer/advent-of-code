@@ -85,6 +85,7 @@ pub const TOP_RIGHT: Point = Point::new(1, -1);
 pub const BOTTOM_LEFT: Point = Point::new(-1, 1);
 pub const BOTTOM_RIGHT: Point = Point::new(1, 1);
 
+pub const CARDINALS: [Point; 4] = [UP, DOWN, LEFT, RIGHT];
 pub const ALL_DIRECTIONS: [Point; 8] =
     [
         TOP_LEFT,

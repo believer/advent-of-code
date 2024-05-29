@@ -37,34 +37,42 @@ You try to ask why they can't just use a weather machine ("not powerful enough")
 | [Day 19: Aplenty](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_19.rs)                        | 🌟  |     331208 | 🌟  | 121464316215623 |
 | [Day 20: Pulse Propagation](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_20.rs)              | 🌟  |  812609846 | 🌟  | 245114020323037 |
 | [Day 21: Step Counter](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_21.rs)                   | 🌟  |       3788 | 🌟  | 631357596621921 |
+| Day 22: Sand Slabs                                                                                                       |     |            |     |                 |
+| [Day 23: A Long Walk](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_23.rs)                    | 🌟  |       2042 | 🌟  |            6466 |
+| Day 24: Never Tell Me The Odds                                                                                           |     |            |     |                 |
+| [Day 25: Snowverload](https://github.com/believer/advent-of-code/blob/master/rust/2023/src/day_25.rs)                    | 🌟  |     548960 |     |               - |
 
 ## Performance
 
 With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automatic benchmarking using [Criterion](https://github.com/bheisler/criterion.rs). Computer is a MacBook Pro M1 Pro, 32 GB RAM.
 
-| Day |        #1 |            #2 | Improvement\*         |             Generator |
-| --- | --------: | ------------: | --------------------- | --------------------: |
-| 1   |  40.71 µs |     834.08 µs | - / `-31.03%`         |             441.01 ns |
-| 2   | 764.68 ns |       1.75 µs |                       |              47.81 µs |
-| 3   | 159.61 µs |       7.72 ms | `-8.44%` / -          |              86.83 µs |
-| 4   |  12.85 µs |      13.09 µs | `-48.41%` / `-46.64%` |             230.06 µs |
-| 5   |   1.27 µs | 238.45 ms\*\* | `-16.72%` / `-98.87%` |              16.85 µs |
-| 6   | 101.59 ns |      15.04 ms |                       | 257.13 ns / 204.78 ns |
-| 7   | 364.18 µs |     359.22 µs |                       | 318.23 µs / 324.96 µs |
-| 8   | 926.09 µs |       4.47 ms | - / `-70.69%`         |             137.33 µs |
-| 9   |   2.44 µs |       2.55 µs |                       |             434.07 µs |
-| 10  |  65.17 µs |      65.01 µs | `-96.02%` / -         |              50.84 µs |
-| 11  | 846.06 µs |     844.65 µs |                       |              75.21 µs |
-| 12  |   2.65 ms |     149.26 ms |                       |             113.10 µs |
-| 13  |  24.87 µs |      17.61 µs |                       |             169.28 µs |
-| 14  |  19.30 µs |      20.22 µs |                       |              23.69 µs |
-| 15  |  19.99 µs |     210.88 µs | - / `-28.20%`         |             241.12 µs |
-| 16  |   1.41 ms |      49.39 ms |                       |              30.33 µs |
-| 17  |  64.21 ms |     173.37 ms |                       |              47.36 µs |
-| 18  | 837.59 ns |     844.43 ns |                       |   41.30 µs / 73.29 µs |
-| 19  |  55.27 µs |     160.90 µs |                       |             213.26 µs |
-| 20  |   5.22 ms |      24.31 ms |                       |              24.13 µs |
-| 21  |   1.48 ms |      24.29 ms |                       |              43.68 µs |
+| Day |            #1 |            #2 | Improvement\*         |             Generator |
+| --- | ------------: | ------------: | --------------------- | --------------------: |
+| 1   |      40.71 µs |     834.08 µs | - / `-31.03%`         |             441.01 ns |
+| 2   |     764.68 ns |       1.75 µs |                       |              47.81 µs |
+| 3   |     159.61 µs |       7.72 ms | `-8.44%` / -          |              86.83 µs |
+| 4   |      12.85 µs |      13.09 µs | `-48.41%` / `-46.64%` |             230.06 µs |
+| 5   |       1.27 µs | 238.45 ms\*\* | `-16.72%` / `-98.87%` |              16.85 µs |
+| 6   |     101.59 ns |      15.04 ms |                       | 257.13 ns / 204.78 ns |
+| 7   |     364.18 µs |     359.22 µs |                       | 318.23 µs / 324.96 µs |
+| 8   |     926.09 µs |       4.47 ms | - / `-70.69%`         |             137.33 µs |
+| 9   |       2.44 µs |       2.55 µs |                       |             434.07 µs |
+| 10  |      65.17 µs |      65.01 µs | `-96.02%` / -         |              50.84 µs |
+| 11  |     846.06 µs |     844.65 µs |                       |              75.21 µs |
+| 12  |       2.65 ms |     149.26 ms |                       |             113.10 µs |
+| 13  |      24.87 µs |      17.61 µs |                       |             169.28 µs |
+| 14  |      19.30 µs |      20.22 µs |                       |              23.69 µs |
+| 15  |      19.99 µs |     210.88 µs | - / `-28.20%`         |             241.12 µs |
+| 16  |       1.41 ms |      49.39 ms |                       |              30.33 µs |
+| 17  |      64.21 ms |     173.37 ms |                       |              47.36 µs |
+| 18  |     837.59 ns |     844.43 ns |                       |   41.30 µs / 73.29 µs |
+| 19  |      55.27 µs |     160.90 µs |                       |             213.26 µs |
+| 20  |       5.22 ms |      24.31 ms |                       |              24.13 µs |
+| 21  |       1.48 ms |      24.29 ms |                       |              43.68 µs |
+| 22  |               |               |                       |                       |
+| 23  | 568.16 ms\*\* |    9.32 s\*\* |                       |              43.68 µs |
+| 24  |               |               |                       |                       |
+| 25  |            ms |             - |                       |                    µs |
 
 \* compared to first solution<br/>
 \*\* slow, didn't benchmark. Value comes from running the solver.

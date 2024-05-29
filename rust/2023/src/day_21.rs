@@ -1,4 +1,4 @@
-//! Day 21
+//! Day 21: Step Counter
 //!
 //! Part one wasn't that hard using a breadth-first search (BFS). Part two
 //! is trickier, but we can use a similar approach. We can also make some
