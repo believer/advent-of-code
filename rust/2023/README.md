@@ -1,6 +1,6 @@
 # Advent of Code 2023
 
-Rust is still fun, but I might also do some [Go](https://github.com/believer/advent-of-code/tree/master/go/2023) and also [TypeScript with Bun](https://github.com/believer/advent-of-code/tree/master/typescript/2023) this year. Will try to pair with ChatGPT to expand my knowledge on the algorithms that can be used.
+Rust is still fun, but I might do some [Go](https://github.com/believer/advent-of-code/tree/master/go/2023) and also [TypeScript with Bun](https://github.com/believer/advent-of-code/tree/master/typescript/2023) this year. Will try to pair with ChatGPT to expand my knowledge on the algorithms that can be used.
 
 ## Advent of Code 2023 Story
 
