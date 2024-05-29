@@ -88,7 +88,7 @@ impl Program {
         loop {
             match instructions.get(self.step) {
                 Some(instruction) => {
-                    if self.seen.get(&instruction.id).is_some() {
+                    if self.seen.contains(&instruction.id) {
                         return Some(self.accumulator);
                     }
 
@@ -113,7 +113,7 @@ impl Program {
                         return Some(self.accumulator);
                     }
 
-                    if self.seen.get(&instruction.id).is_some() {
+                    if self.seen.contains(&instruction.id) {
                         return None;
                     }
 
