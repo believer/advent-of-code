@@ -14,6 +14,7 @@ This is challenging for me, but I also really really like it. I don't do these t
 
 | Year | Language         | Main solution | Link                     |
 | ---- | ---------------- | ------------- | ------------------------ |
+| 2024 | Go               | X             | [Link](/go/2024)         |
 | 2023 | Rust             | X             | [Link](/rust/2023)       |
 | 2023 | Go               |               | [Link](/go/2023)         |
 | 2023 | TypeScript (Bun) |               | [Link](/typescript/2023) |
