@@ -159,9 +159,11 @@ pub fn solve_part_01(input: &Input) -> u64 {
                         };
 
                         for output in module.outputs.iter() {
-                            queue.push_back(
-                                (module.name.clone(), output.clone(), next_pulse.clone())
-                            );
+                            queue.push_back((
+                                module.name.clone(),
+                                output.clone(),
+                                next_pulse.clone(),
+                            ));
                         }
                     }
                 }
@@ -177,9 +179,11 @@ pub fn solve_part_01(input: &Input) -> u64 {
                         };
 
                         for output in module.outputs.iter() {
-                            queue.push_back(
-                                (module.name.clone(), output.clone(), next_pulse.clone())
-                            );
+                            queue.push_back((
+                                module.name.clone(),
+                                output.clone(),
+                                next_pulse.clone(),
+                            ));
                         }
                     }
                 }
@@ -230,89 +234,88 @@ pub fn solve_part_02(input: &Input) -> u64 {
         .map(|module| (module.name.clone(), 0))
         .collect::<HashMap<String, u64>>();
 
-    let fewest_button_presses =
-        'outer: loop {
-            button_presses += 1;
+    let fewest_button_presses = 'outer: loop {
+        button_presses += 1;
 
-            let mut queue = VecDeque::new();
+        let mut queue = VecDeque::new();
 
-            for target in input.broadcast_target.iter() {
-                queue.push_back(("broadcaster".to_string(), target.clone(), Memory::Low));
+        for target in input.broadcast_target.iter() {
+            queue.push_back(("broadcaster".to_string(), target.clone(), Memory::Low));
+        }
+
+        while let Some((from, to, pulse)) = queue.pop_front() {
+            // Handles unknown modules
+            if !modules.contains_key(&to) {
+                continue;
+            };
+
+            let module = modules.get_mut(&to).unwrap();
+
+            // We only care about the module that feeds into "hp"
+            // and we only care about high pulses
+            if module.name == feed.name && pulse == Memory::High {
+                seen.entry(from.clone()).and_modify(|x| *x += 1);
+
+                // Update the cycle length
+                if !cycle_lengths.contains_key(&from) {
+                    cycle_lengths.insert(from.clone(), button_presses);
+                }
+
+                // We've seen all the modules that feed into "hp"
+                // Calculate the LCM of the cycle lengths and break
+                if seen.values().all(|x| *x == 1) {
+                    break 'outer cycle_lengths
+                        .values()
+                        .fold(1, |acc, x| math::lcm(acc, *x as i64));
+                }
             }
 
-            while let Some((from, to, pulse)) = queue.pop_front() {
-                // Handles unknown modules
-                if !modules.contains_key(&to) {
-                    continue;
-                };
+            match module.module_type {
+                ModuleType::FlipFlop => {
+                    if pulse == Memory::Low {
+                        module.memory = if module.memory == Memory::Off {
+                            Memory::On
+                        } else {
+                            Memory::Off
+                        };
+                        let next_pulse = if module.memory == Memory::On {
+                            Memory::High
+                        } else {
+                            Memory::Low
+                        };
 
-                let module = modules.get_mut(&to).unwrap();
-
-                // We only care about the module that feeds into "hp"
-                // and we only care about high pulses
-                if module.name == feed.name && pulse == Memory::High {
-                    seen.entry(from.clone()).and_modify(|x| *x += 1);
-
-                    // Update the cycle length
-                    if !cycle_lengths.contains_key(&from) {
-                        cycle_lengths.insert(from.clone(), button_presses);
-                    }
-
-                    // We've seen all the modules that feed into "hp"
-                    // Calculate the LCM of the cycle lengths and break
-                    if seen.values().all(|x| *x == 1) {
-                        break 'outer cycle_lengths
-                            .values()
-                            .fold(1, |acc, x| math::lcm(acc, *x as i64));
+                        for output in module.outputs.iter() {
+                            queue.push_back((
+                                module.name.clone(),
+                                output.clone(),
+                                next_pulse.clone(),
+                            ));
+                        }
                     }
                 }
 
-                match module.module_type {
-                    ModuleType::FlipFlop => {
-                        if pulse == Memory::Low {
-                            module.memory = if module.memory == Memory::Off {
-                                Memory::On
-                            } else {
-                                Memory::Off
-                            };
-                            let next_pulse = if module.memory == Memory::On {
-                                Memory::High
-                            } else {
-                                Memory::Low
-                            };
+                ModuleType::Conjuction => {
+                    if let Memory::Map(ref mut map) = module.memory {
+                        map.insert(from, pulse.clone());
 
-                            for output in module.outputs.iter() {
-                                queue.push_back((
-                                    module.name.clone(),
-                                    output.clone(),
-                                    next_pulse.clone(),
-                                ));
-                            }
-                        }
-                    }
+                        let next_pulse = if map.values().all(|x| *x == Memory::High) {
+                            Memory::Low
+                        } else {
+                            Memory::High
+                        };
 
-                    ModuleType::Conjuction => {
-                        if let Memory::Map(ref mut map) = module.memory {
-                            map.insert(from, pulse.clone());
-
-                            let next_pulse = if map.values().all(|x| *x == Memory::High) {
-                                Memory::Low
-                            } else {
-                                Memory::High
-                            };
-
-                            for output in module.outputs.iter() {
-                                queue.push_back((
-                                    module.name.clone(),
-                                    output.clone(),
-                                    next_pulse.clone(),
-                                ));
-                            }
+                        for output in module.outputs.iter() {
+                            queue.push_back((
+                                module.name.clone(),
+                                output.clone(),
+                                next_pulse.clone(),
+                            ));
                         }
                     }
                 }
             }
-        };
+        }
+    };
 
     fewest_button_presses as u64
 }

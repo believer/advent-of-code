@@ -19,19 +19,18 @@ pub struct Input {
 
 #[aoc_generator(day12)]
 pub fn input_generator(input: &str) -> Input {
-    let data =
-        input
-            .lines()
-            .map(|line| {
-                let (springs, damaged) = line.split_once(' ').expect("Invalid input");
-                let damaged = damaged
-                    .split(',')
-                    .map(|s| s.parse::<usize>().unwrap())
-                    .collect::<Vec<_>>();
+    let data = input
+        .lines()
+        .map(|line| {
+            let (springs, damaged) = line.split_once(' ').expect("Invalid input");
+            let damaged = damaged
+                .split(',')
+                .map(|s| s.parse::<usize>().unwrap())
+                .collect::<Vec<_>>();
 
-                (springs.to_string(), damaged)
-            })
-            .collect::<Vec<_>>();
+            (springs.to_string(), damaged)
+        })
+        .collect::<Vec<_>>();
 
     Input { data }
 }

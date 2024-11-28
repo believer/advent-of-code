@@ -175,16 +175,15 @@ pub fn solve_part_02(input: &Input) -> u64 {
     // Seeds are ranges in chunks of 2, start and length.
     // This creates a vector of ranges. Not like the first implementation
     // where I created a flat_map with ALL of the range values.
-    let seed_ranges =
-        seeds
-            .chunks(2)
-            .map(|chunk| {
-                let start = chunk[0];
-                let end = start + chunk[1];
+    let seed_ranges = seeds
+        .chunks(2)
+        .map(|chunk| {
+            let start = chunk[0];
+            let end = start + chunk[1];
 
-                start..end
-            })
-            .collect::<Vec<_>>();
+            start..end
+        })
+        .collect::<Vec<_>>();
 
     // Start at location 1 and traverse the maps backwards until we find a
     // valid seed value. This is the lowest end location.

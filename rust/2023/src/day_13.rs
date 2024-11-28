@@ -35,11 +35,10 @@ pub fn input_generator(input: &str) -> Input {
 
 fn find_line(grid: &Grid<u8>, rocks: &[Point], direction: Line) -> i32 {
     // Get the range of the line and the number of smudges
-    let (mut range, target) =
-        match direction {
-            Line::Vertical(t) => (1..grid.width, t),
-            Line::Horizontal(t) => (1..grid.height, t),
-        };
+    let (mut range, target) = match direction {
+        Line::Vertical(t) => (1..grid.width, t),
+        Line::Horizontal(t) => (1..grid.height, t),
+    };
 
     // Find the first line that matches the criteria
     let line = range.find(|&x| {

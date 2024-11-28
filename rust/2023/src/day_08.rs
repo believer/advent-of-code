@@ -122,12 +122,11 @@ pub fn solve_part_02(input: &Input) -> i64 {
         instructions,
     } = input;
     let mut all_steps = Vec::new();
-    let start_locations =
-        instructions
-            .keys()
-            .filter(|i| i.ends_with('A'))
-            .cloned()
-            .collect::<Vec<String>>();
+    let start_locations = instructions
+        .keys()
+        .filter(|i| i.ends_with('A'))
+        .cloned()
+        .collect::<Vec<String>>();
 
     for start in start_locations {
         let mut location = start.clone();
