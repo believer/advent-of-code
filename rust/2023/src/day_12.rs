@@ -49,7 +49,7 @@ pub fn possible_arrangements(springs: &[u8], damaged: &[usize]) -> usize {
     for position in (0..num_springs).rev() {
         for (group, &j) in damaged.iter().enumerate() {
             for count in 0..=j {
-                for &c in &[b'.', b'#'] {
+                for &c in b".#" {
                     // If the current character is not a '?' or the character type
                     // we're looking for, then we can skip it.
                     if ![c, b'?'].contains(&springs[position]) {
