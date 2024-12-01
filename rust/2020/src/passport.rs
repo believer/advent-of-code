@@ -90,15 +90,15 @@ impl Passport {
             return false;
         }
 
-        if self.byr.map_or(true, |v| !(1920..=2002).contains(&v)) {
+        if self.byr.is_none_or(|v| !(1920..=2002).contains(&v)) {
             return false;
         }
 
-        if self.iyr.map_or(true, |v| !(2010..=2020).contains(&v)) {
+        if self.iyr.is_none_or(|v| !(2010..=2020).contains(&v)) {
             return false;
         }
 
-        if self.eyr.map_or(true, |v| !(2020..=2030).contains(&v)) {
+        if self.eyr.is_none_or(|v| !(2020..=2030).contains(&v)) {
             return false;
         }
 
