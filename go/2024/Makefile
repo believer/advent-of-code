@@ -1,4 +1,4 @@
-.PHONE: create-day test run get-input
+.PHONE: create-day test bench run get-input
 
 PADDED_DAY = $(shell printf "%02d" $(DAY))
 
@@ -9,6 +9,11 @@ create-day:
 
 test:
 	@go test ./puzzles/day$(PADDED_DAY)
+
+# run=XXX provide a regex that doesn't match any tests, effectively
+# skipping the testing phase and just running benchmarks
+bench:
+	@go test -run=XXX -bench=. ./puzzles/day$(PADDED_DAY)
 
 run:
 	@go run ./puzzles/day$(PADDED_DAY)/main.go

@@ -16,6 +16,14 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | ----------------------------------------------------------------------------------------------------------------- | --- | --------: | --- | --------: |
 | [Day 1: Historian Hysteria](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day01/main.go) | 🌟  |   1666427 | 🌟  |  24316233 |
 
+## Benchmarks
+
+| Day |           #1 |           #2 | Improvement\* |
+| --- | -----------: | -----------: | ------------- |
+| 1   | 120513 ns/op | 415683 ns/op |               |
+
+Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#hdr-Benchmarks) package.. Computer is a 2021 MacBook Pro M1 Pro, 32 GB RAM.
+
 ## Running
 
 Run a day
