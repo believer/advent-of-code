@@ -10,6 +10,7 @@ import (
 	"github.com/believer/aoc-2024/utils/files"
 )
 
+// Will come back later on today and see what I can improve on
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
 	fmt.Println("Part 2: ", part2("input.txt"))
