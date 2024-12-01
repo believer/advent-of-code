@@ -116,7 +116,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        year: ['2022']
+        year: ['2022', '2023', '2024']
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
