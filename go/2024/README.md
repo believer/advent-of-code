@@ -22,7 +22,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 
 | Day |           #1 |           #2 | Improvement\*      |
 | --- | -----------: | -----------: | ------------------ |
-| 1   | 116264 ns/op | 155479 ns/op | `3,53%` / `68,43%` |
+| 1   | 116264 ns/op | 131233 ns/op | `3,53%` / `68,43%` |
 
 \* compared to first solution
 
