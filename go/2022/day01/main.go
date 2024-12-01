@@ -1,10 +1,11 @@
 package main
 
 import (
-	"beliver/advent-of-code/common"
 	"log"
 	"sort"
 	"strings"
+
+	"github.com/believer/aoc-2022/common"
 )
 
 func Part1(elfs []string) int {
