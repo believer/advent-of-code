@@ -38,23 +38,16 @@ func part1(name string) int {
 func part2(name string) int {
 	left, right := historicallySignificantLocations(name)
 
-	total := 0
 	appears := map[int]int{}
 
 	for _, r := range right {
-		_, ok := appears[r]
-
-		if ok {
-			appears[r] += 1
-		} else {
-			appears[r] = 1
-		}
+		appears[r]++
 	}
 
-	for _, l := range left {
-		v, ok := appears[l]
+	total := 0
 
-		if ok {
+	for _, l := range left {
+		if v, ok := appears[l]; ok {
 			total += l * v
 		}
 	}
@@ -71,11 +64,8 @@ func historicallySignificantLocations(name string) ([]int, []int) {
 		// Split string by any number of whitespace
 		row := strings.Fields(line)
 
-		l := utils.MustIntFromString(row[0])
-		r := utils.MustIntFromString(row[1])
-
-		left = append(left, l)
-		right = append(right, r)
+		left = append(left, utils.MustIntFromString(row[0]))
+		right = append(right, utils.MustIntFromString(row[1]))
 	}
 
 	return left, right
