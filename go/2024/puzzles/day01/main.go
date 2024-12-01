@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/believer/aoc-2024/utils"
@@ -17,32 +16,12 @@ func main() {
 }
 
 func part1(name string) int {
-	lines := files.ReadLines(name)
-	left := []int{}
-	right := []int{}
-	total := 0
-
-	for _, line := range lines {
-		row := strings.Split(line, "   ")
-
-		l, err := strconv.Atoi(row[0])
-
-		if err != nil {
-			panic(err)
-		}
-
-		r, err := strconv.Atoi(row[1])
-
-		if err != nil {
-			panic(err)
-		}
-
-		left = append(left, l)
-		right = append(right, r)
-	}
+	left, right := historicallySignificantLocations(name)
 
 	slices.Sort(left)
 	slices.Sort(right)
+
+	total := 0
 
 	for i, l := range left {
 		total += utils.Abs(l - right[i])
@@ -52,40 +31,46 @@ func part1(name string) int {
 }
 
 func part2(name string) int {
-	lines := files.ReadLines(name)
-	left := []int{}
-	right := []int{}
+	left, right := historicallySignificantLocations(name)
+
 	total := 0
+	appears := map[int]int{}
+
+	for _, r := range right {
+		_, ok := appears[r]
+
+		if ok {
+			appears[r] += 1
+		} else {
+			appears[r] = 1
+		}
+	}
+
+	for _, l := range left {
+		v, ok := appears[l]
+
+		if ok {
+			total += l * v
+		}
+	}
+
+	return total
+}
+
+func historicallySignificantLocations(name string) ([]int, []int) {
+	lines := files.ReadLines(name)
+	left := make([]int, len(lines))
+	right := make([]int, len(lines))
 
 	for _, line := range lines {
-		row := strings.Split(line, "   ")
+		row := strings.Fields(line)
 
-		l, err := strconv.Atoi(row[0])
-
-		if err != nil {
-			panic(err)
-		}
-
-		r, err := strconv.Atoi(row[1])
-
-		if err != nil {
-			panic(err)
-		}
+		l := utils.MustIntFromString(row[0])
+		r := utils.MustIntFromString(row[1])
 
 		left = append(left, l)
 		right = append(right, r)
 	}
 
-	for _, l := range left {
-		appears := 0
-		for _, r := range right {
-			if l == r {
-				appears += 1
-			}
-		}
-
-		total += l * appears
-	}
-
-	return total
+	return left, right
 }

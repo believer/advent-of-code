@@ -20,9 +20,15 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 | Day |           #1 |           #2 | Improvement\* |
 | --- | -----------: | -----------: | ------------- |
-| 1   | 120513 ns/op | 415683 ns/op |               |
+| 1   | 120513 ns/op | 155479 ns/op | - / `62.6%`   |
 
 Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#hdr-Benchmarks) package.. Computer is a 2021 MacBook Pro M1 Pro, 32 GB RAM.
+
+### Previous solutions
+
+| Day |  #1 |           #2 | Improvement | Link                                                                                                                           |
+| --: | --: | -----------: | ----------: | ------------------------------------------------------------------------------------------------------------------------------ |
+|   1 |   - | 415683 ns/op |             | [Link](https://github.com/believer/advent-of-code/blob/47447cc17fffe6994d4b54c4cb815e698b3f5605/go/2024/puzzles/day01/main.go) |
 
 ## Running
 

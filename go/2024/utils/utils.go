@@ -20,7 +20,7 @@ func Sum(nums []int) int {
 	return total
 }
 
-func FromString(s string) int {
+func MustIntFromString(s string) int {
 	v, err := strconv.Atoi(s)
 
 	if err != nil {
