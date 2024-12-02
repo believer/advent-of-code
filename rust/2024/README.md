@@ -4,9 +4,11 @@ Main solutions are in [Go](https://github.com/believer/advent-of-code/tree/maste
 
 ## Days
 
-| Day                                                                                                        | #1  | #1 Answer | #2  | #2 Answer |
-| ---------------------------------------------------------------------------------------------------------- | --- | --------: | --- | --------: |
-| [Day 1: Historian Hysteria](https://github.com/believer/advent-of-code/blob/master/rust/2024/src/day01.rs) | 🌟  |   1666427 | 🌟  |  24316233 |
+| Day                                                                                                         | #1  | #1 Answer | #2  | #2 Answer |
+| ----------------------------------------------------------------------------------------------------------- | --- | --------: | --- | --------: |
+| [Day 1: Historian Hysteria](https://github.com/believer/advent-of-code/blob/master/rust/2024/src/day_01.rs) | 🌟  |   1666427 | 🌟  |  24316233 |
+
+## Performance
 
 | Day |       #1 |       #2 |
 | --- | -------: | -------: |
