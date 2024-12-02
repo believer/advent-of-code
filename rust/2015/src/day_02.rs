@@ -31,12 +31,6 @@ A present with dimensions 1x1x10 requires 2*1 + 2*10 + 2*10 = 42 square feet of 
 All numbers in the elves' list are in feet. How many total square feet of wrapping paper should they order?
 
 */
-// Your puzzle answer was
-/// ```
-/// use advent_of_code_2015::day_02::*;
-/// let data = include_str!("../input/2015/day2.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 1586300);
-/// ```
 #[aoc(day2, part1)]
 pub fn solve_part_01(input: &[(u32, u32, u32)]) -> u32 {
     input.iter().fold(0, |sum, (length, width, height)| {
@@ -62,12 +56,6 @@ A present with dimensions 1x1x10 requires 1+1+1+1 = 4 feet of ribbon to wrap the
 
 How many total feet of ribbon should they order?
  */
-// Your puzzle answer was
-/// ```
-/// use advent_of_code_2015::day_02::*;
-/// let data = include_str!("../input/2015/day2.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 3737498);
-/// ```
 #[aoc(day2, part2)]
 pub fn solve_part_02(input: &[(u32, u32, u32)]) -> u32 {
     input.iter().fold(0, |sum, (length, width, height)| {

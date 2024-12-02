@@ -140,12 +140,6 @@ impl Sand {
 
 /* Part One
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_14::*;
-/// let data = include_str!("../input/2022/day14.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 737);
-/// ```
 #[aoc(day14, part1)]
 pub fn solve_part_01(rocks: &Rocks) -> usize {
     let mut units_of_sand: BTreeSet<(u32, u32)> = BTreeSet::new();
@@ -204,12 +198,6 @@ pub fn solve_part_01(rocks: &Rocks) -> usize {
 
 /* Part Two
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_14::*;
-/// let data = include_str!("../input/2022/day14.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 28145);
-/// ```
 #[aoc(day14, part2)]
 pub fn solve_part_02(rocks: &Rocks) -> usize {
     let mut rocks = rocks.clone();

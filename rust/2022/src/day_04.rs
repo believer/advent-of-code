@@ -66,12 +66,6 @@ pub fn input_generator(input: &str) -> Groups {
  *
  * Find how many pairs overlap completely. In the example above, the answer would be 2.
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_04::*;
-/// let data = include_str!("../input/2022/day4.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 550);
-/// ```
 #[aoc(day4, part1)]
 pub fn solve_part_01(groups: &Groups) -> u32 {
     let mut overlap = 0;
@@ -94,12 +88,6 @@ pub fn solve_part_01(groups: &Groups) -> u32 {
  *
  * In this part, we need to find the pairs that partially overlap.
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_04::*;
-/// let data = include_str!("../input/2022/day4.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 931);
-/// ```
 #[aoc(day4, part2)]
 pub fn solve_part_02(groups: &Groups) -> u32 {
     let mut overlap = 0;

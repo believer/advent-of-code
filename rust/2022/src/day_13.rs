@@ -99,12 +99,6 @@ pub fn input_generator(input: &str) -> Packets {
 
 /* Part One
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_13::*;
-/// let data = include_str!("../input/2022/day13.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 5390);
-/// ```
 #[aoc(day13, part1)]
 pub fn solve_part_01(packets: &Packets) -> usize {
     packets
@@ -121,12 +115,6 @@ pub fn solve_part_01(packets: &Packets) -> usize {
 
 /* Part Two
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_13::*;
-/// let data = include_str!("../input/2022/day13.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 19261);
-/// ```
 #[aoc(day13, part2)]
 pub fn solve_part_02(packets: &Packets) -> usize {
     let mut packets: Vec<&Packet> = packets

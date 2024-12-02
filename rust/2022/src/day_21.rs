@@ -88,12 +88,6 @@ fn evaluate_monkeys(numbers: &mut AllNumbers, equations: &mut AllEquations) {
 
 /* Part One
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_21::*;
-/// let data = include_str!("../input/2022/day21.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 170237589447588);
-/// ```
 #[aoc(day21, part1)]
 pub fn solve_part_01(monkeys: &Input) -> isize {
     let (mut numbers, mut equations) = monkeys.clone();
@@ -105,12 +99,6 @@ pub fn solve_part_01(monkeys: &Input) -> isize {
 
 /* Part Two
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_21::*;
-/// let data = include_str!("../input/2022/day21.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 3712643961892);
-/// ```
 #[aoc(day21, part2)]
 pub fn solve_part_02(monkeys: &Input) -> isize {
     let (mut numbers, mut equations) = monkeys.clone();

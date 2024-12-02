@@ -83,12 +83,6 @@ pub fn input_generator_part_02(input: &str) -> Vec<Vec<String>> {
  *
  * For each group, count the number of questions to which anyone answered "yes". What is the sum of those counts?
  */
-///your puzzle answer was.
-/// ```
-/// use advent_of_code_2020::day_06::*;
-/// let input = include_str!("../input/2020/day6.txt");
-/// assert_eq!(solve_part_01(&input_generator_part_01(input)), 6778);
-/// ```
 #[aoc(day6, part1)]
 pub fn solve_part_01(input: &[String]) -> usize {
     input
@@ -131,12 +125,6 @@ pub fn solve_part_01(input: &[String]) -> usize {
  *
  * For each group, count the number of questions to which everyone answered "yes". What is the sum of those counts?
  */
-///your puzzle answer was.
-/// ```
-/// use advent_of_code_2020::day_06::*;
-/// let input = include_str!("../input/2020/day6.txt");
-/// assert_eq!(solve_part_02(&input_generator_part_02(input)), 3406);
-/// ```
 #[aoc(day6, part2)]
 pub fn solve_part_02(input: &[Vec<String>]) -> usize {
     input.iter().fold(0, |acc, group| {
@@ -168,7 +156,7 @@ pub fn solve_part_02(input: &[Vec<String>]) -> usize {
 mod tests {
     use super::*;
 
-    /// Test example data on part 1
+    // Test example data on part 1
     #[test]
     fn sample_01() {
         let data = "
@@ -191,7 +179,7 @@ b
 
         assert_eq!(solve_part_01(&input_generator_part_01(data)), 11)
     }
-    /// Test example data on part 2
+    // Test example data on part 2
     #[test]
     fn sample_02() {
         let data = "

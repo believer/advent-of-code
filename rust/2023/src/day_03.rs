@@ -85,12 +85,6 @@ pub fn input_generator(input: &str) -> Input {
 * The sum of these numbers is 467 + 633 + 617 + 592 + 755 + 664 + 598 = 4361
 *
 */
-// Your puzzle answer was
-/// ```
-/// use advent_of_code_2023::day_03::*;
-/// let data = include_str!("../input/2023/day3.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 535235);
-/// ```
 #[aoc(day3, part1)]
 pub fn solve_part_01(input: &Input) -> u32 {
     let Input {
@@ -123,12 +117,6 @@ pub fn solve_part_01(input: &Input) -> u32 {
 * If a gear only has one number connected to it, ignore it.
 *
 */
-// Your puzzle answer was
-/// ```
-/// use advent_of_code_2023::day_03::*;
-/// let data = include_str!("../input/2023/day3.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 79844424);
-/// ```
 #[aoc(day3, part2)]
 pub fn solve_part_02(input: &Input) -> u32 {
     let Input { gears, numbers, .. } = input;

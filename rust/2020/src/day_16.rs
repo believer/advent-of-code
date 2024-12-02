@@ -118,12 +118,6 @@ pub fn input_generator(input: &str) -> Train {
  *
  * Consider the validity of the nearby tickets you scanned. What is your ticket scanning error rate?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_16::*;
-/// let input = include_str!("../input/2020/day16.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)), 26980);
-/// ```
 #[aoc(day16, part1)]
 pub fn solve_part_01(train: &Train) -> u32 {
     let mut error = 0;
@@ -148,17 +142,6 @@ pub fn solve_part_01(train: &Train) -> u32 {
 
     error
 }
-
-// /// Your puzzle answer was
-// /// ```
-// /// use advent_of_code_2020::day_16::*;
-// /// let input = include_str!("../input/2020/day16.txt");
-// /// assert_eq!(solve_part_02(&input_generator(input)), 37385);
-// /// ```
-// #[aoc(day16, part2)]
-// pub fn solve_part_02(_input: &[usize]) -> usize {
-//     0
-// }
 
 #[cfg(test)]
 mod tests {

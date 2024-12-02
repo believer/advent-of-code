@@ -104,12 +104,6 @@ pub fn input_generator(input: &str) -> Input {
  *
  * Move each crate to the correct stack. One at a time.
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_05::*;
-/// let data = include_str!("../input/2022/day5.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), "PSNRGBTFT");
-/// ```
 #[aoc(day5, part1)]
 pub fn solve_part_01((stacks, instructions): &Input) -> String {
     let mut stacks = stacks.clone();
@@ -133,12 +127,6 @@ pub fn solve_part_01((stacks, instructions): &Input) -> String {
  *
  * Move each crate to the correct stack. All at once.
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_05::*;
-/// let data = include_str!("../input/2022/day5.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), "BNTZFPMMW");
-/// ```
 #[aoc(day5, part2)]
 pub fn solve_part_02((stacks, instructions): &Input) -> String {
     let mut stacks = stacks.clone();

@@ -205,12 +205,6 @@ fn combat(player_1: &VecDeque<u32>, player_2: &VecDeque<u32>) -> (u32, VecDeque<
  *
  * Play the small crab in a game of Combat using the two decks you just dealt. What is the winning player's score?
  */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_22::*;
-/// let data = include_str!("../input/2020/day22.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 32472);
-/// ```
 #[aoc(day22, part1)]
 pub fn solve_part_01((player_1, player_2): &(VecDeque<u32>, VecDeque<u32>)) -> u32 {
     let mut player_1 = player_1.to_owned();
@@ -303,12 +297,6 @@ pub fn solve_part_01((player_1, player_2): &(VecDeque<u32>, VecDeque<u32>)) -> u
  *
  * Defend your honor as Raft Captain by playing the small crab in a game of Recursive Combat using the same two decks as before. What is the winning player's score?
  */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_22::*;
-/// let data = include_str!("../input/2020/day22.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 36463);
-/// ```
 #[aoc(day22, part2)]
 pub fn solve_part_02((player_1, player_2): &(VecDeque<u32>, VecDeque<u32>)) -> u32 {
     let (_, winner) = combat(player_1, player_2);

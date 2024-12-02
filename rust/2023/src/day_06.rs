@@ -80,14 +80,6 @@ fn race(races: &[(u64, u64)]) -> u64 {
 * covered is the speed times the remaining time.
 *
 */
-// Your puzzle answer was
-/*
-/// ```
-/// use advent_of_code_2023::day_06::*;
-/// let data = include_str!("../input/2023/day6.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 861300);
-/// ```
-*/
 #[aoc(day6, part1)]
 pub fn solve_part_01(input: &Input) -> u64 {
     race(&input.races)
@@ -99,13 +91,6 @@ pub fn solve_part_01(input: &Input) -> u64 {
 * two large numbers. This means we only have one race, but since the time
 * is longer, we have a lot more ways to beat the record.
 *
-*/
-/*
-/// ```
-/// use advent_of_code_2023::day_06::*;
-/// let data = include_str!("../input/2023/day6.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 28101347);
-/// ```
 */
 #[aoc(day6, part2)]
 pub fn solve_part_02(input: &Input) -> u64 {

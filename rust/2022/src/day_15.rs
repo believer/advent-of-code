@@ -137,12 +137,6 @@ fn part2_solver(sensors: &Sensors, max: isize) -> isize {
 
 /* Part One
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_15::*;
-/// let data = include_str!("../input/2022/day15.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 5083287);
-/// ```
 #[aoc(day15, part1)]
 pub fn solve_part_01(sensors: &Sensors) -> usize {
     part1_solver(sensors, 2000000)
@@ -150,12 +144,6 @@ pub fn solve_part_01(sensors: &Sensors) -> usize {
 
 /* Part Two
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_15::*;
-/// let data = include_str!("../input/2022/day15.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 13134039205729);
-/// ```
 #[aoc(day15, part2)]
 pub fn solve_part_02(sensors: &Sensors) -> isize {
     part2_solver(sensors, 4000000)

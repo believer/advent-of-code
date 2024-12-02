@@ -79,12 +79,6 @@ pub fn input_generator(input: &str) -> Input {
 // Part One
 //
 // Find the shortest path from a provided start position to an end position.
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_12::*;
-/// let data = include_str!("../input/2022/day12.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 420);
-/// ```
 #[aoc(day12, part1)]
 pub fn solve_part_01((matrix, start, end): &Input) -> usize {
     // Find the shortest path from start to end
@@ -101,12 +95,6 @@ pub fn solve_part_01((matrix, start, end): &Input) -> usize {
 // First, let's find all position with the lowest cost. Then, we can
 // run Dijkstra's algorithm from each of these positions and save the
 // amount of steps needed. Then we pick the shortest path.
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_12::*;
-/// let data = include_str!("../input/2022/day12.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 414);
-/// ```
 #[aoc(day12, part2)]
 pub fn solve_part_02((matrix, _start, end): &Input) -> usize {
     // Find all starting points at the lowest cost

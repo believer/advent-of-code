@@ -47,12 +47,6 @@ pub fn input_generator(input: &str) -> Game {
  * Following the example that would give us a score of 15 ((6 + 2) + (0 + 1) + (3 + 3))
  * What is our total score if we follow this strategy guide?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_02::*;
-/// let data = include_str!("../input/2022/day2.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 13809);
-/// ```
 #[aoc(day2, part1)]
 pub fn solve_part_01(game: &Game) -> u32 {
     game.iter()
@@ -94,12 +88,6 @@ pub fn solve_part_01(game: &Game) -> u32 {
  * We have to change our strategy to match the desired outcome.
  * What is our total score if we follow this guide?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_02::*;
-/// let data = include_str!("../input/2022/day2.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 12316);
-/// ```
 #[aoc(day2, part2)]
 pub fn solve_part_02(game: &Game) -> u32 {
     game.iter()

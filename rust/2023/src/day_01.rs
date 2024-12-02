@@ -47,11 +47,11 @@ fn sum_first_and_last_digit(line: &str) -> u32 {
 *
 */
 // Your puzzle answer was
-/// ```
-/// use advent_of_code_2023::day_01::*;
-/// let data = include_str!("../input/2023/day1.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 54304);
-/// ```
+ ```
+ use advent_of_code_2023::day_01::*;
+ let data = include_str!("../input/2023/day1.txt");
+ assert_eq!(solve_part_01(&input_generator(data)), 54304);
+ ```
 #[aoc(day1, part1)]
 pub fn solve_part_01(input: &str) -> u32 {
     input.lines().map(sum_first_and_last_digit).sum()
@@ -89,11 +89,11 @@ const TRANSLATIONS: [(&str, &str); 9] = [
 *
 */
 // Your puzzle answer was
-/// ```
-/// use advent_of_code_2023::day_01::*;
-/// let data = include_str!("../input/2023/day1.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 54418);
-/// ```
+ ```
+ use advent_of_code_2023::day_01::*;
+ let data = include_str!("../input/2023/day1.txt");
+ assert_eq!(solve_part_02(&input_generator(data)), 54418);
+ ```
 #[aoc(day1, part2)]
 pub fn solve_part_02(input: &str) -> u32 {
     input

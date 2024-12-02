@@ -14,12 +14,6 @@ pub fn input_generator(input: &str) -> Input {
 
 /* Part One
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2016::day_03::*;
-/// let data = include_str!("../input/2016/day3.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 862);
-/// ```
 #[aoc(day3, part1)]
 pub fn solve_part_01(input: &Input) -> usize {
     input

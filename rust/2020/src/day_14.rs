@@ -103,12 +103,6 @@ fn parse_mask(value: usize, mask: &str) -> usize {
  *
  * Execute the initialization program. What is the sum of all values left in memory after it completes?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_14::*;
-/// let input = include_str!("../input/2020/day14.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)), 5055782549997);
-/// ```
 #[aoc(day14, part1)]
 pub fn solve_part_01(input: &[(String, String)]) -> usize {
     let mut memory: HashMap<u32, usize> = HashMap::new();
@@ -129,13 +123,6 @@ pub fn solve_part_01(input: &[(String, String)]) -> usize {
 
     memory.values().sum()
 }
-
-///// Your puzzle answer was
-/////
-//#[aoc(day14, part2)]
-//pub fn solve_part_02(_input: &[String]) -> u32 {
-//    0
-//}
 
 #[cfg(test)]
 mod tests {

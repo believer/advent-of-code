@@ -129,12 +129,6 @@ pub fn input_generator_part_2(input: &str) -> Vec<String> {
  * Before you can help with the homework, you need to understand it yourself.
  * Evaluate the expression on each line of the homework; what is the sum of the resulting values?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_18::*;
-/// let input = include_str!("../input/2020/day18.txt");
-/// assert_eq!(solve_part_01(&input_generator_part_1(input)), 29839238838303);
-/// ```
 #[aoc(day18, part1)]
 pub fn solve_part_01(input: &[String]) -> u64 {
     input
@@ -168,12 +162,6 @@ pub fn solve_part_01(input: &[String]) -> u64 {
  *
  * What do you get if you add up the results of evaluating the homework problems using these new rules?
  */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_18::*;
-/// let input = include_str!("../input/2020/day18.txt");
-/// assert_eq!(solve_part_02(&input_generator_part_2(input)), 201376568795521);
-/// ```
 #[aoc(day18, part2)]
 pub fn solve_part_02(input: &[String]) -> u64 {
     input

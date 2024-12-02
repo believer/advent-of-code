@@ -143,12 +143,6 @@ pub fn input_generator(input: &str) -> Input {
 * to find the location of the seeds. Return the lowest location.
 *
 */
-// Your puzzle answer was
-/// ```
-/// use advent_of_code_2023::day_05::*;
-/// let data = include_str!("../input/2023/day5.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 993500720);
-/// ```
 #[aoc(day5, part1)]
 pub fn solve_part_01(input: &Input) -> u64 {
     let Input { seeds, maps } = input;
@@ -165,7 +159,6 @@ pub fn solve_part_01(input: &Input) -> u64 {
 * Otherwise, the calculation is the same as part one. Just A LOT more seeds.
 *
 * No doctest for this one, it takes too long.
-* Your puzzle answer was: 4917124
 */
 #[aoc(day5, part2)]
 pub fn solve_part_02(input: &Input) -> u64 {

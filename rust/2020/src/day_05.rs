@@ -97,12 +97,6 @@ fn find_airplane_seats(input: &[String]) -> Vec<u32> {
  * BBFFBBFRLL: row 102, column 4, seat ID 820.
  * As a sanity check, look through your list of boarding passes. What is the highest seat ID on a boarding pass?
  */
-///your puzzle answer was.
-/// ```
-/// use advent_of_code_2020::day_05::*;
-/// let input = include_str!("../input/2020/day5.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)), 866);
-/// ```
 #[aoc(day5, part1)]
 pub fn solve_part_01(input: &[String]) -> u32 {
     find_airplane_seats(input).into_iter().max().unwrap()
@@ -120,12 +114,6 @@ pub fn solve_part_01(input: &[String]) -> u32 {
  *
  * What is the ID of your seat?
 */
-///your puzzle answer was.
-/// ```
-/// use advent_of_code_2020::day_05::*;
-/// let input = include_str!("../input/2020/day5.txt");
-/// assert_eq!(solve_part_02(&input_generator(input)), 583);
-/// ```
 #[aoc(day5, part2)]
 pub fn solve_part_02(input: &[String]) -> u32 {
     let mut my_seat = 0;
@@ -145,7 +133,7 @@ pub fn solve_part_02(input: &[String]) -> u32 {
 mod tests {
     use super::*;
 
-    /// Test example data on part 1
+    // Test example data on part 1
     #[test]
     fn sample_01() {
         let data = "FBFBBFFRLR";

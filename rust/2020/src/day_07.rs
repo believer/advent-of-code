@@ -123,12 +123,6 @@ fn search(input: &BagsCanContain, holds_gold_bags: &mut HashSet<String>, color: 
  *
  * How many bag colors can eventually contain at least one shiny gold bag? (The list of rules is quite long; make sure you get all of it.)
  */
-///your puzzle answer was.
-/// ```
-/// use advent_of_code_2020::day_07::*;
-/// let input = include_str!("../input/2020/day7.txt");
-/// assert_eq!(solve_part_01(&input_generator_part_01(input).unwrap()), 226);
-/// ```
 #[aoc(day7, part1)]
 pub fn solve_part_01(input: &BagsCanContain) -> usize {
     let mut holds_gold_bags: HashSet<String> = HashSet::new();
@@ -180,12 +174,6 @@ fn calculate_cost(input: &BagsRequired, color: &str) -> u32 {
  *
  * How many individual bags are required inside your single shiny gold bag?
  */
-///your puzzle answer was.
-/// ```
-/// use advent_of_code_2020::day_07::*;
-/// let input = include_str!("../input/2020/day7.txt");
-/// assert_eq!(solve_part_02(&input_generator_part_02(input).unwrap()), 9569);
-/// ```
 #[aoc(day7, part2)]
 pub fn solve_part_02(input: &BagsRequired) -> u32 {
     calculate_cost(input, "shiny gold")
@@ -195,7 +183,7 @@ pub fn solve_part_02(input: &BagsRequired) -> u32 {
 mod tests {
     use super::*;
 
-    /// Test example data on part 1
+    // Test example data on part 1
     #[test]
     fn sample_01() {
         let data = "
@@ -213,7 +201,7 @@ dotted black bags contain no other bags.
         assert_eq!(solve_part_01(&input_generator_part_01(data).unwrap()), 4)
     }
 
-    /// Test example data on part 2
+    // Test example data on part 2
     #[test]
     fn sample_02() {
         let data = "

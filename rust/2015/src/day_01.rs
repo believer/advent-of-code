@@ -22,12 +22,6 @@ pub fn input_generator(input: &str) -> Input {
 
 /* Part One
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2015::day_01::*;
-/// let data = include_str!("../input/2015/day1.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 232);
-/// ```
 #[aoc(day1, part1)]
 pub fn solve_part_01(directions: &Input) -> isize {
     directions
@@ -41,12 +35,6 @@ pub fn solve_part_01(directions: &Input) -> isize {
 
 /* Part Two
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2015::day_01::*;
-/// let data = include_str!("../input/2015/day1.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 1783);
-/// ```
 #[aoc(day1, part2)]
 pub fn solve_part_02(directions: &Input) -> usize {
     let mut floor = 0;

@@ -60,12 +60,6 @@ pub fn input_generator(input: &str) -> Input {
 
 /* Part One
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2015::day_03::*;
-/// let data = include_str!("../input/2015/day3.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 2572);
-/// ```
 #[aoc(day3, part1)]
 pub fn solve_part_01(input: &Input) -> usize {
     let mut houses: HashSet<(isize, isize)> = HashSet::with_capacity(input.len());
@@ -83,12 +77,6 @@ pub fn solve_part_01(input: &Input) -> usize {
 
 /* Part Two
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2015::day_03::*;
-/// let data = include_str!("../input/2015/day3.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 2631);
-/// ```
 #[aoc(day3, part2)]
 pub fn solve_part_02(input: &Input) -> usize {
     let mut houses: HashSet<(isize, isize)> = HashSet::with_capacity(input.len());

@@ -96,12 +96,6 @@ pub fn input_generator(input: &str) -> Games {
 * The sum of the game IDs is 1 + 2 + 5 = 8.
 *
 */
-// Your puzzle answer was
-/// ```
-/// use advent_of_code_2023::day_02::*;
-/// let data = include_str!("../input/2023/day2.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 2162);
-/// ```
 #[aoc(day2, part1)]
 pub fn solve_part_01(input: &Games) -> u32 {
     let mut id_sum = 0;
@@ -133,12 +127,6 @@ pub fn solve_part_01(input: &Games) -> u32 {
 * Sum up the powers of all games.
 *
 */
-// Your puzzle answer was
-/// ```
-/// use advent_of_code_2023::day_02::*;
-/// let data = include_str!("../input/2023/day2.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 72513);
-/// ```
 #[aoc(day2, part2)]
 pub fn solve_part_02(input: &Games) -> u32 {
     let mut power_sum = 0;

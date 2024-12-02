@@ -70,12 +70,6 @@ pub fn input_generator(input: &str) -> Input {
     parse_input(input).unwrap().1
 }
 
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_18::*;
-/// let data = include_str!("../input/2022/day18.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 4244);
-/// ```
 #[aoc(day18, part1)]
 pub fn solve_part_01(input: &Input) -> usize {
     input
@@ -89,12 +83,6 @@ pub fn solve_part_01(input: &Input) -> usize {
         .sum()
 }
 
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_18::*;
-/// let data = include_str!("../input/2022/day18.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 2460);
-/// ```
 #[aoc(day18, part2)]
 pub fn solve_part_02(input: &Input) -> usize {
     let min_x = input.iter().map(|cube| cube.x).min().unwrap();

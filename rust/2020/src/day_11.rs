@@ -258,11 +258,6 @@ fn simulate_seating<F: Fn(&[Vec<SeatingSystem>], usize, usize) -> bool>(
  * Simulate your seating area by applying the seating rules repeatedly until no seats change state.
  * How many seats end up occupied?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_11::*;
-/// let input = include_str!("../input/2020/day11.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)), 2183);
 #[aoc(day11, part1)]
 pub fn solve_part_01(grid: &[Vec<SeatingSystem>]) -> usize {
     simulate_seating(grid, should_swap_part_1)
@@ -394,12 +389,6 @@ pub fn solve_part_01(grid: &[Vec<SeatingSystem>]) -> usize {
  * Given the new visibility method and the rule change for occupied seats becoming empty,
  * once equilibrium is reached, how many seats end up occupied?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_11::*;
-/// let input = include_str!("../input/2020/day11.txt");
-/// assert_eq!(solve_part_02(&input_generator(input)), 1990);
-/// ```
 #[aoc(day11, part2)]
 pub fn solve_part_02(grid: &[Vec<SeatingSystem>]) -> usize {
     simulate_seating(grid, should_swap_part_2)
@@ -409,7 +398,7 @@ pub fn solve_part_02(grid: &[Vec<SeatingSystem>]) -> usize {
 mod tests {
     use super::*;
 
-    /// Test example data on part 1
+    // Test example data on part 1
     #[test]
     fn test_example_part_1() {
         let data = "L.LL.LL.LL
@@ -427,7 +416,7 @@ L.LLLLL.LL
         assert_eq!(solve_part_01(&input_generator(data)), 37)
     }
 
-    /// Test example data on part 2
+    // Test example data on part 2
     #[test]
     fn test_example_part_2() {
         let data = "L.LL.LL.LL

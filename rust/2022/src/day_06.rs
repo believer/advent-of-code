@@ -40,12 +40,6 @@ fn find_start_of_message_marker(input: &Input, window_size: usize) -> usize {
  * so this isn't it. The first window that's unique is 'jpqm' and the end of that marker
  * is found on position 7.
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_06::*;
-/// let data = include_str!("../input/2022/day6.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 1300);
-/// ```
 #[aoc(day6, part1)]
 pub fn solve_part_01(input: &Input) -> usize {
     find_start_of_message_marker(input, 4)
@@ -55,12 +49,6 @@ pub fn solve_part_01(input: &Input) -> usize {
  *
  * The window size is now 14, but everything else is the same.
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_06::*;
-/// let data = include_str!("../input/2022/day6.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 3986);
-/// ```
 #[aoc(day6, part2)]
 pub fn solve_part_02(input: &Input) -> usize {
     find_start_of_message_marker(input, 14)

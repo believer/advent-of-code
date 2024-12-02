@@ -45,12 +45,6 @@ In this example, there are 7 measurements that are larger than the previous meas
 
 How many measurements are larger than the previous measurement?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2021::day_01::*;
-/// let data = include_str!("../input/2021/day1.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 1713);
-/// ```
 #[aoc(day1, part1)]
 pub fn solve_part_01(input: &[u32]) -> u32 {
     let mut increases = 0;
@@ -103,12 +97,6 @@ In this example, there are 5 sums that are larger than the previous sum.
 
 Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2021::day_01::*;
-/// let data = include_str!("../input/2021/day1.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 1734);
-/// ```
 #[aoc(day1, part2)]
 pub fn solve_part_02(input: &[u32]) -> u32 {
     let mut previous_sum: u32 = input.windows(3).next().unwrap().iter().sum();

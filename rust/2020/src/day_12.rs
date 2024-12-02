@@ -167,11 +167,6 @@ pub fn input_generator(input: &str) -> Vec<Instruction> {
  * Figure out where the navigation instructions lead. What is the Manhattan distance
  * between that location and the ship's starting position?
  */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_12::*;
-/// let input = include_str!("../input/2020/day12.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)), 1294);
 #[aoc(day12, part1)]
 pub fn solve_part_01(instructions: &[Instruction]) -> u32 {
     let mut ship = Ship::new();
@@ -225,12 +220,6 @@ pub fn solve_part_01(instructions: &[Instruction]) -> u32 {
  *
  * Figure out where the navigation instructions actually lead. What is the Manhattan distance between that location and the ship's starting position?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_12::*;
-/// let input = include_str!("../input/2020/day12.txt");
-/// assert_eq!(solve_part_02(&input_generator(input)), 20592);
-/// ```
 #[aoc(day12, part2)]
 pub fn solve_part_02(instructions: &[Instruction]) -> u32 {
     let mut waypoint = Waypoint::new(10, 1);
@@ -255,7 +244,7 @@ pub fn solve_part_02(instructions: &[Instruction]) -> u32 {
 mod tests {
     use super::*;
 
-    /// Test example data on part 1
+    // Test example data on part 1
     #[test]
     fn test_example_part_1() {
         let data = "F10
@@ -267,7 +256,7 @@ F11";
         assert_eq!(solve_part_01(&input_generator(data)), 25)
     }
 
-    /// Test example data on part 2
+    // Test example data on part 2
     #[test]
     fn test_example_part_2() {
         let data = "F10

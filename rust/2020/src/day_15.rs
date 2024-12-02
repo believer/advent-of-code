@@ -89,12 +89,6 @@ fn solver(input: &[usize], end_on_turn: usize) -> usize {
  * Given the starting numbers 3,1,2, the 2020th number spoken is 1836.
  * Given your starting numbers, what will be the 2020th number spoken?
  */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_15::*;
-/// let input = include_str!("../input/2020/day15.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)), 1696);
-/// ```
 #[aoc(day15, part1)]
 pub fn solve_part_01(input: &[usize]) -> usize {
     solver(input, 2020)
@@ -115,13 +109,6 @@ pub fn solve_part_01(input: &[usize]) -> usize {
  *
  * Given your starting numbers, what will be the 30000000th number spoken?
 */
-// Ignored test, takes too long
-// /// Your puzzle answer was
-// /// ```
-// /// use advent_of_code_2020::day_15::*;
-// /// let input = include_str!("../input/2020/day15.txt");
-// /// assert_eq!(solve_part_02(&input_generator(input)), 37385);
-// /// ```
 #[aoc(day15, part2)]
 pub fn solve_part_02(input: &[usize]) -> usize {
     solver(input, 30_000_000)

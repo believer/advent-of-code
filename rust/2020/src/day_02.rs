@@ -9,11 +9,11 @@ use std::ops::RangeInclusive;
 // Fastest, also a very clean solution, seems to be using a RegEx
 
 lazy_static! {
-    /// Input is in the form "1-3 a: abcdef"
+    // Input is in the form "1-3 a: abcdef"
     static ref RE: Regex = Regex::new(r"(\d+)-(\d+) (\w): (\w*)").unwrap();
 }
 
-/// Official Toboggan Corporate Policy
+// Official Toboggan Corporate Policy
 pub struct OTCP {
     password: String,
     policy: char,
@@ -78,12 +78,6 @@ pub fn input_generator(input: &str) -> Vec<OTCP> {
  *
  * How many passwords are valid according to their policies?
 */
-///Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_02::*;
-/// let input = include_str!("../input/2020/day2.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)), 524);
-/// ```
 #[aoc(day2, part1)]
 pub fn solve_part_01(input: &[OTCP]) -> usize {
     input
@@ -117,12 +111,6 @@ pub fn solve_part_01(input: &[OTCP]) -> usize {
  *
  * How many passwords are valid according to the new interpretation of the policies?
 */
-///your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_02::*;
-/// let input = include_str!("../input/2020/day2.txt");
-/// assert_eq!(solve_part_02(&input_generator(input)), 485);
-/// ```
 #[aoc(day2, part2)]
 pub fn solve_part_02(input: &[OTCP]) -> usize {
     input
@@ -141,7 +129,7 @@ pub fn solve_part_02(input: &[OTCP]) -> usize {
 mod tests {
     use super::*;
 
-    /// Test example data on part 1
+    // Test example data on part 1
     #[test]
     fn sample_01() {
         let data = "
@@ -153,7 +141,7 @@ mod tests {
         assert_eq!(solve_part_01(&input_generator(data)), 2)
     }
 
-    /// Test example data on part 2
+    // Test example data on part 2
     #[test]
     fn sample_02() {
         let data = "

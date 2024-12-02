@@ -38,12 +38,6 @@ pub fn input_generator(input: &str) -> Operations {
  * we should add the cycle value * x to the solution. These cycles
  * can happen in the middle of an operation.
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_10::*;
-/// let data = include_str!("../input/2022/day10.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 16880);
-/// ```
 #[aoc(day10, part1)]
 pub fn solve_part_01(operations: &Operations) -> i32 {
     let mut x = 1;
@@ -88,12 +82,6 @@ pub fn solve_part_01(operations: &Operations) -> i32 {
  *
  * The result will be eight capital letters that are spelled out on the CRT.
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_10::*;
-/// let data = include_str!("../input/2022/day10.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), "###..#..#..##..####..##....##.###..###..#..#.#.#..#..#....#.#..#....#.#..#.#..#.#..#.##...#..#...#..#..#....#.###..#..#.#.#..#.#..####..#...####....#.#..#.###..#.#..#.#..#..#.#....#..#.#..#.#..#.#.#..#..#.#..#.#..#.####.#..#..##..###..#..#.");
-/// ```
 #[aoc(day10, part2)]
 pub fn solve_part_02(operations: &Operations) -> String {
     let mut x: isize = 1;

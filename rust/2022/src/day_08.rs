@@ -32,12 +32,6 @@ fn find_inner_trees(input: &Input) -> Vec<Vec<&u32>> {
  *
  * The edges of the forest are always visible, so we can count them first.
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_08::*;
-/// let data = include_str!("../input/2022/day8.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 1684);
-/// ```
 #[aoc(day8, part1)]
 pub fn solve_part_01(input: &Input) -> u32 {
     // We know that the outer most ring of tree are always visible.
@@ -92,12 +86,6 @@ pub fn solve_part_01(input: &Input) -> u32 {
  *
  * The scenic score is 3 * 2 * 1 * 2 = 12
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_08::*;
-/// let data = include_str!("../input/2022/day8.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 486540);
-/// ```
 #[aoc(day8, part2)]
 pub fn solve_part_02(input: &Input) -> u32 {
     let mut scenic_scores: Vec<u32> = vec![];

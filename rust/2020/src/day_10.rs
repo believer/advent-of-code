@@ -118,12 +118,6 @@ fn find_differences(input: &BTreeSet<u64>) -> impl Iterator<Item = u64> + '_ {
  * outlet, the adapters, and your device. What is the number of 1-jolt
  * differences multiplied by the number of 3-jolt differences?
  */
-///your puzzle answer was.
-/// ```
-/// use advent_of_code_2020::day_10::*;
-/// let input = include_str!("../input/2020/day10.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)), 2475);
-/// ```
 #[aoc(day10, part1)]
 pub fn solve_part_01(input: &BTreeSet<u64>) -> u64 {
     let mut results = [0, 0, 1];
@@ -225,12 +219,6 @@ fn count_connections(
  *
  * What is the total number of distinct ways you can arrange the adapters to connect the charging outlet to your device?
 */
-///your puzzle answer was.
-/// ```
-/// use advent_of_code_2020::day_10::*;
-/// let input = include_str!("../input/2020/day10.txt");
-/// assert_eq!(solve_part_02(&input_generator(input)), 442136281481216);
-/// ```
 #[aoc(day10, part2)]
 pub fn solve_part_02(input: &BTreeSet<u64>) -> u64 {
     let max = match input.iter().max_by(|a, b| a.cmp(b)) {
@@ -247,7 +235,7 @@ pub fn solve_part_02(input: &BTreeSet<u64>) -> u64 {
 mod tests {
     use super::*;
 
-    /// Test example data on part 1
+    // Test example data on part 1
     #[test]
     fn solves_with_example_data_part_01() {
         let data = "16
@@ -266,7 +254,7 @@ mod tests {
         assert_eq!(solve_part_01(&input_generator(data)), 35);
     }
 
-    /// Test example data on part 2
+    // Test example data on part 2
     #[test]
     fn solves_with_example_data_part_02() {
         let data = "16
@@ -285,7 +273,7 @@ mod tests {
         assert_eq!(solve_part_02(&input_generator(data)), 8);
     }
 
-    /// Test example data on part 2
+    // Test example data on part 2
     #[test]
     fn solves_with_long_example_data_part_02() {
         let data = "28

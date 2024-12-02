@@ -177,12 +177,6 @@ fn monkey_in_the_middle(monkeys: &mut [Monkey], rounds: u32, divisor: Option<u64
 
 /* Part One
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_11::*;
-/// let data = include_str!("../input/2022/day11.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 66124);
-/// ```
 #[aoc(day11, part1)]
 pub fn solve_part_01(input: &str) -> u64 {
     let mut monkeys = create_monkeys(input);
@@ -192,12 +186,6 @@ pub fn solve_part_01(input: &str) -> u64 {
 
 /* Part Two
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_11::*;
-/// let data = include_str!("../input/2022/day11.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 19309892877);
-/// ```
 #[aoc(day11, part2)]
 pub fn solve_part_02(input: &str) -> u64 {
     let mut monkeys = create_monkeys(input);

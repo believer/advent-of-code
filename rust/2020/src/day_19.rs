@@ -216,12 +216,6 @@ fn count_matches(program: &Program) -> usize {
  *
  * How many messages completely match rule 0?
  */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_19::*;
-/// let input = include_str!("../input/2020/day19.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)), 122);
-/// ```
 #[aoc(day19, part1)]
 pub fn solve_part_01(program: &Program) -> usize {
     count_matches(program)
@@ -313,12 +307,6 @@ pub fn solve_part_01(program: &Program) -> usize {
  *
  * After updating rules 8 and 11, how many messages completely match rule 0?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_19::*;
-/// let input = include_str!("../input/2020/day19.txt");
-/// assert_eq!(solve_part_02(&input_generator(input)), 287);
-/// ```
 #[aoc(day19, part2)]
 pub fn solve_part_02(program: &Program) -> usize {
     let mut program = program.to_owned();

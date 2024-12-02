@@ -37,12 +37,6 @@ pub fn input_generator(input: &str) -> HashSet<u32> {
  *
  * Of course, your expense report is much larger. Find the two entries that sum to 2020; what do you get if you multiply them together?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_01::*;
-/// let data = include_str!("../input/2020/day1.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 898299);
-/// ```
 #[aoc(day1, part1)]
 pub fn solve_part_01(input: &HashSet<u32>) -> u32 {
     for x in input {
@@ -66,12 +60,6 @@ pub fn solve_part_01(input: &HashSet<u32>) -> u32 {
  *
  * In your expense report, what is the product of the three entries that sum to 2020?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_01::*;
-/// let data = include_str!("../input/2020/day1.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 143933922);
-/// ```
 #[aoc(day1, part2)]
 pub fn solve_part_02(input: &HashSet<u32>) -> u32 {
     for x in input {

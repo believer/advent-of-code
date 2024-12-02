@@ -260,12 +260,6 @@ fn hyper_cube_neighbors() -> Vec<(i32, i32, i32, i32)> {
  * Starting with your given initial configuration, simulate six cycles.
  * How many cubes are left in the active state after the sixth cycle?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_17::*;
-/// let input = include_str!("../input/2020/day17.txt");
-/// assert_eq!(solve_part_01(&input_generator_part_01(input)), 242);
-/// ```
 #[aoc(day17, part1)]
 pub fn solve_part_01(input: &[Cube]) -> usize {
     let mut cube = input.to_owned();
@@ -308,8 +302,6 @@ pub fn solve_part_01(input: &[Cube]) -> usize {
  *
  * Starting with your given initial configuration, simulate six cycles in a 4-dimensional space.
  * How many cubes are left in the active state after the sixth cycle?
- *
- * NO DOC TEST because slow
 */
 #[aoc(day17, part2)]
 pub fn solve_part_02(input: &[HyperCube]) -> usize {

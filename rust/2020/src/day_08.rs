@@ -204,12 +204,6 @@ pub fn input_generator(input: &str) -> Vec<Instruction> {
  *
  * Run your copy of the boot code. Immediately before any instruction is executed a second time, what value is in the accumulator?
 */
-///your puzzle answer was.
-/// ```
-/// use advent_of_code_2020::day_08::*;
-/// let input = include_str!("../input/2020/day8.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)).unwrap(), 1489);
-/// ```
 #[aoc(day8, part1)]
 pub fn solve_part_01(input: &[Instruction]) -> Option<i32> {
     Program::new().calculate_to_error(input)
@@ -262,12 +256,6 @@ pub fn solve_part_01(input: &[Instruction]) -> Option<i32> {
  * Fix the program so that it terminates normally by changing exactly one jmp (to nop)
  * or nop (to jmp). What is the value of the accumulator after the program terminates?
 */
-///your puzzle answer was.
-/// ```
-/// use advent_of_code_2020::day_08::*;
-/// let input = include_str!("../input/2020/day8.txt");
-/// assert_eq!(solve_part_02(&input_generator(input)).unwrap(), 1539);
-/// ```
 #[aoc(day8, part2)]
 pub fn solve_part_02(input: &[Instruction]) -> Option<i32> {
     for i in 0..input.len() {
@@ -310,7 +298,7 @@ pub fn solve_part_02(input: &[Instruction]) -> Option<i32> {
 mod tests {
     use super::*;
 
-    /// Test example data on part 1
+    // Test example data on part 1
     #[test]
     fn sample_01() {
         let data = "
@@ -328,7 +316,7 @@ acc +6
         assert_eq!(solve_part_01(&input_generator(data)).unwrap(), 5)
     }
 
-    /// Test example data on part 2
+    // Test example data on part 2
     #[test]
     fn sample_02() {
         let data = "

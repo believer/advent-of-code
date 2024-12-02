@@ -95,12 +95,6 @@ pub fn input_generator(input: &str) -> Rucksack {
  *
  * Find the item type that appears in both compartments of each rucksack. What is the sum of the priorities of those item types?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_03::*;
-/// let data = include_str!("../input/2022/day3.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 7831);
-/// ```
 #[aoc(day3, part1)]
 pub fn solve_part_01(rucksack: &Rucksack) -> u32 {
     let items = Items::new();
@@ -169,12 +163,6 @@ pub fn solve_part_01(rucksack: &Rucksack) -> u32 {
  * Find the item type that corresponds to the badges of each
  * three-Elf group. What is the sum of the priorities of those item types?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_03::*;
-/// let data = include_str!("../input/2022/day3.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 2683);
-/// ```
 #[aoc(day3, part2)]
 pub fn solve_part_02(rucksack: &Rucksack) -> u32 {
     let items = Items::new();

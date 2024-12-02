@@ -81,12 +81,6 @@ pub fn input_generator_part_02(input: &str) -> Vec<Passport> {
  * Count the number of valid passports - those that have all required fields.
  * Treat cid as optional. In your batch file, how many passports are valid?
 */
-///your puzzle answer was.
-/// ```
-/// use advent_of_code_2020::day_04::*;
-/// let input = include_str!("../input/2020/day4.txt");
-/// assert_eq!(solve_part_01(&input_generator_part_01(input)), 200);
-/// ```
 #[aoc(day4, part1)]
 pub fn solve_part_01(input: &[Passport]) -> usize {
     input
@@ -165,12 +159,6 @@ pub fn solve_part_01(input: &[Passport]) -> usize {
  * Count the number of valid passports - those that have all required fields and valid values.
  * Continue to treat cid as optional. In your batch file, how many passports are valid?
 */
-///your puzzle answer was.
-/// ```
-/// use advent_of_code_2020::day_04::*;
-/// let input = include_str!("../input/2020/day4.txt");
-/// assert_eq!(solve_part_02(&input_generator_part_02(input)), 116);
-/// ```
 #[aoc(day4, part2)]
 pub fn solve_part_02(input: &[Passport]) -> usize {
     input.iter().filter(|passport| passport.is_valid()).count()
@@ -180,7 +168,7 @@ pub fn solve_part_02(input: &[Passport]) -> usize {
 mod tests {
     use super::*;
 
-    /// Test example data on part 1
+    // Test example data on part 1
     #[test]
     fn sample_01() {
         let data = "
@@ -202,7 +190,7 @@ iyr:2011 ecl:brn hgt:59in
         assert_eq!(solve_part_01(&input_generator_part_01(data)), 2)
     }
 
-    /// Test example data on part 2
+    // Test example data on part 2
     #[test]
     fn sample_data_invalid_02() {
         let data = "

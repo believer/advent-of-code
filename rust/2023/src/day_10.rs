@@ -84,11 +84,11 @@ pub fn input_generator(input: &str) -> Input {
     Input { grid, start }
 }
 
-/// Find how many points are enclosed by the loop. The loop is a polygon, so we can use
-/// the Shoelace formula to calculate the area. Then we use Pick's theorem to find the
-/// number of interior points.
-/// https://en.wikipedia.org/wiki/Shoelace_formula
-/// https://en.wikipedia.org/wiki/Pick%27s_theorem
+// Find how many points are enclosed by the loop. The loop is a polygon, so we can use
+// the Shoelace formula to calculate the area. Then we use Pick's theorem to find the
+// number of interior points.
+// https://en.wikipedia.org/wiki/Shoelace_formula
+// https://en.wikipedia.org/wiki/Pick%27s_theorem
 pub fn solver(input: &Input) -> (i32, i32) {
     let Input { grid, start } = input;
     let determinant = |a: Point, b: Point| a.x * b.y - a.y * b.x;
@@ -161,13 +161,6 @@ pub fn solver(input: &Input) -> (i32, i32) {
 * Follow pipes along a grid and find the furthest point from the start.
 *
 */
-/// Your puzzle answer was
-///
-/// ```
-/// use advent_of_code_2023::day_10::*;
-/// let data = include_str!("../input/2023/day10.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 6882);
-/// ```
 #[aoc(day10, part1)]
 pub fn solve_part_01(input: &Input) -> i32 {
     solver(input).0
@@ -178,25 +171,12 @@ pub fn solve_part_01(input: &Input) -> i32 {
 * Find how many points are enclosed by the loop.
 *
 */
-/// ```
-/// use advent_of_code_2023::day_10::*;
-/// let data = include_str!("../input/2023/day10.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 491);
-/// ```
 #[aoc(day10, part2)]
 pub fn solve_part_02(input: &Input) -> i32 {
     solver(input).1
 }
 
-/// First solution using BFS
-///
-/// Your puzzle answer was
-///
-/// ```
-/// use advent_of_code_2023::day_10::*;
-/// let data = include_str!("../input/2023/day10.txt");
-/// assert_eq!(solve_part_01_bfs(&input_generator(data)), 6882);
-/// ```
+// First solution using BFS
 pub fn solve_part_01_bfs(input: &Input) -> u64 {
     let Input { grid, start } = input;
     let mut visited: HashSet<Point> = HashSet::new();

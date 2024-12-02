@@ -116,23 +116,11 @@ fn find_weakness(input: &[u64], preamble: usize) -> Option<u64> {
  *
  * What is the first number that does not have this property?
 */
-///your puzzle answer was.
-/// ```
-/// use advent_of_code_2020::day_09::*;
-/// let input = include_str!("../input/2020/day9.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)).unwrap(), 21806024);
-/// ```
 #[aoc(day9, part1)]
 pub fn solve_part_01(input: &[u64]) -> Option<u64> {
     find_broken_number(input, 25)
 }
 
-///your puzzle answer was.
-/// ```
-/// use advent_of_code_2020::day_09::*;
-/// let input = include_str!("../input/2020/day9.txt");
-/// assert_eq!(solve_part_02(&input_generator(input)).unwrap(), 2986195);
-/// ```
 #[aoc(day9, part2)]
 pub fn solve_part_02(input: &[u64]) -> Option<u64> {
     find_weakness(input, 25)
@@ -142,7 +130,7 @@ pub fn solve_part_02(input: &[u64]) -> Option<u64> {
 mod tests {
     use super::*;
 
-    /// Test example data on part 1
+    // Test example data on part 1
     #[test]
     fn find_broken_number_for_sample() {
         let data = "35
@@ -170,7 +158,7 @@ mod tests {
         assert_eq!(find_broken_number(&input_generator(data), 5).unwrap(), 127)
     }
 
-    /// Test example data on part 2
+    // Test example data on part 2
     #[test]
     fn find_weakness_for_sample() {
         let data = "35

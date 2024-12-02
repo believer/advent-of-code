@@ -84,12 +84,6 @@ pub fn input_generator(input: &str) -> (Vec<String>, BTreeMap<String, String>) {
  *
  * Determine which ingredients cannot possibly contain any of the allergens in your list. How many times do any of those ingredients appear?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_21::*;
-/// let data = include_str!("../input/2020/day21.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 2517);
-/// ```
 #[aoc(day21, part1)]
 pub fn solve_part_01((foods, allergens): &(Vec<String>, BTreeMap<String, String>)) -> usize {
     let allergens = allergens
@@ -119,12 +113,6 @@ pub fn solve_part_01((foods, allergens): &(Vec<String>, BTreeMap<String, String>
  *
  * Time to stock your raft with supplies. What is your canonical dangerous ingredient list?
  */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_21::*;
-/// let data = include_str!("../input/2020/day21.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), "rhvbn,mmcpg,kjf,fvk,lbmt,jgtb,hcbdb,zrb");
-/// ```
 #[aoc(day21, part2)]
 pub fn solve_part_02((_, allergens): &(Vec<String>, BTreeMap<String, String>)) -> String {
     allergens.iter().map(|(_, i)| i).join(",")

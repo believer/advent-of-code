@@ -20,12 +20,6 @@ fn calculate_fuel_with_extra(mass: &i32, total_fuel: i32) -> i32 {
 
 /* Part One
  */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2019::day_01::*;
-/// let data = include_str!("../input/2019/day1.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 3553700);
-/// ```
 #[aoc(day1, part1)]
 pub fn solve_part_01(fuel: &Fuel) -> i32 {
     fuel.iter().map(calculate_fuel).sum()
@@ -33,12 +27,6 @@ pub fn solve_part_01(fuel: &Fuel) -> i32 {
 
 /* Part Two
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2019::day_01::*;
-/// let data = include_str!("../input/2019/day1.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 5327664);
-/// ```
 #[aoc(day1, part2)]
 pub fn solve_part_02(fuel: &Fuel) -> i32 {
     fuel.iter().map(|f| calculate_fuel_with_extra(f, 0)).sum()

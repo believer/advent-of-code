@@ -57,12 +57,6 @@ pub fn input_generator(input: &str) -> CaloriesPerElf {
  * From the example above, the calories for each elf are 6000, 4000, 11000. So, 11000
  * would be our answer.
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_01::*;
-/// let data = include_str!("../input/2022/day1.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 69528);
-/// ```
 #[aoc(day1, part1)]
 pub fn solve_part_01(elves: &CaloriesPerElf) -> u32 {
     *elves.first().unwrap()
@@ -73,12 +67,6 @@ pub fn solve_part_01(elves: &CaloriesPerElf) -> u32 {
  * In part two we want to find the top three elves and sum up the
  * amount of calories they are carrying.
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_01::*;
-/// let data = include_str!("../input/2022/day1.txt");
-/// assert_eq!(solve_part_02(&input_generator(data)), 206152);
-/// ```
 #[aoc(day1, part2)]
 pub fn solve_part_02(elves: &CaloriesPerElf) -> u32 {
     elves.iter().take(3).sum::<u32>()

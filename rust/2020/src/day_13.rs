@@ -111,12 +111,6 @@ pub fn input_generator_part_2(input: &str) -> Vec<String> {
  * What is the ID of the earliest bus you can take to the airport multiplied
  * by the number of minutes you'll need to wait for that bus?
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_13::*;
-/// let input = include_str!("../input/2020/day13.txt");
-/// assert_eq!(solve_part_01(&input_generator_part_1(input)).unwrap(), 3246);
-/// ```
 #[aoc(day13, part1)]
 pub fn solve_part_01((timestamp, buses): &(u64, Vec<u64>)) -> Option<u64> {
     (0..)
@@ -202,12 +196,6 @@ pub fn solve_part_01((timestamp, buses): &(u64, Vec<u64>)) -> Option<u64> {
  * What is the earliest timestamp such that all of the listed bus
  * IDs depart at offsets matching their positions in the list?
  */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2020::day_13::*;
-/// let input = include_str!("../input/2020/day13.txt");
-/// assert_eq!(solve_part_02(&input_generator_part_2(input)), 1010182346291467);
-/// ```
 #[aoc(day13, part2)]
 pub fn solve_part_02(buses: &[String]) -> i64 {
     let mut residues = vec![];

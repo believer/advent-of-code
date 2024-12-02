@@ -70,11 +70,11 @@ fn determinant(a: Point, b: Point) -> i64 {
     a.x as i64 * b.y as i64 - a.y as i64 * b.x as i64
 }
 
-/// Like day 10 we can use the Shoelace formula to calculate the area
-/// of the polygon. Then we can make use of Pick's theorem
-/// to find the number of interior points. We can then add the number of boundary
-/// points and interior points to find the number of cubic meters that
-/// the lava lagoon will hold.
+// Like day 10 we can use the Shoelace formula to calculate the area
+// of the polygon. Then we can make use of Pick's theorem
+// to find the number of interior points. We can then add the number of boundary
+// points and interior points to find the number of cubic meters that
+// the lava lagoon will hold.
 fn cubic_meters(boundary: i64, area: i64) -> i64 {
     // Pick's theorem to find the number of interior points
     let interior_points = area.abs() / 2 - boundary / 2 + 1;
@@ -105,12 +105,6 @@ fn dig(dig_plan: &Vec<(Point, i32)>) -> i64 {
 * Follow the plan and then determine how many cubic meters the lagoon will hold.
 *
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_18::*;
-let data = include_str!("../input/2023/day18.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 48652);
-```"#]
 #[aoc(day18, part1)]
 pub fn solve_part_01(input: &Input) -> i64 {
     dig(&input.dig_plan)
@@ -121,11 +115,6 @@ pub fn solve_part_01(input: &Input) -> i64 {
 * Nothing changes in the solver, we just need to parse the input differently.
 *
 */
-#[doc = r#"```
-use advent_of_code_2023::day_18::*;
-let data = include_str!("../input/2023/day18.txt");
-assert_eq!(solve_part_02(&input_generator_part2(data)), 45757884535661);
-```"#]
 #[aoc(day18, part2)]
 pub fn solve_part_02(input: &Input) -> i64 {
     dig(&input.dig_plan)

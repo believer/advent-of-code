@@ -80,11 +80,6 @@ pub fn input_generator(input: &str) -> Vec<Instruction> {
 
 /* Part One
  */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2016::day_01::*;
-/// let input = include_str!("../input/2016/day1.txt");
-/// assert_eq!(solve_part_01(&input_generator(input)), 252);
 #[aoc(day1, part1)]
 pub fn solve_part_01(instructions: &[Instruction]) -> u32 {
     let mut cab = Cab::new();

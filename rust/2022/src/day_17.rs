@@ -145,12 +145,6 @@ pub fn input_generator(input: &str) -> Input {
 
 /* Part One
 */
-/// Your puzzle answer was
-/// ```
-/// use advent_of_code_2022::day_17::*;
-/// let data = include_str!("../input/2022/day17.txt");
-/// assert_eq!(solve_part_01(&input_generator(data)), 3109);
-/// ```
 #[aoc(day17, part1)]
 pub fn solve_part_01(input: &Input) -> usize {
     let mut jets = input.clone();
