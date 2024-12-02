@@ -3,7 +3,7 @@ use std::time::Instant;
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 fn main() -> Result<()> {
-    let input = parse_input(include_str!("../input"));
+    let input = parse_input("input");
 
     println!("Results for Day 1");
     println!("============================");

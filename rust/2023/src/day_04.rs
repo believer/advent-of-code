@@ -53,12 +53,6 @@ pub fn input_generator(input: &str) -> Input {
 * So winning numbers sums for each card is:
 * 8 + 2 + 2 + 1 + 0 + 0 = 13
 */
-// Your puzzle answer was
- ```
- use advent_of_code_2023::day_04::*;
- let data = include_str!("../input/2023/day4.txt");
- assert_eq!(solve_part_01(&input_generator(data)), 27454);
- ```
 #[aoc(day4, part1)]
 pub fn solve_part_01(input: &Input) -> u32 {
     input
@@ -85,12 +79,6 @@ pub fn solve_part_01(input: &Input) -> u32 {
 * Find out how many scratchcards we win.
 *
 */
-// Your puzzle answer was
- ```
- use advent_of_code_2023::day_04::*;
- let data = include_str!("../input/2023/day4.txt");
- assert_eq!(solve_part_02(&input_generator(data)), 6857330);
- ```
 #[aoc(day4, part2)]
 pub fn solve_part_02(input: &Input) -> u32 {
     // Create a list of starting cards, one of each

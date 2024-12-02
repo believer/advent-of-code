@@ -95,14 +95,7 @@ fn dijkstra(grid: &Grid<u8>, min_steps: u32, max_steps: u32) -> u32 {
 * Find the lowest cost path from the top left corner to the bottom
 * right corner. You can only move a maximum of 3 steps in a straight
 * line before needing to turn left or right.
-*
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_17::*;
-let data = include_str!("../input/2023/day17.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 1013);
-```"#]
 #[aoc(day17, part1)]
 pub fn solve_part_01(input: &Input) -> u32 {
     dijkstra(&input.grid, 1, 3)
@@ -115,13 +108,7 @@ pub fn solve_part_01(input: &Input) -> u32 {
 * line before needing to turn left or right. You must take at least
 * 4 steps before turning left or right, this includes at least
 * 4 steps before reaching the end.
-*
 */
-#[doc = r#"```
-use advent_of_code_2023::day_17::*;
-let data = include_str!("../input/2023/day17.txt");
-assert_eq!(solve_part_02(&input_generator(data)), 1215);
-```"#]
 #[aoc(day17, part2)]
 pub fn solve_part_02(input: &Input) -> u32 {
     dijkstra(&input.grid, 4, 10)

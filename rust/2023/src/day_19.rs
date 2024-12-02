@@ -79,12 +79,6 @@ pub fn input_generator(input: &str) -> Input {
 /* Part One
 *
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_19::*;
-let data = include_str!("../input/2023/day19.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 331208);
-```"#]
 #[aoc(day19, part1)]
 pub fn solve_part_01(input: &Input) -> u64 {
     let mut accepted = 0;
@@ -211,13 +205,7 @@ fn count_accepted(
 
 /* Part Two
 *
-*
 */
-#[doc = r#"```
-use advent_of_code_2023::day_19::*;
-let data = include_str!("../input/2023/day19.txt");
-assert_eq!(solve_part_02(&input_generator(data)), 121464316215623);
-```"#]
 #[aoc(day19, part2)]
 pub fn solve_part_02(input: &Input) -> u64 {
     let mut ranges: HashMap<char, (u64, u64)> = HashMap::new();

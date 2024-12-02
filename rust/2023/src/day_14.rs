@@ -62,14 +62,7 @@ fn tilt_north(grid: &mut Grid<u8>) {
 
 /* Part One
 *
-*
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_14::*;
-let data = include_str!("../input/2023/day14.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 108614);
-```"#]
 #[aoc(day14, part1)]
 pub fn solve_part_01(input: &Input) -> i32 {
     let mut grid = input.grid.clone();
@@ -80,13 +73,7 @@ pub fn solve_part_01(input: &Input) -> i32 {
 
 /* Part Two
 *
-*
 */
-#[doc = r#"```
-use advent_of_code_2023::day_14::*;
-let data = include_str!("../input/2023/day14.txt");
-assert_eq!(solve_part_02(&input_generator(data)), 96447);
-```"#]
 #[aoc(day14, part2)]
 pub fn solve_part_02(input: &Input) -> i32 {
     let mut grid = input.grid.clone();

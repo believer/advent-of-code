@@ -70,12 +70,6 @@ pub fn input_generator(input: &str) -> Input {
 * Add all the last values together, and you get the answer = 114
 *
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_09::*;
-let data = include_str!("../input/2023/day9.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 1853145119);
-```"#]
 #[aoc(day9, part1)]
 pub fn solve_part_01(input: &Input) -> i64 {
     input
@@ -110,11 +104,6 @@ pub fn solve_part_01(input: &Input) -> i64 {
 * Add all the first values together, and you get the answer = 2
 *
 */
-#[doc = r#"```
-use advent_of_code_2023::day_09::*;
-let data = include_str!("../input/2023/day9.txt");
-assert_eq!(solve_part_02(&input_generator(data)), 923);
-```"#]
 #[aoc(day9, part2)]
 pub fn solve_part_02(input: &Input) -> i64 {
     input

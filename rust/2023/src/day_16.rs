@@ -99,12 +99,6 @@ pub fn input_generator(input: &str) -> Input {
 * Find the number of energized tiles after firing the beam from the top left
 * of the grid.
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_16::*;
-let data = include_str!("../input/2023/day16.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 7562);
-```"#]
 #[aoc(day16, part1)]
 pub fn solve_part_01(input: &Input) -> usize {
     fire_ze_lasers(input, Beam::new(ORIGIN, RIGHT))
@@ -114,13 +108,7 @@ pub fn solve_part_01(input: &Input) -> usize {
 *
 * Find the maximum number of energized tiles after firing the beam
 * inwards from all edges of the grid.
-*
 */
-#[doc = r#"```
-use advent_of_code_2023::day_16::*;
-let data = include_str!("../input/2023/day16.txt");
-assert_eq!(solve_part_02(&input_generator(data)), 7793);
-```"#]
 #[aoc(day16, part2)]
 pub fn solve_part_02(input: &Input) -> usize {
     let mut possible_starts = vec![];

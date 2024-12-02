@@ -141,7 +141,6 @@ pub fn input_generator(input: &str) -> Input {
 *
 * Given a list of seeds, and a list of maps, walk through the maps
 * to find the location of the seeds. Return the lowest location.
-*
 */
 #[aoc(day5, part1)]
 pub fn solve_part_01(input: &Input) -> u64 {
@@ -157,8 +156,6 @@ pub fn solve_part_01(input: &Input) -> u64 {
 * number is the length of the range.
 *
 * Otherwise, the calculation is the same as part one. Just A LOT more seeds.
-*
-* No doctest for this one, it takes too long.
 */
 #[aoc(day5, part2)]
 pub fn solve_part_02(input: &Input) -> u64 {

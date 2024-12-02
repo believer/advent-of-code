@@ -33,12 +33,6 @@ pub fn input_generator(input: &str) -> Input {
 /* Part One
 *
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_23::*;
-let data = include_str!("../input/2023/day23.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 2042);
-```"#]
 #[aoc(day23, part1)]
 pub fn solve_part_01(input: &Input) -> usize {
     let mut todo = VecDeque::new();

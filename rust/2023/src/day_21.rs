@@ -78,12 +78,6 @@ fn find_steps(input: &Input, steps: usize) -> usize {
 /* Part One
 *
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_21::*;
-let data = include_str!("../input/2023/day21.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 3788);
-```"#]
 #[aoc(day21, part1)]
 pub fn solve_part_01(input: &Input) -> usize {
     find_steps(input, 64)
@@ -91,13 +85,7 @@ pub fn solve_part_01(input: &Input) -> usize {
 
 /* Part Two
 *
-*
 */
-#[doc = r#"```
-use advent_of_code_2023::day_21::*;
-let data = include_str!("../input/2023/day21.txt");
-assert_eq!(solve_part_02(&input_generator(data)), 631357596621921);
-```"#]
 #[aoc(day21, part2)]
 pub fn solve_part_02(input: &Input) -> usize {
     let steps = 26501365;

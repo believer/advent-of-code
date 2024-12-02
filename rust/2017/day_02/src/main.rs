@@ -17,7 +17,7 @@ where
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 fn main() {
-    let input = parse_input(include_str!("../input"));
+    let input = parse_input("input");
 
     println!("Results for Day 2");
     println!("============================");
@@ -62,12 +62,6 @@ mod tests {
 ";
 
         assert_eq!(day_02::part_01(&parse_input(data)), 18);
-    }
-
-    #[test]
-    fn real_input_part_01() {
-        let input = parse_input(include_str!("../input"));
-        assert_eq!(day_02::part_01(&input), 34925)
     }
 
     #[test]

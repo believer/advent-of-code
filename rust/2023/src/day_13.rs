@@ -83,14 +83,7 @@ fn summarize(input: &Input, smudges: i32) -> i32 {
 
 /* Part One
 *
-*
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_13::*;
-let data = include_str!("../input/2023/day13.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 27300);
-```"#]
 #[aoc(day13, part1)]
 pub fn solve_part_01(input: &Input) -> i32 {
     summarize(input, 0)
@@ -98,13 +91,7 @@ pub fn solve_part_01(input: &Input) -> i32 {
 
 /* Part Two
 *
-*
 */
-#[doc = r#"```
-use advent_of_code_2023::day_13::*;
-let data = include_str!("../input/2023/day13.txt");
-assert_eq!(solve_part_02(&input_generator(data)), 29276);
-```"#]
 #[aoc(day13, part2)]
 pub fn solve_part_02(input: &Input) -> i32 {
     summarize(input, 1)

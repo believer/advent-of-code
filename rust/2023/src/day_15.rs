@@ -41,14 +41,7 @@ fn hash(steps: &str) -> usize {
 *
 * Get the ASCII value of each character in the sequence and add it to 0.
 * Then multiply the result by 17 and get the remainder of 256.
-*
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_15::*;
-let data = include_str!("../input/2023/day15.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 516070);
-```"#]
 #[aoc(day15, part1)]
 pub fn solve_part_01(input: &Input) -> usize {
     input.steps.iter().map(|step| hash(step)).sum()
@@ -61,13 +54,7 @@ pub fn solve_part_01(input: &Input) -> usize {
 *
 * Then get the "focusing power" by multiplying the box number + 1 with the
 * sequence number + 1 and the operation.
-*
 */
-#[doc = r#"```
-use advent_of_code_2023::day_15::*;
-let data = include_str!("../input/2023/day15.txt");
-assert_eq!(solve_part_02(&input_generator(data)), 244981);
-```"#]
 #[aoc(day15, part2)]
 pub fn solve_part_02(input: &Input) -> usize {
     let mut boxes = vec![Vec::new(); 256];

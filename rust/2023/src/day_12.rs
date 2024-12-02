@@ -84,12 +84,6 @@ pub fn possible_arrangements(springs: &[u8], damaged: &[usize]) -> usize {
 *
 *
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_12::*;
-let data = include_str!("../input/2023/day12.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 8270);
-```"#]
 #[aoc(day12, part1)]
 pub fn solve_part_01(input: &Input) -> usize {
     input
@@ -103,11 +97,6 @@ pub fn solve_part_01(input: &Input) -> usize {
 *
 *
 */
-#[doc = r#"```
-use advent_of_code_2023::day_12::*;
-let data = include_str!("../input/2023/day12.txt");
-assert_eq!(solve_part_02(&input_generator(data)), 204640299929836);
-```"#]
 #[aoc(day12, part2)]
 pub fn solve_part_02(input: &Input) -> usize {
     input

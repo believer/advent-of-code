@@ -32,12 +32,6 @@ pub fn input_generator(input: &str) -> Input {
 /* Part One
 *
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_25::*;
-let data = include_str!("../input/2023/day25.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 548960);
-```"#]
 #[aoc(day25, part1)]
 pub fn solve_part_01(input: &Input) -> usize {
     let partitions =

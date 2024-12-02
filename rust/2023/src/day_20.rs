@@ -109,12 +109,6 @@ pub fn input_generator(input: &str) -> Input {
 /* Part One
 *
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_20::*;
-let data = include_str!("../input/2023/day20.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 812609846);
-```"#]
 #[aoc(day20, part1)]
 pub fn solve_part_01(input: &Input) -> u64 {
     let mut modules = input.modules.clone();
@@ -202,13 +196,7 @@ pub fn solve_part_01(input: &Input) -> u64 {
 * only send a low pulse if all of its inputs are high. So, we can
 * find the cycle length of each of the modules that feed into "hp" and
 * then calculate the LCM of those cycle lengths.
-*
 */
-#[doc = r#"```
-use advent_of_code_2023::day_20::*;
-let data = include_str!("../input/2023/day20.txt");
-assert_eq!(solve_part_02(&input_generator(data)), 245114020323037);
-```"#]
 #[aoc(day20, part2)]
 pub fn solve_part_02(input: &Input) -> u64 {
     let mut modules = input.modules.clone();

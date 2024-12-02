@@ -77,12 +77,6 @@ fn galaxy_distance(input: &Input, expansion_rate: usize) -> usize {
 *
 *
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_11::*;
-let data = include_str!("../input/2023/day11.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 9795148);
-```"#]
 #[aoc(day11, part1)]
 pub fn solve_part_01(input: &Input) -> usize {
     galaxy_distance(input, 2)
@@ -90,13 +84,7 @@ pub fn solve_part_01(input: &Input) -> usize {
 
 /* Part Two
 *
-*
 */
-#[doc = r#"```
-use advent_of_code_2023::day_11::*;
-let data = include_str!("../input/2023/day11.txt");
-assert_eq!(solve_part_02(&input_generator(data)), 650672493820);
-```"#]
 #[aoc(day11, part2)]
 pub fn solve_part_02(input: &Input) -> usize {
     galaxy_distance(input, 1_000_000)

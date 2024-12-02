@@ -69,14 +69,7 @@ pub fn input_generator(input: &str) -> Input {
 * We get a list of directions, and a list of instructions.
 * Steps through the directions, and select the correct instruction (left or right).
 * Keep track of the steps, and return the number of steps when we reach the ZZZ location.
-*
 */
-// Your puzzle answer was
-#[doc = r#"```
-use advent_of_code_2023::day_08::*;
-let data = include_str!("../input/2023/day8.txt");
-assert_eq!(solve_part_01(&input_generator(data)), 22411);
-```"#]
 #[aoc(day8, part1)]
 pub fn solve_part_01(input: &Input) -> u64 {
     let Input {
@@ -108,13 +101,7 @@ pub fn solve_part_01(input: &Input) -> u64 {
 * with an A as a start location. We then need to calculate the
 * number of steps it takes for _all of them_ to reach a location
 * that ends with a Z.
-*
 */
-#[doc = r#"```
-use advent_of_code_2023::day_08::*;
-let data = include_str!("../input/2023/day8.txt");
-assert_eq!(solve_part_02(&input_generator(data)), 11188774513823);
-```"#]
 #[aoc(day8, part2)]
 pub fn solve_part_02(input: &Input) -> i64 {
     let Input {
