@@ -37,7 +37,7 @@ func part2(name string) int {
 outer:
 	for _, report := range reports {
 		for i := range report {
-			// Create every permutation of the report
+			// Check every permutation of the report
 			clonedReport := slices.Clone(report)
 			clonedReport = append(clonedReport[:i], clonedReport[i+1:]...)
 
