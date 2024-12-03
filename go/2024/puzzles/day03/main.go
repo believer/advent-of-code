@@ -25,12 +25,8 @@ func part1(name string) int {
 	matches := re.FindAllString(program, -1)
 	total := 0
 
-	for _, mul := range matches {
-		parts := strings.Split(mul, ",")
-		lhs := utils.MustIntFromString(parts[0][4:])
-		rhs := utils.MustIntFromString(parts[1][:len(parts[1])-1])
-
-		total += lhs * rhs
+	for _, m := range matches {
+		total += calculateMultiplication(m)
 	}
 
 	return total
@@ -45,11 +41,7 @@ func part2(name string) int {
 
 	for _, m := range matches {
 		if strings.HasPrefix(m, "mul") && enabled {
-			parts := strings.Split(m, ",")
-			lhs := utils.MustIntFromString(parts[0][4:])
-			rhs := utils.MustIntFromString(parts[1][:len(parts[1])-1])
-
-			total += lhs * rhs
+			total += calculateMultiplication(m)
 		}
 
 		if strings.HasPrefix(m, "do(") {
@@ -62,4 +54,12 @@ func part2(name string) int {
 	}
 
 	return total
+}
+
+func calculateMultiplication(m string) int {
+	parts := strings.Split(m[4:len(m)-1], ",")
+	lhs := utils.MustIntFromString(parts[0])
+	rhs := utils.MustIntFromString(parts[1])
+
+	return lhs * rhs
 }
