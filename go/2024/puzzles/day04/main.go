@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/believer/aoc-2024/utils/files"
 )
@@ -67,19 +66,20 @@ func part2(name string) int {
 	rows := len(lines)
 	cols := len(lines[0])
 
-	for i, r := range lines {
-		for j := range strings.Split(r, "") {
+	// Skip checking edge characters since any A here can't result in a X-MAS
+	for r := range rows - 1 {
+		for c := range cols - 1 {
 			// A's are always in the middle
-			if string(r[j]) != "A" {
+			if string(lines[r][c]) != "A" {
 				continue
 			}
 
 			// Check line above and below
-			if i-1 >= 0 && j-1 >= 0 && i+1 < rows && j+1 < cols {
-				diagonalTopLeft := string(lines[i-1][j-1])
-				diagonalTopRight := string(lines[i-1][j+1])
-				diagonalBottomLeft := string(lines[i+1][j-1])
-				diagonalBottomRight := string(lines[i+1][j+1])
+			if r-1 >= 0 && c-1 >= 0 && r+1 < rows && c+1 < cols {
+				diagonalTopLeft := string(lines[r-1][c-1])
+				diagonalTopRight := string(lines[r-1][c+1])
+				diagonalBottomLeft := string(lines[r+1][c-1])
+				diagonalBottomRight := string(lines[r+1][c+1])
 
 				// M.M
 				// .A.
