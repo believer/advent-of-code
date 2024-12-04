@@ -130,25 +130,37 @@ func part2(name string) int {
 		for j := range strings.Split(r, "") {
 			// A's are always in the middle
 			if string(r[j]) == "A" {
-				// Check line above
+				// Check line above and below
 				if i-1 >= 0 && j-1 >= 0 && i+1 < rows && j+1 < cols {
 					diagonalTopLeft := string(lines[i-1][j-1])
 					diagonalTopRight := string(lines[i-1][j+1])
 					diagonalBottomLeft := string(lines[i+1][j-1])
 					diagonalBottomRight := string(lines[i+1][j+1])
 
+					// M.M
+					// .A.
+					// S.S
 					if diagonalTopLeft == "M" && diagonalBottomRight == "S" && diagonalTopRight == "M" && diagonalBottomLeft == "S" {
 						xmas++
 					}
 
+					// M.S
+					// .A.
+					// M.S
 					if diagonalTopLeft == "M" && diagonalBottomRight == "S" && diagonalTopRight == "S" && diagonalBottomLeft == "M" {
 						xmas++
 					}
 
+					// S.S
+					// .A.
+					// M.M
 					if diagonalTopLeft == "S" && diagonalBottomRight == "M" && diagonalTopRight == "S" && diagonalBottomLeft == "M" {
 						xmas++
 					}
 
+					// S.M
+					// .A.
+					// S.M
 					if diagonalTopLeft == "S" && diagonalBottomRight == "M" && diagonalTopRight == "M" && diagonalBottomLeft == "S" {
 						xmas++
 					}
