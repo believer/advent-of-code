@@ -2,13 +2,12 @@ package main
 
 import (
 	"fmt"
-	"regexp"
 	"strings"
 
 	"github.com/believer/aoc-2024/utils/files"
 )
 
-// Can be cleaned up a bunch, but it works!
+// Changed part 1 to take a similar approach to what I did in part 2
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
 	fmt.Println("Part 2: ", part2("input.txt"))
@@ -17,103 +16,45 @@ func main() {
 func part1(name string) int {
 	lines := files.ReadLines(name)
 	xmas := 0
-	forwards := regexp.MustCompile(`XMAS`)
-	backwards := regexp.MustCompile(`SAMX`)
-
-	// Check horizontal, forwards and backwards
-	for _, l := range lines {
-		t := len(forwards.FindAllString(l, -1))
-		t2 := len(backwards.FindAllString(l, -1))
-
-		xmas += t + t2
-	}
 
 	rows := len(lines)
 	cols := len(lines[0])
 
-	// Check vertical
-	for col := 0; col < cols; col++ {
-		vertical := ""
+	for r := range rows {
+		for c := range cols {
+			// Skip if not an X
+			if string(lines[r][c]) != "X" {
+				continue
+			}
 
-		for row := 0; row < rows; row++ {
-			// Getting from line by row/col becomes an ASCII rune. Convert to string.
-			vertical += string(lines[row][col])
+			// Check all directions
+			for _, dr := range []int{-1, 0, 1} {
+				for _, dc := range []int{-1, 0, 1} {
+					if dr == 0 && dc == 0 {
+						continue
+					}
+
+					// Check bounds
+					threeDown := r + 3*dr
+					threeForwards := c + 3*dc
+					hasSpaceDown := threeDown >= 0 && threeDown < rows
+					hasSpaceForwards := threeForwards >= 0 && threeForwards < cols
+
+					if !hasSpaceDown || !hasSpaceForwards {
+						continue
+					}
+
+					// Check that the next three letters are MAS
+					nextIsM := string(lines[r+dr][c+dc]) == "M"
+					nextIsA := string(lines[r+2*dr][c+2*dc]) == "A"
+					nextIsS := string(lines[r+3*dr][c+3*dc]) == "S"
+
+					if nextIsM && nextIsA && nextIsS {
+						xmas++
+					}
+				}
+			}
 		}
-
-		t := len(forwards.FindAllString(vertical, -1))
-		t2 := len(backwards.FindAllString(vertical, -1))
-
-		xmas += t + t2
-	}
-
-	// Diagonal, top-left to bottom-right
-	for start := 0; start < rows; start++ {
-		diagonal := ""
-
-		for i, j := start, 0; i < rows && j < cols; i, j = i+1, j+1 {
-			diagonal += string(lines[i][j])
-		}
-
-		if len(diagonal) < 4 {
-			break
-		}
-
-		t := len(forwards.FindAllString(diagonal, -1))
-		t2 := len(backwards.FindAllString(diagonal, -1))
-
-		xmas += t + t2
-	}
-
-	for start := 1; start < cols; start++ {
-		diagonal := ""
-
-		for i, j := 0, start; i < rows && j < cols; i, j = i+1, j+1 {
-			diagonal += string(lines[i][j])
-		}
-
-		if len(diagonal) < 4 {
-			break
-		}
-
-		t := len(forwards.FindAllString(diagonal, -1))
-		t2 := len(backwards.FindAllString(diagonal, -1))
-
-		xmas += t + t2
-	}
-
-	// Diagonal, top-right to bottom-left
-	for start := 0; start < rows; start++ {
-		diagonal := ""
-
-		for i, j := start, cols-1; i < rows && j >= 0; i, j = i+1, j-1 {
-			diagonal += string(lines[i][j])
-		}
-
-		if len(diagonal) < 4 {
-			break
-		}
-
-		t := len(forwards.FindAllString(diagonal, -1))
-		t2 := len(backwards.FindAllString(diagonal, -1))
-
-		xmas += t + t2
-	}
-
-	for start := cols - 2; start >= 0; start-- {
-		diagonal := ""
-
-		for i, j := 0, start; i < rows && j >= 0; i, j = i+1, j-1 {
-			diagonal += string(lines[i][j])
-		}
-
-		if len(diagonal) < 4 {
-			break
-		}
-
-		t := len(forwards.FindAllString(diagonal, -1))
-		t2 := len(backwards.FindAllString(diagonal, -1))
-
-		xmas += t + t2
 	}
 
 	return xmas
@@ -129,41 +70,43 @@ func part2(name string) int {
 	for i, r := range lines {
 		for j := range strings.Split(r, "") {
 			// A's are always in the middle
-			if string(r[j]) == "A" {
-				// Check line above and below
-				if i-1 >= 0 && j-1 >= 0 && i+1 < rows && j+1 < cols {
-					diagonalTopLeft := string(lines[i-1][j-1])
-					diagonalTopRight := string(lines[i-1][j+1])
-					diagonalBottomLeft := string(lines[i+1][j-1])
-					diagonalBottomRight := string(lines[i+1][j+1])
+			if string(r[j]) != "A" {
+				continue
+			}
 
-					// M.M
-					// .A.
-					// S.S
-					if diagonalTopLeft == "M" && diagonalBottomRight == "S" && diagonalTopRight == "M" && diagonalBottomLeft == "S" {
-						xmas++
-					}
+			// Check line above and below
+			if i-1 >= 0 && j-1 >= 0 && i+1 < rows && j+1 < cols {
+				diagonalTopLeft := string(lines[i-1][j-1])
+				diagonalTopRight := string(lines[i-1][j+1])
+				diagonalBottomLeft := string(lines[i+1][j-1])
+				diagonalBottomRight := string(lines[i+1][j+1])
 
-					// M.S
-					// .A.
-					// M.S
-					if diagonalTopLeft == "M" && diagonalBottomRight == "S" && diagonalTopRight == "S" && diagonalBottomLeft == "M" {
-						xmas++
-					}
+				// M.M
+				// .A.
+				// S.S
+				if diagonalTopLeft == "M" && diagonalBottomRight == "S" && diagonalTopRight == "M" && diagonalBottomLeft == "S" {
+					xmas++
+				}
 
-					// S.S
-					// .A.
-					// M.M
-					if diagonalTopLeft == "S" && diagonalBottomRight == "M" && diagonalTopRight == "S" && diagonalBottomLeft == "M" {
-						xmas++
-					}
+				// M.S
+				// .A.
+				// M.S
+				if diagonalTopLeft == "M" && diagonalBottomRight == "S" && diagonalTopRight == "S" && diagonalBottomLeft == "M" {
+					xmas++
+				}
 
-					// S.M
-					// .A.
-					// S.M
-					if diagonalTopLeft == "S" && diagonalBottomRight == "M" && diagonalTopRight == "M" && diagonalBottomLeft == "S" {
-						xmas++
-					}
+				// S.S
+				// .A.
+				// M.M
+				if diagonalTopLeft == "S" && diagonalBottomRight == "M" && diagonalTopRight == "S" && diagonalBottomLeft == "M" {
+					xmas++
+				}
+
+				// S.M
+				// .A.
+				// S.M
+				if diagonalTopLeft == "S" && diagonalBottomRight == "M" && diagonalTopRight == "M" && diagonalBottomLeft == "S" {
+					xmas++
 				}
 			}
 		}

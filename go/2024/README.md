@@ -23,22 +23,23 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#hdr-Benchmarks) package. Computer is a 2021 MacBook Pro M1 Pro, 32 GB RAM.
 
-| Day |            #1 |           #2 | Improvement\*      |
-| --- | ------------: | -----------: | ------------------ |
-| 1   |  116264 ns/op | 131233 ns/op | `3.53%` / `68.43%` |
-| 2   |  310935 ns/op | 723512 ns/op |                    |
-| 3   |  336448 ns/op | 785320 ns/op | - / `36.98%`       |
-| 4   | 2864606 ns/op | 294413 ns/op |                    |
+| Day |           #1 |           #2 | Improvement\*      |
+| --- | -----------: | -----------: | ------------------ |
+| 1   | 116264 ns/op | 131233 ns/op | `3.53%` / `68.43%` |
+| 2   | 310935 ns/op | 723512 ns/op |                    |
+| 3   | 336448 ns/op | 785320 ns/op | - / `36.98%`       |
+| 4   | 523315 ns/op | 294413 ns/op | `81.73%` / -       |
 
 \* compared to first solution
 
 ### Previous solutions
 
-| Day |           #1 |            #2 |  Improvement | Link                                                                                                                           |
-| --: | -----------: | ------------: | -----------: | ------------------------------------------------------------------------------------------------------------------------------ |
-|   1 | 120513 ns/op |  415683 ns/op |     Baseline | [Link](https://github.com/believer/advent-of-code/blob/47447cc17fffe6994d4b54c4cb815e698b3f5605/go/2024/puzzles/day01/main.go) |
-|   1 | 120513 ns/op |  155479 ns/op | - / `62,59%` | [Link](https://github.com/believer/advent-of-code/blob/ea42592462771b74de87eae6bea9c0ca892a4499/go/2024/puzzles/day01/main.go) |
-|   3 | 336448 ns/op | 1246155 ns/op |     Baseline | [Link](https://github.com/believer/advent-of-code/blob/461c2dd40039c27102aa1790c650decb79d4f549/go/2024/puzzles/day03/main.go) |
+| Day |            #1 |            #2 |  Improvement | Link                                                                                                                           |
+| --: | ------------: | ------------: | -----------: | ------------------------------------------------------------------------------------------------------------------------------ |
+|   1 |  120513 ns/op |  415683 ns/op |     Baseline | [Link](https://github.com/believer/advent-of-code/blob/47447cc17fffe6994d4b54c4cb815e698b3f5605/go/2024/puzzles/day01/main.go) |
+|   1 |  120513 ns/op |  155479 ns/op | - / `62,59%` | [Link](https://github.com/believer/advent-of-code/blob/ea42592462771b74de87eae6bea9c0ca892a4499/go/2024/puzzles/day01/main.go) |
+|   3 |  336448 ns/op | 1246155 ns/op |     Baseline | [Link](https://github.com/believer/advent-of-code/blob/461c2dd40039c27102aa1790c650decb79d4f549/go/2024/puzzles/day03/main.go) |
+|   4 | 2864606 ns/op |  294413 ns/op |     Baseline | [Link](https://github.com/believer/advent-of-code/blob/99909bb30f82cda079471134452d886a0eb6266f/go/2024/puzzles/day04/main.go) |
 
 ## Running
 
