@@ -9,7 +9,9 @@ import (
 	"github.com/believer/aoc-2024/utils/files"
 )
 
-// Multiple things to improve and simplify, but both parts work
+// Was able to improve performance a bunch by doing less work (shocker!)
+// For instance, using the same hash map structure of rules for both parts
+// improved the benchmark by about 75%.
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
 	fmt.Println("Part 2: ", part2("input.txt"))
@@ -18,38 +20,13 @@ func main() {
 func part1(name string) int {
 	parts := files.ReadParagraphs(name)
 	total := 0
-	orderingRules := map[string][]string{}
-	updates := parts[1]
+	orderingRules := createOrderingRules(parts[0])
 
-	for _, r := range parts[0] {
-		parts := strings.Split(r, "|")
-
-		orderingRules[parts[0]] = append(orderingRules[parts[0]], parts[1])
-	}
-
-	for _, u := range updates {
-		isValid := true
+	for _, u := range parts[1] {
 		pages := strings.Split(u, ",")
 
-		for i, p := range pages {
-			if i+1 > len(pages) {
-				continue
-			}
-
-			before := pages[:i]
-			rules := orderingRules[p]
-
-			for _, r := range rules {
-				if slices.Contains(before, r) {
-					isValid = false
-				}
-			}
-		}
-
-		if isValid {
-			middle := pages[len(pages)/2]
-
-			total += utils.MustIntFromString(middle)
+		if isValidUpdate(pages, orderingRules) {
+			total += middleValue(pages)
 		}
 	}
 
@@ -58,60 +35,58 @@ func part1(name string) int {
 
 func part2(name string) int {
 	parts := files.ReadParagraphs(name)
-	orderingRules := map[string][]string{}
-	orderingRulesSort := [][2]int{}
-	updates := parts[1]
 	total := 0
+	orderingRules := createOrderingRules(parts[0])
 
-	for _, r := range parts[0] {
-		x, y, _ := strings.Cut(r, "|")
-		xx, yy := utils.MustIntFromString(x), utils.MustIntFromString(y)
+	for _, update := range parts[1] {
+		pages := strings.Split(update, ",")
 
-		orderingRules[x] = append(orderingRules[x], y)
-		orderingRulesSort = append(orderingRulesSort, [2]int{xx, yy})
-	}
-
-	invalid := [][]string{}
-
-	for _, u := range updates {
-		isValid := true
-		pages := strings.Split(u, ",")
-
-		for i, p := range pages {
-			if i+1 > len(pages) {
-				continue
-			}
-
-			before := pages[:i]
-			rules := orderingRules[p]
-
-			for _, r := range rules {
-				if slices.Contains(before, r) {
-					isValid = false
+		if !isValidUpdate(pages, orderingRules) {
+			slices.SortFunc(pages, func(a, b string) int {
+				for k, r := range orderingRules {
+					if k == a && slices.Contains(r, b) {
+						return -1
+					}
 				}
-			}
+
+				return 1
+			})
+
+			total += middleValue(pages)
 		}
-
-		if !isValid {
-			invalid = append(invalid, pages)
-		}
-	}
-
-	for _, inva := range invalid {
-		slices.SortFunc(inva, func(a, b string) int {
-			for _, r := range orderingRulesSort {
-				if r[0] == utils.MustIntFromString(a) && r[1] == utils.MustIntFromString(b) {
-					return -1
-				}
-			}
-
-			return 1
-		})
-
-		middle := inva[len(inva)/2]
-
-		total += utils.MustIntFromString(middle)
 	}
 
 	return total
+}
+
+func isValidUpdate(pages []string, rules map[string][]string) bool {
+	for i, page := range pages {
+		before := pages[:i]
+
+		for _, rule := range rules[page] {
+			if slices.Contains(before, rule) {
+				return false
+			}
+		}
+	}
+
+	return true
+}
+
+func createOrderingRules(rules []string) map[string][]string {
+	orderingRules := map[string][]string{}
+
+	for _, r := range rules {
+		x, y, _ := strings.Cut(r, "|")
+
+		orderingRules[x] = append(orderingRules[x], y)
+	}
+
+	return orderingRules
+}
+
+func middleValue(values []string) int {
+	middle := values[len(values)/2]
+
+	return utils.MustIntFromString(middle)
 }
