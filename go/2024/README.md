@@ -18,17 +18,19 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 2: Red-Nosed Reports](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day02/main.go)  | 🌟  |       564 | 🌟  |       604 |
 | [Day 3: Mull It Over](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day03/main.go)       | 🌟  | 161085926 | 🌟  |  82045421 |
 | [Day 4: Ceres Search](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day04/main.go)       | 🌟  |      2562 | 🌟  |      1902 |
+| [Day 5: Print Queue](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day05/main.go)        | 🌟  |      3608 | 🌟  |      4922 |
 
 ## Benchmarks
 
 Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#hdr-Benchmarks) package. Computer is a 2021 MacBook Pro M1 Pro, 32 GB RAM.
 
-| Day |           #1 |           #2 | Improvement\*       |
-| --- | -----------: | -----------: | ------------------- |
-| 1   | 116264 ns/op | 131233 ns/op | `3.53%` / `68.43%`  |
-| 2   | 310935 ns/op | 723512 ns/op |                     |
-| 3   | 336448 ns/op | 785320 ns/op | - / `36.98%`        |
-| 4   | 523315 ns/op | 217584 ns/op | `81.73%` / `26.09%` |
+| Day |            #1 |             #2 | Improvement\*       |
+| --- | ------------: | -------------: | ------------------- |
+| 1   |  116264 ns/op |   131233 ns/op | `3.53%` / `68.43%`  |
+| 2   |  310935 ns/op |   723512 ns/op |                     |
+| 3   |  336448 ns/op |   785320 ns/op | - / `36.98%`        |
+| 4   |  523315 ns/op |   217584 ns/op | `81.73%` / `26.09%` |
+| 4   | 1669175 ns/op | 17299190 ns/op |                     |
 
 \* compared to first solution
 
