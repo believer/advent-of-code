@@ -6,108 +6,52 @@ import (
 	"github.com/believer/aoc-2024/utils/files"
 )
 
-type Direction int
-
-const (
-	UP Direction = iota
-	RIGHT
-	DOWN
-	LEFT
-)
-
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
 	fmt.Println("Part 2: ", part2("input.txt"))
 }
 
+type Position struct {
+	r, c int
+}
+
 func part1(name string) int {
 	lines := files.ReadLines(name)
-	visitedLocations := make(map[[2]int]struct{})
+	visitedLocations := make(map[Position]struct{})
 
 	rows := len(lines)
 	cols := len(lines[0])
-	guardLocation := [2]int{}
-	direction := UP
+	guardLocation := Position{0, 0}
 
-	// Find initial location
+	// Find initial guard location
+outer:
 	for r := range rows {
 		for c := range cols {
 			if string(lines[r][c]) == "^" {
-				guardLocation = [2]int{r, c}
-				visitedLocations[guardLocation] = struct{}{}
+				guardLocation = Position{r, c}
+				break outer
 			}
 		}
 	}
 
+	dr := -1
+	dc := 0
+
 	for {
-		currentLocation := guardLocation
+		r, c := guardLocation.r, guardLocation.c
+		visitedLocations[guardLocation] = struct{}{}
 
-		if direction == UP {
-			r := currentLocation[0] - 1
-			c := currentLocation[1]
-
-			if r < 0 {
-				break
-			}
-
-			if string(lines[r][c]) == "#" {
-				direction = RIGHT
-				continue
-			}
-
-			guardLocation = [2]int{r, c}
-			visitedLocations[guardLocation] = struct{}{}
+		// Check bounds
+		if r+dr < 0 || r+dr >= rows || c+dc < 0 || c+dc >= cols {
+			break
 		}
 
-		if direction == RIGHT {
-			r := currentLocation[0]
-			c := currentLocation[1] + 1
-
-			if c >= cols {
-				break
-			}
-
-			if string(lines[r][c]) == "#" {
-				direction = DOWN
-				continue
-			}
-
-			guardLocation = [2]int{r, c}
-			visitedLocations[guardLocation] = struct{}{}
-		}
-
-		if direction == DOWN {
-			r := currentLocation[0] + 1
-			c := currentLocation[1]
-
-			if r >= rows {
-				break
-			}
-
-			if string(lines[r][c]) == "#" {
-				direction = LEFT
-				continue
-			}
-
-			guardLocation = [2]int{r, c}
-			visitedLocations[guardLocation] = struct{}{}
-		}
-
-		if direction == LEFT {
-			r := currentLocation[0]
-			c := currentLocation[1] - 1
-
-			if c < 0 {
-				break
-			}
-
-			if string(lines[r][c]) == "#" {
-				direction = UP
-				continue
-			}
-
-			guardLocation = [2]int{r, c}
-			visitedLocations[guardLocation] = struct{}{}
+		// We always rotate to the right on obstacles
+		// (-1,0) becomes (0,1) becomes (1,0) becomes (0,-1)
+		if string(lines[r+dr][c+dc]) == "#" {
+			dc, dr = -dr, dc
+		} else {
+			guardLocation = Position{r: r + dr, c: c + dc}
 		}
 	}
 
