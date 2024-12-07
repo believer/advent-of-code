@@ -9,7 +9,8 @@ import (
 // Brute forced part 2 first by checking every position on the grid.
 // It worked, but was slow. We can instead check only the path that
 // the guard took during the first run which was more that 78% faster.
-// Still over a second, but a lot better.
+// Still over a second, but a lot better. Could most likely be
+// parallelized, but I think it's good enough.
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
 	fmt.Println("Part 2: ", part2("input.txt"))
