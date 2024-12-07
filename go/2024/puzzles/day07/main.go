@@ -4,11 +4,19 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/believer/aoc-2024/utils"
 	"github.com/believer/aoc-2024/utils/files"
 )
 
+// Parallelization in Go is so nice and easy and provided a major speed-up
+// in this case.
+
+// Also reducing the amount of type conversions in the permutation
+// generation made some improvement. We used to give it a []string and get back []string.
+// The strings needed to be broken down into individual parts for calculations, so we
+// could instead return a [][]string directly from the permutations.
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
 	fmt.Println("Part 2: ", part2("input.txt"))
@@ -16,125 +24,104 @@ func main() {
 
 func part1(name string) int {
 	lines := files.ReadLines(name)
-	calibrationResult := 0
 	operators := []string{"+", "*"}
 
-expression:
-	for _, l := range lines {
-		result, valuesAsString, _ := strings.Cut(l, ":")
-		values := strings.Split(strings.TrimSpace(valuesAsString), " ")
-		testValue := utils.MustIntFromString(result)
-
-		permutations := allPermutations(values, operators)
-
-		for _, expression := range permutations {
-			total := 0
-			operation := "+"
-
-			for _, v := range strings.Split(expression, " ") {
-				if v == "+" {
-					operation = "+"
-					continue
-				}
-
-				if v == "*" {
-					operation = "*"
-					continue
-				}
-
-				if operation == "+" {
-					total += utils.MustIntFromString(v)
-				}
-
-				if operation == "*" {
-					total *= utils.MustIntFromString(v)
-				}
-			}
-
-			if total == testValue {
-				calibrationResult += total
-				continue expression
-			}
-		}
-	}
-
-	return calibrationResult
+	return processLines(lines, operators)
 }
 
 func part2(name string) int {
 	lines := files.ReadLines(name)
-	calibrationResult := 0
 	operators := []string{"+", "*", "||"}
 
-expression:
-	for _, l := range lines {
-		result, valuesAsString, _ := strings.Cut(l, ":")
-		values := strings.Split(strings.TrimSpace(valuesAsString), " ")
-		testValue := utils.MustIntFromString(result)
+	return processLines(lines, operators)
+}
 
-		permutations := allPermutations(values, operators)
+// Each line is an independent expression, we can calculate them in parallel
+func processLines(lines, operators []string) int {
+	results := make(chan int, len(lines))
 
-		for _, expression := range permutations {
-			total := 0
-			operation := "+"
+	var wg sync.WaitGroup
 
-			for _, v := range strings.Split(expression, " ") {
-				if v == "+" {
-					operation = "+"
-					continue
-				}
+	for _, line := range lines {
+		wg.Add(1)
 
-				if v == "*" {
-					operation = "*"
-					continue
-				}
+		go func(line string) {
+			defer wg.Done()
+			calibrationResult := evaluateLine(line, operators)
+			results <- calibrationResult
+		}(line)
+	}
 
-				if v == "||" {
-					operation = "||"
-					continue
-				}
+	go func() {
+		wg.Wait()
+		close(results)
+	}()
 
-				if operation == "+" {
-					total += utils.MustIntFromString(v)
-				}
+	total := 0
 
-				if operation == "*" {
-					total *= utils.MustIntFromString(v)
-				}
+	for result := range results {
+		total += result
+	}
 
-				if operation == "||" {
-					total = utils.MustIntFromString(strconv.Itoa(total) + v)
-				}
+	return total
+}
+
+func evaluateLine(line string, operators []string) int {
+	resultAsString, valuesAsString, _ := strings.Cut(line, ":")
+	values := strings.Split(strings.TrimSpace(valuesAsString), " ")
+	result := utils.MustIntFromString(resultAsString)
+
+	permutations := allPermutations(values, operators)
+
+	for _, expression := range permutations {
+		total := 0
+		operation := "+"
+
+		for _, v := range expression {
+			switch v {
+			case "+", "*", "||":
+				operation = v
+				continue
 			}
 
-			if total == testValue {
-				calibrationResult += total
-				continue expression
+			num := utils.MustIntFromString(v)
+
+			switch operation {
+			case "+":
+				total += num
+			case "*":
+				total *= num
+			case "||":
+				total = utils.MustIntFromString(strconv.Itoa(total) + v)
 			}
+		}
+
+		if total == result {
+			return total
 		}
 	}
 
-	return calibrationResult
+	return 0
 }
 
-func allPermutations(nums []string, ops []string) []string {
+func allPermutations(nums []string, ops []string) [][]string {
 	if len(nums) == 0 {
 		return nil
 	}
 
-	result := []string{}
-	generateExpressions(nums, ops, nums[0], 1, &result)
+	result := [][]string{}
+	generateExpressions(nums, ops, []string{nums[0]}, 1, &result)
 	return result
 }
 
-func generateExpressions(nums []string, ops []string, current string, index int, result *[]string) {
+func generateExpressions(nums []string, ops []string, current []string, index int, result *[][]string) {
 	if index == len(nums) {
 		*result = append(*result, current)
 		return
 	}
 
 	for _, op := range ops {
-		next := current + " " + op + " " + nums[index]
+		next := append(current, op, nums[index])
 		generateExpressions(nums, ops, next, index+1, result)
 	}
 }
