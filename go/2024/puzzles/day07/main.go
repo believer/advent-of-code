@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"slices"
 	"strconv"
 	"strings"
 
@@ -10,8 +9,6 @@ import (
 	"github.com/believer/aoc-2024/utils/files"
 )
 
-// I think an optimization could be that once an expression becomes
-// true, we can skip the rest of the permutations.
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
 	fmt.Println("Part 2: ", part2("input.txt"))
@@ -22,18 +19,13 @@ func part1(name string) int {
 	calibrationResult := 0
 	operators := []string{"+", "*"}
 
+expression:
 	for _, l := range lines {
 		result, valuesAsString, _ := strings.Cut(l, ":")
-		stringValues := strings.Split(strings.TrimSpace(valuesAsString), " ")
-		values := []int{}
+		values := strings.Split(strings.TrimSpace(valuesAsString), " ")
 		testValue := utils.MustIntFromString(result)
 
-		for _, v := range stringValues {
-			values = append(values, utils.MustIntFromString(v))
-		}
-
 		permutations := allPermutations(values, operators)
-		totals := []int{}
 
 		for _, expression := range permutations {
 			total := 0
@@ -59,13 +51,10 @@ func part1(name string) int {
 				}
 			}
 
-			if total == testValue && !slices.Contains(totals, total) {
-				totals = append(totals, total)
+			if total == testValue {
+				calibrationResult += total
+				continue expression
 			}
-		}
-
-		for _, t := range totals {
-			calibrationResult += t
 		}
 	}
 
@@ -77,18 +66,13 @@ func part2(name string) int {
 	calibrationResult := 0
 	operators := []string{"+", "*", "||"}
 
+expression:
 	for _, l := range lines {
 		result, valuesAsString, _ := strings.Cut(l, ":")
-		stringValues := strings.Split(strings.TrimSpace(valuesAsString), " ")
-		values := []int{}
+		values := strings.Split(strings.TrimSpace(valuesAsString), " ")
 		testValue := utils.MustIntFromString(result)
 
-		for _, v := range stringValues {
-			values = append(values, utils.MustIntFromString(v))
-		}
-
 		permutations := allPermutations(values, operators)
-		totals := []int{}
 
 		for _, expression := range permutations {
 			total := 0
@@ -123,38 +107,34 @@ func part2(name string) int {
 				}
 			}
 
-			if total == testValue && !slices.Contains(totals, total) {
-				totals = append(totals, total)
+			if total == testValue {
+				calibrationResult += total
+				continue expression
 			}
-		}
-
-		for _, t := range totals {
-			calibrationResult += t
 		}
 	}
 
 	return calibrationResult
 }
 
-func allPermutations(nums []int, ops []string) []string {
+func allPermutations(nums []string, ops []string) []string {
 	if len(nums) == 0 {
 		return nil
 	}
 
 	result := []string{}
-	initial := strconv.Itoa(nums[0])
-	generateExpressions(nums, ops, initial, 1, &result)
+	generateExpressions(nums, ops, nums[0], 1, &result)
 	return result
 }
 
-func generateExpressions(nums []int, ops []string, current string, index int, result *[]string) {
+func generateExpressions(nums []string, ops []string, current string, index int, result *[]string) {
 	if index == len(nums) {
 		*result = append(*result, current)
 		return
 	}
 
 	for _, op := range ops {
-		next := current + " " + op + " " + strconv.Itoa(nums[index])
+		next := current + " " + op + " " + nums[index]
 		generateExpressions(nums, ops, next, index+1, result)
 	}
 }
