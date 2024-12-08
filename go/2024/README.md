@@ -12,15 +12,16 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                               | #1  |     #1 Answer | #2  |       #2 Answer |
-| ----------------------------------------------------------------------------------------------------------------- | --- | ------------: | --- | --------------: |
-| [Day 1: Historian Hysteria](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day01/main.go) | 🌟  |       1666427 | 🌟  |        24316233 |
-| [Day 2: Red-Nosed Reports](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day02/main.go)  | 🌟  |           564 | 🌟  |             604 |
-| [Day 3: Mull It Over](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day03/main.go)       | 🌟  |     161085926 | 🌟  |        82045421 |
-| [Day 4: Ceres Search](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day04/main.go)       | 🌟  |          2562 | 🌟  |            1902 |
-| [Day 5: Print Queue](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day05/main.go)        | 🌟  |          3608 | 🌟  |            4922 |
-| [Day 6: Guard Gallivant](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day06/main.go)    | 🌟  |          4778 | 🌟  |            1618 |
-| [Day 7: Bridge Repair](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day07/main.go)      | 🌟  | 1399219271639 | 🌟  | 275791737999003 |
+| Day                                                                                                                  | #1  |     #1 Answer | #2  |       #2 Answer |
+| -------------------------------------------------------------------------------------------------------------------- | --- | ------------: | --- | --------------: |
+| [Day 1: Historian Hysteria](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day01/main.go)    | 🌟  |       1666427 | 🌟  |        24316233 |
+| [Day 2: Red-Nosed Reports](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day02/main.go)     | 🌟  |           564 | 🌟  |             604 |
+| [Day 3: Mull It Over](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day03/main.go)          | 🌟  |     161085926 | 🌟  |        82045421 |
+| [Day 4: Ceres Search](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day04/main.go)          | 🌟  |          2562 | 🌟  |            1902 |
+| [Day 5: Print Queue](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day05/main.go)           | 🌟  |          3608 | 🌟  |            4922 |
+| [Day 6: Guard Gallivant](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day06/main.go)       | 🌟  |          4778 | 🌟  |            1618 |
+| [Day 7: Bridge Repair](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day07/main.go)         | 🌟  | 1399219271639 | 🌟  | 275791737999003 |
+| [Day 8: Resonant Collinearity](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day08/main.go) | 🌟  |           220 | 🌟  |             813 |
 
 ## Benchmarks
 
@@ -35,6 +36,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 5   |   778880 ns/op |    3129873 ns/op | `53.34%` / `81.91%` |
 | 6   |   312461 ns/op | 1153391125 ns/op |                     |
 | 7   | 16480300 ns/op |  842853000 ns/op | `87.01%` / `91.67%` |
+| 8   |    58749 ns/op |     121247 ns/op |                     |
 
 \* compared to first solution
 
