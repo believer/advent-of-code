@@ -22,21 +22,23 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 6: Guard Gallivant](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day06/main.go)       | 🌟  |          4778 | 🌟  |            1618 |
 | [Day 7: Bridge Repair](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day07/main.go)         | 🌟  | 1399219271639 | 🌟  | 275791737999003 |
 | [Day 8: Resonant Collinearity](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day08/main.go) | 🌟  |           220 | 🌟  |             813 |
+| [Day 9: Disk Fragmenter](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day09/main.go)       | 🌟  | 6384282079460 |     |                 |
 
 ## Benchmarks
 
 Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#hdr-Benchmarks) package. Computer is a 2021 MacBook Pro M1 Pro, 32 GB RAM.
 
-| Day |             #1 |               #2 | Improvement\*       |
-| --- | -------------: | ---------------: | ------------------- |
-| 1   |   116264 ns/op |     131233 ns/op | `3.53%` / `68.43%`  |
-| 2   |   310935 ns/op |     723512 ns/op |                     |
-| 3   |   336448 ns/op |     785320 ns/op | - / `36.98%`        |
-| 4   |   523315 ns/op |     217584 ns/op | `81.73%` / `26.09%` |
-| 5   |   778880 ns/op |    3129873 ns/op | `53.34%` / `81.91%` |
-| 6   |   312461 ns/op | 1153391125 ns/op |                     |
-| 7   | 16480300 ns/op |  842853000 ns/op | `87.01%` / `91.67%` |
-| 8   |    58749 ns/op |     121247 ns/op |                     |
+| Day |              #1 |               #2 | Improvement\*       |
+| --- | --------------: | ---------------: | ------------------- |
+| 1   |    116264 ns/op |     131233 ns/op | `3.53%` / `68.43%`  |
+| 2   |    310935 ns/op |     723512 ns/op |                     |
+| 3   |    336448 ns/op |     785320 ns/op | - / `36.98%`        |
+| 4   |    523315 ns/op |     217584 ns/op | `81.73%` / `26.09%` |
+| 5   |    778880 ns/op |    3129873 ns/op | `53.34%` / `81.91%` |
+| 6   |    312461 ns/op | 1153391125 ns/op |                     |
+| 7   |  16480300 ns/op |  842853000 ns/op | `87.01%` / `91.67%` |
+| 8   |     58749 ns/op |     121247 ns/op |                     |
+| 9   | 381476181 ns/op |                  |                     |
 
 \* compared to first solution
 
