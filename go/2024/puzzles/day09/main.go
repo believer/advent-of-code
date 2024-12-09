@@ -10,6 +10,9 @@ import (
 	"github.com/believer/aoc-2024/utils/files"
 )
 
+// Did string manipulation for part 1 at first, but of course that became
+// hard to manage with file IDs bigger than 9 like the example input.
+// Changing to a slice didn't change the code much and even simplified some parts.
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
 	fmt.Println("Part 2: ", part2("input.txt"))
