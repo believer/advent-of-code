@@ -22,7 +22,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 6: Guard Gallivant](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day06/main.go)       | 🌟  |          4778 | 🌟  |            1618 |
 | [Day 7: Bridge Repair](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day07/main.go)         | 🌟  | 1399219271639 | 🌟  | 275791737999003 |
 | [Day 8: Resonant Collinearity](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day08/main.go) | 🌟  |           220 | 🌟  |             813 |
-| [Day 9: Disk Fragmenter](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day09/main.go)       | 🌟  | 6384282079460 |     |                 |
+| [Day 9: Disk Fragmenter](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day09/main.go)       | 🌟  | 6384282079460 | 🌟  |   6408966547049 |
 
 ## Benchmarks
 
@@ -38,7 +38,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 6   |    312461 ns/op | 1153391125 ns/op |                     |
 | 7   |  16480300 ns/op |  842853000 ns/op | `87.01%` / `91.67%` |
 | 8   |     58749 ns/op |     121247 ns/op |                     |
-| 9   | 381476181 ns/op |                  |                     |
+| 9   | 381476181 ns/op |  171042257 ns/op |                     |
 
 \* compared to first solution
 

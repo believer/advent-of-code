@@ -10,6 +10,12 @@ import (
 	"github.com/believer/aoc-2024/utils/files"
 )
 
+type File struct {
+	id    string
+	start int
+	size  int
+}
+
 // Did string manipulation for part 1 at first, but of course that became
 // hard to manage with file IDs bigger than 9 like the example input.
 // Changing to a slice didn't change the code much and even simplified some parts.
@@ -20,20 +26,96 @@ func main() {
 
 func part1(name string) int {
 	line := strings.TrimSpace(files.Read(name))
-	blocked := []string{}
-	fileId := 0
-	fileBlocks := 0
+	diskMap, fileBlocks := createDiskMap(line)
 
-	// Build files and free space
-	for i, digit := range strings.Split(line, "") {
+	// Compact file system
+	for i := 1; i < len(diskMap); i++ {
+		rune := diskMap[len(diskMap)-i]
+
+		if rune == "." {
+			continue
+		}
+
+		firstEmpty := slices.Index(diskMap, ".")
+
+		// The blocks have been compacted
+		if firstEmpty == fileBlocks {
+			break
+		}
+
+		diskMap[firstEmpty] = rune
+		diskMap[len(diskMap)-i] = "."
+	}
+
+	return calculateChecksum(diskMap)
+}
+
+func part2(name string) int {
+	line := strings.TrimSpace(files.Read(name))
+	diskMap, _ := createDiskMap(line)
+	fileMap := map[string]File{}
+
+	// Create map of all files
+	for i, id := range diskMap {
+		if id == "." {
+			continue
+		}
+
+		if file, ok := fileMap[id]; ok {
+			file.size++
+			fileMap[id] = file
+		} else {
+			fileMap[id] = File{id: id, start: i, size: 1}
+		}
+	}
+
+	// Convert map to slice for sorting
+	files := []File{}
+
+	for _, file := range fileMap {
+		files = append(files, file)
+	}
+
+	// Sort files by file ID descending since we're going backwards
+	slices.SortFunc(files, func(a, b File) int {
+		return utils.MustIntFromString(b.id) - utils.MustIntFromString(a.id)
+	})
+
+	// Move files to suitable positions
+	for _, file := range files {
+		newPosition := findFreeSpace(diskMap, file)
+
+		if newPosition == -1 {
+			continue
+		}
+
+		// Move file
+		for i := file.start; i < file.start+file.size; i++ {
+			diskMap[i] = "."
+		}
+
+		for i := 0; i < file.size; i++ {
+			diskMap[newPosition+i] = file.id
+		}
+	}
+
+	return calculateChecksum(diskMap)
+}
+
+func createDiskMap(input string) ([]string, int) {
+	disk := []string{}
+	fileId := 0
+	blocks := 0
+
+	for i, digit := range strings.Split(input, "") {
 		digitAsInt := utils.MustIntFromString(digit)
 
 		for range digitAsInt {
 			if i%2 == 0 {
-				blocked = append(blocked, strconv.Itoa(fileId))
-				fileBlocks += 1
+				disk = append(disk, strconv.Itoa(fileId))
+				blocks += 1
 			} else {
-				blocked = append(blocked, ".")
+				disk = append(disk, ".")
 			}
 		}
 
@@ -42,41 +124,44 @@ func part1(name string) int {
 		}
 	}
 
-	// Compact file system
-	for i := 1; i < len(blocked); i++ {
-		rune := blocked[len(blocked)-i]
+	return disk, blocks
+}
 
-		if rune == "." {
+func findFreeSpace(disk []string, file File) int {
+	currentSize := 0
+	currentStart := -1
+
+	// Find a space that fits the file
+	for i := range file.start {
+		if disk[i] == "." {
+			if currentStart == -1 {
+				currentStart = i
+			}
+
+			currentSize++
+
+			if currentSize == file.size {
+				return currentStart
+			}
+		} else {
+			currentSize = 0
+			currentStart = -1
+		}
+	}
+
+	return -1
+}
+
+func calculateChecksum(disk []string) int {
+	checksum := 0
+
+	for i, digit := range disk {
+		if digit == "." {
 			continue
 		}
 
-		firstEmpty := slices.Index(blocked, ".")
-
-		// The blocks have been compacted
-		if firstEmpty == fileBlocks {
-			break
-		}
-
-		blocked[firstEmpty] = rune
-		blocked[len(blocked)-i] = "."
-	}
-
-	// Calculate checksum
-	checksum := 0
-
-	for i, rune := range blocked {
-		if rune == "." {
-			break
-		}
-
-		digit := utils.MustIntFromString(string(rune))
-
-		checksum += i * digit
+		checksum += i * utils.MustIntFromString(digit)
 	}
 
 	return checksum
-}
-
-func part2(name string) int {
-	return 0
 }
