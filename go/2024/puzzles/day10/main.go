@@ -86,7 +86,6 @@ func findTrailScore(trailMap map[Location]int, start Location, isDistinct bool) 
 			continue
 		}
 
-		moves := []Location{}
 		directions := []Location{
 			{r: current.r - 1, c: current.c}, // Above
 			{r: current.r, c: current.c + 1}, // Right
@@ -97,11 +96,9 @@ func findTrailScore(trailMap map[Location]int, start Location, isDistinct bool) 
 		for _, direction := range directions {
 			// Position exists and is _one_ bigger than current
 			if value, ok := trailMap[direction]; ok && value == trailMap[current]+1 {
-				moves = append(moves, direction)
+				queue = append(queue, direction)
 			}
 		}
-
-		queue = append(queue, moves...)
 	}
 
 	return trailScore
