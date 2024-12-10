@@ -1,5 +1,3 @@
-// Day 1: Trebuchet?!
-
 use std::collections::HashMap;
 
 #[aoc_generator(day1)]
