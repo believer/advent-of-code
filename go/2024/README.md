@@ -23,6 +23,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 7: Bridge Repair](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day07/main.go)         | 🌟  | 1399219271639 | 🌟  | 275791737999003 |
 | [Day 8: Resonant Collinearity](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day08/main.go) | 🌟  |           220 | 🌟  |             813 |
 | [Day 9: Disk Fragmenter](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day09/main.go)       | 🌟  | 6384282079460 | 🌟  |   6408966547049 |
+| [Day 10: Hoof It](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day10/main.go)              | 🌟  |           652 | 🌟  |            1432 |
 
 ## Benchmarks
 
@@ -39,6 +40,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 7   |  16480300 ns/op |  842853000 ns/op | `87.01%` / `91.67%` |
 | 8   |     58749 ns/op |     121247 ns/op |                     |
 | 9   | 381476181 ns/op |  171042257 ns/op |                     |
+| 10  |   1424599 ns/op |    1789071 ns/op |                     |
 
 \* compared to first solution
 
