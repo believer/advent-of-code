@@ -20,66 +20,11 @@ type Location struct {
 
 func part1(name string) int {
 	lines := files.ReadLines(name)
-	trailheads := []Location{}
-	trailMap := map[Location]int{}
-
-	rows := len(lines)
-	cols := len(lines[0])
+	trailMap, trailheads := createTrailMap(lines)
 	trailScoreTotal := 0
 
-	for r := range rows {
-		for c := range cols {
-			value := lines[r][c]
-
-			if value == '0' {
-				trailheads = append(trailheads, Location{r, c})
-			}
-
-			trailMap[Location{r, c}] = utils.MustIntFromString(string(value))
-		}
-	}
-
 	for _, head := range trailheads {
-		visited := map[Location]bool{}
-		queue := []Location{head}
-		trailScore := 0
-
-		for len(queue) > 0 {
-			current := queue[0]
-			queue = queue[1:]
-
-			// We've seen this before
-			if _, ok := visited[current]; ok {
-				continue
-			}
-
-			visited[current] = true
-
-			// Reached a top
-			if trailMap[current] == 9 {
-				trailScore++
-				continue
-			}
-
-			moves := []Location{}
-			directions := []Location{
-				{r: current.r - 1, c: current.c}, // Above
-				{r: current.r, c: current.c + 1}, // Right
-				{r: current.r + 1, c: current.c}, // Below
-				{r: current.r, c: current.c - 1}, // Left
-			}
-
-			for _, direction := range directions {
-				// Position exists and is _one_ bigger than current
-				if value, ok := trailMap[direction]; ok && value == trailMap[current]+1 {
-					moves = append(moves, direction)
-				}
-			}
-
-			queue = append(queue, moves...)
-		}
-
-		trailScoreTotal += trailScore
+		trailScoreTotal += findTrailScore(trailMap, head, true)
 	}
 
 	return trailScoreTotal
@@ -87,12 +32,22 @@ func part1(name string) int {
 
 func part2(name string) int {
 	lines := files.ReadLines(name)
+	trailMap, trailheads := createTrailMap(lines)
+	trailScoreTotal := 0
+
+	for _, head := range trailheads {
+		trailScoreTotal += findTrailScore(trailMap, head, false)
+	}
+
+	return trailScoreTotal
+}
+
+func createTrailMap(lines []string) (map[Location]int, []Location) {
 	trailheads := []Location{}
 	trailMap := map[Location]int{}
 
 	rows := len(lines)
 	cols := len(lines[0])
-	trailScoreTotal := 0
 
 	for r := range rows {
 		for c := range cols {
@@ -106,43 +61,48 @@ func part2(name string) int {
 		}
 	}
 
-	for _, head := range trailheads {
-		visited := map[Location]bool{}
-		queue := []Location{head}
-		trailScore := 0
+	return trailMap, trailheads
+}
 
-		for len(queue) > 0 {
-			current := queue[0]
-			queue = queue[1:]
+func findTrailScore(trailMap map[Location]int, start Location, isDistinct bool) int {
+	visited := map[Location]bool{}
+	queue := []Location{start}
+	trailScore := 0
 
-			visited[current] = true
+	for len(queue) > 0 {
+		current := queue[0]
+		queue = queue[1:]
 
-			// Reached a top
-			if trailMap[current] == 9 {
-				trailScore++
-				continue
-			}
-
-			moves := []Location{}
-			directions := []Location{
-				{r: current.r - 1, c: current.c}, // Above
-				{r: current.r, c: current.c + 1}, // Right
-				{r: current.r + 1, c: current.c}, // Below
-				{r: current.r, c: current.c - 1}, // Left
-			}
-
-			for _, direction := range directions {
-				// Position exists and is _one_ bigger than current
-				if value, ok := trailMap[direction]; ok && value == trailMap[current]+1 {
-					moves = append(moves, direction)
-				}
-			}
-
-			queue = append(queue, moves...)
+		// We've seen this before
+		if _, ok := visited[current]; ok && isDistinct {
+			continue
 		}
 
-		trailScoreTotal += trailScore
+		visited[current] = true
+
+		// Reached a top
+		if trailMap[current] == 9 {
+			trailScore++
+			continue
+		}
+
+		moves := []Location{}
+		directions := []Location{
+			{r: current.r - 1, c: current.c}, // Above
+			{r: current.r, c: current.c + 1}, // Right
+			{r: current.r + 1, c: current.c}, // Below
+			{r: current.r, c: current.c - 1}, // Left
+		}
+
+		for _, direction := range directions {
+			// Position exists and is _one_ bigger than current
+			if value, ok := trailMap[direction]; ok && value == trailMap[current]+1 {
+				moves = append(moves, direction)
+			}
+		}
+
+		queue = append(queue, moves...)
 	}
 
-	return trailScoreTotal
+	return trailScore
 }
