@@ -42,7 +42,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 8   |     58749 ns/op |     121247 ns/op |                     |
 | 9   | 381476181 ns/op |  171042257 ns/op |                     |
 | 10  |   1424599 ns/op |    1789071 ns/op |                     |
-| 11  |          Coming |           Coming |                     |
+| 11  |    424021 ns/op |   15488584 ns/op |                     |
 
 \* compared to first solution
 
