@@ -56,3 +56,18 @@ func (g *Grid) Contains(p Point) (byte, bool) {
 
 	return 0, false
 }
+
+func (g *Grid) FindAll(needle byte) []Point {
+	points := []Point{}
+
+	for i, v := range g.Data {
+		if v == needle {
+			points = append(points, Point{
+				X: i % g.Width,
+				Y: i / g.Width,
+			})
+		}
+	}
+
+	return points
+}
