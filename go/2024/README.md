@@ -44,7 +44,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 9   | 381476181 ns/op |  171042257 ns/op |                     |
 | 10  |   1424599 ns/op |    1789071 ns/op |                     |
 | 11  |    424021 ns/op |   15488584 ns/op |                     |
-| 12  |  10984420 ns/op |   16856988 ns/op |                     |
+| 12  |   6677348 ns/op |   12339733 ns/op | `39.21%` / `26.80%` |
 
 \* compared to first solution
 
@@ -59,6 +59,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 |   5 |   1669175 ns/op |    17299190 ns/op |            Baseline | [Link](https://github.com/believer/advent-of-code/blob/1db858ae3d391319511787d8935c76eecdf6b22f/go/2024/puzzles/day05/main.go) |
 |   7 | 126892714 ns/op | 10124683583 ns/op |            Baseline | [Link](https://github.com/believer/advent-of-code/blob/dd735747021ce43ca3a7427c529813139737271e/go/2024/puzzles/day07/main.go) |
 |   7 | 110164692 ns/op |  7135839625 ns/op | `13.18%` / `29.52%` | [Link](https://github.com/believer/advent-of-code/blob/640d9604dfefa71f7bfef876750f378bd1a58a8b/go/2024/puzzles/day07/main.go) |
+|  12 |  10984420 ns/op |    16856988 ns/op |            Baseline | [Link](https://github.com/believer/advent-of-code/blob/7a220ed0e6deae74d0a293615e6348e6ce1a9a22/go/2024/puzzles/day12/main.go) |
 
 ## Running
 

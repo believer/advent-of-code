@@ -4,44 +4,27 @@ import (
 	"fmt"
 
 	"github.com/believer/aoc-2024/utils/files"
+	"github.com/believer/aoc-2024/utils/grid"
 )
 
 // BFS to find plant regions and perimeters
 // For part 2 find corners of areas which show how many sides it has
+// Added a similar Grid/Point solution like I've used in my Rust solutions
+// in previous years. Made things faster (one dimensional array of bytes) and cleaner!
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
 	fmt.Println("Part 2: ", part2("input.txt"))
 }
 
-type Location struct {
-	r, c int
-}
-
-var directions = [][]int{
-	{-1, 0}, // Above
-	{0, 1},  // Right
-	{1, 0},  // Below
-	{0, -1}, // Left
-}
-
 func part1(name string) int {
-	plants := files.ReadLines(name)
-	grid := map[Location]byte{}
-	visited := map[Location]bool{}
-
-	rows := len(plants)
-	cols := len(plants[0])
+	lines := files.ReadLines(name)
+	plants := grid.New(lines)
+	visited := map[grid.Point]bool{}
 	price := 0
 
-	for r := range rows {
-		for c := range cols {
-			grid[Location{r, c}] = plants[r][c]
-		}
-	}
-
-	for r := range rows {
-		for c := range cols {
-			area, perimeter := findPlantBed(grid, visited, Location{r, c})
+	for y := range plants.Height {
+		for x := range plants.Width {
+			area, perimeter := findPlantBed(plants, visited, grid.Point{X: x, Y: y})
 			price += len(area) * perimeter
 		}
 	}
@@ -50,23 +33,14 @@ func part1(name string) int {
 }
 
 func part2(name string) int {
-	plants := files.ReadLines(name)
-	grid := map[Location]byte{}
-	visited := map[Location]bool{}
-
-	rows := len(plants)
-	cols := len(plants[0])
+	lines := files.ReadLines(name)
+	plants := grid.New(lines)
+	visited := map[grid.Point]bool{}
 	price := 0
 
-	for r := range rows {
-		for c := range cols {
-			grid[Location{r, c}] = plants[r][c]
-		}
-	}
-
-	for r := range rows {
-		for c := range cols {
-			area, _ := findPlantBed(grid, visited, Location{r, c})
+	for y := range plants.Height {
+		for x := range plants.Width {
+			area, _ := findPlantBed(plants, visited, grid.Point{X: x, Y: y})
 			price += len(area) * findCorners(area)
 		}
 	}
@@ -75,24 +49,24 @@ func part2(name string) int {
 }
 
 // The number of corners shows how many sides we have
-func findCorners(area map[Location]bool) int {
+func findCorners(area map[grid.Point]bool) int {
 	corners := 0
 
 	cornerChecks := []struct {
-		offsets        []Location
+		offsets        []grid.Point
 		requiredStates []bool
 	}{
 		// Outer corners
-		{[]Location{{0, -1}, {-1, 0}}, []bool{false, false}}, // Top left
-		{[]Location{{0, 1}, {-1, 0}}, []bool{false, false}},  // Top right
-		{[]Location{{0, -1}, {1, 0}}, []bool{false, false}},  // Bottom left
-		{[]Location{{0, 1}, {1, 0}}, []bool{false, false}},   // Bottom right
+		{[]grid.Point{{Y: 0, X: -1}, {Y: -1, X: 0}}, []bool{false, false}}, // Top left
+		{[]grid.Point{{Y: 0, X: 1}, {Y: -1, X: 0}}, []bool{false, false}},  // Top right
+		{[]grid.Point{{Y: 0, X: -1}, {Y: 1, X: 0}}, []bool{false, false}},  // Bottom left
+		{[]grid.Point{{Y: 0, X: 1}, {Y: 1, X: 0}}, []bool{false, false}},   // Bottom right
 
 		// Inner corners
-		{[]Location{{-1, -1}, {-1, 0}, {0, -1}}, []bool{false, true, true}}, // Inside top left
-		{[]Location{{-1, 1}, {-1, 0}, {0, 1}}, []bool{false, true, true}},   // Inside top right
-		{[]Location{{1, -1}, {1, 0}, {0, -1}}, []bool{false, true, true}},   // Inside bottom left
-		{[]Location{{1, 1}, {1, 0}, {0, 1}}, []bool{false, true, true}},     // Inside bottom right
+		{[]grid.Point{{Y: -1, X: -1}, {Y: -1, X: 0}, {Y: 0, X: -1}}, []bool{false, true, true}}, // Inside top left
+		{[]grid.Point{{Y: -1, X: 1}, {Y: -1, X: 0}, {Y: 0, X: 1}}, []bool{false, true, true}},   // Inside top right
+		{[]grid.Point{{Y: 1, X: -1}, {Y: 1, X: 0}, {Y: 0, X: -1}}, []bool{false, true, true}},   // Inside bottom left
+		{[]grid.Point{{Y: 1, X: 1}, {Y: 1, X: 0}, {Y: 0, X: 1}}, []bool{false, true, true}},     // Inside bottom right
 	}
 
 	for a := range area {
@@ -100,7 +74,7 @@ func findCorners(area map[Location]bool) int {
 			match := true
 
 			for i, offset := range check.offsets {
-				neighbor := Location{a.r + offset.r, a.c + offset.c}
+				neighbor := a.Add(offset)
 
 				if _, ok := area[neighbor]; ok != check.requiredStates[i] {
 					match = false
@@ -117,10 +91,10 @@ func findCorners(area map[Location]bool) int {
 	return corners
 }
 
-func findPlantBed(grid map[Location]byte, visited map[Location]bool, start Location) (map[Location]bool, int) {
-	queue := []Location{start}
+func findPlantBed(g grid.Grid, visited map[grid.Point]bool, start grid.Point) (map[grid.Point]bool, int) {
+	queue := []grid.Point{start}
+	area := map[grid.Point]bool{}
 	perimeter := 0
-	area := map[Location]bool{}
 
 	for len(queue) > 0 {
 		current := queue[0]
@@ -130,7 +104,7 @@ func findPlantBed(grid map[Location]byte, visited map[Location]bool, start Locat
 			continue
 		}
 
-		neighbors := getNeighbors(grid, current)
+		neighbors := getNeighbors(g, current)
 		perimeter += 4 - len(neighbors)
 		area[current] = true
 		visited[current] = true
@@ -143,13 +117,13 @@ func findPlantBed(grid map[Location]byte, visited map[Location]bool, start Locat
 	return area, perimeter
 }
 
-func getNeighbors(grid map[Location]byte, current Location) []Location {
-	neighbors := []Location{}
+func getNeighbors(g grid.Grid, current grid.Point) []grid.Point {
+	neighbors := []grid.Point{}
 
-	for _, d := range directions {
-		next := Location{current.r + d[0], current.c + d[1]}
+	for _, d := range grid.CARDINALS {
+		next := current.Add(d)
 
-		if value, ok := grid[next]; ok && value == grid[current] {
+		if value, ok := g.Contains(next); ok && value == g.Get(current) {
 			neighbors = append(neighbors, next)
 		}
 	}

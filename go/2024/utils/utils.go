@@ -2,11 +2,6 @@ package utils
 
 import "strconv"
 
-type Point struct {
-	x int
-	y int
-}
-
 // Ints
 // -----------------------------------------------------------
 
