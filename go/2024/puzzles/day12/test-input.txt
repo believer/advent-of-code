@@ -1,0 +1,4 @@
+AAAA
+BBCD
+BBCC
+EEEC
