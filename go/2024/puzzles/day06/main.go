@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/believer/aoc-2024/utils/files"
+	"github.com/believer/aoc-2024/utils/grid"
 )
 
 // Brute forced part 2 first by checking every position on the grid.
@@ -16,124 +17,96 @@ func main() {
 	fmt.Println("Part 2: ", part2("input.txt"))
 }
 
-type Position struct {
-	r, c int
-}
-
-type PositionWithDirection struct {
-	r, c, dr, dc int
+type PointWithDirection struct {
+	x, y, dx, dy int
 }
 
 func part1(name string) int {
 	lines := files.ReadLines(name)
-	guardLocation := initialGuardLocation(lines)
+	guardMap := grid.New(lines)
+	guardLocation := guardMap.Find('^')
 
-	return len(getPath(lines, guardLocation))
+	return len(getPath(guardMap, guardLocation))
 }
 
 func part2(name string) int {
 	lines := files.ReadLines(name)
+	guardMap := grid.New(lines)
+	guardLocation := guardMap.Find('^')
 	possibleLoops := 0
-	guardLocation := initialGuardLocation(lines)
 
-	// Create a grid to modify
-	var grid [][]byte
-
-	for _, l := range lines {
-		grid = append(grid, []byte(l))
-	}
-
-	guardPath := getPath(lines, guardLocation)
+	guardPath := getPath(guardMap, guardLocation)
 
 	for p := range guardPath {
-		if lines[p.r][p.c] != '.' {
+		if guardMap.Get(p) != '.' {
 			continue
 		}
 
-		grid[p.r][p.c] = '#'
+		guardMap.Update(p, '#')
 
-		if isLoop(grid, guardLocation.r, guardLocation.c) {
+		if isLoop(guardMap, guardLocation) {
 			possibleLoops++
 		}
 
-		grid[p.r][p.c] = '.'
+		guardMap.Update(p, '.')
 	}
 
 	return possibleLoops
 }
 
-func initialGuardLocation(lines []string) Position {
-	guardLocation := Position{0, 0}
-	rows := len(lines)
-	cols := len(lines[0])
-
-outer:
-	for r := range rows {
-		for c := range cols {
-			if lines[r][c] == '^' {
-				guardLocation = Position{r, c}
-				break outer
-			}
-		}
-	}
-
-	return guardLocation
-}
-
-func getPath(lines []string, guard Position) map[Position]struct{} {
-	visitedLocations := make(map[Position]struct{})
-	rows := len(lines)
-	cols := len(lines[0])
-	dr := -1
-	dc := 0
+func getPath(guardMap grid.Grid, guard grid.Point) map[grid.Point]bool {
+	visitedLocations := map[grid.Point]bool{}
+	dx := 0
+	dy := -1
 
 	for {
-		r, c := guard.r, guard.c
-		visitedLocations[guard] = struct{}{}
+		x, y := guard.X, guard.Y
+		visitedLocations[guard] = true
+		next := grid.Point{X: x + dx, Y: y + dy}
 
 		// Check bounds
-		if r+dr < 0 || r+dr >= rows || c+dc < 0 || c+dc >= cols {
+		if _, ok := guardMap.Contains(next); !ok {
 			break
 		}
 
 		// We always rotate to the right on obstacles
 		// (-1,0) becomes (0,1) becomes (1,0) becomes (0,-1)
-		if lines[r+dr][c+dc] == '#' {
-			dc, dr = -dr, dc
+		if guardMap.Get(next) == '#' {
+			dx, dy = -dy, dx
 		} else {
-			guard = Position{r: r + dr, c: c + dc}
+			guard = next
 		}
 	}
 
 	return visitedLocations
 }
 
-func isLoop(grid [][]byte, r, c int) bool {
-	visitedLocations := make(map[PositionWithDirection]struct{})
-	dr := -1
-	dc := 0
-	rows := len(grid)
-	cols := len(grid[0])
+func isLoop(guardMap grid.Grid, position grid.Point) bool {
+	visitedLocations := map[PointWithDirection]bool{}
+	x, y := position.X, position.Y
+	dx := 0
+	dy := -1
 
 	for {
 		// Save with direction as well to find when we're looping
-		visitedLocations[PositionWithDirection{r, c, dr, dc}] = struct{}{}
+		visitedLocations[PointWithDirection{x, y, dx, dy}] = true
+		next := grid.Point{X: x + dx, Y: y + dy}
 
 		// Check bounds
-		if r+dr < 0 || r+dr >= rows || c+dc < 0 || c+dc >= cols {
+		if _, ok := guardMap.Contains(next); !ok {
 			return false
 		}
 
 		// We always rotate to the right on obstacles
 		// (-1,0) becomes (0,1) becomes (1,0) becomes (0,-1)
-		if grid[r+dr][c+dc] == '#' {
-			dc, dr = -dr, dc
+		if guardMap.Get(next) == '#' {
+			dx, dy = -dy, dx
 		} else {
-			r += dr
-			c += dc
+			x += dx
+			y += dy
 		}
 
-		if _, ok := visitedLocations[PositionWithDirection{r, c, dr, dc}]; ok {
+		if _, ok := visitedLocations[PointWithDirection{x, y, dx, dy}]; ok {
 			return true
 		}
 	}

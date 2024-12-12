@@ -1,5 +1,7 @@
 package grid
 
+import "fmt"
+
 /* Point
 /* ====================================================== */
 
@@ -57,6 +59,25 @@ func (g *Grid) Contains(p Point) (byte, bool) {
 	return 0, false
 }
 
+func (g *Grid) Update(p Point, b byte) {
+	g.Data[g.Width*p.Y+p.X] = b
+}
+
+// Find exactly _one_ point for the given value
+func (g *Grid) Find(needle byte) Point {
+	for i, v := range g.Data {
+		if v == needle {
+			return Point{
+				X: i % g.Width,
+				Y: i / g.Width,
+			}
+		}
+	}
+
+	panic("Point not found")
+}
+
+// Find _all_ points for the given value
 func (g *Grid) FindAll(needle byte) []Point {
 	points := []Point{}
 
@@ -70,4 +91,13 @@ func (g *Grid) FindAll(needle byte) []Point {
 	}
 
 	return points
+}
+
+func (g *Grid) Debug() {
+	for y := range g.Height {
+		for x := range g.Width {
+			fmt.Print(string(g.Get(Point{X: x, Y: y})))
+		}
+		fmt.Println()
+	}
 }
