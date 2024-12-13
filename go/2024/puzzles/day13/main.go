@@ -19,16 +19,6 @@ func main() {
 	fmt.Println("Part 2: ", part2("input.txt"))
 }
 
-// Button A: X+94, Y+34
-// Button B: X+22, Y+67
-// Prize: X=8400, Y=5400
-//
-// If we restructure this, we need to solve two equations:
-//
-// Ax * a + Bx * b = PrizeX
-// Ay * a + By * b = PrizeY
-//
-// Where a and b represent button presses. 0 <= a <= 100
 func part1(name string) int {
 	return solve(name, 0)
 }
@@ -42,7 +32,6 @@ func getEquationValues(prize []string) (int, int, int, int, int, int) {
 	Ax, Ay, Bx, By := 0, 0, 0, 0
 	prizeX, prizeY := 0, 0
 
-	// Extract values from instructions
 	for i, part := range prize {
 		matches := re.FindAllString(part, -1)
 		x, y := utils.MustIntFromString(matches[0]), utils.MustIntFromString(matches[1])
