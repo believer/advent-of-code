@@ -30,26 +30,7 @@ func main() {
 //
 // Where a and b represent button presses. 0 <= a <= 100
 func part1(name string) int {
-	prizes := files.ReadParagraphs(name)
-	tokens := 0
-
-	for _, prize := range prizes {
-		Ax, Ay, Bx, By, prizeX, prizeY := getEquationValues(prize)
-
-		for a := range 101 {
-			for b := range 101 {
-				buttonA := Ax*a + Bx*b
-				buttonB := Ay*a + By*b
-
-				if buttonA == prizeX && buttonB == prizeY {
-					// A tokens cost three times more than B tokens
-					tokens += a*3 + b
-				}
-			}
-		}
-	}
-
-	return tokens
+	return solve(name, 0)
 }
 
 func part2(name string) int {
