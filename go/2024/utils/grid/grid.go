@@ -62,8 +62,31 @@ func New(lines []string) Grid {
 	}
 }
 
+func FromSize(width, height int) Grid {
+	data := make([]byte, width*height)
+
+	for i := range data {
+		data[i] = '.'
+	}
+
+	return Grid{
+		Data:   data,
+		Height: height,
+		Width:  width,
+	}
+}
+
 func (g *Grid) Get(p Point) byte {
 	return g.Data[g.Width*p.Y+p.X]
+}
+
+func (g *Grid) GetWithWrap(p Point) byte {
+	// Wrap coordinates to ensure they stay within bounds
+	wrappedX := (p.X%g.Width + g.Width) % g.Width
+	wrappedY := (p.Y%g.Height + g.Height) % g.Height
+
+	// Update the grid at the wrapped position
+	return g.Data[g.Width*wrappedY+wrappedX]
 }
 
 func (g *Grid) Contains(p Point) (byte, bool) {
@@ -76,6 +99,15 @@ func (g *Grid) Contains(p Point) (byte, bool) {
 
 func (g *Grid) Update(p Point, b byte) {
 	g.Data[g.Width*p.Y+p.X] = b
+}
+
+func (g *Grid) UpdateWithWrap(p Point, b byte) {
+	// Wrap coordinates to ensure they stay within bounds
+	wrappedX := (p.X%g.Width + g.Width) % g.Width
+	wrappedY := (p.Y%g.Height + g.Height) % g.Height
+
+	// Update the grid at the wrapped position
+	g.Data[g.Width*wrappedY+wrappedX] = b
 }
 
 // Find exactly _one_ point for the given value
@@ -108,6 +140,42 @@ func (g *Grid) FindAll(needle byte) []Point {
 	return points
 }
 
+func (g *Grid) GetQuadrant(q int) []byte {
+	var startX, startY, endX, endY int
+
+	halfWidth := g.Width / 2
+	halfHeight := g.Height / 2
+
+	switch q {
+	case 1: // Top-Left
+		startX, startY, endX, endY = 0, 0, halfWidth, halfHeight
+	case 2: // Top-Right
+		startX, startY, endX, endY = halfWidth+1, 0, g.Width, halfHeight
+	case 3: // Bottom-Left
+		startX, startY, endX, endY = 0, halfHeight+1, halfWidth, g.Height
+	case 4: // Bottom-Right
+		startX, startY, endX, endY = halfWidth+1, halfHeight+1, g.Width, g.Height
+	default:
+		panic("Invalid quadrant number")
+	}
+
+	quadrantData := make([]byte, 0, (endX-startX)*(endY-startY))
+	for y := startY; y < endY; y++ {
+		quadrantData = append(quadrantData, g.Data[y*g.Width+startX:y*g.Width+endX]...)
+	}
+
+	return quadrantData
+}
+
+func (g *Grid) GetQuadrants() [][]byte {
+	return [][]byte{
+		g.GetQuadrant(1),
+		g.GetQuadrant(2),
+		g.GetQuadrant(3),
+		g.GetQuadrant(4),
+	}
+}
+
 func (g *Grid) Debug() {
 	for y := range g.Height {
 		for x := range g.Width {
@@ -115,4 +183,6 @@ func (g *Grid) Debug() {
 		}
 		fmt.Println()
 	}
+
+	fmt.Println()
 }

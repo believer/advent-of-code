@@ -27,6 +27,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 11: Plutonian Pebbles](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day11/main.go)    | 🌟  |        187738 | 🌟  | 223767210249237 |
 | [Day 12: Garden Groups](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day12/main.go)        | 🌟  |       1522850 | 🌟  |          953738 |
 | [Day 13: Claw Contraption](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day13/main.go)     | 🌟  |         26299 | 🌟  | 107824497933339 |
+| [Day 14: Restroom Redoubt](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day14/main.go)     | 🌟  |     228690000 | 🌟  |            7093 |
 
 ## Benchmarks
 
@@ -47,6 +48,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 11  |    424021 ns/op |   15488584 ns/op |                     |
 | 12  |   6677348 ns/op |   12339733 ns/op | `39.21%` / `26.80%` |
 | 13  |    698173 ns/op |     702380 ns/op | `75.93%` / -        |
+| 14  |    594981 ns/op |   56488050 ns/op |                     |
 
 \* compared to first solution
 
