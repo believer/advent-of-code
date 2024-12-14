@@ -69,7 +69,9 @@ func part2(name string, width, height int) int {
 	seconds := 0
 
 	// Move robots
-	for s := range 10000 {
+	// Use size of grid as range. When we go over the the size,
+	// the robots will wrap around to their initial position.
+	for s := range tiles.Height * tiles.Width {
 		for i, robot := range robots {
 			next := robot.position.Add(robot.velocity)
 
