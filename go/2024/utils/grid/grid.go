@@ -80,7 +80,7 @@ func (g *Grid) Get(p Point) byte {
 	return g.Data[g.Width*p.Y+p.X]
 }
 
-func (g *Grid) GetWithWrap(p Point) byte {
+func (g *Grid) GetWrapped(p Point) byte {
 	// Wrap coordinates to ensure they stay within bounds
 	wrappedX := (p.X%g.Width + g.Width) % g.Width
 	wrappedY := (p.Y%g.Height + g.Height) % g.Height
@@ -101,7 +101,7 @@ func (g *Grid) Update(p Point, b byte) {
 	g.Data[g.Width*p.Y+p.X] = b
 }
 
-func (g *Grid) UpdateWithWrap(p Point, b byte) {
+func (g *Grid) UpdateWrapped(p Point, b byte) {
 	// Wrap coordinates to ensure they stay within bounds
 	wrappedX := (p.X%g.Width + g.Width) % g.Width
 	wrappedY := (p.Y%g.Height + g.Height) % g.Height
