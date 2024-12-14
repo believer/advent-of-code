@@ -101,6 +101,7 @@ func solve(name string, offset int) int {
 		detAy := (c2*a1 - c1*a2)
 
 		// Ensure that we have integer solutions
+		// since we can only make full button presss and no partial presses
 		if detAx%detA != 0 || detAy%detA != 0 {
 			continue
 		}
@@ -108,7 +109,8 @@ func solve(name string, offset int) int {
 		x := detAx / detA
 		y := detAy / detA
 
-		// Only positive solutions
+		// Only positive solutions since we can't press
+		// the buttons negative amounts
 		if x < 0 || y < 0 {
 			continue
 		}
