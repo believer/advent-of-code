@@ -24,8 +24,16 @@ func TestPart1Small(t *testing.T) {
 
 func TestPart2(t *testing.T) {
 	t.Run("Part 2", func(t *testing.T) {
-		expected := 0
+		expected := 9021
 		actual := part2("test-input.txt")
+		assert.Equal(t, expected, actual)
+	})
+}
+
+func TestPart2Small(t *testing.T) {
+	t.Run("Part 2", func(t *testing.T) {
+		expected := 618
+		actual := part2("test-input-part2-small.txt")
 		assert.Equal(t, expected, actual)
 	})
 }

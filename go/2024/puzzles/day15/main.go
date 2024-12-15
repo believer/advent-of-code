@@ -16,24 +16,9 @@ func main() {
 func part1(name string) int {
 	p := files.ReadParagraphs(name)
 	warehouse := grid.New(p[0])
-	moves := []grid.Point{}
-	gps := 0
 
 	// Get all moves from list
-	for _, moveLine := range p[1] {
-		for _, m := range strings.Split(moveLine, "") {
-			switch m {
-			case "<":
-				moves = append(moves, grid.LEFT)
-			case "^":
-				moves = append(moves, grid.UP)
-			case ">":
-				moves = append(moves, grid.RIGHT)
-			case "v":
-				moves = append(moves, grid.DOWN)
-			}
-		}
-	}
+	moves := getMoves(p[1])
 
 	// Find robot start position
 	robot := warehouse.Find('@')
@@ -73,18 +58,13 @@ func part1(name string) int {
 		robot = next
 	}
 
-	for _, box := range warehouse.FindAll('O') {
-		gps += 100*box.Y + box.X
-	}
-
-	return gps
+	return calculateGps(warehouse, 'O')
 }
 
 func part2(name string) int {
 	p := files.ReadParagraphs(name)
 	warehouse := grid.New(p[0])
 	doubleWarehouse := grid.FromSize(warehouse.Width*2, warehouse.Height)
-	gps := 0
 
 	// Scale warehouse
 	for y := range warehouse.Height {
@@ -110,7 +90,89 @@ func part2(name string) int {
 		}
 	}
 
-	doubleWarehouse.Debug()
+	// Get all moves from list
+	moves := getMoves(p[1])
+
+	// Find robot start position
+	robot := doubleWarehouse.Find('@')
+
+	// Use BFS to find boxes
+moves:
+	for _, m := range moves {
+		queue := []grid.Point{robot}
+		boxes := map[grid.Point]byte{}
+
+		for len(queue) > 0 {
+			current := queue[0]
+			queue = queue[1:]
+
+			if _, ok := boxes[current]; ok {
+				continue
+			}
+
+			boxes[current] = doubleWarehouse.Get(current)
+			next := current.Add(m)
+
+			// Add the box part and it's corresponding other side
+			switch doubleWarehouse.Get(next) {
+			case '#':
+				continue moves
+			case ']':
+				queue = append(queue, next.Add(grid.LEFT))
+				queue = append(queue, next)
+			case '[':
+				queue = append(queue, next.Add(grid.RIGHT))
+				queue = append(queue, next)
+			}
+		}
+
+		// Reset old box positions to empty
+		for p := range boxes {
+			doubleWarehouse.Update(p, '.')
+		}
+
+		// Move boxes
+		for p, b := range boxes {
+			doubleWarehouse.Update(p.Add(m), b)
+		}
+
+		// Move robot
+		next := robot.Add(m)
+		doubleWarehouse.Update(next, '@')
+		doubleWarehouse.Update(robot, '.')
+		robot = next
+	}
+
+	return calculateGps(doubleWarehouse, '[')
+}
+
+func getMoves(list []string) []grid.Point {
+	moves := []grid.Point{}
+
+	for _, moveLine := range list {
+		for _, m := range strings.Split(moveLine, "") {
+			switch m {
+			case "<":
+				moves = append(moves, grid.LEFT)
+			case "^":
+				moves = append(moves, grid.UP)
+			case ">":
+				moves = append(moves, grid.RIGHT)
+			case "v":
+				moves = append(moves, grid.DOWN)
+			}
+		}
+	}
+
+	return moves
+}
+
+func calculateGps(warehouse grid.Grid, needle byte) int {
+	gps := 0
+
+	for _, box := range warehouse.FindAll(needle) {
+		gps += 100*box.Y + box.X
+	}
 
 	return gps
 }
