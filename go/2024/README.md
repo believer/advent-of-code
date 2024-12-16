@@ -29,6 +29,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 13: Claw Contraption](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day13/main.go)     | 🌟  |         26299 | 🌟  | 107824497933339 |
 | [Day 14: Restroom Redoubt](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day14/main.go)     | 🌟  |     228690000 | 🌟  |            7093 |
 | [Day 15: Warehouse Woes](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day15/main.go)       | 🌟  |       1526018 | 🌟  |         1550677 |
+| [Day 16: Reindeer Maze](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day16/main.go)        | 🌟  |         78428 | 🌟  |             463 |
 
 ## Benchmarks
 
@@ -51,6 +52,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 13  |    698173 ns/op |     702380 ns/op | `75.93%` / -        |
 | 14  |     55522 ns/op |   56488050 ns/op | `90.67%` / -        |
 | 15  |    477450 ns/op |    3498110 ns/op |                     |
+| 16  |  97868160 ns/op |   99166694 ns/op |                     |
 
 \* compared to first solution
 
