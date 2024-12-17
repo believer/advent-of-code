@@ -113,7 +113,7 @@ func part2(name string) int {
 
 		for _, v := range validPrograms {
 			for n := range 8 {
-				// Increase the value three bits, since we're in a 3-bit computer.
+				// Increase the value three bits since we're in a 3-bit computer.
 				// This is effectively v * 2^3. Then insert the value of n in the lower bits.
 				a := (v << 3) | n
 
