@@ -12,14 +12,14 @@ import (
 )
 
 type Computer struct {
-	A, B, C      int
-	Iteration    int
-	Instructions []int
-	Output       []string
+	A, B, C            int
+	InstructionPointer int
+	Instructions       []int
+	Output             []string
 }
 
 func (c *Computer) Operand() int {
-	index := c.Iteration + 1
+	index := c.InstructionPointer + 1
 
 	switch c.Instructions[index] {
 	case 0, 1, 2, 3:
@@ -36,10 +36,10 @@ func (c *Computer) Operand() int {
 }
 
 func (c *Computer) Run() {
-	for c.Iteration < len(c.Instructions) {
-		opcode := c.Instructions[c.Iteration]
+	for c.InstructionPointer < len(c.Instructions) {
+		opcode := c.Instructions[c.InstructionPointer]
 		operand := c.Operand()
-		literalOperand := c.Instructions[c.Iteration+1]
+		literalOperand := c.Instructions[c.InstructionPointer+1]
 
 		switch opcode {
 		// adv :: A / 2^operand -> A
@@ -64,7 +64,7 @@ func (c *Computer) Run() {
 			// jnz :: Nothing if A is zero. Otherwise, jump to _literal_ operand.
 		case 3:
 			if c.A != 0 {
-				c.Iteration = literalOperand
+				c.InstructionPointer = literalOperand
 				continue
 			}
 			// bxc :: bitwise XOR of B and C -> B
@@ -81,7 +81,7 @@ func (c *Computer) Run() {
 			c.C = c.A >> operand
 		}
 
-		c.Iteration += 2
+		c.InstructionPointer += 2
 	}
 }
 
