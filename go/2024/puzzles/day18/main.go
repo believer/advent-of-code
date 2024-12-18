@@ -47,7 +47,6 @@ func part2(name string, size int) string {
 		} else {
 			high = middle
 		}
-
 	}
 
 	return bytes[low]
