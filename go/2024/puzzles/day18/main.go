@@ -12,7 +12,7 @@ import (
 
 type Node struct {
 	Point grid.Point
-	Cost  int
+	Steps int
 }
 
 // Another day, another grid puzzle that can be solved with BFS
@@ -58,8 +58,8 @@ func findPath(bytes []string, size, steps int) int {
 	visited := map[grid.Point]bool{}
 	start := grid.Point{X: 0, Y: 0}
 	end := grid.Point{X: size, Y: size}
-	queue := []Node{{Point: start, Cost: 0}}
-	minCost := math.MaxInt
+	queue := []Node{{Point: start, Steps: 0}}
+	minSteps := math.MaxInt
 
 	// Add corrupted memory
 	for i, b := range bytes {
@@ -82,8 +82,8 @@ func findPath(bytes []string, size, steps int) int {
 		queue = queue[1:]
 
 		// Found end with new minimum cost
-		if current.Point == end && current.Cost < minCost {
-			minCost = current.Cost
+		if current.Point == end && current.Steps < minSteps {
+			minSteps = current.Steps
 		}
 
 		// We've seen this before
@@ -98,10 +98,10 @@ func findPath(bytes []string, size, steps int) int {
 			next := current.Point.Add(direction)
 
 			if value, ok := memory.Contains(next); ok && value != '#' {
-				queue = append(queue, Node{Point: next, Cost: current.Cost + 1})
+				queue = append(queue, Node{Point: next, Steps: current.Steps + 1})
 			}
 		}
 	}
 
-	return minCost
+	return minSteps
 }
