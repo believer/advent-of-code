@@ -31,33 +31,33 @@ func part1(name string, size, steps int) int {
 
 func part2(name string, size int) string {
 	bytes := files.ReadLines(name)
-	latest := 0
-	firstImpossible := len(bytes)
+	low := 0
+	high := len(bytes) - 1
 
 	for {
-		if (firstImpossible - latest) <= 1 {
+		if low >= high {
 			break
 		}
 
-		middle := (firstImpossible + latest) / 2
-		minCost := findPath(bytes, size, middle)
+		middle := (low + high) / 2
+		minCost := findPath(bytes, size, middle+1)
 
 		if minCost != math.MaxInt {
-			latest = middle
+			low = middle + 1
 		} else {
-			firstImpossible = middle
+			high = middle
 		}
 
 	}
 
-	return bytes[firstImpossible-1]
+	return bytes[low]
 }
 
 func findPath(bytes []string, size, steps int) int {
 	memory := grid.FromSize(size+1, size+1)
 	visited := map[grid.Point]bool{}
 	start := grid.Point{X: 0, Y: 0}
-	end := grid.Point{X: memory.Width - 1, Y: memory.Height - 1}
+	end := grid.Point{X: size, Y: size}
 	queue := []Node{{Point: start, Cost: 0}}
 	minCost := math.MaxInt
 
