@@ -32,6 +32,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 16: Reindeer Maze](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day16/main.go)          | 🌟  |             78428 | 🌟  |             463 |
 | [Day 17: Chronospatial Computer](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day17/main.go) | 🌟  | 2,0,1,3,4,0,2,1,7 | 🌟  | 236580836040301 |
 | [Day 18: RAM Run](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day18/main.go)                | 🌟  |               288 | 🌟  |            52,5 |
+| [Day 19: Linen Layout](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day19/main.go)           | 🌟  |               209 | 🌟  | 777669668613191 |
 
 ## Benchmarks
 
@@ -57,6 +58,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 16  |  97868160 ns/op |   99166694 ns/op |                     |
 | 17  |     13964 ns/op |     561424 ns/op |                     |
 | 18  |    755414 ns/op |    1996995 ns/op |                     |
+| 19  |  16126963 ns/op |   16206756 ns/op |                     |
 
 \* compared to first solution
 
