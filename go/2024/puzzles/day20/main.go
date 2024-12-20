@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 
 	"github.com/believer/aoc-2024/utils/files"
 	"github.com/believer/aoc-2024/utils/grid"
@@ -58,19 +59,32 @@ func race(name string, maxCheatTime int) int {
 		}
 	}
 
+	var mu sync.Mutex
+	var wg sync.WaitGroup
+
 	for p := range distances {
-		for p2 := range distances {
-			d := p.ManhattanDistance(p2)
+		wg.Add(1)
 
-			if d > maxCheatTime {
-				continue
-			}
+		go func(p grid.Point) {
+			defer wg.Done()
 
-			if distances[p2]-distances[p]-d >= 100 {
-				cheats++
+			for p2 := range distances {
+				d := p.ManhattanDistance(p2)
+
+				if d > maxCheatTime {
+					continue
+				}
+
+				if distances[p2]-distances[p]-d >= 100 {
+					mu.Lock()
+					cheats++
+					mu.Unlock()
+				}
 			}
-		}
+		}(p)
 	}
+
+	wg.Wait()
 
 	return cheats
 }
