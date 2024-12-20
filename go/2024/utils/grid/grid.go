@@ -1,6 +1,10 @@
 package grid
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/believer/aoc-2024/utils"
+)
 
 /* Point
 /* ====================================================== */
@@ -32,6 +36,10 @@ var ALL_DIRECTIONS = []Point{
 
 func (p *Point) Add(p2 Point) Point {
 	return Point{p.X + p2.X, p.Y + p2.Y}
+}
+
+func (p *Point) ManhattanDistance(p2 Point) int {
+	return utils.Abs(p2.X-p.X) + utils.Abs(p2.Y-p.Y)
 }
 
 /* Grid
