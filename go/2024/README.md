@@ -60,7 +60,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 17  |     13964 ns/op |     561424 ns/op |                     |
 | 18  |    755414 ns/op |    1996995 ns/op |                     |
 | 19  |  16126963 ns/op |   16206756 ns/op |                     |
-| 20  | 762519479 ns/op |  845552729 ns/op | `85.99%` / `63.78%` |
+| 20  | 106801508 ns/op |  306290916 ns/op | `85.99%` / `63.78%` |
 
 \* compared to first solution
 
