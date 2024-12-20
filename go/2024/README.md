@@ -80,7 +80,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 |  12 |  10984420 ns/op |    16856988 ns/op |            Baseline | [Link](https://github.com/believer/advent-of-code/blob/7a220ed0e6deae74d0a293615e6348e6ce1a9a22/go/2024/puzzles/day12/main.go) |
 |  13 |   2900453 ns/op |      702380 ns/op |            Baseline | [Link](https://github.com/believer/advent-of-code/blob/0cf31064eb05f384cebe45cbeaf80ba90e0947ce/go/2024/puzzles/day13/main.go) |
 |  14 |    594981 ns/op |    56488050 ns/op |            Baseline | [Link](https://github.com/believer/advent-of-code/blob/a3f28eb2691d3e4be60ec56ab7f699332a2b3d31/go/2024/puzzles/day14/main.go) |
-|  20 | 762519479 ns/op |   845552729 ns/op |                     | [Link](https://github.com/believer/advent-of-code/blob/305eba9ced6b40ecce606cf19f7cb9fc00e5ed73/go/2024/puzzles/day20/main.go) |
+|  20 | 762519479 ns/op |   845552729 ns/op |            Baseline | [Link](https://github.com/believer/advent-of-code/blob/305eba9ced6b40ecce606cf19f7cb9fc00e5ed73/go/2024/puzzles/day20/main.go) |
 
 ## Running
 
