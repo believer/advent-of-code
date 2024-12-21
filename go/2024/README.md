@@ -34,6 +34,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 18: RAM Run](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day18/main.go)                | 🌟  |               288 | 🌟  |            52,5 |
 | [Day 19: Linen Layout](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day19/main.go)           | 🌟  |               209 | 🌟  | 777669668613191 |
 | [Day 20: Race Condition](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day20/main.go)         | 🌟  |              1351 | 🌟  |          966130 |
+| [Day 21: Keypad Conundrum](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day21/main.go)       | 🌟  |            217662 | 🌟  | 263617786809000 |
 
 ## Benchmarks
 
@@ -61,6 +62,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 18  |    755414 ns/op |    1996995 ns/op |                     |
 | 19  |  16126963 ns/op |   16206756 ns/op |                     |
 | 20  | 106801508 ns/op |  306290916 ns/op | `85.99%` / `63.78%` |
+| 21  |     16344 ns/op |      16282 ns/op |                     |
 
 \* compared to first solution
 
