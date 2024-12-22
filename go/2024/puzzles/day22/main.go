@@ -48,7 +48,7 @@ func part2(name string) (maxBananas int) {
 			last = temp
 		}
 
-		// Go through the patterns four by four and them to the total score
+		// Go through the patterns four by four and add them to the total score
 		for i := range len(patterns) - 4 {
 			key := Pattern{
 				patterns[i][0],
