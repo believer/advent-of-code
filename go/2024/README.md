@@ -12,30 +12,31 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                                    | #1  |         #1 Answer | #2  |       #2 Answer |
-| ---------------------------------------------------------------------------------------------------------------------- | --- | ----------------: | --- | --------------: |
-| [Day 1: Historian Hysteria](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day01/main.go)      | 🌟  |           1666427 | 🌟  |        24316233 |
-| [Day 2: Red-Nosed Reports](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day02/main.go)       | 🌟  |               564 | 🌟  |             604 |
-| [Day 3: Mull It Over](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day03/main.go)            | 🌟  |         161085926 | 🌟  |        82045421 |
-| [Day 4: Ceres Search](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day04/main.go)            | 🌟  |              2562 | 🌟  |            1902 |
-| [Day 5: Print Queue](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day05/main.go)             | 🌟  |              3608 | 🌟  |            4922 |
-| [Day 6: Guard Gallivant](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day06/main.go)         | 🌟  |              4778 | 🌟  |            1618 |
-| [Day 7: Bridge Repair](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day07/main.go)           | 🌟  |     1399219271639 | 🌟  | 275791737999003 |
-| [Day 8: Resonant Collinearity](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day08/main.go)   | 🌟  |               220 | 🌟  |             813 |
-| [Day 9: Disk Fragmenter](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day09/main.go)         | 🌟  |     6384282079460 | 🌟  |   6408966547049 |
-| [Day 10: Hoof It](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day10/main.go)                | 🌟  |               652 | 🌟  |            1432 |
-| [Day 11: Plutonian Pebbles](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day11/main.go)      | 🌟  |            187738 | 🌟  | 223767210249237 |
-| [Day 12: Garden Groups](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day12/main.go)          | 🌟  |           1522850 | 🌟  |          953738 |
-| [Day 13: Claw Contraption](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day13/main.go)       | 🌟  |             26299 | 🌟  | 107824497933339 |
-| [Day 14: Restroom Redoubt](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day14/main.go)       | 🌟  |         228690000 | 🌟  |            7093 |
-| [Day 15: Warehouse Woes](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day15/main.go)         | 🌟  |           1526018 | 🌟  |         1550677 |
-| [Day 16: Reindeer Maze](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day16/main.go)          | 🌟  |             78428 | 🌟  |             463 |
-| [Day 17: Chronospatial Computer](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day17/main.go) | 🌟  | 2,0,1,3,4,0,2,1,7 | 🌟  | 236580836040301 |
-| [Day 18: RAM Run](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day18/main.go)                | 🌟  |               288 | 🌟  |            52,5 |
-| [Day 19: Linen Layout](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day19/main.go)           | 🌟  |               209 | 🌟  | 777669668613191 |
-| [Day 20: Race Condition](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day20/main.go)         | 🌟  |              1351 | 🌟  |          966130 |
-| [Day 21: Keypad Conundrum](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day21/main.go)       | 🌟  |            217662 | 🌟  | 263617786809000 |
-| [Day 22: Monkey Market](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day22/main.go)          | 🌟  |       20068964552 | 🌟  |            2246 |
+| Day                                                                                                                    | #1  |         #1 Answer | #2  |                              #2 Answer |
+| ---------------------------------------------------------------------------------------------------------------------- | --- | ----------------: | --- | -------------------------------------: |
+| [Day 1: Historian Hysteria](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day01/main.go)      | 🌟  |           1666427 | 🌟  |                               24316233 |
+| [Day 2: Red-Nosed Reports](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day02/main.go)       | 🌟  |               564 | 🌟  |                                    604 |
+| [Day 3: Mull It Over](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day03/main.go)            | 🌟  |         161085926 | 🌟  |                               82045421 |
+| [Day 4: Ceres Search](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day04/main.go)            | 🌟  |              2562 | 🌟  |                                   1902 |
+| [Day 5: Print Queue](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day05/main.go)             | 🌟  |              3608 | 🌟  |                                   4922 |
+| [Day 6: Guard Gallivant](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day06/main.go)         | 🌟  |              4778 | 🌟  |                                   1618 |
+| [Day 7: Bridge Repair](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day07/main.go)           | 🌟  |     1399219271639 | 🌟  |                        275791737999003 |
+| [Day 8: Resonant Collinearity](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day08/main.go)   | 🌟  |               220 | 🌟  |                                    813 |
+| [Day 9: Disk Fragmenter](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day09/main.go)         | 🌟  |     6384282079460 | 🌟  |                          6408966547049 |
+| [Day 10: Hoof It](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day10/main.go)                | 🌟  |               652 | 🌟  |                                   1432 |
+| [Day 11: Plutonian Pebbles](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day11/main.go)      | 🌟  |            187738 | 🌟  |                        223767210249237 |
+| [Day 12: Garden Groups](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day12/main.go)          | 🌟  |           1522850 | 🌟  |                                 953738 |
+| [Day 13: Claw Contraption](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day13/main.go)       | 🌟  |             26299 | 🌟  |                        107824497933339 |
+| [Day 14: Restroom Redoubt](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day14/main.go)       | 🌟  |         228690000 | 🌟  |                                   7093 |
+| [Day 15: Warehouse Woes](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day15/main.go)         | 🌟  |           1526018 | 🌟  |                                1550677 |
+| [Day 16: Reindeer Maze](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day16/main.go)          | 🌟  |             78428 | 🌟  |                                    463 |
+| [Day 17: Chronospatial Computer](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day17/main.go) | 🌟  | 2,0,1,3,4,0,2,1,7 | 🌟  |                        236580836040301 |
+| [Day 18: RAM Run](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day18/main.go)                | 🌟  |               288 | 🌟  |                                   52,5 |
+| [Day 19: Linen Layout](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day19/main.go)           | 🌟  |               209 | 🌟  |                        777669668613191 |
+| [Day 20: Race Condition](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day20/main.go)         | 🌟  |              1351 | 🌟  |                                 966130 |
+| [Day 21: Keypad Conundrum](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day21/main.go)       | 🌟  |            217662 | 🌟  |                        263617786809000 |
+| [Day 22: Monkey Market](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day22/main.go)          | 🌟  |       20068964552 | 🌟  |                                   2246 |
+| [Day 23: LAN Party](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day23/main.go)              | 🌟  |               926 | 🌟  | az,ed,hz,it,ld,nh,pc,td,ty,ux,wc,yg,zz |
 
 ## Benchmarks
 
@@ -65,6 +66,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 20  | 106801508 ns/op |  306290916 ns/op | `85.99%` / `63.78%` |
 | 21  |     16344 ns/op |      16282 ns/op |                     |
 | 22  |  36743155 ns/op |  617890208 ns/op |                     |
+| 23  |  14217211 ns/op |   14168757 ns/op |                     |
 
 \* compared to first solution
 
