@@ -37,6 +37,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 21: Keypad Conundrum](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day21/main.go)       | 🌟  |            217662 | 🌟  |                        263617786809000 |
 | [Day 22: Monkey Market](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day22/main.go)          | 🌟  |       20068964552 | 🌟  |                                   2246 |
 | [Day 23: LAN Party](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day23/main.go)              | 🌟  |               926 | 🌟  | az,ed,hz,it,ld,nh,pc,td,ty,ux,wc,yg,zz |
+| [Day 24: Crossed Wires](https://github.com/believer/advent-of-code/blob/master/go/2024/puzzles/day24/main.go)          | 🌟  |    53325321422566 |     |                                        |
 
 ## Benchmarks
 
@@ -67,6 +68,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 21  |     16344 ns/op |      16282 ns/op |                     |
 | 22  |  36743155 ns/op |  617890208 ns/op |                     |
 | 23  |  14217211 ns/op |   14168757 ns/op |                     |
+| 24  |    434869 ns/op |                  |                     |
 
 \* compared to first solution
 
