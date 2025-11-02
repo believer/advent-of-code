@@ -24,7 +24,7 @@ fn sum_first_and_last_digit(line: &str) -> u32 {
     let mut digits = line.chars().filter_map(|c| c.to_digit(10));
 
     let first_digit = digits.next().unwrap();
-    let last_digit = digits.last().unwrap_or(first_digit);
+    let last_digit = digits.next_back().unwrap_or(first_digit);
 
     first_digit * 10 + last_digit
 }

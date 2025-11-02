@@ -115,7 +115,7 @@ pub fn solve_part_01((foods, allergens): &(Vec<String>, BTreeMap<String, String>
  */
 #[aoc(day21, part2)]
 pub fn solve_part_02((_, allergens): &(Vec<String>, BTreeMap<String, String>)) -> String {
-    allergens.iter().map(|(_, i)| i).join(",")
+    allergens.values().join(",")
 }
 
 #[cfg(test)]

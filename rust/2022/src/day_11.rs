@@ -111,7 +111,7 @@ impl Monkey {
     }
 
     fn test_item(&mut self, item: u64) -> usize {
-        if item % self.test == 0 {
+        if item.is_multiple_of(self.test) {
             self.if_true
         } else {
             self.if_false
