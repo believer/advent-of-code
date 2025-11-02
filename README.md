@@ -14,6 +14,7 @@ This is challenging for me, but I also really really like it. I don't do these t
 
 | Year | Language         | Main solution | Link                     |
 | ---- | ---------------- | ------------- | ------------------------ |
+| 2025 | Go               | X             | [Link](/go/2025)         |
 | 2024 | Go               | X             | [Link](/go/2024)         |
 | 2024 | Rust             |               | [Link](/rust/2024)       |
 | 2023 | Rust             | X             | [Link](/rust/2023)       |
