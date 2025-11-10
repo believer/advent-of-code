@@ -3,7 +3,7 @@ package files
 import (
 	"bufio"
 	"os"
-	"path"
+	"path/filepath"
 	"runtime"
 )
 
@@ -29,7 +29,7 @@ func Read(name string) string {
 		panic("unable to find caller so cannot build path to read file")
 	}
 
-	b, err := os.ReadFile(path.Join(path.Dir(callingFile), name))
+	b, err := os.ReadFile(filepath.Join(filepath.Dir(callingFile), name))
 
 	if err != nil {
 		panic(err)
@@ -70,7 +70,7 @@ func ReadParagraphs(name string) [][]string {
 }
 
 func readLines(name string, callingFile string) []string {
-	inputFile, err := os.Open(path.Join(path.Dir(callingFile), name))
+	inputFile, err := os.Open(filepath.Join(filepath.Dir(callingFile), name))
 
 	if err != nil {
 		panic(err)
