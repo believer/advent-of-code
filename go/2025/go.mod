@@ -1,4 +1,4 @@
-module github.com/believer/aoc-2024
+module github.com/believer/aoc-2025
 
 go 1.23.3
 
