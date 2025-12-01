@@ -7,6 +7,9 @@ import (
 	"github.com/believer/aoc-2025/utils/files"
 )
 
+// I had a small refactor to clean up the loops, but it was
+// slower than my initial solution so I kept it as is.
+
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
 	fmt.Println("Part 2: ", part2("input.txt"))
