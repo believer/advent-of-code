@@ -16,9 +16,10 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                            | #1  | #1 Answer | #2  | #2 Answer |
-| -------------------------------------------------------------------------------------------------------------- | --- | --------: | --- | --------: |
-| [Day 1: Secret Entrance](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day01/main.go) | 🌟  |       997 | 🌟  |      5978 |
+| Day                                                                                                            | #1  |  #1 Answer | #2  |   #2 Answer |
+| -------------------------------------------------------------------------------------------------------------- | --- | ---------: | --- | ----------: |
+| [Day 1: Secret Entrance](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day01/main.go) | 🌟  |        997 | 🌟  |        5978 |
+| [Day 2: Gift Shop](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day02/main.go)       | 🌟  | 9188031749 | 🌟  | 11323661261 |
 
 ## Benchmarks
 

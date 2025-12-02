@@ -15,26 +15,14 @@ func main() {
 }
 
 func part1(name string) int {
-	line := strings.TrimSpace(files.Read(name))
-	ranges := strings.Split(line, ",")
 	invalid := 0
 
-	for _, r := range ranges {
-		i, i2, _ := strings.Cut(r, "-")
-		s := utils.MustIntFromString(i)
-		e := utils.MustIntFromString(i2)
+	for _, v := range inclusiveRange(name) {
+		valueAsString := strconv.Itoa(v)
+		half := len(valueAsString) / 2
 
-		for i := range e - s + 1 {
-			v := s + i
-			ss := strconv.Itoa(v)
-
-			half := len(ss) / 2
-			c := ss[:half]
-			cc := ss[half:]
-
-			if c == cc {
-				invalid += v
-			}
+		if valueAsString[:half] == valueAsString[half:] {
+			invalid += v
 		}
 	}
 
@@ -42,50 +30,66 @@ func part1(name string) int {
 }
 
 func part2(name string) int {
-	line := strings.TrimSpace(files.Read(name))
-	ranges := strings.Split(line, ",")
 	invalid := 0
-	m := map[int]int{}
+	invalids := map[int]bool{}
 
-	for _, r := range ranges {
-		i, i2, _ := strings.Cut(r, "-")
-		s := utils.MustIntFromString(i)
-		e := utils.MustIntFromString(i2)
+	for _, v := range inclusiveRange(name) {
+		values := strings.Split(strconv.Itoa(v), "")
 
-		for i := range e - s + 1 {
-			v := s + i
-			ss := strconv.Itoa(v)
-			sa := strings.Split(ss, "")
+		// Already seen this ID
+		if _, ok := invalids[v]; ok {
+			continue
+		}
 
-			for c := range len(ss) - 1 {
-				a := chunkBy(sa, c+1)
-				allEqual := true
-				firstChunk := a[0]
+	chunk:
+		for c := range len(values) - 1 {
+			chunkSize := c + 1
 
-				if len(a[0]) != len(a[1]) {
-					break
-				}
+			// Continue if it can't be evenly chunked
+			if len(values)%chunkSize != 0 {
+				continue
+			}
 
-				for _, d := range a {
-					if strings.Join(d, "") != strings.Join(firstChunk, "") {
-						allEqual = false
-						break
-					}
-				}
+			chunks := chunkBy(values, c+1)
+			firstChunk := strings.Join(chunks[0], "")
 
-				if allEqual {
-					m[v] = v
+			// Check if all chunks are the same
+			for _, c := range chunks {
+				if strings.Join(c, "") != firstChunk {
+					continue chunk
 				}
 			}
 
+			// Save invalid value
+			invalids[v] = true
 		}
 	}
 
-	for _, v := range m {
+	// Calculate sum
+	for v := range invalids {
 		invalid += v
 	}
 
 	return invalid
+}
+
+func inclusiveRange(name string) []int {
+	var output []int
+
+	line := strings.TrimSpace(files.Read(name))
+	ranges := strings.Split(line, ",")
+
+	for _, r := range ranges {
+		s, e, _ := strings.Cut(r, "-")
+		start := utils.MustIntFromString(s)
+		end := utils.MustIntFromString(e)
+
+		for i := range end - start + 1 {
+			output = append(output, start+i)
+		}
+	}
+
+	return output
 }
 
 func chunkBy[T any](items []T, chunkSize int) (chunks [][]T) {
