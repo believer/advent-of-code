@@ -14,6 +14,11 @@ func main() {
 	fmt.Println("Part 2: ", part2("input.txt"))
 }
 
+// Lost a bit of performance on part 1 after refactor, but I think
+// the increased readability makes up for it.
+//
+// Part 2 performance increased after refactor though.
+
 func part1(name string) int {
 	invalid := 0
 

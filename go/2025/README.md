@@ -25,18 +25,18 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#hdr-Benchmarks) package. Computer is a 2021 MacBook Pro M1 Pro, 32 GB RAM.
 
-| Day |       #1 |         #2 | Improvement\* |
-| --- | -------: | ---------: | ------------- |
-| 1   |   713866 |     717585 |               |
-| 2   | 34694476 | 1454106125 |               |
+| Day |       #1 |        #2 | Improvement\*        |
+| --- | -------: | --------: | -------------------- |
+| 1   |   713866 |    717585 |                      |
+| 2   | 39771972 | 778769562 | `-14,63%` / `46,44%` |
 
 \* compared to first solution
 
 ### Previous solutions
 
-| Day |  #1 |  #2 | Improvement | Link |
-| --: | --: | --: | ----------: | ---- |
-|   x |     |     |             |      |
+| Day |       #1 |         #2 | Improvement | Link |
+| --: | -------: | ---------: | ----------: | ---- |
+|   2 | 34694476 | 1454106125 |    Baseline |      |
 
 ## Running
 
