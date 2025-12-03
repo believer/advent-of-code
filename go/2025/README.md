@@ -30,7 +30,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | --- | -------: | --------: | -------------------- |
 | 1   |   713866 |    717585 |                      |
 | 2   | 39771972 | 778769562 | `-14,63%` / `46,44%` |
-| 3   |   221365 |           |                      |
+| 3   |   209025 |    276642 | `5,90%`              |
 
 \* compared to first solution
 
@@ -39,6 +39,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | Day |       #1 |         #2 | Improvement | Link |
 | --: | -------: | ---------: | ----------: | ---- |
 |   2 | 34694476 | 1454106125 |    Baseline |      |
+|   3 |   221365 |          - |    Baseline |      |
 
 ## Running
 
