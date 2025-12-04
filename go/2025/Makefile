@@ -1,6 +1,6 @@
 .PHONE: create-day test bench run get-input
 
-DAY ?= $(shell date +%d)
+DAY ?= $(shell date +%-d)
 PADDED_DAY = $(shell printf "%02d" $(DAY))
 
 create-day:
