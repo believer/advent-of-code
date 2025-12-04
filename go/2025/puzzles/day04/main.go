@@ -59,10 +59,17 @@ func findAccessible(department grid.Grid) []grid.Point {
 				continue
 			}
 
+			// Check all directions and increment if it has paper in it
 			for _, dir := range grid.ALL_DIRECTIONS {
-				check := grid.Point{X: p.X + dir.X, Y: p.Y + dir.Y}
+				check := p.Add(dir)
 
-				if _, ok := department.Contains(check); !ok {
+				// NOTE: I tried using TryGet to get bounds check and value
+				// in one line, but it was significantly slower (almost twice as slow).
+				// Even doing the two checks we have here in one if is slower.
+				// From what I can gather, if short-circuiting and compiler
+				// optimizations (like inlining) might be the reason that the
+				// current order is the fastest.
+				if !department.InBounds(check) {
 					continue
 				}
 
@@ -71,6 +78,7 @@ func findAccessible(department grid.Grid) []grid.Point {
 				}
 			}
 
+			// Less than four means the paper is forklift accessible
 			if rolls < 4 {
 				accessible = append(accessible, p)
 			}

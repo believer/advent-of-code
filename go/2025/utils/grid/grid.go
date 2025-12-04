@@ -104,12 +104,17 @@ func (g *Grid) GetWrapped(p Point) byte {
 
 // Reports whether a given point is defined in the grid.
 // If it exists, it includes the value at that point.
-func (g *Grid) Contains(p Point) (byte, bool) {
-	if p.X >= 0 && p.X < g.Width && p.Y >= 0 && p.Y < g.Height {
+func (g *Grid) TryGet(p Point) (byte, bool) {
+	if g.InBounds(p) {
 		return g.Get(p), true
 	}
 
 	return 0, false
+}
+
+// Reports whether a given point is within the grids bounds
+func (g *Grid) InBounds(p Point) bool {
+	return p.X >= 0 && p.X < g.Width && p.Y >= 0 && p.Y < g.Height
 }
 
 // Update the grid at a given point with a given value
