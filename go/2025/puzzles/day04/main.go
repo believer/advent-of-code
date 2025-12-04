@@ -7,6 +7,9 @@ import (
 	"github.com/believer/aoc-2025/utils/grid"
 )
 
+// Love grid problems! My grid utility library saves the day again.
+// Refactored to make it cleaner, no performance loss
+
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
 	fmt.Println("Part 2: ", part2("input.txt"))

@@ -1,6 +1,7 @@
 package grid
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/believer/aoc-2025/utils"
@@ -84,19 +85,25 @@ func FromSize(width, height int) Grid {
 	}
 }
 
+// Get the byte value at a given point.
+// Use [GetWrapped] if grid needs to wrap around.
 func (g *Grid) Get(p Point) byte {
 	return g.Data[g.Width*p.Y+p.X]
 }
 
+// Get the byte value at a given point when the
+// grid wraps around
 func (g *Grid) GetWrapped(p Point) byte {
 	// Wrap coordinates to ensure they stay within bounds
 	wrappedX := (p.X%g.Width + g.Width) % g.Width
 	wrappedY := (p.Y%g.Height + g.Height) % g.Height
 
-	// Update the grid at the wrapped position
+	// Get the value at the wrapped position
 	return g.Data[g.Width*wrappedY+wrappedX]
 }
 
+// Reports whether a given point is defined in the grid.
+// If it exists, it includes the value at that point.
 func (g *Grid) Contains(p Point) (byte, bool) {
 	if p.X >= 0 && p.X < g.Width && p.Y >= 0 && p.Y < g.Height {
 		return g.Get(p), true
@@ -105,10 +112,14 @@ func (g *Grid) Contains(p Point) (byte, bool) {
 	return 0, false
 }
 
+// Update the grid at a given point with a given value
+// See [UpdateWrapped] for wrapped grid.
 func (g *Grid) Update(p Point, b byte) {
 	g.Data[g.Width*p.Y+p.X] = b
 }
 
+// Update the grid at a given point with a given value
+// in a wrapped grid.
 func (g *Grid) UpdateWrapped(p Point, b byte) {
 	// Wrap coordinates to ensure they stay within bounds
 	wrappedX := (p.X%g.Width + g.Width) % g.Width
@@ -119,7 +130,7 @@ func (g *Grid) UpdateWrapped(p Point, b byte) {
 }
 
 // Find exactly _one_ point for the given value
-func (g *Grid) Find(needle byte) Point {
+func (g *Grid) MustFind(needle byte) Point {
 	for i, v := range g.Data {
 		if v == needle {
 			return Point{
@@ -130,6 +141,19 @@ func (g *Grid) Find(needle byte) Point {
 	}
 
 	panic("Point not found")
+}
+
+func (g *Grid) Find(needle byte) (Point, error) {
+	for i, v := range g.Data {
+		if v == needle {
+			return Point{
+				X: i % g.Width,
+				Y: i / g.Width,
+			}, nil
+		}
+	}
+
+	return Point{}, errors.New("Point not found")
 }
 
 // Find _all_ points for the given value
@@ -148,20 +172,29 @@ func (g *Grid) FindAll(needle byte) []Point {
 	return points
 }
 
-func (g *Grid) GetQuadrant(q int) []byte {
+type Quadrant string
+
+const (
+	TopLeft     Quadrant = "TopLeft"
+	TopRight    Quadrant = "TopRight"
+	BottomLeft  Quadrant = "BottomLeft"
+	BottomRight Quadrant = "BottomRight"
+)
+
+func (g *Grid) GetQuadrant(q Quadrant) []byte {
 	var startX, startY, endX, endY int
 
 	halfWidth := g.Width / 2
 	halfHeight := g.Height / 2
 
 	switch q {
-	case 1: // Top-Left
+	case TopLeft:
 		startX, startY, endX, endY = 0, 0, halfWidth, halfHeight
-	case 2: // Top-Right
+	case TopRight:
 		startX, startY, endX, endY = halfWidth+1, 0, g.Width, halfHeight
-	case 3: // Bottom-Left
+	case BottomLeft:
 		startX, startY, endX, endY = 0, halfHeight+1, halfWidth, g.Height
-	case 4: // Bottom-Right
+	case BottomRight:
 		startX, startY, endX, endY = halfWidth+1, halfHeight+1, g.Width, g.Height
 	default:
 		panic("Invalid quadrant number")
@@ -177,10 +210,10 @@ func (g *Grid) GetQuadrant(q int) []byte {
 
 func (g *Grid) GetQuadrants() [][]byte {
 	return [][]byte{
-		g.GetQuadrant(1),
-		g.GetQuadrant(2),
-		g.GetQuadrant(3),
-		g.GetQuadrant(4),
+		g.GetQuadrant(TopLeft),
+		g.GetQuadrant(TopRight),
+		g.GetQuadrant(BottomLeft),
+		g.GetQuadrant(BottomRight),
 	}
 }
 
