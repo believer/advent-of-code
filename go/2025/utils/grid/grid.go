@@ -3,7 +3,7 @@ package grid
 import (
 	"fmt"
 
-	"github.com/believer/aoc-2024/utils"
+	"github.com/believer/aoc-2025/utils"
 )
 
 /* Point
