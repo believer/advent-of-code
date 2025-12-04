@@ -16,11 +16,12 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                            | #1  |  #1 Answer | #2  |       #2 Answer |
-| -------------------------------------------------------------------------------------------------------------- | --- | ---------: | --- | --------------: |
-| [Day 1: Secret Entrance](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day01/main.go) | 🌟  |        997 | 🌟  |            5978 |
-| [Day 2: Gift Shop](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day02/main.go)       | 🌟  | 9188031749 | 🌟  |     11323661261 |
-| [Day 3: Lobby](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day03/main.go)           | 🌟  |      16993 | 🌟  | 168617068915447 |
+| Day                                                                                                                 | #1  |  #1 Answer | #2  |       #2 Answer |
+| ------------------------------------------------------------------------------------------------------------------- | --- | ---------: | --- | --------------: |
+| [Day 1: Secret Entrance](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day01/main.go)      | 🌟  |        997 | 🌟  |            5978 |
+| [Day 2: Gift Shop](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day02/main.go)            | 🌟  | 9188031749 | 🌟  |     11323661261 |
+| [Day 3: Lobby](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day03/main.go)                | 🌟  |      16993 | 🌟  | 168617068915447 |
+| [Day 4: Printing Department ](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day04/main.go) | 🌟  |       1320 | 🌟  |            8354 |
 
 ## Benchmarks
 
@@ -31,6 +32,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 1   |   713866 |    717585 |                      |
 | 2   | 39771972 | 778769562 | `-14,63%` / `46,44%` |
 | 3   |   209025 |    276642 | `5,90%`              |
+| 4   |   214451 |   5483916 |                      |
 
 \* compared to first solution
 
