@@ -23,10 +23,7 @@ type Queue []*Item
 func (pq Queue) Len() int           { return len(pq) }
 func (pq Queue) Less(i, j int) bool { return pq[i].Cost < pq[j].Cost }
 func (pq Queue) Swap(i, j int)      { pq[i], pq[j] = pq[j], pq[i] }
-
-func (pq *Queue) Push(x any) {
-	*pq = append(*pq, x.(*Item))
-}
+func (pq *Queue) Push(x any)        { *pq = append(*pq, x.(*Item)) }
 
 func (pq *Queue) Pop() any {
 	old := *pq
