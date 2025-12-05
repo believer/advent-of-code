@@ -19,9 +19,7 @@ func main() {
 //
 // Part 2 performance increased after refactor though.
 
-func part1(name string) int {
-	invalid := 0
-
+func part1(name string) (invalid int) {
 	for _, v := range inclusiveRange(name) {
 		valueAsString := strconv.Itoa(v)
 		half := len(valueAsString) / 2
@@ -31,11 +29,10 @@ func part1(name string) int {
 		}
 	}
 
-	return invalid
+	return
 }
 
-func part2(name string) int {
-	invalid := 0
+func part2(name string) (invalid int) {
 	invalids := map[int]bool{}
 
 	for _, v := range inclusiveRange(name) {
@@ -75,12 +72,10 @@ func part2(name string) int {
 		invalid += v
 	}
 
-	return invalid
+	return
 }
 
-func inclusiveRange(name string) []int {
-	var output []int
-
+func inclusiveRange(name string) (output []int) {
 	line := strings.TrimSpace(files.Read(name))
 	ranges := strings.Split(line, ",")
 
@@ -94,12 +89,13 @@ func inclusiveRange(name string) []int {
 		}
 	}
 
-	return output
+	return
 }
 
 func chunkBy[T any](items []T, chunkSize int) (chunks [][]T) {
 	for chunkSize < len(items) {
 		items, chunks = items[chunkSize:], append(chunks, items[0:chunkSize:chunkSize])
 	}
+
 	return append(chunks, items)
 }

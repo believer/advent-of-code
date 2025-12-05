@@ -22,10 +22,9 @@ func part1(name string) int {
 	return len(findAccessible(department))
 }
 
-func part2(name string) int {
+func part2(name string) (removable int) {
 	lines := files.ReadLines(name)
 	department := grid.New(lines)
-	removable := 0
 
 	for {
 		accessible := findAccessible(department)
@@ -43,12 +42,10 @@ func part2(name string) int {
 		removable += len(accessible)
 	}
 
-	return removable
+	return
 }
 
-func findAccessible(department grid.Grid) []grid.Point {
-	accessible := []grid.Point{}
-
+func findAccessible(department grid.Grid) (accessible []grid.Point) {
 	for y := range department.Height {
 		for x := range department.Width {
 			rolls := 0
@@ -85,5 +82,5 @@ func findAccessible(department grid.Grid) []grid.Point {
 		}
 	}
 
-	return accessible
+	return
 }

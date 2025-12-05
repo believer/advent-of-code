@@ -16,9 +16,8 @@ func main() {
 	fmt.Println("Part 2: ", part2("input.txt"))
 }
 
-func part1(name string) int {
+func part1(name string) (fresh int) {
 	sections := files.ReadParagraphs(name)
-	fresh := 0
 	intervals := findIntervals(sections[0])
 
 ingredients:
@@ -33,18 +32,17 @@ ingredients:
 		}
 	}
 
-	return fresh
+	return
 }
 
-func part2(name string) int {
+func part2(name string) (fresh int) {
 	sections := files.ReadParagraphs(name)
-	fresh := 0
 
 	for _, r := range findIntervals(sections[0]) {
 		fresh += r.End - r.Start + 1
 	}
 
-	return fresh
+	return
 }
 
 func findIntervals(ranges []string) []interval.Range {
