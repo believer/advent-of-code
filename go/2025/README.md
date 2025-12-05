@@ -30,7 +30,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 
 | Day |       #1 |        #2 | Improvement\*        |
 | --- | -------: | --------: | -------------------- |
-| 1   |   713866 |    717585 |                      |
+| 1   |   340532 |    338234 | `52,30%` / `52,86%`  |
 | 2   | 39771972 | 778769562 | `-14,63%` / `46,44%` |
 | 3   |   209025 |    276642 | `5,57%`              |
 | 4   |   214451 |   5483916 |                      |
@@ -42,6 +42,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 
 | Day |       #1 |         #2 | Improvement | Link                                                                                                                           |
 | --: | -------: | ---------: | ----------: | ------------------------------------------------------------------------------------------------------------------------------ |
+|   1 |   713866 |     717585 |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/53a02dfd3224b4c50893055608807375032416a2/go/2025/puzzles/day01/main.go) |
 |   2 | 34694476 | 1454106125 |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/adfa07923db8b77f08edb19bb5f68435254517b1/go/2025/puzzles/day02/main.go) |
 |   3 |   221365 |          - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/84d03e23d56e216ae811d368f8dfad54f4eb21db/go/2025/puzzles/day03/main.go) |
 |   5 |  3135281 |          - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/0ebd61766589a47aba498000168f720633b7ee1a/go/2025/puzzles/day05/main.go) |
