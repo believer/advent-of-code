@@ -28,7 +28,7 @@ func part1(name string) int {
 	antinodes := make(map[Location]bool)
 
 	for _, locations := range towerLocations {
-		for i := 0; i < len(locations); i++ {
+		for i := range locations {
 			for j := i + 1; j < len(locations); j++ {
 				towerOne := locations[i]
 				towerTwo := locations[j]
