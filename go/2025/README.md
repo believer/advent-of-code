@@ -40,11 +40,11 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 
 ### Previous solutions
 
-| Day |       #1 |         #2 | Improvement | Link |
-| --: | -------: | ---------: | ----------: | ---- |
-|   2 | 34694476 | 1454106125 |    Baseline |      |
-|   3 |   221365 |          - |    Baseline |      |
-|   5 |  3135281 |          - |    Baseline |      |
+| Day |       #1 |         #2 | Improvement | Link                                                                                                                           |
+| --: | -------: | ---------: | ----------: | ------------------------------------------------------------------------------------------------------------------------------ |
+|   2 | 34694476 | 1454106125 |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/adfa07923db8b77f08edb19bb5f68435254517b1/go/2025/puzzles/day02/main.go) |
+|   3 |   221365 |          - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/84d03e23d56e216ae811d368f8dfad54f4eb21db/go/2025/puzzles/day03/main.go) |
+|   5 |  3135281 |          - |    Baseline |                                                                                                                                |
 
 ## Running
 
