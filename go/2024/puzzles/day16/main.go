@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 
 	"github.com/believer/aoc-2024/utils/files"
 	"github.com/believer/aoc-2024/utils/grid"
@@ -31,7 +30,6 @@ func part2(name string) int {
 
 func solve(name string, findAll bool) (int, map[grid.Point]bool) {
 	lines := files.ReadLines(name)
-	score := math.MaxInt
 
 	// Create maze and find start and end points
 	maze := grid.New(lines)
@@ -39,7 +37,6 @@ func solve(name string, findAll bool) (int, map[grid.Point]bool) {
 	end := maze.Find('E')
 
 	// Store visited nodes with coordinates _and_ direction
-	seen := map[dijkstra.Node]int{}
 	tiles := map[grid.Point]bool{}
 
 	// Create priority queue
@@ -49,24 +46,22 @@ func solve(name string, findAll bool) (int, map[grid.Point]bool) {
 		current := queue.Pop()
 
 		// This can never be the lowest cost path
-		if current.Cost > score {
+		if queue.IsExpensive() {
 			continue
 		}
 
 		// We've seen this node at a lower cost
-		if v, ok := seen[current.Node]; ok && v < current.Cost {
+		if queue.HasSeen() {
 			continue
 		}
 
-		seen[current.Node] = current.Cost
-
-		if current.Node.Point == end && current.Cost <= score {
-			score = current.Cost
+		if queue.At(end) {
+			queue.Score = current.Cost
 
 			// For part 1 we only need a score, skip getting all paths
 			// Small change in performance, but it's something.
 			if !findAll {
-				return score, tiles
+				return queue.Score, tiles
 			}
 
 			// Set all unique tiles
@@ -105,5 +100,5 @@ func solve(name string, findAll bool) (int, map[grid.Point]bool) {
 		}
 	}
 
-	return score, tiles
+	return queue.Score, tiles
 }

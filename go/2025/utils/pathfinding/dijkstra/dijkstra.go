@@ -2,6 +2,7 @@ package dijkstra
 
 import (
 	"container/heap"
+	"math"
 
 	"github.com/believer/aoc-2025/utils/grid"
 )
@@ -37,7 +38,10 @@ func (pq *Queue) Pop() any {
 }
 
 type Dijkstra struct {
-	Queue *Queue
+	Current *Item
+	Seen    map[Node]int
+	Score   int
+	Queue   *Queue
 }
 
 func New(start, direction grid.Point) Dijkstra {
@@ -47,26 +51,58 @@ func New(start, direction grid.Point) Dijkstra {
 		Direction: direction,
 	}
 
-	heap.Init(queue)
-	heap.Push(queue, &Item{
+	item := Item{
 		Node: startNode,
 		Cost: 0,
 		Path: []grid.Point{start},
-	})
+	}
+
+	heap.Init(queue)
+	heap.Push(queue, &item)
 
 	return Dijkstra{
-		Queue: queue,
+		Current: &item,
+		Seen:    map[Node]int{},
+		Score:   math.MaxInt,
+		Queue:   queue,
 	}
 }
 
+// Length of queue
 func (d *Dijkstra) Len() int {
 	return d.Queue.Len()
 }
 
+// Grab the first item from the queue
 func (d *Dijkstra) Pop() *Item {
-	return heap.Pop(d.Queue).(*Item)
+	d.Current = heap.Pop(d.Queue).(*Item)
+	return d.Current
 }
 
+// Report whether the current item is more expensive
+// than the lowest score
+func (d *Dijkstra) IsExpensive() bool {
+	return d.Current.Cost > d.Score
+}
+
+// Report whether the current item has been seen
+func (d *Dijkstra) HasSeen() bool {
+	if v, ok := d.Seen[d.Current.Node]; ok && v < d.Current.Cost {
+		return true
+	}
+
+	d.Seen[d.Current.Node] = d.Current.Cost
+
+	return false
+}
+
+// Report whether we've reach a given point (usually the end)
+// and if the cost is lower or equal to the lowest score
+func (d *Dijkstra) At(point grid.Point) bool {
+	return d.Current.Node.Point == point && d.Current.Cost <= d.Score
+}
+
+// Add a new item to the queue
 func (d *Dijkstra) Push(cost int, path []grid.Point, node Node) {
 	heap.Push(d.Queue, &Item{
 		Cost: cost,
