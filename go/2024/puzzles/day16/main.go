@@ -1,43 +1,13 @@
 package main
 
 import (
-	"container/heap"
 	"fmt"
 	"math"
 
 	"github.com/believer/aoc-2024/utils/files"
 	"github.com/believer/aoc-2024/utils/grid"
+	"github.com/believer/aoc-2024/utils/pathfinding/dijkstra"
 )
-
-type Node struct {
-	Point     grid.Point
-	Direction grid.Point
-}
-
-type Item struct {
-	Node Node
-	Cost int
-	Path []grid.Point
-}
-
-// Implement a min-heap for the the nodes
-type PriorityQueue []*Item
-
-func (pq PriorityQueue) Len() int           { return len(pq) }
-func (pq PriorityQueue) Less(i, j int) bool { return pq[i].Cost < pq[j].Cost }
-func (pq PriorityQueue) Swap(i, j int)      { pq[i], pq[j] = pq[j], pq[i] }
-
-func (pq *PriorityQueue) Push(x interface{}) {
-	*pq = append(*pq, x.(*Item))
-}
-
-func (pq *PriorityQueue) Pop() interface{} {
-	old := *pq
-	n := len(old)
-	item := old[n-1]
-	*pq = old[0 : n-1]
-	return item
-}
 
 // Lots of pathfinding this year so far! This time I went for Dijkstra's algorithm
 // and had a go at implementing it myself (like I did last year in Rust). Got some help
@@ -48,18 +18,18 @@ func main() {
 }
 
 func part1(name string) int {
-	score, _ := dijkstra(name, false)
+	score, _ := solve(name, false)
 
 	return score
 }
 
 func part2(name string) int {
-	_, tiles := dijkstra(name, true)
+	_, tiles := solve(name, true)
 
 	return len(tiles)
 }
 
-func dijkstra(name string, findAll bool) (int, map[grid.Point]bool) {
+func solve(name string, findAll bool) (int, map[grid.Point]bool) {
 	lines := files.ReadLines(name)
 	score := math.MaxInt
 
@@ -69,16 +39,14 @@ func dijkstra(name string, findAll bool) (int, map[grid.Point]bool) {
 	end := maze.Find('E')
 
 	// Store visited nodes with coordinates _and_ direction
-	seen := map[Node]int{}
+	seen := map[dijkstra.Node]int{}
 	tiles := map[grid.Point]bool{}
 
 	// Create priority queue
-	queue := &PriorityQueue{}
-	heap.Init(queue)
-	heap.Push(queue, &Item{Node: Node{Point: start, Direction: grid.RIGHT}, Cost: 0, Path: []grid.Point{start}})
+	queue := dijkstra.New(start, grid.RIGHT)
 
 	for queue.Len() > 0 {
-		current := heap.Pop(queue).(*Item)
+		current := queue.Pop()
 
 		// This can never be the lowest cost path
 		if current.Cost > score {
@@ -115,13 +83,13 @@ func dijkstra(name string, findAll bool) (int, map[grid.Point]bool) {
 
 		// Walk forwards
 		if maze.Get(next) != '#' {
-			heap.Push(queue, &Item{
-				Node: Node{Point: next, Direction: direction},
-				Cost: current.Cost + 1,
+			queue.Push(
+				current.Cost+1,
 				// Copy current path. Using append(slice, next) causes problems since
 				// multiple items might be modifying it.
-				Path: append(append([]grid.Point{}, current.Path...), next),
-			})
+				append(append([]grid.Point{}, current.Path...), next),
+				dijkstra.Node{Point: next, Direction: direction},
+			)
 		}
 
 		// Add rotations
@@ -129,11 +97,11 @@ func dijkstra(name string, findAll bool) (int, map[grid.Point]bool) {
 		paths := current.Path
 
 		if direction == grid.UP || direction == grid.DOWN {
-			heap.Push(queue, &Item{Cost: cost, Path: paths, Node: Node{Point: point, Direction: grid.LEFT}})
-			heap.Push(queue, &Item{Cost: cost, Path: paths, Node: Node{Point: point, Direction: grid.RIGHT}})
+			queue.Push(cost, paths, dijkstra.Node{Point: point, Direction: grid.LEFT})
+			queue.Push(cost, paths, dijkstra.Node{Point: point, Direction: grid.RIGHT})
 		} else {
-			heap.Push(queue, &Item{Cost: cost, Path: paths, Node: Node{Point: point, Direction: grid.UP}})
-			heap.Push(queue, &Item{Cost: cost, Path: paths, Node: Node{Point: point, Direction: grid.DOWN}})
+			queue.Push(cost, paths, dijkstra.Node{Point: point, Direction: grid.UP})
+			queue.Push(cost, paths, dijkstra.Node{Point: point, Direction: grid.DOWN})
 		}
 	}
 
