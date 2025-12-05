@@ -57,7 +57,7 @@ func part2(name string) int {
 			}
 		}
 
-		dial = (dial + turn) % 100
+		dial = utils.Abs(dial+turn) % 100
 	}
 
 	return count
