@@ -8,6 +8,7 @@ import (
 
 	"github.com/believer/aoc-2025/utils"
 	"github.com/believer/aoc-2025/utils/files"
+	interval "github.com/believer/aoc-2025/utils/range"
 )
 
 func main() {
@@ -18,20 +19,16 @@ func main() {
 func part1(name string) int {
 	sections := files.ReadParagraphs(name)
 	fresh := 0
+	intervals := findIntervals(sections[0])
 
-ingredient:
-	for _, r := range sections[1] {
-		i := utils.MustIntFromString(r)
+ingredients:
+	for _, ingredient := range sections[1] {
+		i := utils.MustIntFromString(ingredient)
 
-		for _, r := range sections[0] {
-			s, e, _ := strings.Cut(r, "-")
-			start := utils.MustIntFromString(s)
-			end := utils.MustIntFromString(e)
-
-			for i >= start && i <= end {
+		for _, r := range intervals {
+			if r.Contains(i) {
 				fresh += 1
-
-				continue ingredient
+				continue ingredients
 			}
 		}
 	}
@@ -39,38 +36,42 @@ ingredient:
 	return fresh
 }
 
-type Range struct {
-	start int
-	end   int
-}
-
 func part2(name string) int {
 	sections := files.ReadParagraphs(name)
 	fresh := 0
-	intervals := []Range{}
+
+	for _, r := range findIntervals(sections[0]) {
+		fresh += r.End - r.Start + 1
+	}
+
+	return fresh
+}
+
+func findIntervals(ranges []string) []interval.Range {
+	intervals := []interval.Range{}
 
 	// Find all intervals
-	for _, r := range sections[0] {
+	for _, r := range ranges {
 		s, e, _ := strings.Cut(r, "-")
 		start := utils.MustIntFromString(s)
 		end := utils.MustIntFromString(e)
 
-		intervals = append(intervals, Range{start, end})
+		intervals = append(intervals, interval.Range{Start: start, End: end})
 	}
 
 	// Sort by starting point for easier merging
-	slices.SortFunc(intervals, func(a, b Range) int {
-		return a.start - b.start
+	slices.SortFunc(intervals, func(a, b interval.Range) int {
+		return a.Start - b.Start
 	})
 
 	// Compress intervals to remove overlaps
-	merged := []Range{intervals[0]}
+	merged := []interval.Range{intervals[0]}
 
 	for _, r := range intervals[1:] {
 		previous := len(merged) - 1
 		p := merged[previous]
 
-		if r.start > p.end {
+		if r.Start > p.End {
 			// New range, add it
 			merged = append(merged, r)
 		} else {
@@ -79,13 +80,9 @@ func part2(name string) int {
 			// 10-14
 			// 12-18
 			// Becomes: 10-18
-			merged[previous].end = int(math.Max(float64(p.end), float64(r.end)))
+			merged[previous].End = int(math.Max(float64(p.End), float64(r.End)))
 		}
 	}
 
-	for _, r := range merged {
-		fresh += r.end - r.start + 1
-	}
-
-	return fresh
+	return merged
 }
