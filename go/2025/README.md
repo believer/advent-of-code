@@ -44,7 +44,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | --: | -------: | ---------: | ----------: | ------------------------------------------------------------------------------------------------------------------------------ |
 |   2 | 34694476 | 1454106125 |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/adfa07923db8b77f08edb19bb5f68435254517b1/go/2025/puzzles/day02/main.go) |
 |   3 |   221365 |          - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/84d03e23d56e216ae811d368f8dfad54f4eb21db/go/2025/puzzles/day03/main.go) |
-|   5 |  3135281 |          - |    Baseline |                                                                                                                                |
+|   5 |  3135281 |          - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/0ebd61766589a47aba498000168f720633b7ee1a/go/2025/puzzles/day05/main.go) |
 
 ## Running
 
