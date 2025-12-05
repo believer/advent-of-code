@@ -37,18 +37,6 @@ func (pq *Queue) Pop() any {
 	return item
 }
 
-func heuristic(a, b grid.Point) int {
-	dx := a.X - b.X
-	if dx < 0 {
-		dx = -dx
-	}
-	dy := a.Y - b.Y
-	if dy < 0 {
-		dy = -dy
-	}
-	return dx + dy
-}
-
 type Astar struct {
 	Current *Item
 	Seen    map[Node]int
@@ -116,7 +104,7 @@ func (a *Astar) At(point grid.Point) bool {
 
 // Add a new item to the queue
 func (a *Astar) Push(cost int, path []grid.Point, node Node, goal grid.Point) {
-	h := heuristic(node.Point, goal)
+	h := node.Point.ManhattanDistance(goal)
 
 	heap.Push(a.Queue, &Item{
 		Cost:      cost,
