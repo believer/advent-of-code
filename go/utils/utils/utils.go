@@ -15,6 +15,16 @@ func Sum(nums []int) int {
 	return total
 }
 
+func Prod(nums []int) int {
+	total := 1
+
+	for _, n := range nums {
+		total *= n
+	}
+
+	return total
+}
+
 func MustIntFromString(s string) int {
 	v, err := strconv.Atoi(s)
 
@@ -45,6 +55,12 @@ func Abs(n int) int {
 // |x1 - x2| + \y1 - y2|
 func Manhattan(x, y int) int {
 	return Abs(x) + Abs(y)
+}
+
+func Divmod(numerator, denominator int) (quotient, remainder int) {
+	quotient = numerator / denominator
+	remainder = numerator % denominator
+	return
 }
 
 // Slices

@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/believer/aoc-2025/utils"
-	"github.com/believer/aoc-2025/utils/files"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/utils"
 )
 
 func main() {

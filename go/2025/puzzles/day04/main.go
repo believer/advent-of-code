@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/believer/aoc-2025/utils/files"
-	"github.com/believer/aoc-2025/utils/grid"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/grid"
 )
 
 // Love grid problems! My grid utility library saves the day again.

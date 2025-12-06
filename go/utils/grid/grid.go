@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/believer/aoc-2025/utils"
+	"github.com/believer/aoc-utils/utils"
 )
 
 /* Point

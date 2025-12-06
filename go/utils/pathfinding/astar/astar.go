@@ -4,7 +4,7 @@ import (
 	"container/heap"
 	"math"
 
-	"github.com/believer/aoc-2025/utils/grid"
+	"github.com/believer/aoc-utils/grid"
 )
 
 type Node struct {

@@ -4,9 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/believer/aoc-2025/utils"
-	"github.com/believer/aoc-2025/utils/files"
-	"github.com/believer/aoc-2025/utils/math"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/utils"
 )
 
 // I had a small refactor to clean up the loops, but it was
@@ -41,7 +40,7 @@ func part2(name string) int {
 
 	for _, turn := range turns(name) {
 		if turn < 0 {
-			div, mod := math.Divmod(turn, -100)
+			div, mod := utils.Divmod(turn, -100)
 			count += div
 
 			// Check if the remainder would pass zero
@@ -49,7 +48,7 @@ func part2(name string) int {
 				count += 1
 			}
 		} else {
-			div, mod := math.Divmod(turn, 100)
+			div, mod := utils.Divmod(turn, 100)
 			count += div
 
 			if dial+mod >= 100 {
