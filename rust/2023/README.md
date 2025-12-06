@@ -72,7 +72,7 @@ With the help of [cargo-aoc](https://github.com/gobanos/cargo-aoc) I get automat
 | 22  |               |               |                       |                       |
 | 23  | 568.16 ms\*\* |    9.32 s\*\* |                       |              43.68 µs |
 | 24  |               |               |                       |                       |
-| 25  |             |              |                       |                     |
+| 25  |               |               |                       |                       |
 
 \* compared to first solution<br/>
 \*\* slow, didn't benchmark. Value comes from running the solver.

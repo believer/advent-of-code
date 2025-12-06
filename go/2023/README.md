@@ -5,6 +5,6 @@ solutions](https://github.com/believer/advent-of-code/tree/master/rust/2023). Th
 
 ## Days
 
-| Day                                                                                                | #1  | #1 Answer | #2  | #2 Answer |
-| -------------------------------------------------------------------------------------------------- | --- | --------: | --- | --------: |
+| Day                                                                                                        | #1  | #1 Answer | #2  | #2 Answer |
+| ---------------------------------------------------------------------------------------------------------- | --- | --------: | --- | --------: |
 | [Day 1: Trebuchet?!](https://github.com/believer/advent-of-code/blob/master/go/2023/puzzles/day01/main.go) | 🌟  |     54304 | 🌟  |     54418 |
