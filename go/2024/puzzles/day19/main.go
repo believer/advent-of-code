@@ -30,9 +30,7 @@ func onsenTowelDesign(name string) (int, int) {
 	patterns := lines[1]
 	possibleDesigns, totalPossibleDesigns := 0, 0
 
-	for _, l := range strings.Split(lines[0][0], ", ") {
-		designs = append(designs, l)
-	}
+	designs = append(designs, strings.Split(lines[0][0], ", ")...)
 
 	var ways func(string) int
 	designLibrary := map[string]int{}

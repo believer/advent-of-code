@@ -77,9 +77,8 @@ func part2(name string) (invalid int) {
 
 func inclusiveRange(name string) (output []int) {
 	line := strings.TrimSpace(files.Read(name))
-	ranges := strings.Split(line, ",")
 
-	for _, r := range ranges {
+	for r := range strings.SplitSeq(line, ",") {
 		s, e, _ := strings.Cut(r, "-")
 		start := utils.MustIntFromString(s)
 		end := utils.MustIntFromString(e)

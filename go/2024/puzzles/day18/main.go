@@ -34,11 +34,7 @@ func part2(name string, size int) string {
 	low := 0
 	high := len(bytes) - 1
 
-	for {
-		if low >= high {
-			break
-		}
-
+	for low < high {
 		middle := (low + high) / 2
 		minCost := findPath(bytes, size, middle+1)
 

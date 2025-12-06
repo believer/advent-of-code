@@ -34,13 +34,7 @@ func part1(name string) (grandTotal int) {
 	last := len(lines) - 1
 
 	for _, line := range lines[:last] {
-		inner := []string{}
-
-		for digit := range strings.FieldsSeq(line) {
-			inner = append(inner, digit)
-		}
-
-		data = append(data, inner)
+		data = append(data, strings.Fields(line))
 	}
 
 	// Basically a zip

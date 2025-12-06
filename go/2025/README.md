@@ -36,7 +36,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 3   |   209025 |    276642 | `5,57%`              |
 | 4   |   214451 |   5483916 |                      |
 | 5   |   116258 |     68155 | `96,29%` / -         |
-| 6   |   164777 |    986335 | `24,15%` / -         |
+| 6   |   149919 |    986335 | `30,99%` / -         |
 
 \* compared to first solution
 

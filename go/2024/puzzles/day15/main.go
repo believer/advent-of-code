@@ -36,11 +36,7 @@ func part1(name string) int {
 		if warehouse.Get(next) == 'O' {
 			tmp := next.Add(m)
 
-			for {
-				if warehouse.Get(tmp) != 'O' {
-					break
-				}
-
+			for warehouse.Get(tmp) == 'O' {
 				tmp = tmp.Add(m)
 			}
 

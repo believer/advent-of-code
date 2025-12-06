@@ -109,9 +109,7 @@ func findPlantBed(g grid.Grid, visited map[grid.Point]bool, start grid.Point) (m
 		area[current] = true
 		visited[current] = true
 
-		for _, neighbor := range neighbors {
-			queue = append(queue, neighbor)
-		}
+		queue = append(queue, neighbors...)
 	}
 
 	return area, perimeter
