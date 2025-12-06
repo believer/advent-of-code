@@ -38,7 +38,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 5   |   116258 |     68155 | `96,29%` / -         |
 | 6   |   149919 |    986335 | `30,99%` / -         |
 
-\* compared to first solution
+All values are ns/op. \* compared to first solution.
 
 ### Previous solutions
 
