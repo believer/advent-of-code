@@ -18,7 +18,7 @@ import (
 //
 // Part 1 is also a bit of a mess :')
 //
-// Performance is good enough to never going back and trying
+// Performance is good enough to never go back and try
 // to improve this problem again.
 
 func main() {
