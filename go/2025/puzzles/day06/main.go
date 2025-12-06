@@ -20,6 +20,8 @@ import (
 //
 // Performance is good enough to never go back and try
 // to improve this problem again.
+//
+// Edit: Part 1 is cleaner (and faster even though I wasn't supposed to)
 
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
@@ -28,60 +30,36 @@ func main() {
 
 func part1(name string) (grandTotal int) {
 	lines := files.ReadLines(name)
-	problems := [][]int{}
-	signs := []string{}
 	data := [][]string{}
-
 	last := len(lines) - 1
-	for l := range strings.SplitSeq(lines[last], " ") {
-		if l == "" {
-			continue
-		}
-		signs = append(signs, l)
-	}
 
-	for _, l := range lines[:last] {
+	for _, line := range lines[:last] {
 		inner := []string{}
 
-		for r := range strings.SplitSeq(l, " ") {
-			if r == "" {
-				continue
-			}
-
-			inner = append(inner, r)
+		for digit := range strings.FieldsSeq(line) {
+			inner = append(inner, digit)
 		}
 
 		data = append(data, inner)
 	}
 
-	for range data[0] {
-		problems = append(problems, make([]int, len(data)))
-	}
+	// Basically a zip
+	problems := make([][]int, len(data[0]))
 
-	for i, d := range data {
+	for _, d := range data {
 		for j, v := range d {
-			problems[j][i] = utils.MustIntFromString(v)
+			problems[j] = append(problems[j], utils.MustIntFromString(v))
 		}
 	}
 
-	for i, p := range problems {
-		sign := signs[i]
-		total := 0
-
-		for _, v := range p {
-			switch sign {
-			case "+":
-				total += v
-			case "*":
-				if total == 0 {
-					total = v
-				} else {
-					total *= v
-				}
-			}
+	// Do calculations
+	for i, sign := range strings.Fields(lines[last]) {
+		switch sign {
+		case "+":
+			grandTotal += utils.Sum(problems[i])
+		case "*":
+			grandTotal += utils.Prod(problems[i])
 		}
-
-		grandTotal += total
 	}
 
 	return
