@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/believer/aoc-2024/utils"
-	"github.com/believer/aoc-2024/utils/files"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/utils"
 )
 
 // Wasted a couple of minutes when I didn't see that the test input had

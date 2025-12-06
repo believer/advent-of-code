@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/believer/aoc-2024/utils"
-	"github.com/believer/aoc-2024/utils/files"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/utils"
 )
 
 // Needed some tips to get the solution for part 2 and got to

@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/believer/aoc-2024/utils/files"
-	"github.com/believer/aoc-2024/utils/grid"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/grid"
 )
 
 // BFS
@@ -68,7 +68,7 @@ func findTrailScore(trailMap grid.Grid, start grid.Point, isDistinct bool) int {
 			next := current.Add(direction)
 
 			// Position exists and is _one_ bigger than current
-			if value, ok := trailMap.Contains(next); ok && value == trailMap.Get(current)+1 {
+			if value, ok := trailMap.TryGet(next); ok && value == trailMap.Get(current)+1 {
 				queue = append(queue, next)
 			}
 		}

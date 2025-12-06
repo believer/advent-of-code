@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/believer/aoc-2024/utils/files"
-	"github.com/believer/aoc-2024/utils/grid"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/grid"
 )
 
 // Changed part 1 to take a similar approach to what I did in part 2
@@ -34,7 +34,7 @@ func part1(name string) int {
 				// Do we have enough items to check?
 				offByThree := grid.Point{X: x + 3*dx, Y: y + 3*dy}
 
-				if _, ok := xmasGrid.Contains(offByThree); !ok {
+				if _, ok := xmasGrid.TryGet(offByThree); !ok {
 					continue
 				}
 
@@ -71,11 +71,11 @@ func part2(name string) int {
 				continue
 			}
 
-			if _, ok := xmasGrid.Contains(point.Add(grid.TOPLEFT)); !ok {
+			if _, ok := xmasGrid.TryGet(point.Add(grid.TOPLEFT)); !ok {
 				continue
 			}
 
-			if _, ok := xmasGrid.Contains(point.Add(grid.BOTTOMRIGHT)); !ok {
+			if _, ok := xmasGrid.TryGet(point.Add(grid.BOTTOMRIGHT)); !ok {
 				continue
 			}
 

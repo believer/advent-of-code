@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/believer/aoc-2024/utils/files"
-	"github.com/believer/aoc-2024/utils/grid"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/grid"
 )
 
 // Find all distances using BFS. Then use the manhattan distance
@@ -31,8 +31,8 @@ func race(name string, maxCheatTime int) int {
 	cheats := 0
 
 	raceTrack := grid.New(lines)
-	start := raceTrack.Find('S')
-	end := raceTrack.Find('E')
+	start, _ := raceTrack.Find('S')
+	end, _ := raceTrack.Find('E')
 
 	queue := []grid.Point{start}
 	distances := map[grid.Point]int{}
@@ -52,7 +52,7 @@ func race(name string, maxCheatTime int) int {
 				continue
 			}
 
-			if value, ok := raceTrack.Contains(next); ok && value != '#' {
+			if value, ok := raceTrack.TryGet(next); ok && value != '#' {
 				queue = append(queue, next)
 				distances[next] = distances[current] + 1
 			}

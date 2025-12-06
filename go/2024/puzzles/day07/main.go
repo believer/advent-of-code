@@ -6,8 +6,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/believer/aoc-2024/utils"
-	"github.com/believer/aoc-2024/utils/files"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/utils"
 )
 
 // Parallelization in Go is so nice and easy and provided a major speed-up

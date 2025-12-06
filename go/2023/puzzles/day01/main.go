@@ -7,8 +7,8 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/believer/aoc-2024/utils"
-	"github.com/believer/aoc-2024/utils/files"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/utils"
 )
 
 func main() {
@@ -61,7 +61,7 @@ func getCalibrationValue(l string) int {
 	last := getLastDigit(l)
 
 	calibrationValue := strconv.Itoa(first) + strconv.Itoa(last)
-	return utils.FromString(calibrationValue)
+	return utils.MustIntFromString(calibrationValue)
 }
 
 // The rune is the ASCII value of the number, by subtracing with '0' (48)

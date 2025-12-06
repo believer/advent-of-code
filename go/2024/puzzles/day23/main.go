@@ -6,7 +6,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/believer/aoc-2024/utils/files"
+	"github.com/believer/aoc-utils/files"
 )
 
 func main() {

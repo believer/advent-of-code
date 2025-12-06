@@ -5,9 +5,9 @@ import (
 	"math"
 	"strings"
 
-	"github.com/believer/aoc-2024/utils"
-	"github.com/believer/aoc-2024/utils/files"
-	"github.com/believer/aoc-2024/utils/grid"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/grid"
+	"github.com/believer/aoc-utils/utils"
 )
 
 type Node struct {
@@ -96,7 +96,7 @@ func findPath(bytes []string, size, steps int) int {
 		for _, direction := range grid.CARDINALS {
 			next := current.Point.Add(direction)
 
-			if value, ok := memory.Contains(next); ok && value != '#' {
+			if value, ok := memory.TryGet(next); ok && value != '#' {
 				queue = append(queue, Node{Point: next, Steps: current.Steps + 1})
 			}
 		}

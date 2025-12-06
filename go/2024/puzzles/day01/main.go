@@ -5,8 +5,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/believer/aoc-2024/utils"
-	"github.com/believer/aoc-2024/utils/files"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/utils"
 )
 
 // Part 1 couldn't be improved much in terms of performance.

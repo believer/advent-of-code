@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/believer/aoc-2024/utils/files"
-	"github.com/believer/aoc-2024/utils/grid"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/grid"
 )
 
 func main() {
@@ -21,7 +21,7 @@ func part1(name string) int {
 	moves := getMoves(p[1])
 
 	// Find robot start position
-	robot := warehouse.Find('@')
+	robot, _ := warehouse.Find('@')
 
 	for _, m := range moves {
 		next := robot.Add(m)
@@ -94,7 +94,7 @@ func part2(name string) int {
 	moves := getMoves(p[1])
 
 	// Find robot start position
-	robot := doubleWarehouse.Find('@')
+	robot, _ := doubleWarehouse.Find('@')
 
 	// Use BFS to find boxes
 moves:

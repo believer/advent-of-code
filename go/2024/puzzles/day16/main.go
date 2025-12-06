@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"github.com/believer/aoc-2024/utils/files"
-	"github.com/believer/aoc-2024/utils/grid"
-	"github.com/believer/aoc-2024/utils/pathfinding/dijkstra"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/grid"
+	"github.com/believer/aoc-utils/pathfinding/dijkstra"
 )
 
 // Lots of pathfinding this year so far! This time I went for Dijkstra's algorithm
@@ -33,8 +33,8 @@ func solve(name string, findAll bool) (int, map[grid.Point]bool) {
 
 	// Create maze and find start and end points
 	maze := grid.New(lines)
-	start := maze.Find('S')
-	end := maze.Find('E')
+	start, _ := maze.Find('S')
+	end, _ := maze.Find('E')
 
 	// Store visited nodes with coordinates _and_ direction
 	tiles := map[grid.Point]bool{}

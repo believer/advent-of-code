@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/believer/aoc-2024/utils/files"
-	"github.com/believer/aoc-2024/utils/grid"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/grid"
 )
 
 // BFS to find plant regions and perimeters
@@ -123,7 +123,7 @@ func getNeighbors(g grid.Grid, current grid.Point) []grid.Point {
 	for _, d := range grid.CARDINALS {
 		next := current.Add(d)
 
-		if value, ok := g.Contains(next); ok && value == g.Get(current) {
+		if value, ok := g.TryGet(next); ok && value == g.Get(current) {
 			neighbors = append(neighbors, next)
 		}
 	}

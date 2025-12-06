@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/believer/aoc-2024/utils"
-	"github.com/believer/aoc-2024/utils/files"
-	"github.com/believer/aoc-2024/utils/grid"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/grid"
+	"github.com/believer/aoc-utils/utils"
 )
 
 // Part 1 is done with recursive BFS, but this is too slow for
@@ -33,15 +33,15 @@ func runRobots(name string, robots int) int {
 	lines := files.ReadLines(name)
 	numpad := grid.New([]string{"789", "456", "123", "X0A"})
 
-	start := numpad.Find('A')
-	invalid := numpad.Find('X')
+	start, _ := numpad.Find('A')
+	invalid, _ := numpad.Find('X')
 	total := 0
 
 	for _, line := range lines {
 		distance := 0
 
 		for _, digit := range line {
-			target := numpad.Find(byte(digit))
+			target, _ := numpad.Find(byte(digit))
 			distance += cheapestDistance(start, target, invalid, robots, 0)
 			start = target
 		}
@@ -62,11 +62,11 @@ func robot(path string, robots int) int {
 
 	d := 0
 	directionPad := grid.New([]string{"X^A", "<v>"})
-	start := directionPad.Find('A')
-	invalid := directionPad.Find('X')
+	start, _ := directionPad.Find('A')
+	invalid, _ := directionPad.Find('X')
 
 	for _, v := range path {
-		target := directionPad.Find(byte(v))
+		target, _ := directionPad.Find(byte(v))
 		d += cheapestDistance(start, target, invalid, robots, -1)
 		start = target
 	}

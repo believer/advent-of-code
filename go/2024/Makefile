@@ -11,6 +11,9 @@ create-day:
 test:
 	@go test ./puzzles/day$(PADDED_DAY)
 
+test-all:
+	@go test ./...
+
 # run=XXX provide a regex that doesn't match any tests, effectively
 # skipping the testing phase and just running benchmarks
 bench:

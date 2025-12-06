@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/believer/aoc-2024/utils/files"
-	"github.com/believer/aoc-2024/utils/grid"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/grid"
 )
 
 // Brute forced part 2 first by checking every position on the grid.
@@ -24,7 +24,7 @@ type PointWithDirection struct {
 func part1(name string) int {
 	lines := files.ReadLines(name)
 	guardMap := grid.New(lines)
-	guardLocation := guardMap.Find('^')
+	guardLocation, _ := guardMap.Find('^')
 
 	return len(getPath(guardMap, guardLocation))
 }
@@ -32,7 +32,7 @@ func part1(name string) int {
 func part2(name string) int {
 	lines := files.ReadLines(name)
 	guardMap := grid.New(lines)
-	guardLocation := guardMap.Find('^')
+	guardLocation, _ := guardMap.Find('^')
 	possibleLoops := 0
 
 	guardPath := getPath(guardMap, guardLocation)
@@ -65,7 +65,7 @@ func getPath(guardMap grid.Grid, guard grid.Point) map[grid.Point]bool {
 		next := grid.Point{X: x + dx, Y: y + dy}
 
 		// Check bounds
-		if _, ok := guardMap.Contains(next); !ok {
+		if _, ok := guardMap.TryGet(next); !ok {
 			break
 		}
 
@@ -93,7 +93,7 @@ func isLoop(guardMap grid.Grid, position grid.Point) bool {
 		next := grid.Point{X: x + dx, Y: y + dy}
 
 		// Check bounds
-		if _, ok := guardMap.Contains(next); !ok {
+		if _, ok := guardMap.TryGet(next); !ok {
 			return false
 		}
 

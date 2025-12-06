@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/believer/aoc-2024/utils"
-	"github.com/believer/aoc-2024/utils/files"
+	"github.com/believer/aoc-utils/files"
+	"github.com/believer/aoc-utils/utils"
 )
 
 // Part 1 worked fine with a simple array, but part 2 got way out of hand.
