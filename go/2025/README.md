@@ -16,13 +16,14 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Days
 
-| Day                                                                                                                | #1  |  #1 Answer | #2  |       #2 Answer |
-| ------------------------------------------------------------------------------------------------------------------ | --- | ---------: | --- | --------------: |
-| [Day 1: Secret Entrance](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day01/main.go)     | 🌟  |        997 | 🌟  |            5978 |
-| [Day 2: Gift Shop](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day02/main.go)           | 🌟  | 9188031749 | 🌟  |     11323661261 |
-| [Day 3: Lobby](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day03/main.go)               | 🌟  |      16993 | 🌟  | 168617068915447 |
-| [Day 4: Printing Department](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day04/main.go) | 🌟  |       1320 | 🌟  |            8354 |
-| [Day 5: Cafeteria](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day05/main.go)           | 🌟  |        885 | 🌟  | 348115621205535 |
+| Day                                                                                                                | #1  |     #1 Answer | #2  |       #2 Answer |
+| ------------------------------------------------------------------------------------------------------------------ | --- | ------------: | --- | --------------: |
+| [Day 1: Secret Entrance](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day01/main.go)     | 🌟  |           997 | 🌟  |            5978 |
+| [Day 2: Gift Shop](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day02/main.go)           | 🌟  |    9188031749 | 🌟  |     11323661261 |
+| [Day 3: Lobby](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day03/main.go)               | 🌟  |         16993 | 🌟  | 168617068915447 |
+| [Day 4: Printing Department](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day04/main.go) | 🌟  |          1320 | 🌟  |            8354 |
+| [Day 5: Cafeteria](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day05/main.go)           | 🌟  |           885 | 🌟  | 348115621205535 |
+| [Day 6: Trash Compactor](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day06/main.go)     | 🌟  | 6209956042374 | 🌟  |  12608160008022 |
 
 ## Benchmarks
 
@@ -35,6 +36,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 3   |   209025 |    276642 | `5,57%`              |
 | 4   |   214451 |   5483916 |                      |
 | 5   |   116258 |     68155 | `96,29%` / -         |
+| 6   |   217234 |    986335 |                      |
 
 \* compared to first solution
 
