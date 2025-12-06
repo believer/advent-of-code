@@ -23,13 +23,13 @@ func TestPart2(t *testing.T) {
 }
 
 func BenchmarkPart1(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		part1("input.txt")
 	}
 }
 
 func BenchmarkPart2(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		part2("input.txt")
 	}
 }
