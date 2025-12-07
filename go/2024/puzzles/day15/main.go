@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/believer/aoc-utils/algorithms/bfs"
 	"github.com/believer/aoc-utils/files"
 	"github.com/believer/aoc-utils/grid"
 )
@@ -95,12 +96,11 @@ func part2(name string) int {
 	// Use BFS to find boxes
 moves:
 	for _, m := range moves {
-		queue := []grid.Point{robot}
+		queue := bfs.New(robot)
 		boxes := map[grid.Point]byte{}
 
-		for len(queue) > 0 {
-			current := queue[0]
-			queue = queue[1:]
+		for queue.Loop() {
+			current := queue.Pop()
 
 			if _, ok := boxes[current]; ok {
 				continue
@@ -114,11 +114,11 @@ moves:
 			case '#':
 				continue moves
 			case ']':
-				queue = append(queue, next.Add(grid.LEFT))
-				queue = append(queue, next)
+				queue.Push(next.Add(grid.LEFT))
+				queue.Push(next)
 			case '[':
-				queue = append(queue, next.Add(grid.RIGHT))
-				queue = append(queue, next)
+				queue.Push(next.Add(grid.RIGHT))
+				queue.Push(next)
 			}
 		}
 

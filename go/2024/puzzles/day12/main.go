@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/believer/aoc-utils/algorithms/bfs"
 	"github.com/believer/aoc-utils/files"
 	"github.com/believer/aoc-utils/grid"
 )
@@ -92,13 +93,11 @@ func findCorners(area map[grid.Point]bool) int {
 }
 
 func findPlantBed(g grid.Grid, visited map[grid.Point]bool, start grid.Point) (map[grid.Point]bool, int) {
-	queue := []grid.Point{start}
-	area := map[grid.Point]bool{}
+	queue := bfs.New(start)
 	perimeter := 0
 
-	for len(queue) > 0 {
-		current := queue[0]
-		queue = queue[1:]
+	for queue.Loop() {
+		current := queue.Pop()
 
 		if _, ok := visited[current]; ok {
 			continue
@@ -106,13 +105,15 @@ func findPlantBed(g grid.Grid, visited map[grid.Point]bool, start grid.Point) (m
 
 		neighbors := getNeighbors(g, current)
 		perimeter += 4 - len(neighbors)
-		area[current] = true
+		queue.Visit(current)
 		visited[current] = true
 
-		queue = append(queue, neighbors...)
+		for _, n := range neighbors {
+			queue.Push(n)
+		}
 	}
 
-	return area, perimeter
+	return queue.Visited, perimeter
 }
 
 func getNeighbors(g grid.Grid, current grid.Point) []grid.Point {
