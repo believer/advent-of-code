@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 
+	"github.com/believer/aoc-utils/algorithms/bfs"
 	"github.com/believer/aoc-utils/files"
 	"github.com/believer/aoc-utils/grid"
 )
 
 // I spent too much time trying to make a flawed solution work.
-// I thought of BFS (I've had it in the back of my mind that
-// it would appear at some point) but kept working on the path I had taken ':D
+// I thought of BFS (I've had it in the back of my mind that it would
+// appear at some point) but kept working on the path I had taken ':D
 // Eventually, I gave up and looked at my solution from day 18 2024 to remember.
 
 func main() {
@@ -22,16 +23,14 @@ func part1(name string) (splits int) {
 	manifold := grid.New(lines)
 	start, _ := manifold.Find('S')
 
-	queue := []grid.Point{start}
-	seen := map[grid.Point]bool{}
+	queue := bfs.New(start)
 
-	for len(queue) > 0 {
-		beam := queue[0]
-		queue = queue[1:]
+	for queue.Loop() {
+		beam := queue.Pop()
 
 		// Keep track of what we've seen since beams
 		// can split into the same position
-		if _, ok := seen[beam]; ok {
+		if queue.HasVisited(beam) {
 			continue
 		}
 
@@ -39,17 +38,15 @@ func part1(name string) (splits int) {
 			continue
 		}
 
-		seen[beam] = true
+		queue.Visit(beam)
 
 		if manifold.Get(beam) == '^' {
 			splits += 1
-			leftSplit := beam.Add(grid.LEFT)
-			rightSplit := beam.Add(grid.RIGHT)
 
-			queue = append(queue, leftSplit)
-			queue = append(queue, rightSplit)
+			queue.Push(beam.Add(grid.LEFT))
+			queue.Push(beam.Add(grid.RIGHT))
 		} else {
-			queue = append(queue, beam.Add(grid.DOWN))
+			queue.Push(beam.Add(grid.DOWN))
 		}
 	}
 
