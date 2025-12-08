@@ -3,45 +3,7 @@ package grid
 import (
 	"errors"
 	"fmt"
-
-	"github.com/believer/aoc-utils/utils"
 )
-
-/* Point
-/* ====================================================== */
-
-type Point struct {
-	X, Y int
-}
-
-var UP = Point{0, -1}
-var DOWN = Point{0, 1}
-var RIGHT = Point{1, 0}
-var LEFT = Point{-1, 0}
-var TOPLEFT = Point{-1, -1}
-var TOPRIGHT = Point{1, -1}
-var BOTTOMLEFT = Point{-1, 1}
-var BOTTOMRIGHT = Point{1, 1}
-
-var CARDINALS = []Point{UP, DOWN, LEFT, RIGHT}
-var ALL_DIRECTIONS = []Point{
-	TOPLEFT,
-	UP,
-	TOPRIGHT,
-	RIGHT,
-	BOTTOMRIGHT,
-	DOWN,
-	BOTTOMLEFT,
-	LEFT,
-}
-
-func (p *Point) Add(p2 Point) Point {
-	return Point{p.X + p2.X, p.Y + p2.Y}
-}
-
-func (p *Point) ManhattanDistance(p2 Point) int {
-	return utils.Abs(p2.X-p.X) + utils.Abs(p2.Y-p.Y)
-}
 
 /* Grid
 /* ====================================================== */
