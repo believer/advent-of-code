@@ -25,6 +25,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 5: Cafeteria](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day05/main.go)           | 🌟  |           885 | 🌟  | 348115621205535 |
 | [Day 6: Trash Compactor](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day06/main.go)     | 🌟  | 6209956042374 | 🌟  |  12608160008022 |
 | [Day 7: Laboratories](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day07/main.go)        | 🌟  |          1711 | 🌟  |  36706966158365 |
+| [Day 8: Playground](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day08/main.go)          | 🌟  |         69192 | 🌟  |      7264308110 |
 
 ## Benchmarks
 
@@ -39,6 +40,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 5   |   116258 |     68155 | `96,29%` / -         |
 | 6   |   149919 |    986335 | `30,99%` / -         |
 | 7   |   671799 |    508323 |                      |
+| 8   | 66756016 |  64329155 |                      |
 
 All values are ns/op. \* compared to first solution.
 
