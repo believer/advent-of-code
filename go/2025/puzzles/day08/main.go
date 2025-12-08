@@ -26,7 +26,9 @@ func part1(name string, count int) int {
 
 	dsu := dsu.New(len(coords))
 
-	// Create X unions in the DSU
+	// Create X unions in the DSU. I had a bug here for the longest time.
+	// I was incrementing "connected" when a union was _successful_, which
+	// made more checks that required.
 	for i := range count {
 		dsu.Union(edges[i].P1, edges[i].P2)
 	}
