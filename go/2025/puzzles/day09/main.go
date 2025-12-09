@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"slices"
 	"strings"
 
 	"github.com/believer/aoc-utils/files"
@@ -49,6 +50,11 @@ func part1(name string) (largestArea int) {
 	return
 }
 
+type Rectangle struct {
+	P1, P2 grid.Point
+	Area   int
+}
+
 func part2(name string) (largestArea int) {
 	lines := files.ReadLines(name)
 	coords := []grid.Point{}
@@ -61,6 +67,38 @@ func part2(name string) (largestArea int) {
 			Y: utils.MustIntFromString(y),
 		})
 	}
+
+	rectangles := []Rectangle{}
+
+	for i := range len(coords) {
+		p1 := coords[i]
+
+		for j := i + 1; j < len(coords); j++ {
+			p2 := coords[j]
+
+			// Add one to include the red corner tiles
+			dx := math.Abs(float64(p2.X)-float64(p1.X)) + 1
+			dy := math.Abs(float64(p2.Y)-float64(p1.Y)) + 1
+
+			area := int(dx * dy)
+			rectangles = append(rectangles, Rectangle{P1: p1, P2: p2, Area: area})
+		}
+	}
+
+	slices.SortFunc(rectangles, func(a, b Rectangle) int {
+		return b.Area - a.Area
+	})
+
+	for _, r := range rectangles {
+		minX := math.Max(float64(r.P1.X), float64(r.P2.X))
+		maxX := math.Min(float64(r.P1.X), float64(r.P2.X))
+		minY := math.Min(float64(r.P1.Y), float64(r.P2.Y))
+		maxY := math.Max(float64(r.P1.Y), float64(r.P2.Y))
+
+		fmt.Println(minX, maxX, minY, maxY)
+	}
+
+	fmt.Println(rectangles)
 
 	return
 }
