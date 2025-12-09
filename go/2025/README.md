@@ -26,6 +26,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 6: Trash Compactor](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day06/main.go)     | 🌟  | 6209956042374 | 🌟  |  12608160008022 |
 | [Day 7: Laboratories](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day07/main.go)        | 🌟  |          1711 | 🌟  |  36706966158365 |
 | [Day 8: Playground](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day08/main.go)          | 🌟  |         69192 | 🌟  |      7264308110 |
+| [Day 9: Movie Theater](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day09/main.go)       | 🌟  |    4772103936 | 🌟  |      1529675217 |
 
 ## Benchmarks
 
