@@ -42,6 +42,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 6   |   149919 |    986335 | `30,99%` / -         |
 | 7   |   671799 |    508323 |                      |
 | 8   | 66756016 |  64329155 |                      |
+| 9   |   593637 | 375621306 | - / `90,43%`         |
 
 All values are ns/op. \* compared to first solution.
 
@@ -54,6 +55,7 @@ All values are ns/op. \* compared to first solution.
 |   3 |   221365 |          - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/84d03e23d56e216ae811d368f8dfad54f4eb21db/go/2025/puzzles/day03/main.go) |
 |   5 |  3135281 |          - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/0ebd61766589a47aba498000168f720633b7ee1a/go/2025/puzzles/day05/main.go) |
 |   6 |   217234 |          - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/987f84d6b6a172da55f724c519b7b225984fe492/go/2025/puzzles/day06/main.go) |
+|   9 |        - | 3925386083 |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/7d21864ebe8ee554493f41879046d59f78c79282/go/2025/puzzles/day09/main.go) |
 
 ## Running
 

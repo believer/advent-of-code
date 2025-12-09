@@ -16,7 +16,6 @@ import (
 // on the same column or row, which made boundary calculations easier.
 
 // Edit: Found a faster solution using slice bounds instead of a map
-// TODO:<Perf> Add performance from M1 Mac for old solution and new
 
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
