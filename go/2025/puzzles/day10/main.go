@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"math"
+	"slices"
 	"strings"
 
 	"github.com/believer/aoc-utils/files"
@@ -19,29 +21,89 @@ type Machine struct {
 	joltage []int
 }
 
-func part1(name string) int {
+func part1(name string) (totalIterations int) {
 	lines := files.ReadLines(name)
-	var machines []Machine
+	machines := createMachines(lines)
 
+	for _, m := range machines {
+		start := []int{}
+
+		for i, l := range m.lights {
+			if l == 1 {
+				start = append(start, i)
+			}
+		}
+
+		maskedStart := toBitmask(start)
+		maskedButtons := []int{}
+		end := 0
+
+		for _, b := range m.buttons {
+			maskedButtons = append(maskedButtons, toBitmask(b))
+		}
+
+		current := []int{maskedStart}
+		iterations := 0
+
+		for !slices.Contains(current, end) {
+			next := []int{}
+
+			for _, c := range current {
+				for _, b := range maskedButtons {
+					next = append(next, c^b)
+				}
+			}
+
+			current = next
+			iterations += 1
+		}
+
+		totalIterations += iterations
+	}
+
+	return
+}
+
+func part2(name string) int {
+	return 0
+}
+
+func toBitmask(values []int) (mask int) {
+	for _, i := range values {
+		mask += int(math.Pow(2, float64(i)))
+	}
+
+	return
+}
+
+func createMachines(lines []string) (machines []Machine) {
 	for _, l := range lines {
 		lights := strings.Split(l[1:], "] ")
 		buttonSchema := strings.Split(lights[1], " {")
 		buttonSchema = strings.Fields(buttonSchema[0])
 
-		lightSchema := make([]int, len(lights[0]))
+		var lightSchema []int
 		var buttons [][]int
+
+		for l := range strings.SplitSeq(lights[0], "") {
+			switch l {
+			case ".":
+				lightSchema = append(lightSchema, 0)
+			case "#":
+				lightSchema = append(lightSchema, 1)
+			}
+		}
 
 		for _, b := range buttonSchema {
 			// Remove parenthesis
 			b = b[1:]
 			b = b[:len(b)-1]
 
-			// Create a matrix for the button presses
-			buttonsSchema := make([]int, len(lightSchema))
+			var buttonsSchema []int
 
 			for b := range strings.SplitSeq(b, ",") {
 				button := utils.MustIntFromString(b)
-				buttonsSchema[button] = 1
+				buttonsSchema = append(buttonsSchema, button)
 			}
 
 			buttons = append(buttons, buttonsSchema)
@@ -53,37 +115,5 @@ func part1(name string) int {
 		})
 	}
 
-	for _, m := range machines[:1] {
-		solveMachine(m)
-	}
-
-	return 0
-}
-
-func part2(name string) int {
-	return 0
-}
-
-// Gauss elimination
-func solveMachine(m Machine) int {
-	N := len(m.lights)
-	M := len(m.buttons)
-
-	// Create the augmented matrix [A|B]
-	augmentedMatrix := make([][]int, N)
-	for i := range N {
-		augmentedMatrix[i] = make([]int, M+1)
-
-		// Copy A (buttons)
-		for j := range M {
-			augmentedMatrix[i][j] = m.buttons[j][i]
-		}
-
-		// Copy B (lights)
-		augmentedMatrix[i][M] = m.lights[i]
-	}
-
-	fmt.Println(augmentedMatrix)
-
-	return 0
+	return
 }
