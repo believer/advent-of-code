@@ -27,22 +27,26 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 7: Laboratories](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day07/main.go)        | 🌟  |          1711 | 🌟  |  36706966158365 |
 | [Day 8: Playground](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day08/main.go)          | 🌟  |         69192 | 🌟  |      7264308110 |
 | [Day 9: Movie Theater](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day09/main.go)       | 🌟  |    4772103936 | 🌟  |      1529675217 |
+| [Day 10: Factory](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day10/main.go)            | 🌟  |           455 |     |                 |
+| [Day 11: Reactor](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day11/main.go)            | 🌟  |           431 | 🌟  | 358458157650450 |
 
 ## Benchmarks
 
 Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#hdr-Benchmarks) package. Computer is a 2021 MacBook Pro M1 Pro, 32 GB RAM.
 
-| Day |       #1 |        #2 | Improvement\*        |
-| --- | -------: | --------: | -------------------- |
-| 1   |   340532 |    338234 | `52,30%` / `52,86%`  |
-| 2   | 39771972 | 778769562 | `-14,63%` / `46,44%` |
-| 3   |   209025 |    276642 | `5,57%`              |
-| 4   |   214451 |   5483916 |                      |
-| 5   |   116258 |     68155 | `96,29%` / -         |
-| 6   |   149919 |    986335 | `30,99%` / -         |
-| 7   |   671799 |    508323 |                      |
-| 8   | 66756016 |  64329155 |                      |
-| 9   |   593637 | 375621306 | - / `90,43%`         |
+| Day |        #1 |        #2 | Improvement\*        |
+| --- | --------: | --------: | -------------------- |
+| 1   |    340532 |    338234 | `52,30%` / `52,86%`  |
+| 2   |  39771972 | 778769562 | `-14,63%` / `46,44%` |
+| 3   |    209025 |    276642 | `5,57%`              |
+| 4   |    214451 |   5483916 |                      |
+| 5   |    116258 |     68155 | `96,29%` / -         |
+| 6   |    149919 |    986335 | `30,99%` / -         |
+| 7   |    671799 |    508323 |                      |
+| 8   |  66756016 |  64329155 |                      |
+| 9   |    593637 | 375621306 | - / `90,43%`         |
+| 10  | 256756802 |         - |                      |
+| 11  |    106015 |    311170 |                      |
 
 All values are ns/op. \* compared to first solution.
 
