@@ -10,15 +10,20 @@ import (
 	"github.com/believer/aoc-utils/utils"
 )
 
+// Hardest problem of the year. I had an idea of solving part 2
+// using Gaussian elimination, but I don't have the bandwidth to
+// write the code for it :'D Found that others had used Z3, so
+// I tried that in Go, but found it confusing to understand.
+// Did it in JS with z3-solver instead, but haven't included the code.
+
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
-	fmt.Println("Part 2: ", part2("input.txt"))
 }
 
 type Machine struct {
-	lights  []int
-	buttons [][]int
-	joltage []int
+	lights   []int
+	buttons  [][]int
+	joltages []int
 }
 
 func part1(name string) (totalIterations int) {
@@ -64,10 +69,6 @@ func part1(name string) (totalIterations int) {
 	return
 }
 
-func part2(name string) int {
-	return 0
-}
-
 func toBitmask(values []int) (mask int) {
 	for _, i := range values {
 		mask += int(math.Pow(2, float64(i)))
@@ -80,11 +81,10 @@ func createMachines(lines []string) (machines []Machine) {
 	for _, l := range lines {
 		lights := strings.Split(l[1:], "] ")
 		buttonSchema := strings.Split(lights[1], " {")
-		buttonSchema = strings.Fields(buttonSchema[0])
+		buttonData := strings.Fields(buttonSchema[0])
+		joltageData := buttonSchema[1]
 
 		var lightSchema []int
-		var buttons [][]int
-
 		for l := range strings.SplitSeq(lights[0], "") {
 			switch l {
 			case ".":
@@ -94,7 +94,8 @@ func createMachines(lines []string) (machines []Machine) {
 			}
 		}
 
-		for _, b := range buttonSchema {
+		var buttons [][]int
+		for _, b := range buttonData {
 			// Remove parenthesis
 			b = b[1:]
 			b = b[:len(b)-1]
@@ -109,9 +110,15 @@ func createMachines(lines []string) (machines []Machine) {
 			buttons = append(buttons, buttonsSchema)
 		}
 
+		var joltages []int
+		for j := range strings.SplitSeq(joltageData[:len(joltageData)-1], ",") {
+			joltages = append(joltages, utils.MustIntFromString(j))
+		}
+
 		machines = append(machines, Machine{
-			lights:  lightSchema,
-			buttons: buttons,
+			lights:   lightSchema,
+			buttons:  buttons,
+			joltages: joltages,
 		})
 	}
 

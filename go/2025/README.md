@@ -27,7 +27,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 7: Laboratories](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day07/main.go)         | 🌟  |          1711 | 🌟  |  36706966158365 |
 | [Day 8: Playground](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day08/main.go)           | 🌟  |         69192 | 🌟  |      7264308110 |
 | [Day 9: Movie Theater](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day09/main.go)        | 🌟  |    4772103936 | 🌟  |      1529675217 |
-| [Day 10: Factory](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day10/main.go)             | 🌟  |           455 |     |                 |
+| [Day 10: Factory](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day10/main.go)             | 🌟  |           455 | 🌟  |           16978 |
 | [Day 11: Reactor](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day11/main.go)             | 🌟  |           431 | 🌟  | 358458157650450 |
 | [Day 12: Christmas Tree Farm](https://github.com/believer/advent-of-code/blob/master/go/2025/puzzles/day12/main.go) | 🌟  |           422 |     |                 |
 
@@ -46,7 +46,7 @@ Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#h
 | 7   |    671799 |    508323 |                      |
 | 8   |  66756016 |  64329155 |                      |
 | 9   |    593637 | 375621306 | - / `90,43%`         |
-| 10  | 256756802 |         - |                      |
+| 10  | 256756802 |   Used Z3 |                      |
 | 11  |    106015 |    311170 |                      |
 | 12  |    274895 |         - |                      |
 

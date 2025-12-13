@@ -14,22 +14,8 @@ func TestPart1(t *testing.T) {
 	})
 }
 
-func TestPart2(t *testing.T) {
-	t.Run("Part 2", func(t *testing.T) {
-		expected := 0
-		actual := part2("test-input.txt")
-		assert.Equal(t, expected, actual)
-	})
-}
-
 func BenchmarkPart1(b *testing.B) {
 	for b.Loop() {
 		part1("input.txt")
-	}
-}
-
-func BenchmarkPart2(b *testing.B) {
-	for b.Loop() {
-		part2("input.txt")
 	}
 }
