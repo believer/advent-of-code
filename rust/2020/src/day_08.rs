@@ -86,22 +86,19 @@ impl Program {
 
     fn calculate_to_error(&mut self, instructions: &[Instruction]) -> Option<i32> {
         loop {
-            match instructions.get(self.step) {
-                Some(instruction) => {
-                    if self.seen.contains(&instruction.id) {
-                        return Some(self.accumulator);
-                    }
+            let instruction = instructions.get(self.step)?;
 
-                    self.add_seen_and_step(instruction);
-
-                    if let Operation::Jump = instruction.operation {
-                        continue;
-                    }
-
-                    self.step_one();
-                }
-                None => return None,
+            if self.seen.contains(&instruction.id) {
+                return Some(self.accumulator);
             }
+
+            self.add_seen_and_step(instruction);
+
+            if let Operation::Jump = instruction.operation {
+                continue;
+            }
+
+            self.step_one();
         }
     }
 

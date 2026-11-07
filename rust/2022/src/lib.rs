@@ -1,5 +1,3 @@
-#![feature(iter_array_chunks)]
-
 extern crate aoc_runner;
 extern crate pathfinding;
 
