@@ -1,10 +1,12 @@
 package files
 
 import (
-	"bufio"
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
+
+	"github.com/believer/aoc-utils/utils"
 )
 
 // Borrowed from https://github.com/kylehoehns/aoc-2023-go/blob/main/pkg/files/filereader.go
@@ -12,42 +14,36 @@ import (
 
 // ReadLines reads a file and returns a slice of strings, one for each line
 func ReadLines(name string) []string {
-	_, callingFile, _, ok := runtime.Caller(1)
+	return splitLines(readFile(name, callerFile()))
+}
 
-	if !ok {
-		panic("unable to find caller so cannot build path to read file")
+// Lines is a shorter name for [ReadLines]
+func Lines(name string) []string {
+	return splitLines(readFile(name, callerFile()))
+}
+
+// Ints reads a file and returns all integers found on each line.
+// Lines without integers produce empty slices.
+func Ints(name string) [][]int {
+	lines := splitLines(readFile(name, callerFile()))
+	result := make([][]int, len(lines))
+
+	for i, line := range lines {
+		result[i] = utils.Ints(line)
 	}
 
-	return readLines(name, callingFile)
+	return result
 }
 
 // Read reads a file and returns a string containing the entire file
 func Read(name string) string {
-	_, callingFile, _, ok := runtime.Caller(1)
-
-	if !ok {
-		panic("unable to find caller so cannot build path to read file")
-	}
-
-	b, err := os.ReadFile(filepath.Join(filepath.Dir(callingFile), name))
-
-	if err != nil {
-		panic(err)
-	}
-
-	return string(b)
+	return readFile(name, callerFile())
 }
 
 // ReadParagraphs reads a file and returns a slice of slices of strings, one for each line
 // A gap of one or more blank lines is used to split the file into groups
 func ReadParagraphs(name string) [][]string {
-	_, callingFile, _, ok := runtime.Caller(1)
-
-	if !ok {
-		panic("unable to find caller so cannot build path to read file")
-	}
-
-	lines := readLines(name, callingFile)
+	lines := splitLines(readFile(name, callerFile()))
 
 	var groups [][]string
 
@@ -55,8 +51,10 @@ func ReadParagraphs(name string) [][]string {
 
 	for _, line := range lines {
 		if line == "" {
-			groups = append(groups, curGroup)
-			curGroup = make([]string, 0)
+			if len(curGroup) > 0 {
+				groups = append(groups, curGroup)
+				curGroup = make([]string, 0)
+			}
 		} else {
 			curGroup = append(curGroup, line)
 		}
@@ -69,28 +67,37 @@ func ReadParagraphs(name string) [][]string {
 	return groups
 }
 
-func readLines(name string, callingFile string) []string {
-	inputFile, err := os.Open(filepath.Join(filepath.Dir(callingFile), name))
+// Find the file that called the public function (two frames up)
+func callerFile() string {
+	_, callingFile, _, ok := runtime.Caller(2)
+
+	if !ok {
+		panic("unable to find caller so cannot build path to read file")
+	}
+
+	return callingFile
+}
+
+func readFile(name string, callingFile string) string {
+	b, err := os.ReadFile(filepath.Join(filepath.Dir(callingFile), name))
 
 	if err != nil {
 		panic(err)
 	}
 
-	defer func(inputFile *os.File) {
-		err := inputFile.Close()
+	return string(b)
+}
 
-		if err != nil {
-			panic(err)
-		}
-	}(inputFile)
+// Split on newlines. A single trailing newline doesn't create an extra line.
+func splitLines(s string) []string {
+	if s == "" {
+		return nil
+	}
 
-	scanner := bufio.NewScanner(inputFile)
-	scanner.Split(bufio.ScanLines)
+	lines := strings.Split(strings.TrimSuffix(s, "\n"), "\n")
 
-	var lines []string
-
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
+	for i, l := range lines {
+		lines[i] = strings.TrimSuffix(l, "\r")
 	}
 
 	return lines

@@ -1,10 +1,10 @@
 package astar
 
 import (
-	"container/heap"
 	"math"
 
 	"github.com/believer/aoc-utils/grid"
+	"github.com/believer/aoc-utils/pathfinding/pq"
 )
 
 type Node struct {
@@ -19,22 +19,12 @@ type Item struct {
 	Path      []grid.Point
 }
 
-type Queue []*Item
+type Queue = pq.Queue[*Item]
 
-func (pq Queue) Len() int { return len(pq) }
-func (pq Queue) Less(i, j int) bool {
-	return pq[i].Cost+pq[i].Heuristic < pq[j].Cost+pq[j].Heuristic
-}
-func (pq Queue) Swap(i, j int) { pq[i], pq[j] = pq[j], pq[i] }
-func (pq *Queue) Push(x any)   { *pq = append(*pq, x.(*Item)) }
-
-func (pq *Queue) Pop() any {
-	old := *pq
-	n := len(old)
-	item := old[n-1]
-	*pq = old[0 : n-1]
-
-	return item
+func newQueue() *Queue {
+	return pq.New(func(a, b *Item) bool {
+		return a.Cost+a.Heuristic < b.Cost+b.Heuristic
+	})
 }
 
 type Astar struct {
@@ -42,10 +32,14 @@ type Astar struct {
 	Seen    map[Node]int
 	Score   int
 	Queue   *Queue
+
+	// Estimates the cost from a point to the goal. Must never overestimate.
+	// Defaults to Manhattan distance.
+	Heuristic func(from, goal grid.Point) int
 }
 
 func New(start, direction grid.Point) Astar {
-	queue := &Queue{}
+	queue := newQueue()
 	startNode := Node{
 		Point:     start,
 		Direction: direction,
@@ -57,14 +51,15 @@ func New(start, direction grid.Point) Astar {
 		Path: []grid.Point{start},
 	}
 
-	heap.Init(queue)
-	heap.Push(queue, &item)
+	queue.Push(&item)
 
 	return Astar{
 		Current: &item,
 		Seen:    map[Node]int{},
 		Score:   math.MaxInt,
 		Queue:   queue,
+
+		Heuristic: grid.Point.ManhattanDistance,
 	}
 }
 
@@ -75,7 +70,7 @@ func (a *Astar) Len() int {
 
 // Grab the first item from the queue
 func (a *Astar) Pop() *Item {
-	a.Current = heap.Pop(a.Queue).(*Item)
+	a.Current = a.Queue.Pop()
 	return a.Current
 }
 
@@ -104,9 +99,9 @@ func (a *Astar) At(point grid.Point) bool {
 
 // Add a new item to the queue
 func (a *Astar) Push(cost int, path []grid.Point, node Node, goal grid.Point) {
-	h := node.Point.ManhattanDistance(goal)
+	h := a.Heuristic(node.Point, goal)
 
-	heap.Push(a.Queue, &Item{
+	a.Queue.Push(&Item{
 		Cost:      cost,
 		Path:      path,
 		Heuristic: h,

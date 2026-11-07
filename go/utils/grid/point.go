@@ -32,11 +32,35 @@ var ALL_DIRECTIONS = []Point{
 	LEFT,
 }
 
-func (p *Point) Add(p2 Point) Point {
+func (p Point) Add(p2 Point) Point {
 	return Point{p.X + p2.X, p.Y + p2.Y}
 }
 
-func (p *Point) ManhattanDistance(p2 Point) int {
+func (p Point) Sub(p2 Point) Point {
+	return Point{p.X - p2.X, p.Y - p2.Y}
+}
+
+func (p Point) Scale(n int) Point {
+	return Point{p.X * n, p.Y * n}
+}
+
+// Turn a direction 90 degrees clockwise. Y grows downwards,
+// so UP turns into RIGHT.
+func (p Point) TurnRight() Point {
+	return Point{-p.Y, p.X}
+}
+
+// Turn a direction 90 degrees counter-clockwise
+func (p Point) TurnLeft() Point {
+	return Point{p.Y, -p.X}
+}
+
+// The opposite direction
+func (p Point) Opposite() Point {
+	return Point{-p.X, -p.Y}
+}
+
+func (p Point) ManhattanDistance(p2 Point) int {
 	return utils.Abs(p2.X-p.X) + utils.Abs(p2.Y-p.Y)
 }
 
@@ -47,7 +71,7 @@ type Point3 struct {
 	X, Y, Z int
 }
 
-func (p *Point3) Distance(q Point3) int {
+func (p Point3) Distance(q Point3) int {
 	dx := p.X - q.X
 	dy := p.Y - q.Y
 	dz := p.Z - q.Z

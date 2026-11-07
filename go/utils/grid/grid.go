@@ -14,16 +14,23 @@ type Grid struct {
 	Width  int
 }
 
+// Create a grid from lines of equal width. Panics if the
+// lines have different widths.
 func New(lines []string) Grid {
-	data := []byte{}
+	if len(lines) == 0 {
+		return Grid{Data: []byte{}}
+	}
+
 	height := len(lines)
 	width := len(lines[0])
+	data := make([]byte, 0, height*width)
 
-	for r := range height {
-		for c := range width {
-			current := lines[r][c]
-			data = append(data, current)
+	for r, line := range lines {
+		if len(line) != width {
+			panic(fmt.Sprintf("grid: line %d has width %d, expected %d", r, len(line), width))
 		}
+
+		data = append(data, line...)
 	}
 
 	return Grid{
@@ -137,6 +144,62 @@ func (g *Grid) FindAll(needle byte) []Point {
 	}
 
 	return points
+}
+
+// In-bounds points next to p in the given directions,
+// for example [CARDINALS] or [ALL_DIRECTIONS].
+func (g *Grid) Neighbors(p Point, dirs []Point) []Point {
+	neighbors := make([]Point, 0, len(dirs))
+
+	for _, d := range dirs {
+		if next := p.Add(d); g.InBounds(next) {
+			neighbors = append(neighbors, next)
+		}
+	}
+
+	return neighbors
+}
+
+// A copy of row y
+func (g *Grid) Row(y int) []byte {
+	return append([]byte{}, g.Data[y*g.Width:(y+1)*g.Width]...)
+}
+
+// A copy of column x
+func (g *Grid) Col(x int) []byte {
+	col := make([]byte, g.Height)
+
+	for y := range g.Height {
+		col[y] = g.Data[y*g.Width+x]
+	}
+
+	return col
+}
+
+// A deep copy of the grid
+func (g *Grid) Clone() Grid {
+	return Grid{
+		Data:   append([]byte{}, g.Data...),
+		Height: g.Height,
+		Width:  g.Width,
+	}
+}
+
+// A new grid with rows and columns swapped
+func (g *Grid) Transpose() Grid {
+	data := make([]byte, 0, len(g.Data))
+
+	for x := range g.Width {
+		for y := range g.Height {
+			data = append(data, g.Data[y*g.Width+x])
+		}
+	}
+
+	return Grid{
+		Data:   data,
+		Height: g.Width,
+		Width:  g.Height,
+	}
 }
 
 type Quadrant string

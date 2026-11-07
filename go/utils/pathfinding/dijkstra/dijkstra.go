@@ -1,10 +1,10 @@
 package dijkstra
 
 import (
-	"container/heap"
 	"math"
 
 	"github.com/believer/aoc-utils/grid"
+	"github.com/believer/aoc-utils/pathfinding/pq"
 )
 
 type Node struct {
@@ -18,20 +18,10 @@ type Item struct {
 	Path []grid.Point
 }
 
-type Queue []*Item
+type Queue = pq.Queue[*Item]
 
-func (pq Queue) Len() int           { return len(pq) }
-func (pq Queue) Less(i, j int) bool { return pq[i].Cost < pq[j].Cost }
-func (pq Queue) Swap(i, j int)      { pq[i], pq[j] = pq[j], pq[i] }
-func (pq *Queue) Push(x any)        { *pq = append(*pq, x.(*Item)) }
-
-func (pq *Queue) Pop() any {
-	old := *pq
-	n := len(old)
-	item := old[n-1]
-	*pq = old[0 : n-1]
-
-	return item
+func newQueue() *Queue {
+	return pq.New(func(a, b *Item) bool { return a.Cost < b.Cost })
 }
 
 type Dijkstra struct {
@@ -42,7 +32,7 @@ type Dijkstra struct {
 }
 
 func New(start, direction grid.Point) Dijkstra {
-	queue := &Queue{}
+	queue := newQueue()
 	startNode := Node{
 		Point:     start,
 		Direction: direction,
@@ -54,8 +44,7 @@ func New(start, direction grid.Point) Dijkstra {
 		Path: []grid.Point{start},
 	}
 
-	heap.Init(queue)
-	heap.Push(queue, &item)
+	queue.Push(&item)
 
 	return Dijkstra{
 		Current: &item,
@@ -72,7 +61,7 @@ func (d *Dijkstra) Len() int {
 
 // Grab the first item from the queue
 func (d *Dijkstra) Pop() *Item {
-	d.Current = heap.Pop(d.Queue).(*Item)
+	d.Current = d.Queue.Pop()
 	return d.Current
 }
 
@@ -101,9 +90,53 @@ func (d *Dijkstra) At(point grid.Point) bool {
 
 // Add a new item to the queue
 func (d *Dijkstra) Push(cost int, path []grid.Point, node Node) {
-	heap.Push(d.Queue, &Item{
+	d.Queue.Push(&Item{
 		Cost: cost,
 		Path: path,
 		Node: node,
 	})
+}
+
+// Edge to another node in a graph with a cost
+type Edge[N comparable] struct {
+	To   N
+	Cost int
+}
+
+// Search finds the lowest cost from start to any node where goal reports true,
+// for any comparable node type. Reports false if no goal is reachable.
+func Search[N comparable](start N, goal func(N) bool, neighbors func(N) []Edge[N]) (int, bool) {
+	type state struct {
+		node N
+		cost int
+	}
+
+	queue := pq.New(func(a, b state) bool { return a.cost < b.cost })
+	best := map[N]int{start: 0}
+
+	queue.Push(state{start, 0})
+
+	for queue.Len() > 0 {
+		current := queue.Pop()
+
+		if goal(current.node) {
+			return current.cost, true
+		}
+
+		// A cheaper way to this node was already handled
+		if current.cost > best[current.node] {
+			continue
+		}
+
+		for _, e := range neighbors(current.node) {
+			cost := current.cost + e.Cost
+
+			if v, ok := best[e.To]; !ok || cost < v {
+				best[e.To] = cost
+				queue.Push(state{e.To, cost})
+			}
+		}
+	}
+
+	return 0, false
 }
