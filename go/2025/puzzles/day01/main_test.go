@@ -20,6 +20,12 @@ func TestPart2(t *testing.T) {
 		actual := part2("test-input.txt")
 		assert.Equal(t, expected, actual)
 	})
+
+	t.Run("Part 2 - edge cases", func(t *testing.T) {
+		expected := 16
+		actual := part2("test-input-part2.txt")
+		assert.Equal(t, expected, actual)
+	})
 }
 
 func BenchmarkPart1(b *testing.B) {

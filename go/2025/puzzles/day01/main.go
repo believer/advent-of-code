@@ -2,14 +2,10 @@ package main
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/believer/aoc-utils/files"
 	"github.com/believer/aoc-utils/utils"
 )
-
-// I had a small refactor to clean up the loops, but it was
-// slower than my initial solution so I kept it as is.
 
 func main() {
 	fmt.Println("Part 1: ", part1("input.txt"))
@@ -21,55 +17,54 @@ func part1(name string) int {
 	count := 0
 
 	for _, turn := range turns(name) {
-		dial = (dial + turn) % 100
+		dial = wrap(dial + turn)
 
 		if dial == 0 {
-			count += 1
+			count++
 		}
 	}
 
 	return count
 }
 
-// Learnt this neat trick that we can calculate how many
-// full turns in either direction we will make. One full
-// turn, of course, results in us passing 0.
+// Every full turn of 100 passes 0 once. Moving right, that's simply
+// how many hundreds we pass. Moving left, we can count the distance
+// to the next 0 as if we were moving right from the mirrored position.
 func part2(name string) int {
 	dial := 50
 	count := 0
 
 	for _, turn := range turns(name) {
-		if turn < 0 {
-			div, mod := utils.Divmod(turn, -100)
-			count += div
-
-			// Check if the remainder would pass zero
-			if dial != 0 && dial+mod <= 0 {
-				count += 1
-			}
+		if turn >= 0 {
+			count += (dial + turn) / 100
 		} else {
-			div, mod := utils.Divmod(turn, 100)
-			count += div
-
-			if dial+mod >= 100 {
-				count += 1
-			}
+			count += (wrap(-dial) - turn) / 100
 		}
 
-		dial = utils.Abs(dial+turn) % 100
+		dial = wrap(dial + turn)
 	}
 
 	return count
 }
 
-func turns(name string) (values []int) {
+// Go's % keeps the sign of the dividend, so -18 % 100 is -18, not 82
+func wrap(n int) int {
+	return (n%100 + 100) % 100
+}
+
+func turns(name string) []int {
 	lines := files.ReadLines(name)
+	values := make([]int, 0, len(lines))
 
 	for _, l := range lines {
-		l = strings.Replace(l, "L", "-", 1)
-		v := utils.MustIntFromString(strings.Replace(l, "R", "", 1))
+		v := utils.MustIntFromString(l[1:])
+
+		if l[0] == 'L' {
+			v = -v
+		}
+
 		values = append(values, v)
 	}
 
-	return
+	return values
 }
