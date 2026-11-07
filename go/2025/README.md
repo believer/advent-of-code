@@ -33,35 +33,42 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Benchmarks
 
-Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#hdr-Benchmarks) package. Computer is a 2021 MacBook Pro M1 Pro, 32 GB RAM.
+Using Go's built-in benchmarking with the [testing](https://pkg.go.dev/testing#hdr-Benchmarks) package. Computer is a 2021 MacBook Pro M1 Pro, 32 GB RAM. Go 1.27.3.
 
-| Day |        #1 |        #2 | Improvement\*        |
-| --- | --------: | --------: | -------------------- |
-| 1   |    182329 |    185571 | `74,46%` / `74,14%`  |
-| 2   |     18088 |     45950 | `99,95%` / `99,99%`  |
-| 3   |    209025 |    276642 | `5,57%`              |
-| 4   |    214451 |   5483916 |                      |
-| 5   |    116258 |     68155 | `96,29%` / -         |
-| 6   |    149919 |    986335 | `30,99%` / -         |
-| 7   |    671799 |    508323 |                      |
-| 8   |  66756016 |  64329155 |                      |
-| 9   |    593637 | 375621306 | - / `90,43%`         |
-| 10  | 256756802 |   Used Z3 |                      |
-| 11  |    106015 |    311170 |                      |
-| 12  |    274895 |         - |                      |
+| Day |       #1 | #1 Memory |        #2 | #2 Memory | Time improvement\*  | Memory improvement\*  |
+| --- | -------: | --------: | --------: | --------: | ------------------- | --------------------- |
+| 1   |   183638 |  291.6 kB |    185994 |  291.6 kB | `74,28%` / `74,08%` | `-12,65%` / `-12,65%` |
+| 2   |    18028 |    4.5 kB |     47607 |   41.8 kB | `99,95%` / `99,99%` | `99,97%` / `99,99%`   |
+| 3   |    76212 |  220.4 kB |    110505 |  220.4 kB | `65,57%` / `58,05%` | `44,18%` / `61,93%`   |
+| 4   |   236087 |  192.3 kB |   5574204 |  508.8 kB |                     |                       |
+| 5   |   118341 |  142.7 kB |     71405 |  142.7 kB | `96,23%` / -        | `-9,30%` / -          |
+| 6   |   153077 |  187.9 kB |     89268 |   25.3 kB | `29,53%` / `89,82%` | `35,80%` / `98,23%`   |
+| 7   |   697391 |    1.3 MB |    524869 |  550.3 kB |                     |                       |
+| 8   | 56495965 |   12.2 MB |  56413290 |   12.2 MB | `10,67%` / `10,74%` | `82,63%` / `82,64%`   |
+| 9   |   176729 |   47.6 kB | 372113055 |   30.4 MB | `69,61%` / `90,52%` | `0,00%` / `13,31%`    |
+| 10  |   531942 |  747.5 kB |   Used Z3 |         - | `99,79%`            | `99,98%`              |
+| 11  |   107265 |  180.2 kB |    316487 |  331.1 kB |                     |                       |
+| 12  |   257945 |  478.4 kB |         - |         - |                     |                       |
 
-All values are ns/op. \* compared to first solution.
+Times are ns/op and memory is B/op allocated (from `-benchmem`). \* compared to first solution. A negative memory improvement means the current solution allocates more than the first one did.
 
 ### Previous solutions
 
-| Day |       #1 |         #2 | Improvement | Link                                                                                                                           |
-| --: | -------: | ---------: | ----------: | ------------------------------------------------------------------------------------------------------------------------------ |
-|   1 |   713866 |     717585 |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/53a02dfd3224b4c50893055608807375032416a2/go/2025/puzzles/day01/main.go) |
-|   2 | 34694476 | 1454106125 |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/adfa07923db8b77f08edb19bb5f68435254517b1/go/2025/puzzles/day02/main.go) |
-|   3 |   221365 |          - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/84d03e23d56e216ae811d368f8dfad54f4eb21db/go/2025/puzzles/day03/main.go) |
-|   5 |  3135281 |          - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/0ebd61766589a47aba498000168f720633b7ee1a/go/2025/puzzles/day05/main.go) |
-|   6 |   217234 |          - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/987f84d6b6a172da55f724c519b7b225984fe492/go/2025/puzzles/day06/main.go) |
-|   9 |        - | 3925386083 |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/7d21864ebe8ee554493f41879046d59f78c79282/go/2025/puzzles/day09/main.go) |
+| Day |        #1 | #1 Memory |         #2 | #2 Memory | Improvement | Link                                                                                                                           |
+| --: | --------: | --------: | ---------: | --------: | ----------: | ------------------------------------------------------------------------------------------------------------------------------ |
+|   1 |    713866 |  258.9 kB |     717585 |  258.9 kB |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/53a02dfd3224b4c50893055608807375032416a2/go/2025/puzzles/day01/main.go) |
+|   2 |  34694476 |   17.1 MB | 1454106125 |    2.0 GB |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/adfa07923db8b77f08edb19bb5f68435254517b1/go/2025/puzzles/day02/main.go) |
+|   3 |    221365 |  394.7 kB |          - |         - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/84d03e23d56e216ae811d368f8dfad54f4eb21db/go/2025/puzzles/day03/main.go) |
+|   3 |         - |         - |     263429 |  578.8 kB |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/7ddbbc020d781055e2b18f9d9e7b677c042812ad/go/2025/puzzles/day03/main.go) |
+|   5 |   3135281 |  130.5 kB |          - |         - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/0ebd61766589a47aba498000168f720633b7ee1a/go/2025/puzzles/day05/main.go) |
+|   6 |    217234 |  292.7 kB |          - |         - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/987f84d6b6a172da55f724c519b7b225984fe492/go/2025/puzzles/day06/main.go) |
+|   6 |         - |         - |     876634 |    1.4 MB |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/7ddbbc020d781055e2b18f9d9e7b677c042812ad/go/2025/puzzles/day06/main.go) |
+|   8 |  63245626 |   70.3 MB |   63199803 |   70.3 MB |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/7ddbbc020d781055e2b18f9d9e7b677c042812ad/go/2025/puzzles/day08/main.go) |
+|   9 |         - |         - | 3925386083 |   35.0 MB |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/7d21864ebe8ee554493f41879046d59f78c79282/go/2025/puzzles/day09/main.go) |
+|   9 |    581487 |   47.6 kB |          - |         - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/7ddbbc020d781055e2b18f9d9e7b677c042812ad/go/2025/puzzles/day09/main.go) |
+|  10 | 247743677 |    4.2 GB |          - |         - |    Baseline | [Link](https://github.com/believer/advent-of-code/blob/7ddbbc020d781055e2b18f9d9e7b677c042812ad/go/2025/puzzles/day10/main.go) |
+
+Memory for the older baselines was measured afterwards on Go 1.27.3, since only times were recorded originally.
 
 ## Running
 

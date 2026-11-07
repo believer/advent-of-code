@@ -2,12 +2,9 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"slices"
-	"strings"
 
 	"github.com/believer/aoc-utils/files"
-	"github.com/believer/aoc-utils/utils"
 )
 
 func main() {
@@ -50,8 +47,8 @@ func createBanks(name string) [][]int {
 	for i, l := range lines {
 		batteries := make([]int, len(l))
 
-		for j, battery := range strings.Split(l, "") {
-			batteries[j] = utils.MustIntFromString(battery)
+		for j, battery := range []byte(l) {
+			batteries[j] = int(battery - '0')
 		}
 
 		banks[i] = batteries
@@ -74,5 +71,15 @@ func jolt(n int, b []int) int {
 	// Multiply the max digit with the n ** 10 to get the correct value
 	// for the current position. Then, recurse with a shortened list of
 	// remaining batteries.
-	return maxDigit*int(math.Pow(10, float64(n))) + jolt(n, b[index:])
+	return maxDigit*pow10(n) + jolt(n, b[index:])
+}
+
+func pow10(n int) int {
+	result := 1
+
+	for range n {
+		result *= 10
+	}
+
+	return result
 }

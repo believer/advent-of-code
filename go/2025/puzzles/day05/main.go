@@ -1,8 +1,8 @@
 package main
 
 import (
+	"cmp"
 	"fmt"
-	"math"
 	"slices"
 	"strings"
 
@@ -59,7 +59,7 @@ func findIntervals(ranges []string) []interval.Range {
 
 	// Sort by starting point for easier merging
 	slices.SortFunc(intervals, func(a, b interval.Range) int {
-		return a.Start - b.Start
+		return cmp.Compare(a.Start, b.Start)
 	})
 
 	// Compress intervals to remove overlaps
@@ -78,7 +78,7 @@ func findIntervals(ranges []string) []interval.Range {
 			// 10-14
 			// 12-18
 			// Becomes: 10-18
-			merged[previous].End = int(math.Max(float64(p.End), float64(r.End)))
+			merged[previous].End = max(p.End, r.End)
 		}
 	}
 

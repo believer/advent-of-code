@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"slices"
 	"strings"
 
 	"github.com/believer/aoc-utils/files"
@@ -61,43 +60,34 @@ func part1(name string) (grandTotal int) {
 
 func part2(name string) (grandTotal int) {
 	lines := files.ReadLines(name)
-	cols := [][]string{}
-
-	// Transpose
-	for i := range len(lines[0]) {
-		col := []string{}
-
-		for _, line := range lines {
-			col = append(col, string(line[i]))
-		}
-
-		cols = append(cols, col)
-	}
-
-	// Reverse to get operation on last line
-	slices.Reverse(cols)
+	last := len(lines) - 1
 	current := []int{}
 
-	for _, v := range cols {
-		last := len(v) - 1
-		d := strings.TrimSpace(strings.Join(v[:last], ""))
+	// Read column by column from the right to get
+	// the operation after the numbers it applies to
+	for i := len(lines[0]) - 1; i >= 0; i-- {
+		col := make([]byte, 0, last)
+
+		for _, line := range lines[:last] {
+			col = append(col, line[i])
+		}
+
+		d := strings.TrimSpace(string(col))
 
 		if d == "" {
 			continue
 		}
 
-		digits := utils.MustIntFromString(d)
-		current = append(current, digits)
-		operation := v[last]
+		current = append(current, utils.MustIntFromString(d))
 
 		// Perform calculation and reset current
-		switch operation {
-		case "+":
+		switch lines[last][i] {
+		case '+':
 			grandTotal += utils.Sum(current)
-			current = []int{}
-		case "*":
+			current = current[:0]
+		case '*':
 			grandTotal += utils.Prod(current)
-			current = []int{}
+			current = current[:0]
 		}
 	}
 

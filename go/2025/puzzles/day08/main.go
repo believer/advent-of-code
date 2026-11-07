@@ -1,8 +1,9 @@
 package main
 
 import (
+	"cmp"
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 
 	"github.com/believer/aoc-utils/data/dsu"
@@ -42,8 +43,8 @@ func part1(name string, count int) int {
 		}
 	}
 
-	sort.Slice(sizes, func(a, b int) bool {
-		return sizes[a] > sizes[b]
+	slices.SortFunc(sizes, func(a, b int) int {
+		return cmp.Compare(b, a)
 	})
 
 	// Multiply three largest sets
@@ -92,15 +93,12 @@ func getCoords(name string) (coords []grid.Point3) {
 	return
 }
 
-func getEdges(coords []grid.Point3) (edges graph.Edges) {
+func getEdges(coords []grid.Point3) graph.Edges {
 	n := len(coords)
+	edges := make(graph.Edges, 0, n*(n-1)/2)
 
 	for i := range n {
 		for j := i + 1; j < n; j++ {
-			if i == j {
-				continue
-			}
-
 			distance := coords[i].Distance(coords[j])
 
 			edge := graph.Edge{P1: i, P2: j, Distance: distance}
@@ -109,7 +107,9 @@ func getEdges(coords []grid.Point3) (edges graph.Edges) {
 	}
 
 	// Sort by distance
-	sort.Sort(graph.Edges(edges))
+	slices.SortFunc(edges, func(a, b graph.Edge) int {
+		return cmp.Compare(a.Distance, b.Distance)
+	})
 
-	return
+	return edges
 }

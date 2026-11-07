@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"slices"
 	"strings"
 
@@ -50,12 +49,21 @@ func part1(name string) (totalIterations int) {
 		current := []int{maskedStart}
 		iterations := 0
 
+		// Pressing buttons can lead back to a light state we've already
+		// reached in fewer presses. Skipping those keeps the queue from
+		// growing exponentially (it used to allocate 4 GB).
+		seen := make([]bool, 1<<len(m.lights))
+		seen[maskedStart] = true
+
 		for !slices.Contains(current, end) {
 			next := []int{}
 
 			for _, c := range current {
 				for _, b := range maskedButtons {
-					next = append(next, c^b)
+					if !seen[c^b] {
+						seen[c^b] = true
+						next = append(next, c^b)
+					}
 				}
 			}
 
@@ -71,7 +79,7 @@ func part1(name string) (totalIterations int) {
 
 func toBitmask(values []int) (mask int) {
 	for _, i := range values {
-		mask += int(math.Pow(2, float64(i)))
+		mask |= 1 << i
 	}
 
 	return

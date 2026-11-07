@@ -35,18 +35,13 @@ func part1(name string) (fits int) {
 		shape := 0
 
 		for _, s := range p[1:] {
-			for v := range strings.SplitSeq(s, "") {
-				if v == "#" {
-					shape++
-				}
-			}
+			shape += strings.Count(s, "#")
 		}
 
 		shapes = append(shapes, shape)
 	}
 
 	// Get region sizes and number of packages
-	packages := [][]int{}
 	var regions []Region
 
 	for _, p := range paragraphs[6:] {
@@ -59,8 +54,6 @@ func part1(name string) (fits int) {
 				counts = append(counts, utils.MustIntFromString(r))
 			}
 
-			packages = append(packages, counts)
-
 			regions = append(regions, Region{
 				height: utils.MustIntFromString(area[0]),
 				width:  utils.MustIntFromString(area[1]),
@@ -70,12 +63,11 @@ func part1(name string) (fits int) {
 	}
 
 	// Check if package sizes will fit inside the area
-	for i, r := range regions {
-		p := packages[i]
+	for _, r := range regions {
 		size := 0
 
-		for i, pp := range p {
-			size += shapes[i] * pp
+		for i, count := range r.counts {
+			size += shapes[i] * count
 		}
 
 		if r.Area() >= size {

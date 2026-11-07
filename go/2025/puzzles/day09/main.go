@@ -1,8 +1,8 @@
 package main
 
 import (
+	"cmp"
 	"fmt"
-	"math"
 	"slices"
 	"strings"
 
@@ -33,14 +33,10 @@ func part1(name string) (largestArea int) {
 			p2 := coords[j]
 
 			// Add one to include the red corner tiles
-			dx := math.Abs(float64(p2.X)-float64(p1.X)) + 1
-			dy := math.Abs(float64(p2.Y)-float64(p1.Y)) + 1
+			dx := utils.Abs(p2.X-p1.X) + 1
+			dy := utils.Abs(p2.Y-p1.Y) + 1
 
-			area := dx * dy
-
-			if area > float64(largestArea) {
-				largestArea = int(area)
-			}
+			largestArea = max(largestArea, dx*dy)
 		}
 	}
 
@@ -68,17 +64,16 @@ func part2(name string) (largestArea int) {
 			p2 := coords[j]
 
 			// Add one to include the red corner tiles
-			dx := math.Abs(float64(p2.X)-float64(p1.X)) + 1
-			dy := math.Abs(float64(p2.Y)-float64(p1.Y)) + 1
+			dx := utils.Abs(p2.X-p1.X) + 1
+			dy := utils.Abs(p2.Y-p1.Y) + 1
 
-			area := int(dx * dy)
-			rectangles = append(rectangles, Rectangle{P1: p1, P2: p2, Area: area})
+			rectangles = append(rectangles, Rectangle{P1: p1, P2: p2, Area: dx * dy})
 		}
 	}
 
 	// Sort to check from largest and down
 	slices.SortFunc(rectangles, func(a, b Rectangle) int {
-		return b.Area - a.Area
+		return cmp.Compare(b.Area, a.Area)
 	})
 
 	// Find the first valid
@@ -200,22 +195,4 @@ func createBoundariesSlice(coords []grid.Point) ([]Bounds, int) {
 	}
 
 	return bounds, minY
-}
-
-// math.Min / math.Max use float64s so these helpers
-// remove any need for casting
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-
-	return b
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-
-	return b
 }
