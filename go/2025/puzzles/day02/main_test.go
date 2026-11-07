@@ -12,12 +12,24 @@ func TestPart1(t *testing.T) {
 		actual := part1("test-input.txt")
 		assert.Equal(t, expected, actual)
 	})
+
+	t.Run("Part 1 - edge cases", func(t *testing.T) {
+		expected := 224838
+		actual := part1("test-input-edge.txt")
+		assert.Equal(t, expected, actual)
+	})
 }
 
 func TestPart2(t *testing.T) {
 	t.Run("Part 2", func(t *testing.T) {
 		expected := 4174379265
 		actual := part2("test-input.txt")
+		assert.Equal(t, expected, actual)
+	})
+
+	t.Run("Part 2 - edge cases", func(t *testing.T) {
+		expected := 10225947
+		actual := part2("test-input-edge.txt")
 		assert.Equal(t, expected, actual)
 	})
 }

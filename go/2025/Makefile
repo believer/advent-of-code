@@ -29,7 +29,7 @@ test-all: ## Run tests for all days
 # run=XXX provide a regex that doesn't match any tests, effectively
 # skipping the testing phase and just running benchmarks
 bench: ## Run benchmarks for the given day (skips tests)
-	@go test -run=XXX -bench=. ./puzzles/day$(PADDED_DAY)
+	@go test -run=XXX -bench=. -benchmem ./puzzles/day$(PADDED_DAY)
 
 run: ## Run the solution for the given day
 	@go run ./puzzles/day$(PADDED_DAY)/main.go

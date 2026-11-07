@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"iter"
 	"strconv"
 	"strings"
 
@@ -14,18 +15,20 @@ func main() {
 	fmt.Println("Part 2: ", part2("input.txt"))
 }
 
-// Lost a bit of performance on part 1 after refactor, but I think
-// the increased readability makes up for it.
-//
-// Part 2 performance increased after refactor though.
+// Instead of checking every ID in the ranges, we generate the invalid
+// ones directly. An ID made of a repeated block is the block times a
+// multiplier, e.g. 123123 = 123 * 1001 and 121212 = 12 * 10101.
 
 func part1(name string) (invalid int) {
-	for _, v := range inclusiveRange(name) {
-		valueAsString := strconv.Itoa(v)
-		half := len(valueAsString) / 2
+	for _, r := range idRanges(name) {
+		for length := digits(r.start); length <= digits(r.end); length++ {
+			if length%2 != 0 {
+				continue
+			}
 
-		if valueAsString[:half] == valueAsString[half:] {
-			invalid += v
+			for id := range repeated(r, length, length/2) {
+				invalid += id
+			}
 		}
 	}
 
@@ -33,68 +36,77 @@ func part1(name string) (invalid int) {
 }
 
 func part2(name string) (invalid int) {
-	invalids := map[int]bool{}
+	// IDs like 1111 are both 1 x 4 and 11 x 2
+	seen := map[int]bool{}
 
-	for _, v := range inclusiveRange(name) {
-		values := strings.Split(strconv.Itoa(v), "")
+	for _, r := range idRanges(name) {
+		for length := digits(r.start); length <= digits(r.end); length++ {
+			for size := 1; size <= length/2; size++ {
+				if length%size != 0 {
+					continue
+				}
 
-		// Already seen this ID
-		if _, ok := invalids[v]; ok {
-			continue
-		}
-
-	chunk:
-		for c := range len(values) - 1 {
-			chunkSize := c + 1
-
-			// Continue if it can't be evenly chunked
-			if len(values)%chunkSize != 0 {
-				continue
-			}
-
-			chunks := chunkBy(values, c+1)
-			firstChunk := strings.Join(chunks[0], "")
-
-			// Check if all chunks are the same
-			for _, c := range chunks {
-				if strings.Join(c, "") != firstChunk {
-					continue chunk
+				for id := range repeated(r, length, size) {
+					if !seen[id] {
+						seen[id] = true
+						invalid += id
+					}
 				}
 			}
-
-			// Save invalid value
-			invalids[v] = true
 		}
-	}
-
-	// Calculate sum
-	for v := range invalids {
-		invalid += v
 	}
 
 	return
 }
 
-func inclusiveRange(name string) (output []int) {
+type idRange struct {
+	start, end int
+}
+
+// All IDs in the range with the given length that consist
+// of a block with the given size repeated
+func repeated(r idRange, length, size int) iter.Seq[int] {
+	return func(yield func(int) bool) {
+		multiplier := (pow10(length) - 1) / (pow10(size) - 1)
+
+		// Smallest and largest block that keeps the ID in range,
+		// without leading zeroes or overflowing into a longer block
+		lo := max(pow10(size-1), (r.start+multiplier-1)/multiplier)
+		hi := min(pow10(size)-1, r.end/multiplier)
+
+		for block := lo; block <= hi; block++ {
+			if !yield(block * multiplier) {
+				return
+			}
+		}
+	}
+}
+
+func idRanges(name string) (ranges []idRange) {
 	line := strings.TrimSpace(files.Read(name))
 
 	for r := range strings.SplitSeq(line, ",") {
 		s, e, _ := strings.Cut(r, "-")
-		start := utils.MustIntFromString(s)
-		end := utils.MustIntFromString(e)
 
-		for i := range end - start + 1 {
-			output = append(output, start+i)
-		}
+		ranges = append(ranges, idRange{
+			start: utils.MustIntFromString(s),
+			end:   utils.MustIntFromString(e),
+		})
 	}
 
 	return
 }
 
-func chunkBy[T any](items []T, chunkSize int) (chunks [][]T) {
-	for chunkSize < len(items) {
-		items, chunks = items[chunkSize:], append(chunks, items[0:chunkSize:chunkSize])
+func digits(n int) int {
+	return len(strconv.Itoa(n))
+}
+
+func pow10(n int) int {
+	result := 1
+
+	for range n {
+		result *= 10
 	}
 
-	return append(chunks, items)
+	return result
 }
